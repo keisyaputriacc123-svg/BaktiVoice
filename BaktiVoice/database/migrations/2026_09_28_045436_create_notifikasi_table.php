@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -11,20 +12,14 @@ return new class extends Migration
     {
         Schema::create('notifikasi', function (Blueprint $table) {
             $table->id('id_notifikasi');
+            $table->foreignId('id_user')->constrained('users', 'id_user')->onDelete('cascade');
+            $table->string('judul');
             $table->text('pesan');
-            $table->timestamp('tanggal_notifikasi')->useCurrent();
-            $table->boolean('status_baca')->default(false);
-
-            $table->foreignId('id_user')
-                  ->constrained('users', 'id_user')
-                  ->onDelete('cascade');
-
-            $table->foreignId('id_laporan')
-                  ->constrained('laporan', 'id_laporan')
-                  ->onDelete('cascade');
-
+            $table->boolean('is_read')->default(false);
             $table->timestamps();
         });
+
+        DB::statement('ALTER TABLE notifikasi ENABLE ROW LEVEL SECURITY;');
     }
 
 
