@@ -11,10 +11,8 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
-        /* ==========================================================================
-        DESIGN TOKENS (Sesuai dengan sekolahku.design.md & Wireframe)
-           ========================================================================== */
+
+ <style>
         :root {
             --primary: #1f2937;
             --on-primary: #ffffff;
@@ -32,16 +30,14 @@
             --radius-lg: 16px;
             --radius-pill: 9999px;
 
-            --shadow-card: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+
             --shadow-elevated: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
             --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
             --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ==========================================================================
-        BASE STYLES
-           ========================================================================== */
+
         * {
             margin: 0;
             padding: 0;
@@ -59,9 +55,7 @@
             padding: 16px;
         }
 
-        /* ==========================================================================
-        LAYOUT / CARD WRAPPER
-           ========================================================================== */
+
         .login-card {
             background-color: #ffffff;
             width: 100%;
@@ -74,9 +68,7 @@
             transition: transform var(--transition-base);
         }
 
-        /* ==========================================================================
-        BRANDING (LOGO & TITLE)
-           ========================================================================== */
+
         .brand-wrapper {
             margin-bottom: 28px;
             display: flex;
@@ -84,7 +76,7 @@
             align-items: center;
         }
 
-        /* Menggunakan inline SVG untuk merepresentasikan Logo BaktiVoice sesuai gambar */
+
         .logo-icon {
             width: 72px;
             height: 72px;
@@ -106,9 +98,22 @@
             font-weight: 500;
         }
 
-        /* ==========================================================================
-        FORM ELEMENTS
-           ========================================================================== */
+        .alert-danger {
+            background-color: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            margin-bottom: 18px;
+            text-align: left;
+        }
+
+        .alert-danger ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
         .login-form {
             display: flex;
             flex-direction: column;
@@ -140,9 +145,10 @@
             color: #9ca3af;
             font-size: 15px;
             transition: color var(--transition-fast);
+            pointer-events: none;
         }
 
-        .form-input {
+        .form-input, .form-select {
             width: 100%;
             padding: 12px 14px 12px 42px;
             font-size: 14px;
@@ -154,21 +160,24 @@
             transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
         }
 
-        .form-input:focus {
+        .form-select {
+            appearance: none;
+            cursor: pointer;
+        }
+
+        .form-input:focus, .form-select:focus {
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(31, 41, 55, 0.1);
         }
 
         .form-input:focus + .input-icon,
+        .form-select:focus + .input-icon,
         .input-wrapper:focus-within .input-icon {
             color: var(--primary);
         }
 
-        .form-input::placeholder {
-            color: #9ca3af;
-        }
 
-        /* Toggle Show/Hide Password */
+
         .toggle-password {
             position: absolute;
             right: 14px;
@@ -184,7 +193,7 @@
             color: var(--text);
         }
 
-        /* Remember Me & Forgot Password Row */
+
         .form-options {
             display: flex;
             align-items: center;
@@ -221,7 +230,7 @@
             text-decoration: underline;
         }
 
-        /* Button Submit */
+
         .btn-submit {
             width: 100%;
             padding: 12px;
@@ -248,9 +257,7 @@
             transform: scale(0.99);
         }
 
-        /* ==========================================================================
-        FOOTER / REGISTER LINK
-           ========================================================================== */
+
         .form-footer {
             margin-top: 24px;
             font-size: 13px;
@@ -268,26 +275,7 @@
             text-decoration: underline;
         }
 
-        /* Alert Display for Laravel Validation Errors */
-        .alert-error {
-            background-color: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #dc2626;
-            padding: 10px 14px;
-            border-radius: var(--radius-sm);
-            font-size: 13px;
-            margin-bottom: 16px;
-            text-align: left;
-        }
 
-        .alert-error ul {
-            margin-left: 18px;
-            margin-top: 4px;
-        }
-
-        /* ==========================================================================
-        RESPONSIVE UI (Mobile Adaptive)
-           ========================================================================== */
         @media (max-width: 480px) {
             .login-card {
                 padding: 28px 20px;
@@ -309,21 +297,14 @@
     <main class="login-card">
         <!-- BRAND LOGO & TITLE -->
         <div class="brand-wrapper">
-        <img
-    src="{{ asset('images/logo BaktiVoice.png') }}"
-    alt="Logo BaktiVoice"
-    class="logo-icon"
->
-
+            <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="logo-icon">
             <h1 class="brand-title">BaktiVoice</h1>
             <p class="brand-subtitle">Sistem Pengaduan Sekolah</p>
         </div>
 
-        <!-- LARAVEL ERROR DISPLAY (Optional Directive) -->
-        {{--
+        <!-- TAMPILAN ERROR VALIDASI/LOGIN -->
         @if ($errors->any())
-            <div class="alert-error">
-                <strong>Terjadi kesalahan:</strong>
+            <div class="alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
@@ -331,13 +312,30 @@
                 </ul>
             </div>
         @endif
-        --}}
 
-        <!-- FORM LOGIN -->
-        <!-- Note: Ganti action ke route login laravel Anda, ex: route('login') -->
+
+
+    <!-- FORM LOGIN -->
         <form class="login-form" action="{{ route('login.post') }}" method="POST" id="loginForm">
-            <!-- Laravel CSRF Token -->
-@csrf
+            @csrf
+
+            <!-- Field Role / Jabatan -->
+            <div class="form-group">
+                <label for="role" class="form-label">Masuk Sebagai</label>
+                <div class="input-wrapper">
+                    <select name="role" id="role" class="form-select" required>
+                        <option value="" disabled selected>-- Pilih Peran / Hak Akses --</option>
+                        <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
+                        <option value="guru_bk" {{ old('role') == 'guru_bk' ? 'selected' : '' }}>Guru BK</option>
+                        <option value="wakasek_kesiswaan" {{ old('role') == 'wakasek_kesiswaan' ? 'selected' : '' }}>Wakasek Kesiswaan</option>
+                        <option value="wakasek_kurikulum" {{ old('role') == 'wakasek_kurikulum' ? 'selected' : '' }}>Wakasek Kurikulum</option>
+                        <option value="wakasek_sarana" {{ old('role') == 'wakasek_sarana' ? 'selected' : '' }}>Wakasek Sarana & Prasarana</option>
+                        <option value="wakasek_dudi" {{ old('role') == 'wakasek_dudi' ? 'selected' : '' }}>Wakasek Humas / Hubin / DUDI</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                    </select>
+                    <i class="fa-solid fa-user-shield input-icon"></i>
+                </div>
+            </div>
 
             <!-- Field Email / Username / NISN -->
             <div class="form-group">
@@ -376,13 +374,13 @@
                 </div>
             </div>
 
-            <!-- Opsi Tambahan (Ingat Saya & Lupa Password) -->
+            <!-- Opsi Tambahan -->
             <div class="form-options">
                 <label class="remember-me">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <span>Ingat Saya</span>
                 </label>
-                <a href="{{ route('password.request') }}" class="forgot-password">Lupa Password?</a>
+                <a href="#" class="forgot-password">Lupa Password?</a>
             </div>
 
             <!-- Tombol Submit -->
@@ -399,20 +397,20 @@
         </div>
     </main>
 
-    <!-- JAVASCRIPT (Toggle Password & Form Interaction) -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const togglePasswordBtn = document.getElementById('btnTogglePassword');
             const passwordInput = document.getElementById('password');
             const iconEye = document.getElementById('iconEye');
 
-            // Fitur Toggle Show/Hide Password
+
             if (togglePasswordBtn && passwordInput && iconEye) {
                 togglePasswordBtn.addEventListener('click', function () {
                     const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                     passwordInput.setAttribute('type', type);
 
-                    // Toggle Icon
+
                     if (type === 'text') {
                         iconEye.classList.remove('fa-eye');
                         iconEye.classList.add('fa-eye-slash');

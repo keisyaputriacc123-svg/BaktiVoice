@@ -1,20 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-// 1. Rute untuk Buka Halaman Login (GET)
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
-
-// 2. Rute untuk Memproses Data Login Saat Tombol Diklik (POST)
-Route::post('/login', function () {
-    // Di sini nanti logika untuk mengecek password & email/NISN
-})->name('login.post');
+// Route Login & Logout menggunakan LoginController
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // 3. rute utk memproses fitur lupa pssword
 Route::get('/forgot-password', function () {
@@ -26,16 +22,22 @@ Route::get('/register', function () {
     return view ('register');
 })->name('register');
 
+// 5. Route untuk halaman register
 Route::post('/register', function () {
     // Logika simpan data pendaftaran nanti di sini
 })->name('register.post');
 
-//route halaman dashboard admin
+// 6. route halaman dashboard admin
 Route::get('/dashboard', function () {
 return view ('dashboard_admin');
 })->name('dashboard');
 
-
+// 7. Route halaman landing page
 Route::get('/', function () {
     return view('landing_page');
 })->name('landing');
+
+// 8. Route halaman data master
+Route::get('/data-master', function () {
+    return view('data_master');
+});

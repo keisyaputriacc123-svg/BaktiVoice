@@ -55,6 +55,7 @@
             left: 0;
             z-index: 100;
             padding: 24px 16px;
+            overflow-y: auto;
         }
 
         .brand {
@@ -64,10 +65,10 @@
             padding: 0 12px 24px 12px;
         }
 
-        .brand-logo-img{
+        .brand-logo-img {
             width: 60px !important;
             height: 60px !important;
-            max width: 60px !important;
+            max-width: 60px !important;
             background-color: var(--primary);
             color: #96ace0;
             font-weight: 800;
@@ -91,10 +92,11 @@
             gap: 6px;
         }
 
-        .nav-item a {
+        .nav-item a, .dropdown-btn {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
+            width: 100%;
             padding: 12px 16px;
             color: var(--text-muted);
             text-decoration: none;
@@ -102,14 +104,23 @@
             font-size: 14px;
             border-radius: 8px;
             transition: all 0.2s ease;
+            background: none;
+            border: none;
+            cursor: pointer;
         }
 
-        .nav-item a:hover {
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-item a:hover, .dropdown-btn:hover {
             background-color: #f1f5f9;
             color: var(--text-main);
         }
 
-        .nav-item.active a {
+        .nav-item.active > a, .nav-item.active > .dropdown-btn {
             background-color: var(--primary);
             color: #ffffff;
             font-weight: 600;
@@ -119,6 +130,39 @@
             font-size: 16px;
             width: 20px;
             text-align: center;
+        }
+
+        .arrow-icon {
+            font-size: 12px !important;
+            transition: transform 0.3s ease;
+        }
+
+        /* --- SUB-MENU DATA MASTER --- */
+        .sub-menu {
+            list-style: none;
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            padding-left: 32px;
+            margin-top: 4px;
+        }
+
+        .sub-menu.show {
+            display: flex;
+        }
+
+        .sub-menu a {
+            padding: 8px 12px;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-radius: 6px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .sub-menu a:hover {
+            background-color: #f1f5f9;
+            color: var(--text-main);
         }
 
         .logout-btn {
@@ -132,6 +176,7 @@
             font-size: 14px;
             border-radius: 8px;
             transition: background 0.2s;
+            margin-top: 16px;
         }
 
         .logout-btn:hover {
@@ -253,7 +298,7 @@
             color: var(--text-main);
         }
 
-        /* Variant Card Colors */
+
         .stat-card.total .stat-value { color: #1e293b; }
         .stat-card.diproses .stat-value { color: #d97706; }
         .stat-card.selesai .stat-value { color: #16a34a; }
@@ -331,7 +376,7 @@
             gap: 20px;
         }
 
-        /* Status Badges */
+
         .status-badge {
             padding: 6px 14px;
             border-radius: 20px;
@@ -342,20 +387,9 @@
             justify-content: center;
         }
 
-        .badge-diproses {
-            background-color: #fef3c7;
-            color: #b45309;
-        }
-
-        .badge-selesai {
-            background-color: #dcfce7;
-            color: #15803d;
-        }
-
-        .badge-ditolak {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
+        .badge-diproses { background-color: #fef3c7; color: #b45309; }
+        .badge-selesai { background-color: #dcfce7; color: #15803d; }
+        .badge-ditolak { background-color: #fee2e2; color: #b91c1c; }
 
         .btn-dropdown {
             background: none;
@@ -379,8 +413,8 @@
                 width: 70px;
                 padding: 16px 8px;
             }
-            .brand-name, .nav-item span, .logout-btn span {
-                display: none;
+            .brand-name, .nav-item span, .logout-btn span, .arrow-icon, .sub-menu {
+                display: none !important;
             }
             .main-wrapper {
                 margin-left: 70px;
@@ -397,35 +431,60 @@
     <aside class="sidebar">
         <div>
             <!-- Logo Brand -->
-        <div class="brand">
-    <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
-    <span class="brand-name">BaktiVoice</span>
-</div>
+            <div class="brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
+            </div>
 
             <!-- Navigasi Utama -->
             <ul class="nav-menu">
                 <li class="nav-item active">
                     <a href="#">
-                        <i class="fa-regular fa-file-lines"></i>
-                        <span>Laporan</span>
+                        <div class="nav-content">
+                            <i class="fa-regular fa-file-lines"></i>
+                            <span>Laporan</span>
+                        </div>
+                    </a>
+                </li>
+
+                <!-- MENU DATA MASTER (DROPDOWN) -->
+                <li class="nav-item">
+                    <button class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-database"></i>
+                            <span>Data Master</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
+                    </button>
+                    <ul class="sub-menu" id="masterMenu">
+                        <li><a href="#">Data Pengguna</a></li>
+                        <li><a href="#">Kategori Laporan</a></li>
+                        <li><a href="#">Data Lokasi / Kelas</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Rekap Laporan</span>
+                        </div>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#">
-                        <i class="fa-solid fa-chart-column"></i>
-                        <span>Rekap Laporan</span>
+                        <div class="nav-content">
+                            <i class="fa-regular fa-bell"></i>
+                            <span>Notifikasi</span>
+                        </div>
                     </a>
                 </li>
                 <li class="nav-item">
                     <a href="#">
-                        <i class="fa-regular fa-bell"></i>
-                        <span>Notifikasi</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#">
-                        <i class="fa-regular fa-user"></i>
-                        <span>Profil</span>
+                        <div class="nav-content">
+                            <i class="fa-regular fa-user"></i>
+                            <span>Profil</span>
+                        </div>
                     </a>
                 </li>
             </ul>
@@ -545,5 +604,20 @@
         </main>
     </div>
 
+    <!-- SCRIPT DROPDOWN TOGGLE -->
+    <script>
+        function toggleDropdown(menuId, arrowId) {
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
+
+            menu.classList.toggle('show');
+
+            if (menu.classList.contains('show')) {
+                arrow.style.transform = 'rotate(180deg)';
+            } else {
+                arrow.style.transform = 'rotate(0deg)';
+            }
+        }
+    </script>
 </body>
 </html>
