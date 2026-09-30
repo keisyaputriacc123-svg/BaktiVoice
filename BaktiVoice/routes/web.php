@@ -17,6 +17,15 @@ Route::get('/forgot-password', function () {
     return view('welcome'); // atau view halaman lupa password Anda
 })->name('password.request');
 
+// Route Dashboard Sesuai Role
+Route::get('/admin/dashboard', function () { return view('welcome'); })->name('admin.dashboard');
+Route::get('/siswa/dashboard', function () { return view('welcome'); })->name('siswa.dashboard');
+Route::get('/bk/dashboard', function () { return view('welcome'); })->name('bk.dashboard');
+Route::get('/wakasek/kesiswaan/dashboard', function () { return view('welcome'); })->name('wakasek.kesiswaan.dashboard');
+Route::get('/wakasek/kurikulum/dashboard', function () { return view('welcome'); })->name('wakasek.kurikulum.dashboard');
+Route::get('/wakasek/sarana/dashboard', function () { return view('welcome'); })->name('wakasek.sarana.dashboard');
+Route::get('/wakasek/dudi/dashboard', function () { return view('welcome'); })->name('wakasek.dudi.dashboard');
+
 // 4. Route utk daftar akun pengaduan
 Route::get('/register', function () {
     return view ('register');
