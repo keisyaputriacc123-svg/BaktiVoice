@@ -11,7 +11,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
-            $table->string('nama', 100);
+            $table->string('name', 100);
             $table->string('username', 100)->unique();
             $table->string('password'); // Panjang default 255 aman untuk bcrypt
             $table->enum('role', [
