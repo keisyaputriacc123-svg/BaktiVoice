@@ -3,13 +3,12 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+
+public function up(): void
     {
         Schema::create('jobs', function (Blueprint $table) {
             $table->id();
@@ -43,11 +42,13 @@ return new class extends Migration
             $table->longText('exception');
             $table->timestamp('failed_at')->useCurrent();
         });
+
+        DB::statement('ALTER TABLE jobs ENABLE ROW LEVEL SECURITY;');
+        DB::statement('ALTER TABLE job_batches ENABLE ROW LEVEL SECURITY;');
+        DB::statement('ALTER TABLE failed_jobs ENABLE ROW LEVEL SECURITY;');
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::dropIfExists('jobs');
