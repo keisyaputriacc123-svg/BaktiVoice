@@ -12,17 +12,19 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
-            $table->string('name', 100);
-            $table->string('username', 100)->unique();
-            $table->string('password');
-            $table->enum('role', [
-                'siswa',
-                'admin',
-                'guru_bk',
-                'wakasek kurikulum',
-                'wakasek kesiswaan',
-                'wakasek sarana',
-                'wakasek dudi'
+        $table->string('name', 100);
+        $table->string('username', 100)->unique();
+        $table->string('email', 100)->unique()->nullable();
+        $table->string('nisn', 20)->unique()->nullable();   
+        $table->string('password');
+        $table->enum('role', [
+            'siswa',
+            'admin',
+            'guru_bk',
+            'wakasek kurikulum',
+            'wakasek kesiswaan',
+            'wakasek sarana',
+            'wakasek dudi'
             ]);
             $table->timestamps();
         });
