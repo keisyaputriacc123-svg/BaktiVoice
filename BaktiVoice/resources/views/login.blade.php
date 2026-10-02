@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 
- <style>
+<style>
         :root {
             --primary: #1f2937;
             --on-primary: #ffffff;
@@ -331,7 +331,7 @@
                         <option value="wakasek_kurikulum" {{ old('role') == 'wakasek_kurikulum' ? 'selected' : '' }}>Wakasek Kurikulum</option>
                         <option value="wakasek_sarana" {{ old('role') == 'wakasek_sarana' ? 'selected' : '' }}>Wakasek Sarana & Prasarana</option>
                         <option value="wakasek_dudi" {{ old('role') == 'wakasek_dudi' ? 'selected' : '' }}>Wakasek Humas / Hubin / DUDI</option>
-                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
+                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin </option>
                     </select>
                     <i class="fa-solid fa-user-shield input-icon"></i>
                 </div>

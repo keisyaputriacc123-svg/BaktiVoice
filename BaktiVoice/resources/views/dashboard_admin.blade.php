@@ -457,9 +457,9 @@
                         <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
                     <ul class="sub-menu" id="masterMenu">
-                        <li><a href="#">Data Pengguna</a></li>
                         <li><a href="#">Kategori Laporan</a></li>
-                        <li><a href="#">Data Lokasi / Kelas</a></li>
+                        <li><a href="#">Status Laporan</a></li>
+                        <li><a href="#">User & Role</a></li>
                     </ul>
                 </li>
 
@@ -542,14 +542,14 @@
                 <h2 class="section-header">Laporan Terbaru</h2>
 
                 <div class="report-list">
-                    <!-- Item 1: Fasilitas Kelas -->
+                    <!-- Item 1: Kasus Perundungan Siswa -->
                     <div class="report-card">
                         <div class="report-info-group">
                             <div class="report-thumbnail">
                                 <i class="fa-regular fa-image"></i>
                             </div>
                             <div class="report-details">
-                                <div class="report-title">Fasilitas Kelas</div>
+                                <div class="report-title">Kasus Perundungan Siswa</div>
                                 <div class="report-date">14 Sep 2026</div>
                             </div>
                         </div>
@@ -561,14 +561,14 @@
                         </div>
                     </div>
 
-                    <!-- Item 2: Fasilitas Toilet -->
+                    <!-- Item 2: Jadwal Pelajaran Bentrok -->
                     <div class="report-card">
                         <div class="report-info-group">
                             <div class="report-thumbnail">
                                 <i class="fa-regular fa-image"></i>
                             </div>
                             <div class="report-details">
-                                <div class="report-title">Fasilitas Toilet</div>
+                                <div class="report-title">Jadwal Pelajaran Bentrok</div>
                                 <div class="report-date">12 Sep 2026</div>
                             </div>
                         </div>
@@ -580,14 +580,14 @@
                         </div>
                     </div>
 
-                    <!-- Item 3: Keamanan Sekolah -->
+                    <!-- Item 3: Kendala Tempat Magang -->
                     <div class="report-card">
                         <div class="report-info-group">
                             <div class="report-thumbnail">
                                 <i class="fa-regular fa-image"></i>
                             </div>
                             <div class="report-details">
-                                <div class="report-title">Keamanan Sekolah</div>
+                                <div class="report-title">Kendala Tempat Magang</div>
                                 <div class="report-date">9 Sep 2026</div>
                             </div>
                         </div>

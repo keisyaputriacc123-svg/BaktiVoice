@@ -32,7 +32,7 @@ class LoginController extends Controller
             // Redirect berdasarkan role pengguna
             switch ($user->role ?? null) {
                 case 'admin':
-                    return redirect()->route('admin.dashboard');
+                    return redirect()->route('dashboard_admin');
                 case 'siswa':
                     return redirect()->route('siswa.dashboard');
                 case 'guru_bk':

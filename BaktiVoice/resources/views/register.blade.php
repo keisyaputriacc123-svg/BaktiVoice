@@ -209,6 +209,15 @@
                 border: none;
             }
         }
+        .alert-error {
+    background-color: #fee2e2;
+    color: #b91c1c;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    text-align: left;
+}
     </style>
 </head>
 <body>
@@ -226,6 +235,18 @@
 
         <h2 class="section-title">Buat Akun Baru</h2>
         <p class="section-subtitle">Daftar untuk menggunakan BaktiVoice</p>
+
+        @if ($errors->any())
+    <div class="alert-error">
+        {{ $errors->first() }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert-error">
+        {{ session('error') }}
+    </div>
+@endif
 
         <!-- Form Register -->
         <form class="register-form" action="{{ route('register.post') }}" method="POST">
@@ -288,7 +309,7 @@
 
         <!-- Footer Link ke Login -->
         <div class="form-footer">
-            Sudah punya akun? <a href="{{ route('login') }}" class="login-link">Masuk</a>
+            Sudah punya akun? <a href="{{ route('login') }}" class="register-link">Masuk</a>
         </div>
     </main>
 
