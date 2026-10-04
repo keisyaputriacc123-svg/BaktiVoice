@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BaktiVoice - Dashboard Admin</title>
+
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -169,14 +171,17 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            width: 100%;
             padding: 12px 16px;
             color: #ef4444;
-            text-decoration: none;
+            background: transparent;
+            border: none;
             font-weight: 600;
             font-size: 14px;
             border-radius: 8px;
             transition: background 0.2s;
-            margin-top: 16px;
+            cursor: pointer;
+            text-align: left;
         }
 
         .logout-btn:hover {
@@ -298,7 +303,6 @@
             color: var(--text-main);
         }
 
-
         .stat-card.total .stat-value { color: #1e293b; }
         .stat-card.diproses .stat-value { color: #d97706; }
         .stat-card.selesai .stat-value { color: #16a34a; }
@@ -376,7 +380,6 @@
             gap: 20px;
         }
 
-
         .status-badge {
             padding: 6px 14px;
             border-radius: 20px;
@@ -439,7 +442,7 @@
             <!-- Navigasi Utama -->
             <ul class="nav-menu">
                 <li class="nav-item active">
-                    <a href="#">
+                    <a href="{{ route('dashboard_admin') }}">
                         <div class="nav-content">
                             <i class="fa-regular fa-file-lines"></i>
                             <span>Laporan</span>
@@ -457,9 +460,9 @@
                         <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
                     <ul class="sub-menu" id="masterMenu">
-                        <li><a href="#">Kategori Laporan</a></li>
-                        <li><a href="#">Status Laporan</a></li>
-                        <li><a href="#">User & Role</a></li>
+                        <li><a href="{{ route('data_master') }}">Kategori Laporan</a></li>
+                        <li><a href="{{ route('data_master') }}">Status Laporan</a></li>
+                        <li><a href="{{ route('data_master') }}">User & Role</a></li>
                     </ul>
                 </li>
 
@@ -490,11 +493,14 @@
             </ul>
         </div>
 
-        <!-- Tombol Logout -->
-        <a href="{{ route('login') }}" class="logout-btn">
-            <i class="fa-solid fa-xmark"></i>
-            <span>Logout</span>
-        </a>
+        <!-- Form Logout -->
+        <form action="{{ route('logout') }}" method="POST" style="margin-top: 16px;">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </aside>
 
     <!-- MAIN WRAPPER -->
