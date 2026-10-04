@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -60,9 +59,23 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
 // ================================
 // DASHBOARD ADMIN
 // ================================
-Route::get('/admin/dashboard', function () {
-    return view('welcome');
+Route::get('/admin_dashboard', function () {
+    return view('dashboard_admin');
 })->name('dashboard_admin');
+
+// ================================
+// DATA MASTER
+// ================================
+Route::get('/data_master', function () {
+    return view('data_master');
+})->name('data_master');
+
+// ================================
+// HALAMAN LAPORAN ADMIN
+// ================================
+Route::get('/laporan_admin', function () {
+    return view('laporan_admin');
+})->name('laporan.admin');
 
 // ================================
 // DASHBOARD SISWA
@@ -96,10 +109,3 @@ Route::get('/wakasek/sarana/dashboard', function () {
 Route::get('/wakasek/dudi/dashboard', function () {
     return view('welcome');
 })->name('wakasek.dudi.dashboard');
-
-// ================================
-// DATA MASTER
-// ================================
-Route::get('/data-master', function () {
-    return view('data_master');
-})->name('data-master');
