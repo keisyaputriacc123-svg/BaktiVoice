@@ -1,7 +1,9 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
+use App\Models\User;
 use App\Http\Controllers\LoginController;
 
 // ================================
@@ -12,94 +14,86 @@ Route::get('/', function () {
 })->name('landing');
 
 // ================================
-// LOGIN & LOGOUT
+// GUEST ROUTES (LOGIN & REGISTER)
 // ================================
-Route::get('/login', [LoginController::class, 'showLoginForm'])
-    ->name('login');
+Route::middleware('guest')->group(function () {
+    // Login
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 
-Route::post('/login', [LoginController::class, 'login'])
-    ->name('login.post');
+    // Lupa Password
+    Route::get('/forgot-password', function () {
+        return view('welcome');
+    })->name('password.request');
 
-Route::post('/logout', [LoginController::class, 'logout'])
-    ->name('logout');
+    // Register
+    Route::get('/register', function () {
+        return view('register');
+    })->name('register');
 
-// ================================
-// LUPA PASSWORD
-// ================================
-Route::get('/forgot-password', function () {
-    return view('welcome');
-})->name('password.request');
+    Route::post('/register', function (Request $request) {
+        $validated = $request->validate([
+            'name'     => 'required|string|max:100',
+            'username' => 'required|string|max:100|unique:users,username',
+            'email'    => 'nullable|email|max:100|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-// ================================
-// REGISTER
-// ================================
-Route::get('/register', function () {
-    return view('register');
-})->name('register');
+        User::create([
+            'name'     => $validated['name'],
+            'username' => $validated['username'],
+            'email'    => $validated['email'] ?? null,
+            'password' => Hash::make($validated['password']),
+            'role'     => 'siswa',
+        ]);
 
-Route::post('/register', function (\Illuminate\Http\Request $request) {
-    $validated = $request->validate([
-        'name' => 'required|string|max:100',
-        'username' => 'required|string|max:100|unique:users,username',
-        'email' => 'nullable|email|max:100|unique:users,email',
-        'password' => 'required|string|min:8|confirmed',
-    ]);
-
-    \App\Models\User::create([
-        'name' => $validated['name'],
-        'username' => $validated['username'],
-        'email' => $validated['email'] ?? null,
-        'password' => $validated['password'],
-        'role' => 'siswa',
-    ]);
-
-    return redirect()->route('login')
-        ->with('success', 'Registrasi berhasil! Silakan login dengan akun kamu.');
-})->name('register.post');
+        return redirect()->route('login')
+            ->with('success', 'Registrasi berhasil! Silakan login dengan akun kamu.');
+    })->name('register.post');
+});
 
 // ================================
-// DASHBOARD ADMIN
+// AUTHENTICATED ROUTES (LOGOUT & DASHBOARDS)
 // ================================
-Route::get('/admin/dashboard', function () {
-    return view('welcome');
-})->name('dashboard_admin');
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// ================================
-// DASHBOARD SISWA
-// ================================
-Route::get('/siswa/dashboard', function () {
-    return view('welcome');
-})->name('siswa.dashboard');
+    // Dashboard Admin
+    Route::get('/admin/dashboard', function () {
+        return view('dashboard_admin');
+    })->name('dashboard_admin');
 
-// ================================
-// DASHBOARD GURU BK
-// ================================
-Route::get('/bk/dashboard', function () {
-    return view('welcome');
-})->name('bk.dashboard');
+    // Dashboard Siswa (Menyesuaikan dengan view siswa_dashboard.blade.php / folder)
+    Route::get('/siswa/dashboard', function () {
+        return view('siswa.dashboard');
+    })->name('siswa.dashboard');
 
-// ================================
-// DASHBOARD WAKASEK
-// ================================
-Route::get('/wakasek/kesiswaan/dashboard', function () {
-    return view('welcome');
-})->name('wakasek.kesiswaan.dashboard');
+    // Dashboard Guru BK
+    Route::get('/bk/dashboard', function () {
+        return view('bk.dashboard');
+    })->name('bk.dashboard');
 
-Route::get('/wakasek/kurikulum/dashboard', function () {
-    return view('welcome');
-})->name('wakasek.kurikulum.dashboard');
+    // Dashboard Wakasek
+    Route::prefix('wakasek')->name('wakasek.')->group(function () {
+        Route::get('/kesiswaan/dashboard', function () {
+            return view('wakasek.kesiswaan.dashboard');
+        })->name('kesiswaan.dashboard');
 
-Route::get('/wakasek/sarana/dashboard', function () {
-    return view('welcome');
-})->name('wakasek.sarana.dashboard');
+        Route::get('/kurikulum/dashboard', function () {
+            return view('wakasek.kurikulum.dashboard');
+        })->name('kurikulum.dashboard');
 
-Route::get('/wakasek/dudi/dashboard', function () {
-    return view('welcome');
-})->name('wakasek.dudi.dashboard');
+        Route::get('/sarana/dashboard', function () {
+            return view('wakasek.sarana.dashboard');
+        })->name('sarana.dashboard');
 
-// ================================
-// DATA MASTER
-// ================================
-Route::get('/data-master', function () {
-    return view('data_master');
-})->name('data-master');
+        Route::get('/dudi/dashboard', function () {
+            return view('wakasek.dudi.dashboard');
+        })->name('dudi.dashboard');
+    });
+
+    // Data Master (Menggunakan penamaan 'data_master' agar sesuai dengan controller/blade)
+    Route::get('/admin/data-master', function () {
+        return view('data_master');
+    })->name('data_master');
+});
