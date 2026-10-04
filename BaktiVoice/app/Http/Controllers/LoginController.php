@@ -20,25 +20,18 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'login'    => 'required|string',
             'password' => 'required|string',
-            'role'     => 'required|string',
+
         ]);
 
         // Cek apakah inputan berupa email atau username/NISN
         $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        // Autentikasi dengan mencocokkan email/username, password, dan role yang dipilih
-        $credentials = [
-            $fieldType => $request->login,
-            'password' => $request->password,
-            'role'     => $request->role,
-        ];
-
-        if (Auth::attempt($credentials, $request->has('remember'))) {
+        if (Auth::attempt([$fieldType => $request->login, 'password' => $request->password], $request->remember)) {
             $request->session()->regenerate();
             $user = Auth::user();
 
             // Redirect berdasarkan role pengguna
-            switch ($user->role ?? $request->role) {
+            switch ($user->role ?? null) {
                 case 'admin':
                     return redirect()->route('dashboard_admin');
                 case 'siswa':
@@ -60,8 +53,8 @@ class LoginController extends Controller
         }
 
         return back()->withErrors([
-            'login' => 'Username/Email, Password, atau Peran yang dipilih tidak cocok.',
-        ])->onlyInput('login', 'role');
+            'login' => 'Kredensial yang dimasukkan tidak sesuai.',
+        ])->onlyInput('login');
     }
 
     // Logout
