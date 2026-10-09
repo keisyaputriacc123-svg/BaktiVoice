@@ -57,9 +57,11 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
         ->with('success', 'Registrasi berhasil! Silakan login dengan akun kamu.');
 })->name('register.post');
 
-// ================================
-// DASHBOARD ADMIN
-// ================================
+
+ // ================================
+ // DASHBOARD ADMIN
+ // ================================
+
 Route::get('/dashboard_admin', function () {
     return view('dashboard_admin');
 })->name('dashboard_admin');
@@ -77,13 +79,14 @@ Route::get('/data_master', function () {
 Route::get('/laporan_admin', function () {
     return view('laporan_admin');
 })->name('laporan.admin');
+
 Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
     ->name('laporan.update-status');
 
 // --------------------------------
 // HALAMAN REKAP LAPORAN
 // --------------------------------
-    Route::get('/rekap_laporan', function () {
+Route::get('/rekap_laporan', function () {
     return view('rekap_laporan');
 })->name('rekap_laporan');
 

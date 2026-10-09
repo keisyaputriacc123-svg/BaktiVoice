@@ -1,4 +1,4 @@
-<<?php
+<?php
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,20 +12,22 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('id_user');
-        $table->string('name', 100);
-        $table->string('username', 100)->unique();
-        $table->string('email', 100)->unique()->nullable();
-        $table->string('nisn', 20)->unique()->nullable();
-        $table->string('password');
-        $table->enum('role', [
-            'siswa',
-            'admin',
-            'guru_bk',
-            'wakasek kurikulum',
-            'wakasek kesiswaan',
-            'wakasek sarana',
-            'wakasek dudi'
+            $table->string('name', 100);
+            $table->string('username', 100)->unique();
+            $table->string('email', 100)->unique()->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('nisn', 20)->unique()->nullable();
+            $table->string('password');
+            $table->enum('role', [
+                'siswa',
+                'admin',
+                'guru_bk',
+                'wakasek kurikulum',
+                'wakasek kesiswaan',
+                'wakasek sarana',
+                'wakasek dudi'
             ]);
+            $table->rememberToken(); // <-- Tetap ada di sini
             $table->timestamps();
         });
 
@@ -35,7 +37,6 @@ return new class extends Migration
 
     public function down(): void
     {
-
-    Schema::dropIfExists('users');
+        Schema::dropIfExists('users');
     }
 };

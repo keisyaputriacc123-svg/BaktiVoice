@@ -20,6 +20,7 @@ class LoginController extends Controller
         $credentials = $request->validate([
             'login'    => 'required|string',
             'password' => 'required|string',
+
         ]);
 
         // Cek apakah inputan berupa email atau username/NISN
