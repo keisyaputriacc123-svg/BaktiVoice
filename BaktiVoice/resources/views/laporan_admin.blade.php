@@ -1291,7 +1291,7 @@
                     </section>
 
 
-               <!-- Aksi Admin -->
+                <!-- Aksi Admin -->
 
                     <section class="detail-card">
 

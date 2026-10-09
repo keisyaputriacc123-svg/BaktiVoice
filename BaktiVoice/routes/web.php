@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LaporanController;
 
 // ================================
 // LANDING PAGE
@@ -59,37 +60,70 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
 // ================================
 // DASHBOARD ADMIN
 // ================================
-Route::get('/admin_dashboard', function () {
+Route::get('/dashboard_admin', function () {
     return view('dashboard_admin');
 })->name('dashboard_admin');
 
-// ================================
+// --------------------------------
 // DATA MASTER
-// ================================
+// --------------------------------
 Route::get('/data_master', function () {
     return view('data_master');
 })->name('data_master');
 
-// ================================
+// --------------------------------
 // HALAMAN LAPORAN ADMIN
-// ================================
+// --------------------------------
 Route::get('/laporan_admin', function () {
     return view('laporan_admin');
 })->name('laporan.admin');
+Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
+    ->name('laporan.update-status');
+
+// --------------------------------
+// HALAMAN REKAP LAPORAN
+// --------------------------------
+    Route::get('/rekap_laporan', function () {
+    return view('rekap_laporan');
+})->name('rekap_laporan');
 
 // ================================
 // DASHBOARD SISWA
 // ================================
-Route::get('/siswa/dashboard', function () {
-    return view('welcome');
-})->name('siswa.dashboard');
+Route::get('/dashboard_siswa', function () {
+    return view('dashboard_siswa');
+})->name('dashboard_siswa');
+
+// --------------------------------
+// BUAT LAPORAN
+// --------------------------------
+Route::get('/buat_laporan', function () {
+    return view('buat_laporan');
+})->name('buat_laporan');
+
+// --------------------------------
+// REKAP LAPORAN
+// --------------------------------
+Route::get('/dashboard/siswa/riwayat_laporan', function () {
+    return view('riwayat_laporan');
+})->name('riwayat_laporan');
+
+// --------------------------------
+// KONFIRMASI LAPORAN
+// --------------------------------
+Route::get('/dashboard/siswa/konfirmasi_laporan', function () {
+    return view('konfirmasi_laporan');
+})->name('konfirmasi_laporan');
+
 
 // ================================
 // DASHBOARD GURU BK
 // ================================
-Route::get('/bk/dashboard', function () {
-    return view('welcome');
-})->name('bk.dashboard');
+Route::get('/dashboard_bk', function () {
+    return view('dashboard_bk');
+})->name('dashboard_bk');
+
+
 
 // ================================
 // DASHBOARD WAKASEK
