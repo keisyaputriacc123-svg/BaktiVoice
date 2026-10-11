@@ -81,31 +81,31 @@ Route::get('/laporan_admin', function () {
 // DASHBOARD SISWA
 // ================================
 Route::get('/siswa/dashboard', function () {
-    return view('welcome');
+    return view('siswa.dashboard');
 })->name('siswa.dashboard');
 
 // ================================
 // DASHBOARD GURU BK
 // ================================
 Route::get('/bk/dashboard', function () {
-    return view('welcome');
+    return view('bk.dashboard');
 })->name('bk.dashboard');
 
 // ================================
 // DASHBOARD WAKASEK
 // ================================
 Route::get('/wakasek/kesiswaan/dashboard', function () {
-    return view('welcome');
+    return view('wakasek.kesiswaan.dashboard');
 })->name('wakasek.kesiswaan.dashboard');
 
 Route::get('/wakasek/kurikulum/dashboard', function () {
-    return view('welcome');
+    return view('wakasek.kurikulum.dashboard');
 })->name('wakasek.kurikulum.dashboard');
 
 Route::get('/wakasek/sarana/dashboard', function () {
-    return view('welcome');
+    return view('wakasek.sarana.dashboard');
 })->name('wakasek.sarana.dashboard');
 
 Route::get('/wakasek/dudi/dashboard', function () {
-    return view('welcome');
+    return view('wakasek.dudi.dashboard');
 })->name('wakasek.dudi.dashboard');
