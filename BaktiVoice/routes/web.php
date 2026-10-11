@@ -91,8 +91,8 @@ Route::get('/rekap_laporan', function () {
 })->name('rekap_laporan');
 
 // ================================
-// DASHBOARD SISWA
-// ================================
+ // DASHBOARD SISWA
+ // ================================
 
 Route::get('/siswa/dashboard', function () {
     return view('dashboard_siswa');
