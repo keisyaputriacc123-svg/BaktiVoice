@@ -734,7 +734,7 @@
                 <!-- LAPORAN SISWA -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('LaporanSiswa_bk') }}">
 
                         <div class="nav-content">
 
@@ -754,7 +754,7 @@
                 <!-- MONITORING -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('monitoring_bk') }}">
 
                         <div class="nav-content">
 

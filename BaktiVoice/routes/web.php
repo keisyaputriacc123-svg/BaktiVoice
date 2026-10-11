@@ -78,7 +78,7 @@ Route::get('/data_master', function () {
 // --------------------------------
 Route::get('/laporan_admin', function () {
     return view('laporan_admin');
-})->name('laporan.admin');
+})->name('laporan_admin');
 
 Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
     ->name('laporan.update-status');
@@ -118,7 +118,6 @@ Route::get('/dashboard/siswa/konfirmasi_laporan', function () {
     return view('konfirmasi_laporan');
 })->name('konfirmasi_laporan');
 
-
 // ================================
 // DASHBOARD GURU BK
 // ================================
@@ -126,23 +125,61 @@ Route::get('/dashboard_bk', function () {
     return view('dashboard_bk');
 })->name('dashboard_bk');
 
+// --------------------------------
+// LAPORAN SISWA
+// --------------------------------
+Route::get('/dashboard/bk/laporan-siswa', function ()
+{ return view('LaporanSiswa_bk');
+})->name('LaporanSiswa_bk');
+
+Route::get('/dashboard/bk/detail-laporan', function () {
+    return view('DetailLaporan_bk');
+})->name('detail_laporan_bk');
+
+// --------------------------------
+// MONITORING
+// --------------------------------
+Route::get('/dashboard/bk/monitoring', function () {
+    return view('monitoring_bk');
+})->name('monitoring_bk');
 
 
 // ================================
 // DASHBOARD WAKASEK
 // ================================
+
 Route::get('/wakasek/kesiswaan/dashboard', function () {
-    return view('welcome');
+    return view('dashboard_wakasek');
 })->name('wakasek.kesiswaan.dashboard');
 
 Route::get('/wakasek/kurikulum/dashboard', function () {
-    return view('welcome');
+    return view('dashboard_wakasek');
 })->name('wakasek.kurikulum.dashboard');
 
 Route::get('/wakasek/sarana/dashboard', function () {
-    return view('welcome');
+    return view('dashboard_wakasek');
 })->name('wakasek.sarana.dashboard');
 
 Route::get('/wakasek/dudi/dashboard', function () {
-    return view('welcome');
+    return view('dashboard_wakasek');
 })->name('wakasek.dudi.dashboard');
+
+// ================================
+ // REKAP LAPORAN WAKASEK
+ // ================================
+
+Route::get('/wakasek/kesiswaan/rekap', function () {
+    return view('rekap_wakasek');
+})->name('wakasek.kesiswaan.rekap');
+
+Route::get('/wakasek/kurikulum/rekap', function () {
+    return view('rekap_wakasek');
+})->name('wakasek.kurikulum.rekap');
+
+Route::get('/wakasek/sarana/rekap', function () {
+    return view('rekap_wakasek');
+})->name('wakasek.sarana.rekap');
+
+Route::get('/wakasek/dudi/rekap', function () {
+    return view('rekap_wakasek');
+})->name('wakasek.dudi.rekap');
