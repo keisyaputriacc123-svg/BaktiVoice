@@ -95,8 +95,29 @@ Route::get('/rekap_laporan', function () {
 // ================================
 
 Route::get('/siswa/dashboard', function () {
-    return view('siswa.dashboard');
-})->name('siswa.dashboard');
+    return view('dashboard_siswa');
+})->name('dashboard_siswa');
+
+// --------------------------------
+// BUAT LAPORAN
+// --------------------------------
+Route::get('/buat_laporan', function () {
+    return view('buat_laporan');
+})->name('buat_laporan');
+
+// --------------------------------
+// RIWAYAT LAPORAN
+// --------------------------------
+Route::get('/dashboard/siswa/riwayat_laporan', function () {
+    return view('riwayat_laporan');
+})->name('riwayat_laporan');
+
+// --------------------------------
+// KONFIRMASI LAPORAN
+// --------------------------------
+Route::get('/dashboard/siswa/konfirmasi_laporan', function () {
+    return view('konfirmasi_laporan');
+})->name('konfirmasi_laporan');
 
 
 // ================================
@@ -104,8 +125,29 @@ Route::get('/siswa/dashboard', function () {
 // ================================
 
 Route::get('/bk/dashboard', function () {
-    return view('bk.dashboard');
-})->name('bk.dashboard');
+    return view('dashboard_bk');
+})->name('dashboard_bk');
+
+// --------------------------------
+// LAPORAN SISWA
+// --------------------------------
+Route::get('/dashboard/bk/laporan-siswa', function () {
+    return view('LaporanSiswa_bk');
+})->name('LaporanSiswa_bk');
+
+// --------------------------------
+// DETAIL LAPORAN
+// --------------------------------
+Route::get('/dashboard/bk/detail-laporan', function () {
+    return view('DetailLaporan_bk');
+})->name('detail_laporan_bk');
+
+// --------------------------------
+// MONITORING
+// --------------------------------
+Route::get('/dashboard/bk/monitoring', function () {
+    return view('monitoring_bk');
+})->name('monitoring_bk');
 
 
 // ================================
@@ -114,7 +156,7 @@ Route::get('/bk/dashboard', function () {
 
 Route::get('/wakasek/kesiswaan/dashboard', function () {
 
-return view('wakasek.kesiswaan.dashboard');
+return view('dashboard_wakasek');
 })->name('wakasek.kesiswaan.dashboard');
 
 Route::get('/wakasek/kurikulum/dashboard', function () {
@@ -127,7 +169,7 @@ Route::get('/wakasek/sarana/dashboard', function () {
 
 Route::get('/wakasek/dudi/dashboard', function () {
     return view('wakasek.dudi.dashboard');
-    
+
 })->name('wakasek.dudi.dashboard');
 
 // ================================
