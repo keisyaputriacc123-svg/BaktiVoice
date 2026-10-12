@@ -9,7 +9,7 @@ return [
     |
     | Here you may specify the default filesystem disk that should be used
     | by the framework. The "local" disk, as well as a variety of cloud
-    | based disks are available to your application for file storage.
+    | storage disks are available to your application. Just specify away!
     |
     */
 
@@ -20,9 +20,9 @@ return [
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
-    | Below you may configure as many filesystem disks as necessary, and you
-    | may even configure multiple disks for the same driver. Examples for
-    | most supported storage drivers are configured here for reference.
+    | Here you may configure as many filesystem disks as you like, and you
+    | may even configure multiple disks of the same driver. Defaults have
+    | been set up for each driver as a starting point for your code.
     |
     | Supported drivers: "local", "ftp", "sftp", "s3"
     |
@@ -35,7 +35,7 @@ return [
             'root' => storage_path('app/private'),
             'serve' => true,
             'throw' => false,
-            'report' => false,
+            
         ],
 
         'public' => [
@@ -44,20 +44,19 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
-            'report' => false,
+
         ],
 
-        's3' => [
+        // Konfigurasi Supabase Storage untuk BaktiVoice
+        'supabase' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
-            'endpoint' => env('AWS_ENDPOINT'),
-            'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
-            'report' => false,
+            'key' => env('SUPABASE_PUBLISHABLE_KEY'),
+            'secret' => env('SUPABASE_SECRET_KEY'),
+            'region' => 'us-east-1',
+            'bucket' => env('SUPABASE_STORAGE_BUCKET', 'bukti-laporan'),
+            'url' => env('SUPABASE_URL') . '/storage/v1/object/public',
+            'endpoint' => env('SUPABASE_URL') . '/storage/v1/s3',
+            'use_path_style_endpoint' => true,
         ],
 
     ],
@@ -68,7 +67,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may configure the symbolic links that will be created when the
-    | `storage:link` Artisan command is executed. The array keys should be
+    | "storage:link" Artisan command is executed. The array keys should be
     | the locations of the links and the values should be their targets.
     |
     */
