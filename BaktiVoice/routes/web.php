@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\DataMasterController;
 
 // ================================
 // LANDING PAGE
@@ -43,14 +44,15 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
         'username' => 'required|string|max:100|unique:users,username',
         'email' => 'nullable|email|max:100|unique:users,email',
         'password' => 'required|string|min:8|confirmed',
+        'role' => 'required|string', // Pastikan validasi role ini ada
     ]);
 
     \App\Models\User::create([
         'name' => $validated['name'],
         'username' => $validated['username'],
         'email' => $validated['email'] ?? null,
-        'password' => $validated['password'],
-        'role' => 'siswa',
+        'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+        'role' => $validated['role'], // Mengambil role sesuai yang Anda pilih di halaman register
     ]);
 
     return redirect()->route('login')
@@ -69,9 +71,10 @@ Route::get('/dashboard_admin', function () {
 // --------------------------------
 // DATA MASTER
 // --------------------------------
-Route::get('/data_master', function () {
-    return view('data_master');
-})->name('data_master');
+Route::get('/data_master', [DataMasterController::class, 'index'])->name('data_master');
+Route::post('/data_master/store', [DataMasterController::class, 'store'])->name('data.store');
+Route::delete('/data_master/{id}', [DataMasterController::class, 'destroy'])->name('data.destroy');
+
 
 // --------------------------------
 // HALAMAN LAPORAN ADMIN
