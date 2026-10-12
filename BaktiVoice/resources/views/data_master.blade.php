@@ -774,60 +774,68 @@
     </div>
 
     <!-- =========================
-    MODAL DYNAMIC FORM
-    ========================= -->
+MODAL DYNAMIC FORM
+================ ================= -->
 
-    <div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center hidden p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
-            <div class="flex items-center justify-between border-b border-gray-100 pb-3">
-                <h3 id="modalTitle" class="text-lg font-bold text-gray-800">Tambah Data</h3>
-                <button onclick="closeModal()" type="button" class="text-gray-400 hover:text-gray-600">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
+<div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center hidden p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
+        <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+            <h3 id="modalTitle" class="text-lg font-bold text-gray-800">Tambah Data</h3>
+            <button onclick="closeModal()" type="button" class="text-gray-400 hover:text-gray-600">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+        </div>
+
+        <!-- PERUBAHAN DI SINI: Tambahkan action, method POST, dan hilangkan preventDefault agar data terkirim ke backend -->
+        <form action="{{ route('data.store') }}" method="POST" class="space-y-4">
+            @csrf
+
+            <!-- Hidden input untuk mendeteksi tab apa yang sedang aktif (users / kategori / status) -->
+            <input type="hidden" name="active_tab" id="activeTabInput" value="users">
+
+            <div>
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nama / Judul</label>
+                <input
+                    type="text"
+                    name="name"
+                    required
+                    placeholder="Masukkan nama..."
+                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+                >
             </div>
 
-            <form class="space-y-4" onsubmit="event.preventDefault(); closeModal();">
-                <div>
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Nama / Judul</label>
-                    <input
-                        type="text"
-                        placeholder="Masukkan nama..."
-                        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
-                    >
-                </div>
+            <div id="roleSelectField">
+                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pilih Role Akses</label>
+                <select name="role" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
+                    <option value="Siswa">Siswa</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Guru BK">Guru BK</option>
+                    <option value="Wakasek Kurikulum">Wakasek Kurikulum</option>
+                    <option value="Wakasek Kesiswaan">Wakasek Kesiswaan</option>
+                    <option value="Wakasek Sarana">Wakasek Sarana</option>
+                    <option value="Wakasek DUDI">Wakasek DUDI</option>
+                </select>
+            </div>
 
-                <div id="roleSelectField">
-                    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Pilih Role Akses</label>
-                    <select class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
-                        <option value="siswa">Siswa</option>
-                        <option value="admin">Admin</option>
-                        <option value="guru_bk">Guru BK</option>
-                        <option value="wakasek_kurikulum">Wakasek Kurikulum</option>
-                        <option value="wakasek_kesiswaan">Wakasek Kesiswaan</option>
-                        <option value="wakasek_sarana">Wakasek Sarana</option>
-                        <option value="wakasek_dudi">Wakasek DUDI</option>
-                    </select>
-                </div>
+            <div class="flex justify-end gap-3 border-t border-gray-100 pt-4">
+                <button
+                    type="button"
+                    onclick="closeModal()"
+                    class="px-4 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-100 rounded-xl"
+                >
+                    Batal
+                </button>
 
-                <div class="flex justify-end gap-3 border-t border-gray-100 pt-4">
-                    <button
-                        type="button"
-                        onclick="closeModal()"
-                        class="px-4 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-100 rounded-xl"
-                    >
-                        Batal
-                    </button>
-
-                    <button
-                        type="submit"
-                        class="px-5 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-sm"
-                    >
-                        Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
+                <button
+                    type="submit"
+                    class="px-5 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700 shadow-sm"
+                >
+                    Simpan
+                </button>
+            </div>
+        </form>
     </div>
+</div>
 
     <!-- =========================
         JAVASCRIPT
@@ -854,6 +862,12 @@
 
         function switchTab(tab) {
             currentTab = tab;
+
+            // TAMBAHAN: Memperbarui nilai input tersembunyi agar backend tahu tab mana yang aktif
+            const activeTabInput = document.getElementById('activeTabInput');
+            if (activeTabInput) {
+                activeTabInput.value = tab;
+            }
 
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.add('hidden');
@@ -916,5 +930,4 @@
         }
     </script>
 
-</body>
-</html>
+    
