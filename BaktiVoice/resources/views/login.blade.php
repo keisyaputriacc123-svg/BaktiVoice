@@ -320,23 +320,7 @@
         <form class="login-form" action="{{ route('login.post') }}" method="POST" id="loginForm">
             @csrf
 
-            <!-- Field Role / Jabatan -->
-            <div class="form-group">
-                <label for="role" class="form-label">Masuk Sebagai</label>
-                <div class="input-wrapper">
-                    <select name="role" id="role" class="form-select" required>
-                        <option value="" disabled selected>-- Pilih Peran / Hak Akses --</option>
-                        <option value="siswa" {{ old('role') == 'siswa' ? 'selected' : '' }}>Siswa</option>
-                        <option value="guru_bk" {{ old('role') == 'guru_bk' ? 'selected' : '' }}>Guru BK</option>
-                        <option value="wakasek_kesiswaan" {{ old('role') == 'wakasek_kesiswaan' ? 'selected' : '' }}>Wakasek Kesiswaan</option>
-                        <option value="wakasek_kurikulum" {{ old('role') == 'wakasek_kurikulum' ? 'selected' : '' }}>Wakasek Kurikulum</option>
-                        <option value="wakasek_sarana" {{ old('role') == 'wakasek_sarana' ? 'selected' : '' }}>Wakasek Sarana & Prasarana</option>
-                        <option value="wakasek_dudi" {{ old('role') == 'wakasek_dudi' ? 'selected' : '' }}>Wakasek Humas / Hubin / DUDI</option>
-                        <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin </option>
-                    </select>
-                    <i class="fa-solid fa-user-shield input-icon"></i>
-                </div>
-            </div>
+
 
             <!-- Field Email / Username / NISN -->
             <div class="form-group">
