@@ -279,6 +279,24 @@
                 </div>
             </div>
 
+            <!-- Field: Pilih Role (Ditambahkan di sini) -->
+            <div class="form-group">
+                <label for="role" class="form-label">Daftar Sebagai (Role)</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user-shield input-icon"></i>
+                    <select id="role" name="role" class="form-input" required>
+                        <option value="">-- Pilih Peran / Role --</option>
+                        <option value="admin">Admin</option>
+                        <option value="siswa">Siswa</option>
+                        <option value="guru_bk">Guru BK</option>
+                        <option value="wakasek_kesiswaan">Wakasek Kesiswaan</option>
+                        <option value="wakasek_kurikulum">Wakasek Kurikulum</option>
+                        <option value="wakasek_sarana">Wakasek Sarana</option>
+                        <option value="wakasek_dudi">Wakasek DUDI</option>
+                    </select>
+                </div>
+            </div>
+
             <!-- Field: Password -->
             <div class="form-group">
                 <label for="password" class="form-label">Password</label>
