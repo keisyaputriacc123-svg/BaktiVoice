@@ -44,7 +44,7 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
         'username' => 'required|string|max:100|unique:users,username',
         'email' => 'nullable|email|max:100|unique:users,email',
         'password' => 'required|string|min:8|confirmed',
-        'role' => 'required|string', // Pastikan validasi role ini ada
+        'role' => 'required|string',
     ]);
 
     \App\Models\User::create([
@@ -52,7 +52,7 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
         'username' => $validated['username'],
         'email' => $validated['email'] ?? null,
         'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
-        'role' => $validated['role'], // Mengambil role sesuai yang Anda pilih di halaman register
+        'role' => $validated['role'],
     ]);
 
     return redirect()->route('login')
@@ -60,9 +60,9 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
 })->name('register.post');
 
 
- // ================================
- // DASHBOARD ADMIN
- // ================================
+// ================================
+// DASHBOARD ADMIN
+// ================================
 
 Route::get('/dashboard_admin', function () {
     return view('dashboard_admin');
@@ -72,8 +72,9 @@ Route::get('/dashboard_admin', function () {
 // DATA MASTER
 // --------------------------------
 Route::get('/data_master', [DataMasterController::class, 'index'])->name('data_master');
-Route::post('/data_master/store', [DataMasterController::class, 'store'])->name('data.store');
-Route::delete('/data_master/{id}', [DataMasterController::class, 'destroy'])->name('data.destroy');
+Route::post('/data_master/store', [DataMasterController::class, 'store'])->name('data_master.store');
+Route::put('/data_master/{id}', [DataMasterController::class, 'update'])->name('data_master.update');
+Route::delete('/data_master/{id}', [DataMasterController::class, 'destroy'])->name('data_master.destroy');
 
 
 // --------------------------------
@@ -83,8 +84,8 @@ Route::get('/laporan_admin', function () {
     return view('laporan_admin');
 })->name('laporan_admin');
 
-Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
-    ->name('laporan.update-status');
+// Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
+//     ->name('laporan.update-status');
 
 // --------------------------------
 // HALAMAN REKAP LAPORAN
@@ -93,9 +94,10 @@ Route::get('/rekap_laporan', function () {
     return view('rekap_laporan');
 })->name('rekap_laporan');
 
+
 // ================================
- // DASHBOARD SISWA
- // ================================
+// DASHBOARD SISWA
+// ================================
 
 Route::get('/siswa/dashboard', function () {
     return view('dashboard_siswa');
@@ -158,26 +160,25 @@ Route::get('/dashboard/bk/monitoring', function () {
 // ================================
 
 Route::get('/wakasek/kesiswaan/dashboard', function () {
-
-return view('dashboard_wakasek');
+    return view('dashboard_wakasek');
 })->name('wakasek.kesiswaan.dashboard');
 
-Route::get('/wakasek/kurikulum/dashboard', function () {
-    return view('wakasek.kurikulum.dashboard');
-})->name('wakasek.kurikulum.dashboard');
+// Route::get('/wakasek/kurikulum/dashboard', function () {
+//     return view('wakasek.kurikulum.dashboard');
+// })->name('wakasek.kurikulum.dashboard');
 
-Route::get('/wakasek/sarana/dashboard', function () {
-    return view('wakasek.sarana.dashboard');
-})->name('wakasek.sarana.dashboard');
+// Route::get('/wakasek/sarana/dashboard', function () {
+//     return view('wakasek.sarana.dashboard');
+// })->name('wakasek.sarana.dashboard');
 
-Route::get('/wakasek/dudi/dashboard', function () {
-    return view('wakasek.dudi.dashboard');
+// Route::get('/wakasek/dudi/dashboard', function () {
+//     return view('wakasek.dudi.dashboard');
+// })->name('wakasek.dudi.dashboard');
 
-})->name('wakasek.dudi.dashboard');
 
 // ================================
- // REKAP LAPORAN WAKASEK
- // ================================
+// REKAP LAPORAN WAKASEK
+// ================================
 
 Route::get('/wakasek/kesiswaan/rekap', function () {
     return view('rekap_wakasek');
