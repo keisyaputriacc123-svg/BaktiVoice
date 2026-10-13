@@ -510,22 +510,22 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                     <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
                         <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL USERS</span>
-                        <div class="text-3xl font-extrabold text-gray-800 mt-1">128</div>
+                        <div class="text-3xl font-extrabold text-gray-800 mt-1">{{ $totalUsers }}</div>
                     </div>
 
                     <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
                         <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL SISWA</span>
-                        <div class="text-3xl font-extrabold text-orange-500 mt-1">115</div>
+                        <div class="text-3xl font-extrabold text-orange-500 mt-1">{{ $totalSiswa }}</div>
                     </div>
 
                     <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
                         <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">GURU BK & WAKASEK</span>
-                        <div class="text-3xl font-extrabold text-emerald-500 mt-1">11</div>
+                        <div class="text-3xl font-extrabold text-emerald-500 mt-1">{{ $totalBkWakasek }}</div>
                     </div>
 
                     <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">ADMIN</span>
-                        <div class="text-3xl font-extrabold text-red-500 mt-1">2</div>
+                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">Admin</span>
+                        <div class="text-3xl font-extrabold text-red-500 mt-1">{{ $totalAdmin }}</div>
                     </div>
                 </div>
 
@@ -555,98 +555,73 @@
                                         <th class="py-3.5 px-6 text-center">Aksi</th>
                                     </tr>
                                 </thead>
+<tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+    @forelse($users as $user)
+        <tr class="hover:bg-gray-50/60 transition">
+            <!-- Kolom Nama & Avatar -->
+            <td class="py-4 px-6">
+                <div class="flex items-center gap-3">
+                    <!-- Inisial huruf pertama nama user -->
+                    <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
+                        {{ substr($user->name, 0, 1) }}
+                    </div>
+                    <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+                </div>
+            </td>
 
-                                <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">A</div>
-                                                <span class="font-semibold text-gray-800">Budi Santoso</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">budi.admin@bakti.sch.id</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-purple-50 text-purple-600 font-semibold text-xs rounded-full">Admin</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
+            <!-- Kolom Email -->
+            <td class="py-4 px-6 text-gray-500">{{ $user->email }}</td>
 
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-xs">S</div>
-                                                <span class="font-semibold text-gray-800">Siti Aminah</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">siti.bk@bakti.sch.id</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-emerald-50 text-emerald-600 font-semibold text-xs rounded-full">Guru BK</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
+            <!-- Kolom Role / Jabatan dengan warna badge dinamis -->
+            <td class="py-4 px-6">
+                @php
+                    $roleLower = strtolower($user->role);
+                    // Menentukan warna badge berdasarkan role
+                    $badgeClass = 'bg-gray-100 text-gray-700'; // Default
+                    if ($roleLower === 'admin') {
+                        $badgeClass = 'bg-purple-50 text-purple-600';
+                    } elseif ($roleLower === 'siswa') {
+                        $badgeClass = 'bg-orange-50 text-orange-600';
+                    } elseif (str_contains($roleLower, 'bk') || str_contains($roleLower, 'wakasek')) {
+                        $badgeClass = 'bg-teal-50 text-teal-700';
+                    }
+                @endphp
+                <span class="px-3 py-1 {{ $badgeClass }} font-semibold text-xs rounded-full capitalize">
+                    {{ $user->role }}
+                </span>
+            </td>
 
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center font-bold text-xs">W</div>
-                                                <span class="font-semibold text-gray-800">Drs. Ahmad Dahlan</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">ahmad.kurikulum@bakti.sch.id</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-amber-50 text-amber-700 font-semibold text-xs rounded-full">Wakasek Kurikulum</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
+            <!-- Kolom Aksi (Edit & Hapus) -->
+            <td class="py-4 px-6 text-center space-x-2">
+                <!-- Tombol Edit (bisa disesuaikan dengan fungsi edit Anda) -->
+                <button type="button" class="text-blue-600 hover:text-blue-800">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
 
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs">M</div>
-                                                <span class="font-semibold text-gray-800">Muhammad Hatta</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">hatta.kesiswaan@bakti.sch.id</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-indigo-50 text-indigo-700 font-semibold text-xs rounded-full">Wakasek Kesiswaan</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center font-bold text-xs">E</div>
-                                                <span class="font-semibold text-gray-800">Eka Rahmawati</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">eka.dudi@bakti.sch.id</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-teal-50 text-teal-700 font-semibold text-xs rounded-full">Wakasek DUDI</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
-
-                                    <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6">
-                                            <div class="flex items-center gap-3">
-                                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs">R</div>
-                                                <span class="font-semibold text-gray-800">Rizky Pratama</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-4 px-6 text-gray-500">0051234567 (NISN)</td>
-                                        <td class="py-4 px-6"><span class="px-3 py-1 bg-blue-50 text-blue-600 font-semibold text-xs rounded-full">Siswa</span></td>
-                                        <td class="py-4 px-6 text-center space-x-2">
-                                            <button class="text-blue-600 hover:text-blue-800"><i class="fa-regular fa-pen-to-square"></i></button>
-                                            <button class="text-red-500 hover:text-red-700"><i class="fa-regular fa-trash-can"></i></button>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                <!-- Form Hapus User -->
+    {{-- <form action="{{ route('data_master.destroy', $user->id) }}" method="POST" class="inline">
+    @csrf
+    @method('DELETE')
+    <button
+        type="submit"
+        class="text-red-500 hover:text-red-700 transition"
+        onclick="return confirm('Apakah Anda yakin ingin menghapus user ini?')"
+        title="Hapus User"
+    >
+        <i class="fa-regular fa-trash-can"></i>
+    </button>
+</form> --}}
+            </td>
+        </tr>
+    @empty
+        <!-- Jika data user kosong -->
+        <tr>
+            <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
+                Belum ada data pengguna yang tersedia.
+            </td>
+        </tr>
+    @endforelse
+</tbody>
                             </table>
                         </div>
                     </div>
@@ -787,7 +762,7 @@ MODAL DYNAMIC FORM
         </div>
 
         <!-- PERUBAHAN DI SINI: Tambahkan action, method POST, dan hilangkan preventDefault agar data terkirim ke backend -->
-        <form action="{{ route('data.store') }}" method="POST" class="space-y-4">
+        <form action="{{ route('data_master.store') }}" method="POST" class="space-y-4">
             @csrf
 
             <!-- Hidden input untuk mendeteksi tab apa yang sedang aktif (users / kategori / status) -->
@@ -930,4 +905,4 @@ MODAL DYNAMIC FORM
         }
     </script>
 
-    
+
