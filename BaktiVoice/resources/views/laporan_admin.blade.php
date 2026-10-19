@@ -10,14 +10,10 @@
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- FontAwesome -->
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -34,9 +30,7 @@
             --topbar-height: 70px;
             --radius: 12px;
 
-            --shadow:
-                0 1px 3px 0 rgba(119, 5, 5, 0.05),
-                0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            --shadow: 0 1px 3px 0 rgba(119, 5, 5, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
         }
 
         * {
@@ -53,10 +47,7 @@
             min-height: 100vh;
         }
 
-        /* =========================
-        SIDEBAR
-        ========================= */
-
+        /* SIDEBAR */
         .sidebar {
             width: var(--sidebar-width);
             background-color: var(--card-bg);
@@ -170,16 +161,17 @@
             transition: transform 0.3s ease;
         }
 
-        /* =========================
-        SUB MENU
-        ========================= */
-
+        /* SUB MENU */
         .sub-menu {
             list-style: none;
             display: none;
             flex-direction: column;
-            gap: 4px;
 
+
+
+
+
+            gap: 4px;
             padding-left: 32px;
             margin-top: 4px;
         }
@@ -204,10 +196,7 @@
             color: var(--text-main);
         }
 
-        /* =========================
-        LOGOUT
-        ========================= */
-
+        /* LOGOUT */
         .logout-btn {
             display: flex;
             align-items: center;
@@ -225,30 +214,34 @@
 
             transition: background 0.2s;
             margin-top: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
         }
 
         .logout-btn:hover {
             background-color: #fef2f2;
         }
 
-        /* =========================
-        MAIN WRAPPER
-        ========================= */
-
+        /* MAIN WRAPPER */
         .main-wrapper {
             margin-left: var(--sidebar-width);
 
             flex: 1;
             display: flex;
+
+
+
+
+
+
             flex-direction: column;
 
             min-height: 100vh;
         }
 
-        /* =========================
-        TOPBAR
-        ========================= */
-
+        /* TOPBAR */
         .topbar {
             height: var(--topbar-height);
 
@@ -314,25 +307,20 @@
             color: var(--text-main);
         }
 
-        /* =========================
-        CONTENT
-        ========================= */
-
+        /* CONTENT */
         .content {
             padding: 28px 32px 40px;
             flex: 1;
             width: 100%;
             box-sizing: border-box;
-}
+        }
+
         .detail-grid > div:last-child {
             position: sticky;
             top: 90px;
-}
+        }
 
-        /* =========================
-        BREADCRUMB
-        ========================= */
-
+        /* BREADCRUMB */
         .breadcrumb {
             display: flex;
             align-items: center;
@@ -362,10 +350,7 @@
             font-weight: 600;
         }
 
-        /* =========================
-        PAGE HEADER
-        ========================= */
-
+        /* PAGE HEADER */
         .page-header {
             display: flex;
             align-items: center;
@@ -405,32 +390,30 @@
             color: var(--text-main);
         }
 
-        /* =========================
-        DETAIL GRID
-        ========================= */
-
+        /* DETAIL GRID */
         .detail-grid {
             display: grid;
             grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
             gap: 20px;
             width: 100%;
             align-items: start;
-}
+        }
 
-.detail-main,
-.detail-sidebar {
-    width: 100%;
-    min-width: 0;
-}
-
-        /* =========================
-        CARD
-       ========================= */
-
-            .detail-card {
+        .detail-main,
+        .detail-sidebar {
             width: 100%;
-            box-sizing: border-box;
+            min-width: 0;
+        }
 
+        /* CARD */
+        .detail-card {
+            width: 100%;
+
+
+
+
+
+            box-sizing: border-box;
             background-color: var(--card-bg);
             border: 1px solid var(--border);
             border-radius: var(--radius);
@@ -438,7 +421,7 @@
 
             padding: 24px;
             margin-bottom: 20px;
-}
+        }
 
         .card-title {
             font-size: 16px;
@@ -449,12 +432,9 @@
             margin-bottom: 20px;
 
             border-bottom: 1px solid var(--border);
-}
+        }
 
-        /* =========================
-        REPORT HEADER
-        ========================= */
-
+        /* REPORT HEADER */
         .report-heading {
             display: flex;
             justify-content: space-between;
@@ -476,10 +456,7 @@
             color: var(--text-muted);
         }
 
-        /* =========================
-        STATUS BADGE
-        ========================= */
-
+        /* STATUS BADGE */
         .status-badge {
             padding: 7px 14px;
 
@@ -493,6 +470,11 @@
             justify-content: center;
 
             white-space: nowrap;
+        }
+
+        .badge-pending {
+            background-color: #f1f5f9;
+            color: #475569;
         }
 
         .badge-diproses {
@@ -510,20 +492,14 @@
             color: #b91c1c;
         }
 
-        /* =========================
-        REPORT DESCRIPTION
-        ========================= */
-
+        /* REPORT DESCRIPTION */
         .description {
             color: #475569;
             font-size: 14px;
             line-height: 1.8;
         }
 
-        /* =========================
-        INFORMATION
-        ========================= */
-
+        /* INFORMATION */
         .info-list {
             display: flex;
             flex-direction: column;
@@ -548,10 +524,7 @@
             text-align: right;
         }
 
-        /* =========================
-        IMAGE / EVIDENCE
-        ========================= */
-
+        /* IMAGE / EVIDENCE */
         .evidence-box {
             width: 100%;
             min-height: 220px;
@@ -570,10 +543,8 @@
 
         .evidence-box img {
             width: 100%;
-            height: 100%;
-            min-height: 220px;
-
-            object-fit: cover;
+            max-height: 400px;
+            object-fit: contain;
         }
 
         .evidence-placeholder {
@@ -590,10 +561,7 @@
             font-size: 36px;
         }
 
-        /* =========================
-        RESPONSE / TANGGAPAN
-        ========================= */
-
+        /* RESPONSE / TANGGAPAN */
         .response-box {
             background: #f8fafc;
 
@@ -601,6 +569,7 @@
             border-radius: 10px;
 
             padding: 18px;
+            margin-bottom: 12px;
         }
 
         .response-header {
@@ -643,10 +612,7 @@
             color: #475569;
         }
 
-        /* =========================
-        RESPONSE INPUT
-        ========================= */
-
+        /* RESPONSE INPUT */
         .response-input {
             width: 100%;
             min-height: 120px;
@@ -664,33 +630,23 @@
 
             resize: vertical;
             outline: none;
-
-            transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-}
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
 
         .response-input::placeholder {
             color: #94a3b8;
-}
+        }
 
         .response-input:focus {
             border-color: var(--primary);
-
-            box-shadow:
-        0 0 0 3px rgba(150, 172, 224, 0.15);
-}
-
-
-    /* =========================
-    RESPONSE BUTTON
-    ========================= */
+            box-shadow: 0 0 0 3px rgba(150, 172, 224, 0.15);
+        }
 
         .response-actions {
             display: flex;
             justify-content: flex-end;
             margin-top: 12px;
-}
+        }
 
         .response-submit {
             display: inline-flex;
@@ -712,15 +668,13 @@
             cursor: pointer;
 
             transition: background-color 0.2s ease;
-}
+        }
 
         .response-submit:hover {
             background-color: #7f99d2;
-}
-        /* =========================
-        ADMIN ACTION
-        ========================= */
+        }
 
+        /* ADMIN ACTION */
         .action-buttons {
             display: flex;
             flex-direction: column;
@@ -746,6 +700,15 @@
             gap: 8px;
 
             transition: all 0.2s ease;
+        }
+
+        .btn-pending {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        .btn-pending:hover {
+            background: #cbd5e1;
         }
 
         .btn-process {
@@ -775,9 +738,15 @@
             background: #fecaca;
         }
 
-        /* =========================
-        RESPONSIVE
-        ========================= */
+        .alert-success {
+            padding: 12px 16px;
+            background-color: #dcfce7;
+            color: #15803d;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
 
         @media (max-width: 900px) {
 
@@ -834,36 +803,28 @@
 
 <body>
 
-    <!-- =========================
-        SIDEBAR
-    ========================= -->
-
+    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div>
 
             <!-- Logo -->
             <div class="brand">
-
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img">
-
-                <span class="brand-name">
-                    BaktiVoice
-                </span>
-
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
             </div>
 
             <!-- Navigation -->
             <ul class="nav-menu">
 
-                <!-- Laporan ACTIVE -->
+
+
+
+
+
+
                 <li class="nav-item active">
-
-                    <a href="{{ route('laporan.admin') }}">
-
+                    <a href="{{ route('laporan_admin') }}">
                         <div class="nav-content">
 
                             <i class="fa-regular fa-file-lines"></i>
@@ -876,13 +837,9 @@
 
                 </li>
 
-                <!-- Data Master -->
+
                 <li class="nav-item">
-
-                    <button
-                        class="dropdown-btn"
-                        onclick="toggleDropdown('masterMenu', 'masterArrow')">
-
+                    <button class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
                         <div class="nav-content">
 
                             <i class="fa-solid fa-database"></i>
@@ -890,41 +847,23 @@
                             <span>Data Master</span>
 
                         </div>
-
-                        <i
-                            class="fa-solid fa-chevron-down arrow-icon"
-                            id="masterArrow">
-                        </i>
-
+                        <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
-
-                    <ul
-                        class="sub-menu"
-                        id="masterMenu">
-
-                        <li>
-                            <a href="#">
-                                Kategori Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Status Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                User & Role
-                            </a>
-                        </li>
-
+                    <ul class="sub-menu" id="masterMenu">
+                        <li><a href="#">Kategori Laporan</a></li>
+                        <li><a href="#">Status Laporan</a></li>
+                        <li><a href="#">User & Role</a></li>
                     </ul>
 
                 </li>
 
-                <!-- Rekap -->
+
+
+
+
+
+
+
                 <li class="nav-item">
 
                     <a href="#">
@@ -941,7 +880,12 @@
 
                 </li>
 
-                <!-- Notifikasi -->
+
+
+
+
+
+
                 <li class="nav-item">
 
                     <a href="#">
@@ -958,7 +902,12 @@
 
                 </li>
 
-                <!-- Profil -->
+
+
+
+
+
+
                 <li class="nav-item">
 
                     <a href="#">
@@ -980,35 +929,21 @@
         </div>
 
         <!-- Logout -->
-        <a
-            href="{{ route('login') }}"
-            class="logout-btn">
-
-            <i class="fa-solid fa-xmark"></i>
-
-            <span>Logout</span>
-
-        </a>
-
+        <form action="{{ route('logout') }}" method="POST" style="width: 100%;">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-xmark"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </aside>
 
-
-    <!-- =========================
-        MAIN WRAPPER
-    ========================= -->
-
+    <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
-        <!-- =========================
-            TOPBAR
-        ========================= -->
-
+        <!-- TOPBAR -->
         <header class="topbar">
-
-            <div
-                class="topbar-icon"
-                title="Notifikasi">
-
+            <div class="topbar-icon" title="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
 
             </div>
@@ -1022,53 +957,38 @@
                 </div>
 
                 <span class="user-name">
-                    Admin Sekolah
+                    {{ Auth::user()->name ?? 'Admin Sekolah' }}
                 </span>
 
             </div>
 
         </header>
 
-
-        <!-- =========================
-        CONTENT
-        ========================= -->
-
+        <!-- CONTENT -->
         <main class="content">
+
+            <!-- Alert Pesan Sukses -->
+            @if(session('success'))
+                <div class="alert-success">
+                    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                </div>
+            @endif
 
             <!-- Breadcrumb -->
 
             <div class="breadcrumb">
-
-                <a href="#">
-                    Laporan
-                </a>
-
+                <a href="{{ route('laporan_admin') }}">Laporan</a>
                 <i class="fa-solid fa-chevron-right"></i>
-
-                <span class="current">
-                    Detail Laporan
-                </span>
-
+                <span class="current">Detail Laporan</span>
             </div>
 
 
             <!-- Page Header -->
 
             <div class="page-header">
-
-                <h1 class="page-title">
-                    Detail Laporan
-                </h1>
-
-                <a
-                    href="#"
-                    class="back-btn">
-
-                    <i class="fa-solid fa-arrow-left"></i>
-
-                    Kembali
-
+                <h1 class="page-title">Detail Laporan</h1>
+                <a href="{{ route('laporan_admin') }}" class="back-btn">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali
                 </a>
 
             </div>
@@ -1078,16 +998,10 @@
 
             <div class="detail-grid">
 
-
-                <!-- =========================
-                    LEFT COLUMN
-                ========================= -->
-
+                <!-- LEFT COLUMN -->
                 <div class="detail-main">
 
-
-                    <!-- Detail Laporan -->
-
+                    <!-- Judul Laporan -->
                     <section class="detail-card">
 
                         <div class="report-heading">
@@ -1095,19 +1009,30 @@
                             <div>
 
                                 <h2 class="report-title">
-                                    Kasus Perundungan Siswa
+                                    {{ $laporan->judul }}
                                 </h2>
 
                                 <div class="report-date">
-                                    Dilaporkan pada 14 September 2026
+                                    Dilaporkan pada {{ \Carbon\Carbon::parse($laporan->created_at)->isoFormat('D MMMM YYYY') }}
                                 </div>
 
                             </div>
 
-                            <span class="status-badge badge-diproses">
-                                Diproses
-                            </span>
+                            @php
+                                $statusName = $laporan->status->nama_status ?? $laporan->status ?? 'Menunggu';
+                                $badgeClass = 'badge-pending';
+                                if (strtolower($statusName) == 'diproses' || strtolower($statusName) == 'proses') {
+                                    $badgeClass = 'badge-diproses';
+                                } elseif (strtolower($statusName) == 'selesai') {
+                                    $badgeClass = 'badge-selesai';
+                                } elseif (strtolower($statusName) == 'ditolak') {
+                                    $badgeClass = 'badge-ditolak';
+                                }
+                            @endphp
 
+                            <span class="status-badge {{ $badgeClass }}">
+                                {{ ucfirst($statusName) }}
+                            </span>
                         </div>
 
                     </section>
@@ -1116,17 +1041,9 @@
                     <!-- Isi Laporan -->
 
                     <section class="detail-card">
-
-                        <h3 class="card-title">
-                            Isi Laporan
-                        </h3>
-
+                        <h3 class="card-title">Isi Laporan</h3>
                         <p class="description">
-                            Saya ingin melaporkan adanya kasus perundungan
-                            yang terjadi di lingkungan sekolah. Kejadian
-                            tersebut sudah beberapa kali terjadi dan
-                            membuat siswa merasa tidak nyaman ketika
-                            berada di lingkungan sekolah.
+                            {{ $laporan->isi_laporan }}
                         </p>
 
                     </section>
@@ -1135,47 +1052,58 @@
                     <!-- Bukti Laporan -->
 
                     <section class="detail-card">
-
-                        <h3 class="card-title">
-                        Bukti Laporan
-                        </h3>
-
+    <h3 class="card-title">Bukti Laporan</h3>
     <div class="evidence-box">
-
-        <div class="evidence-placeholder">
-
-            <i class="fa-regular fa-image"></i>
-
-            <span>
-                Bukti laporan
-            </span>
-
-        </div>
-
+        @if(!empty($laporan->bukti_url))
+            <!-- Menggunakan asset() langsung karena file disimpan di public/uploads/laporan -->
+            <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti Laporan">
+        @else
+            <div class="evidence-placeholder">
+                <i class="fa-regular fa-image"></i>
+                <span>Tidak ada bukti foto yang dilampirkan</span>
+            </div>
+        @endif
     </div>
+                    </section>
 
-</section>
-<!-- Tanggapan & Tindak Lanjut -->
+                    <!-- Tanggapan & Tindak Lanjut -->
+                    <section class="detail-card">
+                        <h3 class="card-title">Tanggapan & Tindak Lanjut</h3>
 
-<section class="detail-card">
+                        <!-- Menampilkan daftar tanggapan sebelumnya jika ada -->
+                        @if(isset($laporan->tanggapan) && $laporan->tanggapan->count() > 0)
+    @foreach($laporan->tanggapan as $item)
+        <div class="response-box">
+            <div class="response-header">
+                <div class="response-avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div>
+                    <div class="response-name">
+                        {{ $item->user->name ?? 'Admin Sekolah' }}
+                    </div>
+                    <div class="response-date">
+                        {{ \Carbon\Carbon::parse($item->created_at)->diffForHumans() }}
+                    </div>
+                </div>
+            </div>
+            <p class="response-text">{{ $item->tanggapan }}</p>
+        </div>
+    @endforeach
+@endif
 
-    <h3 class="card-title">
-        Tanggapan & Tindak Lanjut
-    </h3>
-
+                        <!-- Form Input Tanggapan Baru -->
+<form action="{{ url('/api/laporan/' . ($laporan->id_laporan ?? $laporan->id) . '/tanggapan') }}" method="POST" class="mt-3">
+    @csrf
     <div class="response-box">
-
         <div class="response-header">
-
             <div class="response-avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-
             <div>
                 <div class="response-name">
-                    Admin Sekolah
+                    {{ Auth::user()->name ?? 'Admin Sekolah' }}
                 </div>
-
                 <div class="response-date">
                     Tulis tanggapan untuk laporan ini
                 </div>
@@ -1183,19 +1111,16 @@
 
         </div>
 
-        <!-- Kolom Tanggapan -->
+
         <textarea
+            name="tanggapan"
             class="response-input"
             placeholder="Tulis tanggapan atau tindak lanjut laporan..."
-            rows="5"></textarea>
+            rows="4" required></textarea>
 
-        <!-- Tombol Kirim -->
+
         <div class="response-actions">
-
-            <button
-                type="button"
-                class="response-submit">
-
+            <button type="submit" class="response-submit">
                 <i class="fa-solid fa-paper-plane"></i>
 
                 Kirim Tanggapan
@@ -1205,145 +1130,89 @@
         </div>
 
     </div>
+</form>
+                    </section>
 
-</section>
+                </div>
 
-
-                <!-- =========================
-                RIGHT COLUMN
-                ========================= -->
-
+                <!-- RIGHT COLUMN -->
                 <div class="detail-sidebar">
 
 
                     <!-- Informasi Laporan -->
 
                     <section class="detail-card">
-
-                        <h3 class="card-title">
-                            Informasi Laporan
-                        </h3>
-
+                        <h3 class="card-title">Informasi Laporan</h3>
                         <div class="info-list">
 
                             <div class="info-item">
+                                <span class="info-label">ID Laporan</span>
+                                <span class="info-value">#BV-{{ str_pad($laporan->id, 3, '0', STR_PAD_LEFT) }}</span>
+                            </div>
 
-                                <span class="info-label">
-                                    ID Laporan
-                                </span>
+                            <div class="info-item">
+                                <span class="info-label">Kategori</span>
+                                <span class="info-value">{{ $laporan->kategori->nama_kategori ?? $laporan->kategori ?? 'Umum' }}</span>
+                            </div>
 
+                            <div class="info-item">
+                                <span class="info-label">Pelapor</span>
                                 <span class="info-value">
-                                    #BV-001
+                                    @if($laporan->anonim)
+                                        Anonim
+                                    @else
+                                        {{ $laporan->user->name ?? 'Siswa' }}
+                                    @endif
                                 </span>
 
                             </div>
 
                             <div class="info-item">
-
-                                <span class="info-label">
-                                    Kategori
-                                </span>
-
-                                <span class="info-value">
-                                    Kesiswaan
-                                </span>
-
+                                <span class="info-label">Tanggal</span>
+                                <span class="info-value">{{ \Carbon\Carbon::parse($laporan->created_at)->format('d M Y') }}</span>
                             </div>
 
                             <div class="info-item">
-
-                                <span class="info-label">
-                                    Pelapor
-                                </span>
-
-                                <span class="info-value">
-                                    Siswa
-                                </span>
-
-                            </div>
-
-                            <div class="info-item">
-
-                                <span class="info-label">
-                                    Tanggal
-                                </span>
-
-                                <span class="info-value">
-                                    14 Sep 2026
-                                </span>
-
-                            </div>
-
-                            <div class="info-item">
-
-                                <span class="info-label">
-                                    Status
-                                </span>
-
-                                <span class="info-value">
-                                    Diproses
-                                </span>
-
+                                <span class="info-label">Status</span>
+                                <span class="info-value">{{ ucfirst($statusName) }}</span>
                             </div>
 
                         </div>
 
                     </section>
 
+                    <!-- Aksi Admin -->
+<section class="detail-card">
+    <h3 class="card-title">Aksi Laporan</h3>
 
-                <!-- Aksi Admin -->
+    <!-- Perhatikan penambahan $laporan->id_laporan di dalam URL -->
+    <form action="{{ url('/api/laporan/' . ($laporan->id_laporan ?? 1) . '/status') }}" method="POST">
+        @csrf
+        @method('PUT')
 
-                    <section class="detail-card">
+        <div class="action-buttons">
+            <button type="submit" name="status_id" value="1" class="action-btn btn-pending">
+                <i class="fa-solid fa-clock"></i>
+                Pending Laporan
+            </button>
 
-                        <h3 class="card-title">
-                            Aksi Laporan
-                        </h3>
+            <button type="submit" name="status_id" value="2" class="action-btn btn-process">
+                <i class="fa-solid fa-spinner"></i>
+                Proses Laporan
+            </button>
 
-                        <div class="action-buttons">
+            <button type="submit" name="status_id" value="3" class="action-btn btn-success">
+                <i class="fa-solid fa-check"></i>
+                Tandai Selesai
+            </button>
 
-                            <button
-                                type="button"
-                                class="action-btn btn-pending">
-
-                                <i class="fa-solid fa-clock"></i>
-
-                                Pending Laporan
-
-                        </button>
-
-                            <button
-                                type="button"
-                                class="action-btn btn-process">
-
-                                <i class="fa-solid fa-spinner"></i>
-
-                                Proses Laporan
-
-                            </button>
-
-                            <button
-                                type="button"
-                                class="action-btn btn-success">
-
-                                <i class="fa-solid fa-check"></i>
-
-                                Tandai Selesai
-
-                            </button>
-
-                            <button
-                                type="button"
-                                class="action-btn btn-danger">
-
-                                <i class="fa-solid fa-xmark"></i>
-
-                                Tolak Laporan
-
-                            </button>
-
-                        </div>
-
-                    </section>
+            <button type="submit" name="status_id" value="4" class="action-btn btn-danger">
+                <i class="fa-solid fa-xmark"></i>
+                Tolak Laporan
+            </button>
+        </div>
+    </form>
+</section>
 
                 </div>
 
@@ -1353,32 +1222,19 @@
 
     </div>
 
-    <!-- =========================
-        JAVASCRIPT
-    ========================= -->
-
+    <!-- JAVASCRIPT -->
     <script>
 
         function toggleDropdown(menuId, arrowId) {
-
-            const menu =
-                document.getElementById(menuId);
-
-            const arrow =
-                document.getElementById(arrowId);
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
 
             menu.classList.toggle('show');
 
             if (menu.classList.contains('show')) {
-
-                arrow.style.transform =
-                    'rotate(180deg)';
-
+                arrow.style.transform = 'rotate(180deg)';
             } else {
-
-                arrow.style.transform =
-                    'rotate(0deg)';
-
+                arrow.style.transform = 'rotate(0deg)';
             }
 
         }
