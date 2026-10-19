@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\DataMasterController;
+use App\Http\Controllers\TanggapanController;
+use App\Http\Controllers\StatusLaporanController;
+use App\Http\Controllers\KategoriLaporanController;
+use App\Http\Controllers\UserController;
 
 // ================================
 // LANDING PAGE
@@ -72,28 +76,43 @@ Route::get('/dashboard_admin', function () {
 // DATA MASTER
 // --------------------------------
 Route::get('/data_master', [DataMasterController::class, 'index'])->name('data_master');
+
 Route::post('/data_master/store', [DataMasterController::class, 'store'])->name('data_master.store');
+Route::post('/data_master/status', [DataMasterController::class, 'store'])->name('status.store');
+Route::post('/data_master/kategori', [DataMasterController::class, 'store'])->name('kategori.store');
+Route::post('/users/store', [DataMasterController::class, 'store'])->name('user.store');
+
 Route::put('/data_master/{id}', [DataMasterController::class, 'update'])->name('data_master.update');
+Route::put('/users/{id}', [DataMasterController::class, 'update'])->name('user.update');
 Route::delete('/data_master/{id}', [DataMasterController::class, 'destroy'])->name('data_master.destroy');
+Route::delete('/user/{id}', [DataMasterController::class, 'destroy'])->name('user.destroy');
 
+Route::get('/data_master/status/{id}/edit', [DataMasterController::class, 'editStatus'])->name('status.edit');
+Route::put('/data_master/status/{id}', [DataMasterController::class, 'updateStatus'])->name('status.update');
+Route::delete('/data_master/status/{id}', [DataMasterController::class, 'destroyStatus'])->name('status.destroy');
+
+Route::put('/data_master/kategori/{id}', [DataMasterController::class, 'updateKategori'])->name('kategori.update');
+Route::post('/data_master/kategori', [DataMasterController::class, 'store'])->name('kategori.store');
+Route::delete('/data_master/kategori/{id}', [DataMasterController::class, 'destroyKategori'])->name('kategori.destroy');
 
 // --------------------------------
-// HALAMAN LAPORAN ADMIN
+// HALAMAN LAPORAN ADMIN (DIUPDATE)
 // --------------------------------
-Route::get('/laporan_admin', function () {
-    return view('laporan_admin');
-})->name('laporan_admin');
 
-// Route::patch('/laporan_admin/{id}/status', [LaporanController::class, 'updateStatus'])
-//     ->name('laporan.update-status');
+// Menampilkan daftar atau halaman detail laporan admin berdasarkan ID
+Route::get('/laporan_admin/{id?}', [LaporanController::class, 'showAdmin'])->name('laporan_admin');
+
+// Route untuk mengubah status laporan dari tombol aksi admin
+Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
+
+// Route untuk menyimpan tanggapan admin
+Route::post('/api/laporan/{id}/tanggapan', [TanggapanController::class, 'store'])->name('laporan.tanggapan');
+
 
 // --------------------------------
 // HALAMAN REKAP LAPORAN
 // --------------------------------
-Route::get('/rekap_laporan', function () {
-    return view('rekap_laporan');
-})->name('rekap_laporan');
-
+Route::get('/rekap_laporan', [LaporanController::class, 'rekapAdmin'])->name('rekap_laporan');
 
 // ================================
 // DASHBOARD SISWA
@@ -106,24 +125,18 @@ Route::get('/siswa/dashboard', function () {
 // --------------------------------
 // BUAT LAPORAN
 // --------------------------------
-Route::get('/buat_laporan', function () {
-    return view('buat_laporan');
-})->name('buat_laporan');
+Route::get('/buat_laporan', [LaporanController::class, 'create'])->name('buat_laporan');
+Route::post('/buat_laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
 // --------------------------------
 // RIWAYAT LAPORAN
 // --------------------------------
-Route::get('/dashboard/siswa/riwayat_laporan', function () {
-    return view('riwayat_laporan');
-})->name('riwayat_laporan');
+Route::get('/siswa/riwayat', [LaporanController::class, 'riwayat'])->name('riwayat_laporan');
 
 // --------------------------------
 // KONFIRMASI LAPORAN
 // --------------------------------
-Route::get('/dashboard/siswa/konfirmasi_laporan', function () {
-    return view('konfirmasi_laporan');
-})->name('konfirmasi_laporan');
-
+Route::get('/konfirmasi_laporan/{id?}', [LaporanController::class, 'konfirmasi'])->name('konfirmasi_laporan');
 
 // ================================
 // DASHBOARD GURU BK
@@ -133,23 +146,13 @@ Route::get('/bk/dashboard', function () {
     return view('dashboard_bk');
 })->name('dashboard_bk');
 
-// --------------------------------
-// LAPORAN SISWA
-// --------------------------------
-Route::get('/dashboard/bk/laporan-siswa', function () {
-    return view('LaporanSiswa_bk');
-})->name('LaporanSiswa_bk');
+Route::get('/siswa/dashboard', [LaporanController::class, 'dashboardSiswa'])->name('dashboard_siswa');
 
-// --------------------------------
-// DETAIL LAPORAN
-// --------------------------------
 Route::get('/dashboard/bk/detail-laporan', function () {
     return view('DetailLaporan_bk');
 })->name('detail_laporan_bk');
 
-// --------------------------------
-// MONITORING
-// --------------------------------
+
 Route::get('/dashboard/bk/monitoring', function () {
     return view('monitoring_bk');
 })->name('monitoring_bk');
@@ -163,17 +166,7 @@ Route::get('/wakasek/kesiswaan/dashboard', function () {
     return view('dashboard_wakasek');
 })->name('wakasek.kesiswaan.dashboard');
 
-// Route::get('/wakasek/kurikulum/dashboard', function () {
-//     return view('wakasek.kurikulum.dashboard');
-// })->name('wakasek.kurikulum.dashboard');
 
-// Route::get('/wakasek/sarana/dashboard', function () {
-//     return view('wakasek.sarana.dashboard');
-// })->name('wakasek.sarana.dashboard');
-
-// Route::get('/wakasek/dudi/dashboard', function () {
-//     return view('wakasek.dudi.dashboard');
-// })->name('wakasek.dudi.dashboard');
 
 
 // ================================
