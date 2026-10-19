@@ -423,7 +423,7 @@
 
 
         .form-input::placeholder {
-            color: #1e293b;
+            color: #94a3b8;
 
             opacity: 1;
         }
@@ -449,7 +449,7 @@
         .form-select {
             width: 100%;
 
-            height: 78px;
+            height: 52px;
 
             padding: 0 52px 0 13px;
 
@@ -482,7 +482,7 @@
 
             color: #64748b;
 
-            font-size: 22px;
+            font-size: 18px;
 
             pointer-events: none;
         }
@@ -518,7 +518,7 @@
 
 
         .form-textarea::placeholder {
-            color: #1e293b;
+            color: #94a3b8;
 
             opacity: 1;
         }
@@ -609,7 +609,7 @@
 
             border-radius: 50%;
 
-            background-color: #808080;
+            background-color: #496cbd;
 
             top: 3px;
             left: 3px;
@@ -719,6 +719,29 @@
             color: var(--text-main);
 
             display: none;
+        }
+
+        /* ALERT STYLING */
+        .alert-success {
+            padding: 14px 18px;
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .alert-error {
+            padding: 14px 18px;
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            font-weight: 600;
         }
 
 
@@ -874,7 +897,7 @@
 
 
             .form-select {
-                height: 65px;
+                height: 52px;
 
                 font-size: 14px;
             }
@@ -1135,6 +1158,19 @@
                 Buat Laporan
             </h1>
 
+            <!-- NOTIFIKASI SUKSES / ERROR -->
+            @if(session('success'))
+                <div class="alert-success">
+                    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert-error">
+                    <i class="fa-solid fa-triangle-exclamation"></i> {{ session('error') }}
+                </div>
+            @endif
+
 
             <!-- =================================================
                  FORM LAPORAN
@@ -1142,7 +1178,7 @@
 
             <form
                 class="report-form"
-                action="#"
+                action="{{ route('laporan.store') }}"
                 method="POST"
                 enctype="multipart/form-data"
             >
@@ -1166,13 +1202,14 @@
                         name="judul_laporan"
                         class="form-input"
                         placeholder="Masukan Judul Laporan"
+                        required
                     >
 
                 </div>
 
 
 
-                <!-- KATEGORI -->
+                <!-- KATEGORI (DINAMIS DARI DATABASE) -->
 
                 <div class="form-group">
 
@@ -1188,27 +1225,20 @@
                         <select
                             name="id_kategori"
                             class="form-select"
+                            required
                         >
 
                             <option value="" selected disabled>
                                 Pilih Kategori
                             </option>
 
-                            <option value="kesiswaan">
-                                Kesiswaan
-                            </option>
-
-                            <option value="kurikulum">
-                                Kurikulum
-                            </option>
-
-                            <option value="sarana_prasarana">
-                                Sarana dan Prasarana
-                            </option>
-
-                            <option value="dudi">
-                                DUDI
-                            </option>
+                            @if(isset($kategoris) && count($kategoris) > 0)
+                                @foreach($kategoris as $kat)
+                                    <option value="{{ $kat->id_kategori ?? $kat->id }}">
+                                        {{ $kat->nama_kategori }}
+                                    </option>
+                                @endforeach
+                            @endif
 
                         </select>
 
@@ -1236,6 +1266,7 @@
                         name="isi_laporan"
                         class="form-textarea"
                         placeholder="Jelaskan Keluhan atau Saranmu"
+                        required
                     ></textarea>
 
                 </div>
