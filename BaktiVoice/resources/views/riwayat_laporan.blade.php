@@ -43,10 +43,7 @@
             min-height: 100vh;
         }
 
-        /* =========================
-           SIDEBAR
-        ========================= */
-
+        /* SIDEBAR */
         .sidebar {
             position: fixed;
             top: 0;
@@ -134,7 +131,7 @@
             background-color: #f1f5f9;
         }
 
-        /* MENU AKTIF */
+
 
         .nav-item.active > a {
             background-color: var(--primary);
@@ -142,7 +139,7 @@
             font-weight: 600;
         }
 
-        /* LOGOUT */
+
 
         .logout-btn {
             display: flex;
@@ -169,20 +166,14 @@
             text-align: center;
         }
 
-        /* =========================
-           MAIN WRAPPER
-        ========================= */
-
+        /* MAIN WRAPPER */
         .main-wrapper {
             margin-left: var(--sidebar-width);
 
             min-height: 100vh;
         }
 
-        /* =========================
-           TOPBAR
-        ========================= */
-
+        /* TOPBAR */
         .topbar {
             height: var(--topbar-height);
 
@@ -261,10 +252,7 @@
             color: #496cbd;
         }
 
-        /* =========================
-           CONTENT
-        ========================= */
-
+        /* CONTENT */
         .content {
             padding: 32px 36px 50px;
         }
@@ -278,10 +266,7 @@
             margin-bottom: 24px;
         }
 
-        /* =========================
-           SEARCH
-        ========================= */
-
+        /* SEARCH */
         .search-wrapper {
             position: relative;
 
@@ -357,10 +342,7 @@
             font-size: 16px;
         }
 
-        /* =========================
-           LAPORAN CARD
-        ========================= */
-
+        /* LAPORAN CARD */
         .report-list {
             display: flex;
             flex-direction: column;
@@ -383,9 +365,13 @@
             gap: 16px;
 
             transition: 0.2s ease;
+            text-decoration: none;
+            color: inherit;
         }
 
         .report-card:hover {
+
+
             border-color: #cbd5e1;
 
             box-shadow: 0 3px 10px rgba(15, 23, 42, 0.05);
@@ -464,6 +450,11 @@
             font-weight: 600;
         }
 
+        .status-pending {
+            background-color: #f3f4f6;
+            color: #4b5563;
+        }
+
         .status-diproses {
             background-color: #fff4cc;
             color: #d97706;
@@ -502,10 +493,7 @@
             color: #496cbd;
         }
 
-        /* =========================
-           RESPONSIVE
-        ========================= */
-
+        /* RESPONSIVE */
         @media (max-width: 768px) {
 
             .sidebar {
@@ -617,34 +605,22 @@
 
 <body>
 
-    <!-- =========================
-         SIDEBAR
-    ========================== -->
-
+    <!-- SIDEBAR -->
     <aside class="sidebar">
 
         <div>
 
             <!-- BRAND -->
             <div class="brand">
-
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
-
-                <span class="brand-name">
-                    BaktiVoice
-                </span>
-
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
             </div>
 
 
             <!-- NAVIGATION -->
             <ul class="nav-menu">
 
-                <!-- DASHBOARD -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('dashboard_siswa') }}">
@@ -652,11 +628,7 @@
                         <div class="nav-content">
 
                             <i class="fa-solid fa-house"></i>
-
-                            <span>
-                                Dashboard
-                            </span>
-
+                            <span>Dashboard</span>
                         </div>
 
                     </a>
@@ -664,7 +636,7 @@
                 </li>
 
 
-                <!-- BUAT LAPORAN -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('buat_laporan') }}">
@@ -672,11 +644,7 @@
                         <div class="nav-content">
 
                             <i class="fa-regular fa-file-lines"></i>
-
-                            <span>
-                                Buat Laporan
-                            </span>
-
+                            <span>Buat Laporan</span>
                         </div>
 
                     </a>
@@ -684,7 +652,7 @@
                 </li>
 
 
-                <!-- RIWAYAT LAPORAN -->
+
                 <li class="nav-item active">
 
                     <a href="{{ route('riwayat_laporan') }}">
@@ -692,11 +660,7 @@
                         <div class="nav-content">
 
                             <i class="fa-solid fa-clock-rotate-left"></i>
-
-                            <span>
-                                Riwayat Laporan
-                            </span>
-
+                            <span>Riwayat Laporan</span>
                         </div>
 
                     </a>
@@ -704,19 +668,20 @@
                 </li>
 
 
-                <!-- NOTIFIKASI -->
+
                 <li class="nav-item">
+
+
+
+
+
 
                     <a href="#">
 
                         <div class="nav-content">
 
                             <i class="fa-regular fa-bell"></i>
-
-                            <span>
-                                Notifikasi
-                            </span>
-
+                            <span>Notifikasi</span>
                         </div>
 
                     </a>
@@ -724,7 +689,7 @@
                 </li>
 
 
-                <!-- PROFIL -->
+
                 <li class="nav-item">
 
                     <a href="#">
@@ -732,11 +697,7 @@
                         <div class="nav-content">
 
                             <i class="fa-regular fa-user"></i>
-
-                            <span>
-                                Profil
-                            </span>
-
+                            <span>Profil</span>
                         </div>
 
                     </a>
@@ -752,27 +713,19 @@
         <a href="{{ route('login') }}" class="logout-btn">
 
             <i class="fa-solid fa-xmark"></i>
-
-            <span>
-                Logout
-            </span>
-
+            <span>Logout</span>
         </a>
 
     </aside>
 
-
-    <!-- =========================
-         MAIN WRAPPER
-    ========================== -->
-
+    <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
 
         <!-- TOPBAR -->
         <header class="topbar">
 
-            <!-- NOTIFICATION -->
+
             <div class="topbar-icon" title="Notifikasi">
 
                 <i class="fa-regular fa-bell"></i>
@@ -780,7 +733,7 @@
             </div>
 
 
-            <!-- USER -->
+
             <div class="user-profile">
 
                 <div class="avatar">
@@ -797,17 +750,9 @@
 
         </header>
 
-
-        <!-- =========================
-             CONTENT
-        ========================== -->
-
+        <!-- CONTENT -->
         <main class="content">
-
-            <h1 class="page-title">
-                Riwayat Laporan
-            </h1>
-
+            <h1 class="page-title">Riwayat Laporan</h1>
 
             <!-- SEARCH -->
             <div class="search-wrapper">
@@ -820,195 +765,66 @@
                     id="searchInput"
                     placeholder="Cari..."
                 >
-
-                <button
-                    type="button"
-                    class="search-button"
-                >
+                <button type="button" class="search-button">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
 
             </div>
 
-
-            <!-- DAFTAR LAPORAN -->
+            <!-- DAFTAR LAPORAN DINAMIS -->
             <div class="report-list" id="reportList">
+                @forelse($laporans as $laporan)
+                    @php
+                        $statusNama = $laporan->status->nama_status ?? 'Pending';
+                        $statusClass = match(strtolower($statusNama)) {
+                            'proses', 'diproses' => 'status-diproses',
+                            'selesai' => 'status-selesai',
+                            'ditolak' => 'status-ditolak',
+                            default => 'status-pending'
+                        };
+                    @endphp
 
+                    <a href="{{ route('konfirmasi_laporan', ['id' => $laporan->id_laporan]) }}"
+                       class="report-card"
+                       data-title="{{ $laporan->judul_laporan }}"
+                       data-date="{{ $laporan->created_at->format('d M Y') }}">
 
-                <!-- LAPORAN 1 -->
-                <div
-                    class="report-card"
-                    data-title="Fasilitas Kelas"
-                    data-date="14 Sep 2026"
-                >
-
-                    <div class="report-image">
-
-                        <i class="fa-regular fa-image"></i>
-
-                    </div>
-
-
-                    <div class="report-info">
-
-                        <div class="report-title">
-                            Fasilitas Kelas
+                        <div class="report-image">
+                            @if($laporan->bukti_url)
+                                <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti">
+                            @else
+                                <i class="fa-regular fa-image"></i>
+                            @endif
                         </div>
 
-                        <div class="report-date">
-                            14 Sep 2026
+                        <div class="report-info">
+                            <div class="report-title">
+                                {{ $laporan->judul_laporan }}
+                            </div>
+                            <div class="report-date">
+                                {{ $laporan->created_at->format('d M Y') }}
+                            </div>
                         </div>
 
-                    </div>
-
-
-                    <div class="report-status status-diproses">
-                        Diproses
-                    </div>
-
-
-                    <div class="report-arrow">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LAPORAN 2 -->
-                <div
-                    class="report-card"
-                    data-title="Fasilitas Toilet"
-                    data-date="12 Sep 2026"
-                >
-
-                    <div class="report-image">
-
-                        <i class="fa-regular fa-image"></i>
-
-                    </div>
-
-
-                    <div class="report-info">
-
-                        <div class="report-title">
-                            Fasilitas Toilet
+                        <div class="report-status {{ $statusClass }}">
+                            {{ $statusNama }}
                         </div>
 
-                        <div class="report-date">
-                            12 Sep 2026
+                        <div class="report-arrow">
+                            <i class="fa-solid fa-chevron-right"></i>
                         </div>
-
+                    </a>
+                @empty
+                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                        Belum ada riwayat laporan yang dikirim.
                     </div>
-
-
-                    <div class="report-status status-selesai">
-                        Selesai
-                    </div>
-
-
-                    <div class="report-arrow">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LAPORAN 3 -->
-                <div
-                    class="report-card"
-                    data-title="Keamanan Sekolah"
-                    data-date="9 Sep 2026"
-                >
-
-                    <div class="report-image">
-
-                        <i class="fa-regular fa-image"></i>
-
-                    </div>
-
-
-                    <div class="report-info">
-
-                        <div class="report-title">
-                            Keamanan Sekolah
-                        </div>
-
-                        <div class="report-date">
-                            9 Sep 2026
-                        </div>
-
-                    </div>
-
-
-                    <div class="report-status status-ditolak">
-                        Ditolak
-                    </div>
-
-
-                    <div class="report-arrow">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </div>
-
-                </div>
-
-
-                <!-- LAPORAN 4 -->
-                <div
-                    class="report-card"
-                    data-title="Saran"
-                    data-date="7 Sep 2026"
-                >
-
-                    <div class="report-image">
-
-                        <i class="fa-regular fa-image"></i>
-
-                    </div>
-
-
-                    <div class="report-info">
-
-                        <div class="report-title">
-                            Saran
-                        </div>
-
-                        <div class="report-date">
-                            7 Sep 2026
-                        </div>
-
-                    </div>
-
-
-                    <div class="report-status status-selesai">
-                        Selesai
-                    </div>
-
-
-                    <div class="report-arrow">
-
-                        <i class="fa-solid fa-chevron-right"></i>
-
-                    </div>
-
-                </div>
-
+                @endforelse
             </div>
-
         </main>
 
     </div>
 
-
-    <!-- =========================
-         SEARCH JAVASCRIPT
-    ========================== -->
-
+    <!-- SEARCH JAVASCRIPT -->
     <script>
 
         const searchInput = document.getElementById('searchInput');
@@ -1022,17 +838,10 @@
 
 
             reportCards.forEach(function (card) {
+                const title = card.dataset.title ? card.dataset.title.toLowerCase() : '';
+                const date = card.dataset.date ? card.dataset.date.toLowerCase() : '';
 
-                const title = card.dataset.title.toLowerCase();
-
-                const date = card.dataset.date.toLowerCase();
-
-
-                if (
-                    title.includes(keyword) ||
-                    date.includes(keyword)
-                ) {
-
+                if (title.includes(keyword) || date.includes(keyword)) {
                     card.style.display = 'flex';
 
                 } else {
