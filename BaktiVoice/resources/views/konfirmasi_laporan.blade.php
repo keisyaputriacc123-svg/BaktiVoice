@@ -929,7 +929,7 @@
                     </p>
 
 
-                    <!-- NOMOR LAPORAN -->
+                    <!-- NOMOR LAPORAN (DINAMIS) -->
 
                     <div class="report-label">
 
@@ -940,7 +940,7 @@
 
                     <div class="report-number">
 
-                        #BV001
+                        #BV{{ str_pad($laporan->id ?? $laporan->id_laporan ?? 1, 3, '0', STR_PAD_LEFT) }}
 
                     </div>
 
