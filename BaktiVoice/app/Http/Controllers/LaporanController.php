@@ -1,102 +1,235 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Laporan;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
+use Exception;
+
 class LaporanController extends Controller
 {
     /**
-     * S2-03 & S2-06: Menyimpan laporan baru dengan Validasi Keamanan & Database Transaction
+     * Menampilkan Dashboard Siswa secara dinamis
+     */
+    public function dashboardSiswa()
+    {
+        $userId = Auth::id() ?? 1;
+
+        // Hitung statistik laporan milik siswa berdasarkan id_status di database
+        $totalLaporan   = Laporan::where('id_user', $userId)->count();
+        $laporanPending  = Laporan::where('id_user', $userId)->where('id_status', 1)->count(); // ID 1 = Pending
+        $laporanDiproses = Laporan::where('id_user', $userId)->where('id_status', 2)->count(); // ID 2 = Diproses
+        $laporanSelesai  = Laporan::where('id_user', $userId)->where('id_status', 3)->count(); // ID 3 = Selesai
+        $laporanDitolak  = Laporan::where('id_user', $userId)->where('id_status', 4)->count(); // ID 4 = Ditolak
+
+        // Ambil daftar laporan terbaru milik siswa
+        $laporans = Laporan::with(['kategori', 'status'])
+            ->where('id_user', $userId)
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('dashboard_siswa', compact(
+            'totalLaporan',
+            'laporanPending',
+            'laporanDiproses',
+            'laporanSelesai',
+            'laporanDitolak',
+            'laporans'
+        ));
+    }
+
+    /**
+     * Menampilkan halaman Riwayat Laporan milik siswa yang login secara dinamis
+     */
+    public function riwayat(Request $request)
+    {
+        $userId = Auth::id() ?? 1;
+
+        // Query dasar laporan milik user yang sedang login
+        $query = Laporan::with(['kategori', 'status'])
+            ->where('id_user', $userId)
+            ->orderBy('created_at', 'desc');
+
+        // Fitur pencarian server-side (opsional jika mencari via request HTTP)
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('judul_laporan', 'like', "%{$search}%")
+                  ->orWhere('isi_laporan', 'like', "%{$search}%");
+            });
+        }
+
+        $laporans = $query->get();
+
+        return view('riwayat_laporan', compact('laporans'));
+    }
+
+    /**
+     * Menampilkan halaman Form Buat Laporan beserta daftar kategori dinamis
+     */
+    public function create()
+    {
+        // Ambil semua data kategori untuk isi dropdown di Blade
+        $kategoris = Kategori::all();
+        return view('buat_laporan', compact('kategoris'));
+    }
+
+    /**
+     * Menampilkan halaman Konfirmasi Laporan
+     */
+    public function konfirmasi(Request $request, $id = null)
+    {
+        // Cari laporan berdasarkan ID (jika ada) - Sesuaikan primary key 'id_laporan'
+        $laporan = null;
+        if ($id) {
+            $laporan = Laporan::where('id_laporan', $id)->first();
+        }
+
+        return view('konfirmasi_laporan', compact('laporan'));
+    }
+
+    /**
+     * Menyimpan laporan baru dari form Blade dengan Database Transaction & Local Storage
      */
     public function store(Request $request)
     {
-        // 1. Validasi Sisi Server (Standar Keamanan Input & Pencegahan Unrestricted File Upload)
+        // 1. Validasi Input Form Sesuai Nama 'name="..."' di buat_laporan.blade.php
         $validated = $request->validate([
-            'kategori_id' => 'required|exists:kategori,id',
-            'judul'       => 'required|string|max:150',
-            'isi_laporan' => 'required|string',
-            'anonim'      => 'required|boolean',
-            'bukti'       => [
+            'judul_laporan'    => 'required|string|max:150',
+            'id_kategori'      => 'required',
+            'isi_laporan'      => 'required|string',
+            'privasi'          => 'required|string',
+            'bukti_pendukung' => [
                 'nullable',
-                'image',
-                'mimes:jpeg,png,jpg,webp',
-                'max:2048' // Maksimal ukuran 2048 KB (2 Megabyte)
+                'file',
+                'mimes:jpeg,png,jpg,webp,mp4,doc,docx',
+                'max:5120' // Maksimal 5 MB
             ],
         ], [
-            'kategori_id.required' => 'Kategori laporan wajib dipilih.',
-            'kategori_id.exists'   => 'Kategori laporan tidak valid.',
-            'judul.required'       => 'Judul laporan wajib diisi.',
-            'judul.max'            => 'Judul laporan maksimal 150 karakter.',
-            'isi_laporan.required' => 'Isi laporan wajib diisi.',
-            'anonim.required'      => 'Status anonim wajib diisi.',
-            'bukti.image'          => 'Berkas bukti harus berupa gambar foto yang valid.',
-            'bukti.mimes'          => 'Format gambar yang diperbolehkan hanya JPG, JPEG, PNG, atau WEBP.',
-            'bukti.max'            => 'Ukuran berkas bukti maksimal adalah 2MB.',
+            'judul_laporan.required' => 'Judul laporan wajib diisi.',
+            'judul_laporan.max'      => 'Judul laporan maksimal 150 karakter.',
+            'id_kategori.required'   => 'Kategori laporan wajib dipilih.',
+            'isi_laporan.required'   => 'Isi laporan wajib diisi.',
+            'privasi.required'       => 'Pilihan privasi wajib dipilih.',
+            'bukti_pendukung.mimes'  => 'Format berkas bukti harus JPG, PNG, WEBP, MP4, DOC, atau DOCX.',
+            'bukti_pendukung.max'    => 'Ukuran berkas bukti maksimal adalah 5MB.',
         ]);
 
-        // 2. Memulai Database Transaction (Prinsip ACID untuk Integritas Data)
+        // 2. Memulai Database Transaction
         DB::beginTransaction();
         try {
             $buktiUrl = null;
 
-            // 3. Proses Unggah Berkas ke Supabase Storage (Bucket: bukti-laporan)
-            if ($request->hasFile('bukti')) {
-                $file = $request->file('bukti');
+            // 3. Unggah Berkas ke Folder Lokal Public (public/uploads/laporan)
+            if ($request->hasFile('bukti_pendukung')) {
+                $file = $request->file('bukti_pendukung');
 
-                // Membuat nama file unik untuk keamanan
-                $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+                if ($file && $file->isValid()) {
+                    // Buat nama file unik
+                    $filename = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
 
-                // Mengunggah ke Supabase Storage
-                $path = $file->storeAs('', $filename, 'supabase');
+                    // Pindahkan file ke folder public/uploads/laporan
+                    $file->move(public_path('uploads/laporan'), $filename);
 
-
-                // Mendapatkan URL publik file dari Supabase Storage
-                $buktiUrl = Storage::url($path);
-
+                    // Simpan path relatif untuk database
+                    $buktiUrl = 'uploads/laporan/' . $filename;
+                }
             }
 
-            // 4. Menyimpan Data Utama ke Database Supabase PostgreSQL
+            // Konversi nilai privasi ke boolean/integer (anonim = true/1, identitas = false/0)
+            $isAnonim = ($request->privasi === 'anonim') ? 1 : 0;
+
+            // 4. Menyimpan Data ke Database
+            /** @var \App\Models\User $user */
+            $userId = Auth::id() ?? 1;
+
             $laporan = Laporan::create([
-                'user_id' => \Illuminate\Support\Facades\Auth::id(), // Mengambil ID siswa yang sedang aktif login
-                'kategori_id' => $validated['kategori_id'],
-                'status_id'   => 1, // Status default awal: 'Menunggu'
-                'judul'       => $validated['judul'],
-                'isi_laporan' => $validated['isi_laporan'],
-                'anonim'      => $validated['anonim'],
-                'bukti_url'   => $buktiUrl, // Menyimpan metadata URL file
+                'id_user'       => $userId,
+                'id_kategori'   => $validated['id_kategori'],
+                'id_status'     => 1,
+                'judul_laporan' => $validated['judul_laporan'],
+                'isi_laporan'   => $validated['isi_laporan'],
+                'anonim'        => $isAnonim,
+                'bukti_url'     => $buktiUrl,
             ]);
 
-            // 5. Commit Transaksi jika seluruh proses berhasil
+            // 5. Commit Transaksi
             DB::commit();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Laporan berhasil dikirim dan disimpan ke dalam sistem.',
-                'data'    => [
-                    'id'          => $laporan->id,
-                    'judul'       => $laporan->judul,
-                    'kategori_id' => $laporan->kategori_id,
-                    'status_id'   => $laporan->status_id,
-                    'anonim'      => $laporan->anonim,
-                    'bukti_url'   => $laporan->bukti_url,
-                    'created_at'  => $laporan->created_at,
-                ]
-            ], 201);
+            // Ambil ID laporan berdasarkan primary key 'id_laporan'
+            $laporanId = $laporan->id_laporan ?? $laporan->id;
 
-        } catch (\Exception $e) {
-            // 6. Rollback Transaksi jika terjadi kegagalan sistem / penyimpanan
+            // Redirect langsung ke halaman konfirmasi dengan membawa ID laporan terbaru
+            return redirect()->route('konfirmasi_laporan', ['id' => $laporanId])
+                ->with('success', 'Laporan Anda berhasil dikirim!');
+
+        } catch (Exception $e) {
+            // 6. Rollback Transaksi jika terjadi kegagalan
             DB::rollBack();
 
-            return response()->json([
-                'success' => false,
-                'message' => 'Terjadi kesalahan sistem saat menyimpan transaksi laporan.',
-                'error'   => $e->getMessage()
-            ], 500);
+            return redirect()->back()
+                ->withInput()
+                ->with('error', 'Terjadi kesalahan saat mengirim laporan: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * Menampilkan Halaman Detail Laporan di Sisi Admin
+     */
+    public function showAdmin($id = null)
+    {
+        if ($id) {
+            $laporan = Laporan::with(['kategori', 'status', 'user', 'tanggapan.user'])->findOrFail($id);
+        } else {
+            $laporan = Laporan::with(['kategori', 'status', 'user', 'tanggapan.user'])->latest()->first();
+        }
+
+        return view('laporan_admin', compact('laporan'));
+    }
+
+    /**
+     * Menampilkan Halaman Rekap Laporan di Sisi Admin secara dinamis dari database
+     */
+    public function rekapAdmin(Request $request)
+    {
+        $query = Laporan::with(['kategori', 'status', 'user']);
+
+        // Filter berdasarkan status jika ada pilihan
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('id_status', $request->status);
+        }
+
+        // Fitur pencarian rekap
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('judul_laporan', 'like', "%{$search}%")
+                  ->orWhere('isi_laporan', 'like', "%{$search}%");
+            });
+        }
+
+        $laporans = $query->orderBy('created_at', 'desc')->get();
+
+        // Statistik ringkasan rekap laporan
+        $totalLaporan    = Laporan::count();
+        $laporanPending  = Laporan::where('id_status', 1)->count();
+        $laporanDiproses = Laporan::where('id_status', 2)->count();
+        $laporanSelesai  = Laporan::where('id_status', 3)->count();
+        $laporanDitolak  = Laporan::where('id_status', 4)->count();
+
+        return view('rekap_laporan', compact(
+            'laporans',
+            'totalLaporan',
+            'laporanPending',
+            'laporanDiproses',
+            'laporanSelesai',
+            'laporanDitolak'
+        ));
     }
 }
