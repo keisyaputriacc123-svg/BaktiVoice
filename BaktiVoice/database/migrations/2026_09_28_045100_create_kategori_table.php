@@ -13,11 +13,11 @@ return new class extends Migration
         Schema::create('kategori', function (Blueprint $table) {
             $table->id('id_kategori');
             $table->string('nama_kategori', 100);
-
+            $table->string('penanggung_jawab', 100)->nullable();
             $table->timestamps();
         });
 
-        DB::statement('ALTER TABLE kategori ENABLE ROW LEVEL SECURITY;');
+        DB::statement('ALTER TABLE kategori DISABLE ROW LEVEL SECURITY;');
     }
 
 
