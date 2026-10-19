@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class StatusLaporan extends Model
 {
-    protected $table = 'status_laporan'; // Sesuaikan jika nama tabel di database Anda berbeda
-    protected $primaryKey = 'id_status'; // Sesuaikan dengan primary key di database Anda
+    use HasFactory;
+
+    protected $table = 'status_laporan';
+    protected $primaryKey = 'id_status';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'nama_status',
+    ];
 }
