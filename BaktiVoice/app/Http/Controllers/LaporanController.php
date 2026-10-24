@@ -40,7 +40,7 @@ class LaporanController extends Controller
             'laporanDiproses',
             'laporanSelesai',
             'laporanDitolak',
-            'laporans'
+            'laporans' 
         ));
     }
 
@@ -109,7 +109,7 @@ class LaporanController extends Controller
                 'nullable',
                 'file',
                 'mimes:jpeg,png,jpg,webp,mp4,doc,docx',
-                'max:5120' // Maksimal 5 MB
+                'max:15210' // Maksimal 15 MB
             ],
         ], [
             'judul_laporan.required' => 'Judul laporan wajib diisi.',
@@ -182,16 +182,31 @@ class LaporanController extends Controller
     /**
      * Menampilkan Halaman Detail Laporan di Sisi Admin
      */
-    public function showAdmin($id = null)
-    {
-        if ($id) {
-            $laporan = Laporan::with(['kategori', 'status', 'user', 'tanggapan.user'])->findOrFail($id);
-        } else {
-            $laporan = Laporan::with(['kategori', 'status', 'user', 'tanggapan.user'])->latest()->first();
-        }
+   
+public function showAdmin($id = null)
+{
+    // Jika ID tersedia, tampilkan detail laporan yang dipilih.
+    if ($id) {
+        $laporan = Laporan::with([
+            'kategori',
+            'status',
+            'user',
+            'tanggapan.user'
+        ])->findOrFail($id);
 
-        return view('laporan_admin', compact('laporan'));
+        return view('detail_laporan_admin', compact('laporan'));
     }
+
+    // Jika tidak ada ID, tampilkan daftar laporan admin.
+    $laporans = Laporan::with([
+        'kategori',
+        'status',
+        'user',
+        'tanggapan.user'
+    ])->latest()->get();
+
+    return view('laporan_admin', compact('laporans'));
+}
 
     /**
      * Menampilkan Halaman Rekap Laporan di Sisi Admin secara dinamis dari database

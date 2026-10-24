@@ -23,23 +23,21 @@
     <style>
         :root {
             --primary: #96ace0;
-            --primary-hover: #0f172a;
-            --background: #f8fafc;
+            --primary-hover: #7b94d1;
+            --background: #eaf1fb;
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #496cbd;
+            --border: rgba(186, 210, 240, 0.6);
+            --text-main: #2c4a8e;
             --text-muted: #64748b;
-
             --font-family: 'Inter', sans-serif;
-
             --sidebar-width: 250px;
             --topbar-height: 70px;
-
             --radius: 12px;
+            --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
 
-            --shadow:
-                0 1px 3px 0 rgba(119, 5, 5, 0.05),
-                0 1px 2px 0 rgba(0, 0, 0, 0.03);
+
+            --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+            --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
         }
 
         * {
@@ -50,7 +48,7 @@
         }
 
         body {
-            background-color: var(--background);
+            background-color: var(--background) !important;
             color: var(--text-main);
             display: flex;
             min-height: 100vh;
@@ -63,29 +61,25 @@
 
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--card-bg);
-            border-right: 1px solid var(--border);
-
+            background: var(--gradient-pastel) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
-
             z-index: 100;
-
             padding: 24px 16px;
             overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
         }
 
         .brand {
             display: flex;
             align-items: center;
             gap: 12px;
-
             padding: 0 12px 24px 12px;
         }
 
@@ -93,33 +87,25 @@
             width: 60px !important;
             height: 60px !important;
             max-width: 60px !important;
-
-            background-color: var(--primary);
-
-            color: #96ace0;
-            font-weight: 800;
-
-            border-radius: 8px;
-
+            background-color: #ffffff;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-
-            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            object-fit: contain;
         }
 
         .brand-name {
             font-size: 20px;
             font-weight: 800;
-            color: var(--text-main);
+            color: #1e3a70 !important;
         }
 
         .nav-menu {
             list-style: none;
-
             display: flex;
             flex-direction: column;
-
             gap: 6px;
         }
 
@@ -128,25 +114,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             width: 100%;
-
             padding: 12px 16px;
-
-            color: var(--text-muted);
-
+            color: #274472 !important;
             text-decoration: none;
-
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
-
-            border-radius: 8px;
-
-            transition: all 0.2s ease;
-
+            border-radius: 10px;
+            transition: all 0.25s ease;
             background: none;
             border: none;
-
             cursor: pointer;
         }
 
@@ -158,16 +135,18 @@
 
         .nav-item a:hover,
         .dropdown-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
+            transform: translateX(4px);
         }
 
         /* MENU AKTIF */
         .nav-item.active > a,
         .nav-item.active > .dropdown-btn {
-            background-color: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
+            background-color: #ffffff !important;
+            color: #3b62ac !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
         }
 
         .nav-item i {
@@ -188,12 +167,9 @@
 
         .sub-menu {
             list-style: none;
-
             display: none;
             flex-direction: column;
-
             gap: 4px;
-
             padding-left: 32px;
             margin-top: 4px;
         }
@@ -204,19 +180,17 @@
 
         .sub-menu a {
             padding: 8px 12px;
-
             font-size: 13px;
-            color: var(--text-muted);
-
+            color: #274472 !important;
             border-radius: 6px;
-
             text-decoration: none;
             display: block;
+            transition: background 0.2s;
         }
 
         .sub-menu a:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
         }
 
 
@@ -228,122 +202,104 @@
             display: flex;
             align-items: center;
             gap: 12px;
-
             padding: 12px 16px;
-
-            color: #ef4444;
-
+            color: #e11d48 !important;
             text-decoration: none;
-
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-
-            border-radius: 8px;
-
-            transition: background 0.2s;
-
+            border-radius: 10px;
+            transition: all 0.2s ease;
             margin-top: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
         }
 
         .logout-btn:hover {
-            background-color: #fef2f2;
+            background-color: rgba(255, 255, 255, 0.5) !important;
+            color: #be123c !important;
         }
 
 
         /* =====================================================
-        MAIN WRAPPER
+        MAIN WRAPPER & TOPBAR (PASTEL BLUE)
         ===================================================== */
 
         .main-wrapper {
             margin-left: var(--sidebar-width);
-
             flex: 1;
-
             display: flex;
             flex-direction: column;
-
             min-height: 100vh;
+            background-color: var(--background) !important;
         }
-
-
-        /* =====================================================
-        TOPBAR
-        ===================================================== */
 
         .topbar {
             height: var(--topbar-height);
-
-            background-color: var(--card-bg);
-
-            border-bottom: 1px solid var(--border);
-
+            background: var(--gradient-pastel) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: flex-end;
-
             padding: 0 36px;
-
             gap: 20px;
-
             position: sticky;
             top: 0;
-
             z-index: 90;
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
         }
 
         .topbar-icon {
-            color: var(--text-muted);
-
+            color: #274472 !important;
             font-size: 18px;
-
             cursor: pointer;
-
             position: relative;
-
             padding: 8px;
-
             border-radius: 50%;
-
-            transition: background 0.2s;
+            transition: all 0.2s ease;
+            border: none;
+            background: none;
         }
 
         .topbar-icon:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-
             gap: 12px;
-
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
             cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         .avatar {
             width: 38px;
             height: 38px;
-
             border-radius: 50%;
-
-            background-color: #e2e8f0;
-
+            background-color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
-
-            color: var(--text-muted);
-
+            color: #3b62ac !important;
             font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
             font-size: 14px;
-
-            font-weight: 600;
-
-            color: var(--text-main);
+            font-weight: 700;
+            color: #1e3a70 !important;
         }
 
 
@@ -353,17 +309,14 @@
 
         .content {
             padding: 36px;
-
             flex: 1;
+            background-color: var(--background) !important;
         }
 
         .page-title {
             font-size: 28px;
-
             font-weight: 800;
-
-            color: var(--text-main);
-
+            color: #1e3a70 !important;
             margin-bottom: 28px;
         }
 
@@ -374,99 +327,70 @@
 
         .filter-wrapper {
             background-color: var(--card-bg);
-
             border: 1px solid var(--border);
-
             border-radius: var(--radius);
-
             padding: 24px;
-
             margin-bottom: 28px;
-
             box-shadow: var(--shadow);
         }
 
         .filter-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(3, minmax(180px, 1fr))
-                auto;
-
+            grid-template-columns: repeat(3, minmax(180px, 1fr)) auto;
             gap: 16px;
-
             align-items: end;
         }
 
         .filter-group {
             display: flex;
-
             flex-direction: column;
-
             gap: 8px;
         }
 
         .filter-label {
             font-size: 13px;
-
             font-weight: 600;
-
             color: var(--text-muted);
         }
 
         .filter-select,
         .filter-date {
             width: 100%;
-
             height: 48px;
-
             padding: 0 14px;
-
             border: 1px solid var(--border);
-
             border-radius: 8px;
-
             background-color: #ffffff;
-
             color: #334155;
-
             font-size: 14px;
-
             outline: none;
-
             cursor: pointer;
+            transition: border-color 0.2s;
         }
 
         .filter-select:focus,
         .filter-date:focus {
-            border-color: var(--primary);
+            border-color: #7b9fe8;
+            box-shadow: 0 0 0 3px rgba(123, 159, 232, 0.2);
         }
 
         .filter-button {
             height: 48px;
-
             padding: 0 24px;
-
             border: none;
-
             border-radius: 8px;
-
-            background-color: var(--primary);
-
+            background: var(--gradient-button) !important;
             color: white;
-
             font-size: 14px;
-
             font-weight: 600;
-
             cursor: pointer;
-
+            box-shadow: 0 4px 12px rgba(98, 140, 219, 0.25);
             transition: all 0.2s ease;
         }
 
         .filter-button:hover {
-            background-color: #819bd5;
             transform: translateY(-1px);
+            box-shadow: 0 6px 16px rgba(98, 140, 219, 0.35);
         }
 
 
@@ -476,81 +400,48 @@
 
         .stats-grid {
             display: grid;
-
-            grid-template-columns:
-                repeat(4, minmax(160px, 1fr));
-
+            grid-template-columns: repeat(4, minmax(160px, 1fr));
             gap: 20px;
-
             margin-bottom: 36px;
         }
 
         .stat-card {
             background-color: var(--card-bg);
-
             border: 1px solid var(--border);
-
             border-radius: var(--radius);
-
             padding: 24px;
-
             min-height: 130px;
-
             display: flex;
-
             flex-direction: column;
-
             align-items: center;
-
             justify-content: center;
-
             text-align: center;
-
             box-shadow: var(--shadow);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .stat-card:hover {
             transform: translateY(-2px);
-
-            box-shadow:
-                0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(123, 159, 232, 0.12);
         }
 
         .stat-title {
             font-size: 14px;
-
             font-weight: 600;
-
             color: var(--text-muted);
-
             margin-bottom: 8px;
         }
 
         .stat-value {
             font-size: 30px;
-
             font-weight: 800;
         }
 
-        .stat-card.total .stat-value {
-            color: #1e293b;
-        }
-
-        .stat-card.diproses .stat-value {
-            color: #d97706;
-        }
-
-        .stat-card.selesai .stat-value {
-            color: #16a34a;
-        }
-
-        .stat-card.ditolak .stat-value {
-            color: #dc2626;
-        }
+        .stat-card.total .stat-value { color: #1e3a70; }
+        .stat-card.pending .stat-value { color: #64748b; }
+        .stat-card.diproses .stat-value { color: #d97706; }
+        .stat-card.selesai .stat-value { color: #16a34a; }
+        .stat-card.ditolak .stat-value { color: #dc2626; }
 
 
         /* =====================================================
@@ -559,80 +450,57 @@
 
         .table-card {
             background-color: var(--card-bg);
-
             border: 1px solid var(--border);
-
             border-radius: var(--radius);
-
             overflow: hidden;
-
             box-shadow: var(--shadow);
         }
 
         .table-header {
             padding: 20px 24px;
-
             border-bottom: 1px solid var(--border);
-
             display: flex;
-
             align-items: center;
-
             justify-content: space-between;
         }
 
         .table-title {
             font-size: 18px;
-
             font-weight: 700;
-
-            color: var(--text-main);
+            color: #1e3a70;
         }
 
         .table-wrapper {
             width: 100%;
-
             overflow-x: auto;
         }
 
         .report-table {
             width: 100%;
-
             border-collapse: collapse;
-
             min-width: 800px;
         }
 
         .report-table th {
             background-color: #f8fafc;
-
-            color: #475569;
-
+            color: #1e3a70;
             font-size: 13px;
-
             font-weight: 700;
-
             padding: 15px 16px;
-
             text-align: left;
-
-            border-bottom: 1px solid var(--border);
+            border-bottom: 2px solid var(--border);
         }
 
         .report-table td {
             padding: 16px;
-
             font-size: 14px;
-
             color: #334155;
-
-            border-bottom: 1px solid var(--border);
-
+            border-bottom: 1px solid rgba(186, 210, 240, 0.4);
             vertical-align: middle;
         }
 
         .report-table tbody tr:hover {
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
         }
 
         .report-table tbody tr:last-child td {
@@ -646,35 +514,18 @@
 
         .status-badge {
             display: inline-flex;
-
             align-items: center;
             justify-content: center;
-
             padding: 6px 14px;
-
             border-radius: 20px;
-
             font-size: 12px;
-
             font-weight: 600;
-
             white-space: nowrap;
         }
 
-        .badge-diproses {
-            background-color: #fef3c7;
-            color: #b45309;
-        }
-
-        .badge-selesai {
-            background-color: #dcfce7;
-            color: #15803d;
-        }
-
-        .badge-ditolak {
-            background-color: #fee2e2;
-            color: #b91c1c;
-        }
+        .badge-diproses { background-color: #fef3c7; color: #b45309; }
+        .badge-selesai { background-color: #dcfce7; color: #15803d; }
+        .badge-ditolak { background-color: #fee2e2; color: #b91c1c; }
 
 
         /* =====================================================
@@ -683,35 +534,22 @@
 
         .btn-view {
             display: inline-flex;
-
             align-items: center;
-
             gap: 8px;
-
             padding: 8px 14px;
-
             border: none;
-
             border-radius: 7px;
-
-            background-color: #eef2ff;
-
-            color: #496cbd;
-
+            background-color: #eaf0ff;
+            color: #3b62ac;
             text-decoration: none;
-
             font-size: 13px;
-
             font-weight: 600;
-
             cursor: pointer;
-
             transition: all 0.2s ease;
         }
 
         .btn-view:hover {
-            background-color: var(--primary);
-
+            background-color: #3b62ac;
             color: white;
         }
 
@@ -726,9 +564,7 @@
 
         .empty-row {
             text-align: center !important;
-
             padding: 40px !important;
-
             color: var(--text-muted) !important;
         }
 
@@ -738,40 +574,30 @@
         ===================================================== */
 
         @media (max-width: 1000px) {
-
             .filter-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-
             .filter-button {
                 width: 100%;
             }
-
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-
         @media (max-width: 768px) {
-
             .sidebar {
                 width: 70px;
-
                 padding: 16px 8px;
             }
-
             .brand {
                 justify-content: center;
-
                 padding: 0 0 24px;
             }
-
             .brand-logo-img {
                 width: 45px !important;
                 height: 45px !important;
             }
-
             .brand-name,
             .nav-item span,
             .logout-btn span,
@@ -779,52 +605,40 @@
             .sub-menu {
                 display: none !important;
             }
-
             .nav-item a,
             .dropdown-btn,
             .logout-btn {
                 justify-content: center;
-
                 padding: 12px;
             }
-
             .main-wrapper {
                 margin-left: 70px;
             }
-
             .topbar {
                 padding: 0 20px;
             }
-
             .user-name {
                 display: none;
             }
-
             .content {
                 padding: 20px;
             }
-
             .page-title {
                 font-size: 24px;
             }
-
             .filter-grid {
                 grid-template-columns: 1fr;
             }
-
             .stats-grid {
                 grid-template-columns: 1fr 1fr;
             }
         }
 
-
         @media (max-width: 480px) {
-
             .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
-
     </style>
 </head>
 
@@ -860,7 +674,7 @@
                 <!-- LAPORAN -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('dashboard_admin') }}">
 
                         <div class="nav-content">
 
@@ -877,62 +691,27 @@
                 </li>
 
 
-                <!-- DATA MASTER -->
+            <!-- MENU DATA MASTER (DROPDOWN) -->
                 <li class="nav-item">
-
-                    <button
-                        class="dropdown-btn"
-                        onclick="toggleDropdown('masterMenu', 'masterArrow')">
-
+                    <button class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
                         <div class="nav-content">
-
                             <i class="fa-solid fa-database"></i>
-
-                            <span>
-                                Data Master
-                            </span>
-
+                            <span>Data Master</span>
                         </div>
-
-                        <i
-                            class="fa-solid fa-chevron-down arrow-icon"
-                            id="masterArrow">
-                        </i>
-
+                        <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
-
-
-                    <ul
-                        class="sub-menu"
-                        id="masterMenu">
-
-                        <li>
-                            <a href="#">
-                                Kategori Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                Status Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#">
-                                User & Role
-                            </a>
-                        </li>
-
+                    <ul class="sub-menu" id="masterMenu">
+                        <li><a href="{{ route('data_master') }}">Kategori Laporan</a></li>
+                        <li><a href="{{ route('data_master') }}">Status Laporan</a></li>
+                        <li><a href="{{ route('data_master') }}">User & Role</a></li>
                     </ul>
-
                 </li>
 
 
                 <!-- REKAP LAPORAN -->
                 <li class="nav-item active">
 
-                    <a href="#">
+                    <a href="{{ route('rekap_laporan') }}">
 
                         <div class="nav-content">
 
@@ -952,7 +731,7 @@
                 <!-- NOTIFIKASI -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('notifikasi_admin') }}">
 
                         <div class="nav-content">
 
@@ -972,7 +751,7 @@
                 <!-- PROFIL -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('profil_admin') }}">
 
                         <div class="nav-content">
 
@@ -998,7 +777,7 @@
             href="{{ route('login') }}"
             class="logout-btn">
 
-            <i class="fa-solid fa-xmark"></i>
+            <i class="fa-solid fa-right-from-bracket"></i>
 
             <span>
                 Logout
@@ -1007,7 +786,6 @@
         </a>
 
     </aside>
-
 
 
     <!-- =====================================================
@@ -1227,7 +1005,15 @@
 
                 </div>
 
-
+                <!-- PENDING  -->
+    <div class="stat-card pending">
+        <div class="stat-title">
+            PENDING
+        </div>
+        <div class="stat-value" id="pendingCount">
+            3
+        </div>
+    </div>
 
                 <!-- DIPROSES -->
 
@@ -1386,7 +1172,7 @@
                                 <td>
 
                                     <a
-                                        href="#"
+                                        href="{{ route('laporan_admin', 4) }}"
                                         class="btn-view">
 
                                         <span>

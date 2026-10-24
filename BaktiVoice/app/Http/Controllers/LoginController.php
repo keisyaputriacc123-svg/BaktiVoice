@@ -40,13 +40,13 @@ class LoginController extends Controller
                     return redirect()->route('dashboard_siswa');
                 case 'guru_bk':
                     return redirect()->route('dashboard_bk');
-                case 'wakasek_kesiswaan':
+                case 'wakasek kesiswaan':
                     return redirect()->route('wakasek.kesiswaan.dashboard');
-                case 'wakasek_kurikulum':
+                case 'wakasek kurikulum':
                     return redirect()->route('wakasek.kurikulum.dashboard');
-                case 'wakasek_sarana':
+                case 'wakasek sarana':
                     return redirect()->route('wakasek.sarana.dashboard');
-                case 'wakasek_dudi':
+                case 'wakasek dudi':
                     return redirect()->route('wakasek.dudi.dashboard');
                 default:
                     Auth::logout();

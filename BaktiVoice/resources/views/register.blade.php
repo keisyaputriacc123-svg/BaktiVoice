@@ -168,19 +168,26 @@
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background-color: var(--primary);
-            color: #ffffff;
+            background: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%) !important;
+            color: #ffffff !important;
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: 12px !important;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s ease;
-            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.3) !important;
+            transition: all 0.3s ease;
+            margin-top: 4px;
         }
 
         .btn-submit:hover {
-            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 159, 232, 0.45) !important;
+            background: linear-gradient(135deg, #6b90e0 0%, #8bb7f5 50%, #a8ccff 100%) !important;
         }
 
         /* Footer */
@@ -281,19 +288,16 @@
 
             <!-- Field: Pilih Role (Ditambahkan di sini) -->
             <div class="form-group">
-                <label for="role" class="form-label">Daftar Sebagai (Role)</label>
+                <label for="role" class="form-label">Daftar Sebagai</label>
                 <div class="input-wrapper">
                     <i class="fa-solid fa-user-shield input-icon"></i>
-                    <select id="role" name="role" class="form-input" required>
-                        <option value="">-- Pilih Peran / Role --</option>
-                        <option value="admin">Admin</option>
-                        <option value="siswa">Siswa</option>
-                        <option value="guru_bk">Guru BK</option>
-                        <option value="wakasek_kesiswaan">Wakasek Kesiswaan</option>
-                        <option value="wakasek_kurikulum">Wakasek Kurikulum</option>
-                        <option value="wakasek_sarana">Wakasek Sarana</option>
-                        <option value="wakasek_dudi">Wakasek DUDI</option>
-                    </select>
+
+                    <input type="hidden" name="role" value="siswa">
+                    <div class="form-input" style="background: #f5f7fb; cursor: not-allowed;">
+                    Siswa
+                    </div>
+
+
                 </div>
             </div>
 

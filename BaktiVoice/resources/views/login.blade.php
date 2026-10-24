@@ -235,10 +235,10 @@
         .btn-submit {
             width: 100%;
             padding: 12px;
-            background-color: var(--primary);
-            color: var(--on-primary);
+            background: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%) !important;
+            color: #ffffff !important;
             border: none;
-            border-radius: var(--radius-sm);
+            border-radius: 12px !important;
             font-size: 14px;
             font-weight: 700;
             cursor: pointer;
@@ -246,12 +246,15 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: background-color var(--transition-fast), transform var(--transition-fast);
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.3) !important;
+            transition: all 0.3s ease;
             margin-top: 4px;
         }
 
         .btn-submit:hover {
-            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(123, 159, 232, 0.45) !important;
+            background: linear-gradient(135deg, #6b90e0 0%, #8bb7f5 50%, #a8ccff 100%) !important;
         }
 
         .btn-submit:active {

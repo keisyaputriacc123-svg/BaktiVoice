@@ -14,17 +14,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <style>
+  <style>
         :root {
             --primary: #96ace0;
-            --background: #f8fafc;
+            --primary-hover: #7b94d1;
+            --background: #eaf1fb;
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #496cbd;
+            --border: rgba(186, 210, 240, 0.6);
+            --text-main: #2c4a8e;
             --text-muted: #64748b;
             --font-family: 'Inter', sans-serif;
             --sidebar-width: 250px;
             --topbar-height: 70px;
+            --radius: 12px;
+            --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+
+            --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+            --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
         }
 
         * {
@@ -34,19 +40,19 @@
         body {
             margin: 0;
             font-family: var(--font-family);
-            background-color: var(--background);
+            background-color: var(--background) !important;
             color: var(--text-main);
             min-height: 100vh;
         }
 
         /* =========================
-        SIDEBAR
+        SIDEBAR (PASTEL BLUE)
         ========================= */
 
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--card-bg);
-            border-right: 1px solid var(--border);
+            background: var(--gradient-pastel) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -57,6 +63,7 @@
             z-index: 100;
             padding: 24px 16px;
             overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
         }
 
         .brand {
@@ -71,13 +78,15 @@
             height: 60px;
             max-width: 60px;
             object-fit: contain;
-            border-radius: 8px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .brand-name {
             font-size: 20px;
             font-weight: 800;
-            color: var(--text-main);
+            color: #1e3a70 !important;
             white-space: nowrap;
         }
 
@@ -97,12 +106,12 @@
             justify-content: space-between;
             width: 100%;
             padding: 12px 16px;
-            color: var(--text-muted);
+            color: #274472 !important;
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
-            border-radius: 8px;
-            transition: all 0.2s ease;
+            border-radius: 10px;
+            transition: all 0.25s ease;
             background: none;
             border: none;
             cursor: pointer;
@@ -117,15 +126,17 @@
 
         .nav-item a:hover,
         .dropdown-btn:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
+            transform: translateX(4px);
         }
 
         .nav-item.active > a,
         .nav-item.active > .dropdown-btn {
-            background-color: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
+            background-color: #ffffff !important;
+            color: #3b62ac !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
         }
 
         .nav-item i {
@@ -155,21 +166,22 @@
         .sub-menu a {
             padding: 8px 12px;
             font-size: 13px;
-            color: var(--text-muted);
+            color: #274472 !important;
             border-radius: 6px;
             text-decoration: none;
             display: block;
+            transition: background 0.2s;
         }
 
         .sub-menu a:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
         }
 
         .sub-menu a.sub-active {
-            background-color: #eff6ff;
-            color: #496cbd;
-            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.6) !important;
+            color: #102a56 !important;
+            font-weight: 700;
         }
 
         .logout-btn {
@@ -177,17 +189,23 @@
             align-items: center;
             gap: 12px;
             padding: 12px 16px;
-            color: #ef4444;
+            color: #e11d48 !important;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
-            border-radius: 8px;
-            transition: background 0.2s;
+            border-radius: 10px;
+            transition: all 0.2s ease;
             margin-top: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
         }
 
         .logout-btn:hover {
-            background-color: #fef2f2;
+            background-color: rgba(255, 255, 255, 0.5) !important;
+            color: #be123c !important;
         }
 
         /* =========================
@@ -199,17 +217,18 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            background-color: var(--background) !important;
         }
 
         /* =========================
-        TOPBAR - SAMA DENGAN DASHBOARD
+        TOPBAR (PASTEL BLUE)
         ========================= */
 
         .topbar {
             height: var(--topbar-height);
             min-height: var(--topbar-height);
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border);
+            background: var(--gradient-pastel) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             display: flex;
             align-items: center;
             justify-content: flex-end;
@@ -218,29 +237,38 @@
             position: sticky;
             top: 0;
             z-index: 90;
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
         }
 
         .topbar-icon {
-            color: var(--text-muted);
+            color: #274472 !important;
             font-size: 18px;
             cursor: pointer;
             position: relative;
             padding: 8px;
             border-radius: 50%;
-            transition: background 0.2s;
+            transition: all 0.2s ease;
             border: none;
             background: none;
         }
 
         .topbar-icon:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
             gap: 12px;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+            cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         .avatar {
@@ -248,24 +276,43 @@
             height: 38px;
             flex-shrink: 0;
             border-radius: 50%;
-            background-color: #e2e8f0;
+            background-color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-muted);
+            color: #3b62ac !important;
             font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
             font-size: 14px;
-            font-weight: 600;
-            color: var(--text-main);
+            font-weight: 700;
+            color: #1e3a70 !important;
         }
 
         /* CONTENT BODY */
-        .content-area {
+        .content-area, .content {
             flex: 1;
             min-width: 0;
+            padding: 36px;
+            background-color: var(--background) !important;
+        }
+
+        /* TAMBAHAN KARTU & TABEL DATA MASTER */
+        .master-card, .stat-card {
+            background-color: var(--card-bg) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .btn-add, .btn-primary {
+            background: var(--gradient-button) !important;
+            color: #ffffff !important;
+            border: none !important;
+            box-shadow: 0 4px 12px rgba(98, 140, 219, 0.25);
         }
 
         /* Responsif */
@@ -351,7 +398,7 @@
 
                 <!-- Laporan -->
                 <li class="nav-item">
-                    <a href="{{ url('/dashboard/admin') }}">
+                    <a href="{{ route('dashboard_admin') }}">
                         <div class="nav-content">
                             <i class="fa-regular fa-file-lines"></i>
                             <span>Laporan</span>
@@ -409,7 +456,7 @@
 
                 <!-- Rekap Laporan -->
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="{{ route('rekap_laporan') }}">
                         <div class="nav-content">
                             <i class="fa-solid fa-chart-column"></i>
                             <span>Rekap Laporan</span>
@@ -419,7 +466,7 @@
 
                 <!-- Notifikasi -->
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="{{ route('notifikasi_admin') }}">
                         <div class="nav-content">
                             <i class="fa-regular fa-bell"></i>
                             <span>Notifikasi</span>
@@ -429,7 +476,7 @@
 
                 <!-- Profil -->
                 <li class="nav-item">
-                    <a href="#">
+                    <a href="{{ route('profil_admin') }}">
                         <div class="nav-content">
                             <i class="fa-regular fa-user"></i>
                             <span>Profil</span>
@@ -449,7 +496,7 @@
                 class="logout-btn"
                 style="width: 100%; background: none; border: none; cursor: pointer; font-family: inherit; text-align: left;"
             >
-                <i class="fa-solid fa-xmark"></i>
+                <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Logout</span>
             </button>
         </form>

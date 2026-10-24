@@ -17,11 +17,11 @@
     <style>
         :root {
             --primary: #96ace0;
-            --primary-hover: #0f172a;
-            --background: #f8fafc;
+            --primary-hover: #7b94d1;
+            --background: #eaf1fb;
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #496cbd;
+            --border: rgba(186, 210, 240, 0.6);
+            --text-main: #2c4a8e;
             --text-muted: #64748b;
 
             --font-family: 'Inter', sans-serif;
@@ -31,9 +31,10 @@
 
             --radius: 12px;
 
-            --shadow:
-                0 1px 3px 0 rgba(119, 5, 5, 0.05),
-                0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+
+            --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+            --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
         }
 
         * {
@@ -44,7 +45,7 @@
         }
 
         body {
-            background-color: var(--background);
+            background-color: var(--background) !important;
             color: var(--text-main);
             display: flex;
             min-height: 100vh;
@@ -57,8 +58,8 @@
 
         .sidebar {
             width: var(--sidebar-width);
-            background-color: var(--card-bg);
-            border-right: 1px solid var(--border);
+            background: var(--gradient-pastel) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
 
             display: flex;
             flex-direction: column;
@@ -73,6 +74,7 @@
 
             padding: 24px 16px;
             overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
         }
 
         .brand {
@@ -88,24 +90,26 @@
             height: 60px !important;
             max-width: 60px !important;
 
-            background-color: var(--primary);
-            color: #96ace0;
+            background-color: #ffffff !important;
+            color: #3b62ac;
 
             font-weight: 800;
 
-            border-radius: 8px;
+            border-radius: 12px;
 
             display: flex;
             align-items: center;
             justify-content: center;
 
             font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            object-fit: contain;
         }
 
         .brand-name {
             font-size: 20px;
             font-weight: 800;
-            color: var(--text-main);
+            color: #1e3a70 !important;
         }
 
         .nav-menu {
@@ -125,15 +129,15 @@
 
             padding: 12px 16px;
 
-            color: var(--text-muted);
+            color: #274472 !important;
             text-decoration: none;
 
-            font-weight: 500;
+            font-weight: 600;
             font-size: 14px;
 
-            border-radius: 8px;
+            border-radius: 10px;
 
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .nav-content {
@@ -143,14 +147,16 @@
         }
 
         .nav-item a:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
+            transform: translateX(4px);
         }
 
         .nav-item.active > a {
-            background-color: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
+            background-color: #ffffff !important;
+            color: #3b62ac !important;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
         }
 
         .nav-item i {
@@ -158,6 +164,21 @@
             width: 20px;
             text-align: center;
         }
+
+        .nav-notification {
+    position: relative;
+}
+
+.nav-notification .notification-dot {
+    position: absolute;
+    top: 9px;
+    left: 29px;
+    width: 8px;
+    height: 8px;
+    background: #ef7777;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
 
 
         /* =====================================================
@@ -171,26 +192,27 @@
 
             padding: 12px 16px;
 
-            color: #ef4444;
+            color: #e11d48 !important;
             text-decoration: none;
 
-            font-weight: 600;
+            font-weight: 700;
             font-size: 14px;
 
-            border-radius: 8px;
+            border-radius: 10px;
 
-            transition: background 0.2s;
+            transition: all 0.2s ease;
 
             margin-top: 16px;
         }
 
         .logout-btn:hover {
-            background-color: #fef2f2;
+            background-color: rgba(255, 255, 255, 0.5) !important;
+            color: #be123c !important;
         }
 
 
         /* =====================================================
-           MAIN WRAPPER
+           MAIN WRAPPER & TOPBAR (PASTEL BLUE)
         ===================================================== */
 
         .main-wrapper {
@@ -202,18 +224,14 @@
             flex-direction: column;
 
             min-height: 100vh;
+            background-color: var(--background) !important;
         }
-
-
-        /* =====================================================
-           TOPBAR
-        ===================================================== */
 
         .topbar {
             height: var(--topbar-height);
 
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border);
+            background: var(--gradient-pastel) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 
             display: flex;
             align-items: center;
@@ -227,10 +245,11 @@
             top: 0;
 
             z-index: 90;
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
         }
 
         .topbar-icon {
-            color: var(--text-muted);
+            color: #274472 !important;
 
             font-size: 18px;
 
@@ -246,8 +265,8 @@
         }
 
         .topbar-icon:hover {
-            background-color: #f1f5f9;
-            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.4) !important;
+            color: #102a56 !important;
         }
 
         .user-profile {
@@ -256,7 +275,15 @@
 
             gap: 12px;
 
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+
             cursor: pointer;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         .avatar {
@@ -265,23 +292,25 @@
 
             border-radius: 50%;
 
-            background-color: #e2e8f0;
+            background-color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.8);
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            color: var(--text-muted);
+            color: #3b62ac !important;
 
             font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
             font-size: 14px;
 
-            font-weight: 600;
+            font-weight: 700;
 
-            color: var(--text-main);
+            color: #1e3a70 !important;
         }
 
 
@@ -293,6 +322,7 @@
             padding: 36px;
 
             flex: 1;
+            background-color: var(--background) !important;
         }
 
         .page-title {
@@ -300,7 +330,7 @@
 
             font-weight: 800;
 
-            color: var(--text-main);
+            color: #1e3a70 !important;
 
             margin-bottom: 20px;
         }
@@ -319,7 +349,7 @@
 
             font-weight: 800;
 
-            color: #1e293b;
+            color: #1e3a70 !important;
 
             margin-bottom: 4px;
         }
@@ -368,8 +398,7 @@
         .stat-card:hover {
             transform: translateY(-2px);
 
-            box-shadow:
-                0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(123, 159, 232, 0.12);
         }
 
         .stat-title {
@@ -395,7 +424,7 @@
         }
 
         .stat-card.total .stat-value {
-            color: #1e293b;
+            color: #1e3a70;
         }
 
         .stat-card.diproses .stat-value {
@@ -420,7 +449,7 @@
 
             font-weight: 700;
 
-            color: #1e293b;
+            color: #1e3a70 !important;
 
             margin-bottom: 16px;
         }
@@ -456,7 +485,7 @@
         }
 
         .report-card:hover {
-            border-color: #cbd5e1;
+            border-color: #7b9fe8;
 
             transform: translateY(-1px);
         }
@@ -473,7 +502,7 @@
             width: 52px;
             height: 52px;
 
-            background-color: #f1f5f9;
+            background-color: #eaf0ff;
 
             border-radius: 8px;
 
@@ -481,7 +510,7 @@
             align-items: center;
             justify-content: center;
 
-            color: var(--text-muted);
+            color: #3b62ac;
 
             font-size: 20px;
 
@@ -510,7 +539,7 @@
 
             font-weight: 700;
 
-            color: #1e293b;
+            color: #1e3a70;
         }
 
         .report-date {
@@ -553,6 +582,11 @@
             color: #b45309;
         }
 
+        .badge-pending {
+            background-color: #fef3c7;
+            color: #64748b;
+        }
+
         .badge-selesai {
             background-color: #dcfce7;
             color: #15803d;
@@ -569,27 +603,27 @@
         ===================================================== */
 
         .btn-detail {
-            background: none;
+            background: #eaf0ff;
 
             border: none;
 
-            color: var(--text-muted);
+            color: #3b62ac;
 
             font-size: 16px;
 
             cursor: pointer;
 
-            padding: 8px;
+            padding: 8px 12px;
 
-            border-radius: 6px;
+            border-radius: 8px;
 
-            transition: background 0.2s;
+            transition: all 0.2s;
         }
 
         .btn-detail:hover {
-            background-color: #f1f5f9;
+            background-color: #3b62ac;
 
-            color: var(--text-main);
+            color: white;
         }
 
 
@@ -770,11 +804,19 @@
 
                 </li>
 
+                <!-- NOTIFIKASI -->
+                <li class="nav-item">
+    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
+        <i class="fa-solid fa-bell"></i>
+        <span>Notifikasi</span>
+        <span class="notification-dot"></span>
+    </a>
+</li>
 
                 <!-- PROFIL -->
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('profil_bk') }}" title="Profil">
 
                         <div class="nav-content">
 
@@ -799,7 +841,7 @@
         <!-- LOGOUT -->
         <a href="{{ route('login') }}" class="logout-btn">
 
-            <i class="fa-solid fa-xmark"></i>
+            <i class="fa-solid fa-right-from-bracket"></i>
 
             <span>
                 Logout
@@ -824,15 +866,17 @@
 
         <header class="topbar">
 
-            <!-- NOTIFICATION -->
-            <div
+                <!-- NOTIFICATION -->
+            <a
+                href="{{ route('notifikasi_bk') }}"
                 class="topbar-icon"
                 title="Notifikasi"
+                aria-label="Buka notifikasi"
             >
 
                 <i class="fa-regular fa-bell"></i>
 
-            </div>
+            </a>
 
 
             <!-- USER -->
@@ -896,6 +940,14 @@
 
                 </div>
 
+<div class="stat-card pending">
+             <div class="stat-title">
+                 Pending
+             </div>
+             <div class="stat-value">
+                 2
+             </div>
+         </div>
 
                 <!-- DIPROSES -->
                 <div class="stat-card diproses">

@@ -71,9 +71,9 @@
             height: 38px;
             object-fit: contain;
             background: transparent !important; /* Menghilangkan background putih */
-    border: none !important;             /* Menghilangkan garis pinggir */
-    box-shadow: none !important;         /* Menghilangkan bayangan jika ada */
-    filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.08)); /* Efek bayangan halus jika diinginkan */
+            border: none !important;             /* Menghilangkan garis pinggir */
+            box-shadow: none !important;         /* Menghilangkan bayangan jika ada */
+            filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.08)); /* Efek bayangan halus jika diinginkan */
 }
 
         .brand-title {
@@ -110,40 +110,48 @@
             font-size: 14px;
             font-weight: 600;
             color: var(--text-main);
-            background-color: #f1f5f9;
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
             border-radius: var(--radius-md);
-            transition: background 0.2s;
+            transition: all 0.2s ease;
         }
 
         .btn-login:hover {
-            background-color: #e2e8f0;
+            background-color: #f1f5f9;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
         }
 
         .btn-register {
             padding: 8px 20px;
             font-size: 14px;
             font-weight: 600;
-            color: #ffffff;
-            background-color: var(--primary);
+            color:#1e3a8a !important;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%) !important;
             border-radius: var(--radius-md);
-            transition: background 0.2s;
+            box-shadow: 0 4px 12px rgba(147, 197, 253, 0.3);
+            transition: all 0.2s ease;
+            display: inline-block;
         }
 
         .btn-register:hover {
-            background-color: var(--primary-hover);
+            background:linear-gradient(135deg, #bfdbfe 0%, #93c5fd 50%, #60a5fa 100%) !important;
+            box-shadow: 0 6px 15px rgba(147, 197, 253, 0.4);
+            transform: translateY(-1px);
         }
 
         /* --- HERO SECTION --- */
         .hero {
-            background-color: var(--background);
-            padding: 64px 0 80px 0;
+            background:linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%) !important;
+            padding: 64px 48px 80px 48px;
             border-radius: 24px;
             margin-top: 10px;
+            box-shadow: 0 10px 25px -5px rgba(147, 197, 253, 0.3);
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.3fr 1fr;
             gap: 40px;
             align-items: center;
         }
@@ -163,15 +171,15 @@
             font-size: 42px;
             font-weight: 800;
             line-height: 1.15;
-            color: var(--text-main);
-            margin-bottom: 20px;
+            color: #0f172a;
+            margin-bottom: 16px;
         }
 
         .hero-desc {
-            font-size: 15px;
-            color: var(--text-muted);
+            font-size: 16px;
+            color: #334155;
             margin-bottom: 32px;
-            max-width: 480px;
+            max-width: 100%;
         }
 
         .hero-actions {
@@ -181,21 +189,41 @@
 
         .btn-primary {
             padding: 12px 28px;
-            background-color: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
-            border-radius: var(--radius-md);
             font-size: 14px;
+            font-weight: 600;
+            color: #1e3a8a !important; /* Warna teks biru tua supaya pas dengan background pastel */
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%) !important; /* Biru pastel gradasi persis tombol Daftar */
+            border: 1px solid #93c5fd;
+            border-radius: var(--radius-md);
+            box-shadow: 0 4px 12px rgba(147, 197, 253, 0.3);
+            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #bfdbfe 0%, #93c5fd 50%, #60a5fa 100%) !important;
+            box-shadow: 0 6px 15px rgba(147, 197, 253, 0.4);
+            transform: translateY(-1px);
         }
 
         .btn-secondary {
             padding: 12px 28px;
-            background-color: #ffffff;
-            color: var(--text-main);
-            border: 1px solid #cbd5e1;
-            font-weight: 600;
-            border-radius: var(--radius-md);
             font-size: 14px;
+            font-weight: 600;
+            color: var(--text-main);
+            background-color: #f8fafc !important; /* Warna putih bersih persis tombol Masuk */
+            border: 1px solid #cbd5e1;
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #f1f5f9 !important;
+            border-color: #94a3b8;
+            transform: translateY(-1px);
         }
 
         .mockup-img {
@@ -205,9 +233,110 @@
             border-radius: var(--radius-lg);
         }
 
-        /* --- FEATURES SECTION --- */
+        .Bavi-mascot {
+            width: 300px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            animation: Bavi-float 3s ease-in-out infinite;
+            will-change: transform;
+        }
+
+        @keyframes Bavi-float {
+            0%, 100% {
+            transform: translateY(0);
+        }
+
+            50% {
+            transform: translateY(-8px);
+        }
+        }
+
+        
+/* Wadah maskot Bavi */
+.hero-mascot {
+    position: relative;
+}
+
+/* Balon percakapan Bavi */
+.bavi-speech {
+    position: absolute;
+    top: -65px;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+
+    width: max-content;
+    max-width: 260px;
+    padding: 14px 18px;
+
+    background: #ffffff;
+    color: #496cbd;
+    border: 1px solid #dce6ff;
+    border-radius: 18px;
+    box-shadow: 0 8px 24px rgba(73, 108, 189, 0.15);
+
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 10;
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        visibility 0.3s ease;
+}
+
+/* Ekor balon */
+.bavi-speech::after {
+    content: "";
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+
+    width: 16px;
+    height: 16px;
+
+    background: #ffffff;
+    border-right: 1px solid #dce6ff;
+    border-bottom: 1px solid #dce6ff;
+
+    transform: translateX(-50%) rotate(45deg);
+}
+
+/* Balon muncul */
+.bavi-speech.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Tampilan HP */
+@media (max-width: 768px) {
+    .bavi-speech {
+        top: -60px;
+        max-width: 220px;
+        font-size: 13px;
+        padding: 12px 14px;
+    }
+}
+
+
+        @media (prefers-reduced-motion: reduce) {
+        .Bavi-mascot {
+            animation: none;
+            will-change: auto;
+    }
+}
+
+
+       /* --- FEATURES SECTION --- */
         .features {
-            padding: 80px 0;
+            padding: 60px 0;
         }
 
         .features-grid {
@@ -216,35 +345,71 @@
             gap: 24px;
         }
 
+        /* Kartu Fitur Mewah & Modern */
         .feature-card {
             background-color: #ffffff;
-            padding: 24px;
-            border-radius: var(--radius-md);
+            padding: 28px 24px;
+            border-radius: var(--radius-lg, 16px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
             text-align: left;
+            transition: all 0.3s ease;
         }
 
+        /* Efek Melayang & Glow saat Kursor Diarahkan */
+        .feature-card:hover {
+            transform: translateY(-6px);
+            border-color: #93c5fd;
+            box-shadow: 0 14px 28px rgba(37, 99, 235, 0.08);
+        }
+
+        /* Wadah Ikon dengan Gradasi Biru Pastel */
         .feature-icon-box {
-            width: 48px;
-            height: 48px;
-            background-color: #f1f5f9;
-            border-radius: 12px;
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 16px;
-            color: var(--primary);
-            font-size: 20px;
+            margin-bottom: 20px;
+            color: #2563eb;
+            font-size: 22px;
+            box-shadow: 0 4px 10px rgba(147, 197, 253, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        /* Animasi Ikon saat Kartu Di-hover */
+        .feature-card:hover .feature-icon-box {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: #ffffff;
+            transform: scale(1.05);
         }
 
         .feature-title {
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 8px;
+            color: var(--text-main, #1e293b);
         }
 
         .feature-desc {
             font-size: 13px;
             color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Responsif untuk Layar Tablet dan HP */
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* --- ABOUT SECTION --- */
@@ -259,16 +424,19 @@
             align-items: center;
         }
 
-        .about-placeholder-box {
+        .about-image {
             width: 100%;
-            height: 280px;
-            background-color: #e2e8f0;
+            height: 280px; /* Menyesuaikan tinggi kotak sebelumnya */
             border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            font-size: 48px;
+            overflow: hidden; /* Supaya sudut gambar melengkung rapi mengikuti radius */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05); /* Efek bayangan halus */
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Agar gambar tidak gepeng atau terdistorsi */
+            display: block;
         }
 
         .about-title {
@@ -293,7 +461,7 @@
             gap: 8px;
         }
 
-        /* --- HOW IT WORKS SECTION --- */
+       /* --- HOW IT WORKS SECTION --- */
         .how-it-works {
             padding: 80px 0;
             text-align: center;
@@ -307,6 +475,7 @@
             font-size: 28px;
             font-weight: 800;
             margin-bottom: 8px;
+            color: var(--text-main, #1e293b);
         }
 
         .section-subtitle {
@@ -317,48 +486,74 @@
         .steps-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
+            gap: 24px;
             text-align: left;
         }
 
+        /* Tampilan Kartu Mewah & Modern */
         .step-card {
             display: flex;
             gap: 16px;
             align-items: flex-start;
+            background: #ffffff;
+            padding: 28px 20px;
+            border-radius: var(--radius-lg, 16px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
         }
 
+        /* Efek Melayang saat di-hover */
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Lingkaran Angka dengan Gradasi Biru */
         .step-number {
-            width: 36px;
-            height: 36px;
-            background-color: #64748b;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2563eb, #60a5fa);
             color: #ffffff;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 14px;
+            font-size: 15px;
             flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
         }
 
         .step-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             margin-bottom: 6px;
+            color: var(--text-main, #1e293b);
         }
 
         .step-desc {
             font-size: 13px;
             color: var(--text-muted);
+            line-height: 1.5;
         }
 
-        /* --- CTA BANNER --- */
+        /* Responsif untuk Layar HP/Tablet */
+        @media (max-width: 768px) {
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+       /* --- CTA BANNER --- */
         .cta-banner {
             margin: 40px 0 80px 0;
-            background-color: #e2e8f0;
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+            border: 1px solid #93c5fd;
             border-radius: var(--radius-lg);
             padding: 48px;
             text-align: center;
+            box-shadow: 0 10px 25px -5px rgba(147, 197, 253, 0.3);
         }
 
         .cta-title {
@@ -371,6 +566,56 @@
             font-size: 13px;
             color: var(--text-muted);
             margin-bottom: 24px;
+        }
+
+        /* --- FAQ SECTION --- */
+        .faq-section {
+            padding: 60px 0;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        /* Kartu FAQ Modern */
+        .faq-card {
+            background-color: #ffffff;
+            padding: 28px;
+            border-radius: var(--radius-lg, 16px);
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        /* Efek Hover Melayang & Aksen Biru */
+        .faq-card:hover {
+            transform: translateY(-4px);
+            border-color: #93c5fd;
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.06);
+        }
+
+        .faq-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main, #1e293b);
+            margin-bottom: 10px;
+        }
+
+        .faq-card p {
+            font-size: 13px;
+            color: var(--text-muted, #64748b);
+            line-height: 1.6;
+        }
+
+        /* Responsif untuk Layar HP */
+        @media (max-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* --- FOOTER --- */
@@ -447,8 +692,20 @@
                             <a href="#tentang" class="btn-secondary">Pelajari Lebih Lanjut</a>
                         </div>
                     </div>
-                    <div>
-                        <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Preview" class="mockup-img" style="background:#fff; padding:20px; border:1px solid #e2e8f0;">
+                    <div class="hero-mascot" id="baviContainer">
+
+                        <div class="bavi-speech" id="baviSpeech" role="status" aria-live="polite">
+                            Hai, Sobat Bakti! 👋
+                            <br>
+                            Aku Bavi, siap menemanimu!
+                    </div>
+                        <img
+                            src="{{ asset('images/Bavi.png') }}"
+                            data-eyes-open="{{ asset('images/Bavi.png') }}"
+                            data-eyes-closed="{{ asset('images/Bavi_EyesClosed.png') }}"
+                            alt="Bavi, maskot BaktiVoice"
+                            class="Bavi-mascot"
+                            id="baviMascot">
                     </div>
                 </div>
             </div>
@@ -484,8 +741,8 @@
     <!-- ABOUT SECTION -->
     <section class="container about" id="tentang">
         <div class="about-grid">
-            <div class="about-placeholder-box">
-                <i class="fa-regular fa-image"></i>
+            <div class="about-image">
+                <img src="images/landing.jpg" alt="Tentang BaktiVoice">
             </div>
             <div>
                 <span class="badge-pill">Tentang BaktiVoice</span>
@@ -540,6 +797,41 @@
         </div>
     </section>
 
+<!-- FAQ SECTION -->
+<section class="container faq-section" id="faq">
+    <div class="section-header text-center">
+        <span class="badge-pill">Bantuan & FAQ</span>
+        <h2 class="section-title">Pertanyaan yang Sering Diajukan</h2>
+        <p class="section-subtitle">Temukan jawaban cepat seputar penggunaan sistem BaktiVoice.</p>
+    </div>
+
+    <div class="faq-grid">
+        <!-- Item FAQ 1 -->
+        <div class="faq-card">
+            <h3>Apakah identitas saya aman saat mengirim laporan?</h3>
+            <p>Ya, sangat aman. Sistem BaktiVoice menjaga kerahasiaan identitas pelapor agar kamu bisa menyampaikan aspirasi dengan tenang.</p>
+        </div>
+
+        <!-- Item FAQ 2 -->
+        <div class="faq-card">
+            <h3>Berapa lama laporan saya akan ditindaklanjuti?</h3>
+            <p>Laporan akan segera diverifikasi oleh pihak sekolah (Admin/Guru BK) dalam waktu 1x24 jam kerja.</p>
+        </div>
+
+        <!-- Item FAQ 3 -->
+        <div class="faq-card">
+            <h3>Bagaimana cara memantau status laporan saya?</h3>
+            <p>Kamu cukup login ke akun BaktiVoice kamu, lalu buka menu riwayat atau status laporan untuk melihat perkembangannya secara *real-time*.</p>
+        </div>
+
+        <!-- Item FAQ 4 -->
+        <div class="faq-card">
+            <h3>Siapa saja yang bisa menggunakan BaktiVoice?</h3>
+            <p>Sistem ini dapat digunakan oleh seluruh siswa SMK Budi Bakti Ciwidey, guru BK, admin sekolah, hingga wakasek.</p>
+        </div>
+    </div>
+</section>
+
     <!-- FOOTER -->
     <footer class="footer" id="kontak">
         <div class="container footer-container">
@@ -563,6 +855,107 @@
             </div>
         </div>
     </footer>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const bavi = document.getElementById('baviMascot');
+    const container = document.getElementById('baviContainer');
+    const speech = document.getElementById('baviSpeech');
+
+    if (!bavi || !container || !speech) return;
+
+    // =========================
+    // ANIMASI KEDIPAN BAVI
+    // =========================
+    const mataTerbuka = bavi.dataset.eyesOpen;
+    const mataTertutup = bavi.dataset.eyesClosed;
+
+    let blinkTimer;
+    let speechTimer;
+    let hideTimer;
+
+    function kedipBavi() {
+        bavi.src = mataTertutup;
+
+        setTimeout(function () {
+            bavi.src = mataTerbuka;
+        }, 350);
+    }
+
+    function jadwalkanKedipan() {
+        blinkTimer = setTimeout(function () {
+            kedipBavi();
+            jadwalkanKedipan();
+        }, Math.random() * 2000 + 2500);
+    }
+
+    jadwalkanKedipan();
+
+    // =========================
+    // SAPAAN BAVI
+    // =========================
+    const pesanBavi = [
+        'Hai, Sobat Bakti! 👋 Aku Bavi, siap menemanimu!',
+        'Punya aspirasi untuk sekolah? Yuk, sampaikan suaramu! 💙',
+        'Jangan ragu untuk berbagi saran demi sekolah yang lebih baik! ✨'
+    ];
+
+    let pesanIndex = 0;
+
+    function tampilkanPesan(gantiPesan = false) {
+        clearTimeout(hideTimer);
+
+        if (gantiPesan) {
+            pesanIndex = (pesanIndex + 1) % pesanBavi.length;
+        }
+
+        speech.innerHTML = pesanBavi[pesanIndex]
+            .replace(' 👋', ' 👋')
+            .replace(' 💙', ' 💙')
+            .replace(' ✨', ' ✨');
+
+        speech.classList.add('show');
+
+        hideTimer = setTimeout(function () {
+            speech.classList.remove('show');
+        }, 5000);
+    }
+
+    // Sapaan pertama setelah 1,5 detik
+    speechTimer = setTimeout(function () {
+        tampilkanPesan(false);
+    }, 1500);
+
+    // Hover untuk pengguna laptop/komputer
+    container.addEventListener('mouseenter', function () {
+        clearTimeout(speechTimer);
+        tampilkanPesan(true);
+    });
+
+    container.addEventListener('mouseleave', function () {
+        clearTimeout(hideTimer);
+
+        hideTimer = setTimeout(function () {
+            speech.classList.remove('show');
+        }, 1200);
+    });
+
+    // Klik atau sentuh Bavi
+    bavi.addEventListener('click', function () {
+        clearTimeout(speechTimer);
+        tampilkanPesan(true);
+    });
+
+    // Akses dengan keyboard
+    bavi.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            tampilkanPesan(true);
+        }
+    });
+});
+</script>
 
 </body>
 </html>

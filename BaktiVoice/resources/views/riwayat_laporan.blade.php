@@ -15,53 +15,64 @@
     <style>
         :root {
             --primary: #96ace0;
-            --primary-hover: #7f99d4;
-            --background: #f8fafc;
+            --primary-hover: #7b94d1;
+            --background: #eaf1fb; /* Background main content abu-biru soft pastel */
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #496cbd;
-            --text-dark: #0f172a;
+            --border: rgba(186, 210, 240, 0.5);
+            --text-main: #2c4a8e;
             --text-muted: #64748b;
+
+            --font-family: 'Inter', sans-serif;
 
             --sidebar-width: 250px;
             --topbar-height: 70px;
+
             --radius: 12px;
 
-            --font-family: 'Inter', sans-serif;
+            --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+
+            /* Gradasi Biru Pastel Favorit Kamu */
+            --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: var(--font-family);
         }
 
         body {
-            font-family: var(--font-family);
-            background-color: var(--background);
-            color: var(--text-dark);
+            background-color: var(--background) !important;
+            color: var(--text-main);
+            display: flex;
             min-height: 100vh;
         }
 
-        /* SIDEBAR */
+
+/* =====================================================
+SIDEBAR
+===================================================== */
+
         .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-
             width: var(--sidebar-width);
-
-            background-color: #ffffff;
-            border-right: 1px solid var(--border);
-
-            padding: 24px 16px;
+            background: var(--gradient-pastel);
+            border-right: 1px solid rgba(255, 255, 255, 0.4);
 
             display: flex;
             flex-direction: column;
             justify-content: space-between;
 
-            z-index: 1000;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+            z-index: 100;
+
+            padding: 24px 16px;
+            overflow-y: auto;
+            box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
         }
 
         .brand {
@@ -69,24 +80,28 @@
             align-items: center;
             gap: 12px;
 
-            padding: 0 8px;
-            margin-bottom: 28px;
+            padding: 0 12px 24px 12px;
         }
 
         .brand-logo-img {
-            width: 60px;
-            height: 60px;
+            width: 60px !important;
+            height: 60px !important;
+            max-width: 60px !important;
 
-            object-fit: contain;
+            background-color: #ffffff;
+            border-radius: 12px;
 
-            background-color: var(--primary);
-            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         .brand-name {
-            font-size: 21px;
+            font-size: 20px;
             font-weight: 800;
-            color: #496cbd;
+            color: #1e3a70;
         }
 
         .nav-menu {
@@ -94,92 +109,115 @@
 
             display: flex;
             flex-direction: column;
-            gap: 5px;
+
+            gap: 6px;
         }
 
         .nav-item a {
             display: flex;
             align-items: center;
 
+            width: 100%;
+
+            padding: 12px 16px;
+
+            color: #274472;
             text-decoration: none;
 
-            color: #496cbd;
+            font-weight: 600;
+            font-size: 14px;
 
-            padding: 11px 12px;
+            border-radius: 10px;
 
-            border-radius: 9px;
-
-            transition: 0.2s ease;
+            transition: all 0.25s ease;
         }
 
         .nav-content {
             display: flex;
             align-items: center;
-
-            gap: 14px;
-        }
-
-        .nav-item i {
-            width: 18px;
-
-            text-align: center;
-
-            font-size: 15px;
+            gap: 12px;
         }
 
         .nav-item a:hover {
-            background-color: #f1f5f9;
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #102a56;
+            transform: translateX(4px);
         }
-
-
 
         .nav-item.active > a {
-            background-color: var(--primary);
-            color: #ffffff;
-            font-weight: 600;
+            background-color: #ffffff;
+            color: #3b62ac;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
         }
 
+        .nav-item i {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
 
 
         .logout-btn {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 12px;
 
+            padding: 12px 16px;
+
+            color: #e11d48;
             text-decoration: none;
 
-            color: #ef4444;
+            font-weight: 700;
+            font-size: 14px;
 
-            padding: 11px 12px;
+            border-radius: 10px;
 
-            border-radius: 9px;
+            transition: all 0.2s ease;
 
-            transition: 0.2s ease;
+            margin-top: 16px;
         }
 
         .logout-btn:hover {
-            background-color: #fef2f2;
+            background-color: rgba(255, 255, 255, 0.5);
+            color: #be123c;
         }
 
-        .logout-btn i {
-            width: 18px;
-            text-align: center;
-        }
 
-        /* MAIN WRAPPER */
+
+    /* =====================================================
+       MAIN WRAPPER
+    ===================================================== */
+
         .main-wrapper {
             margin-left: var(--sidebar-width);
 
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+
             min-height: 100vh;
+            background-color: var(--background) !important;
         }
 
-        /* TOPBAR */
+
+    /* =====================================================
+       TOPBAR
+    ===================================================== */
+
         .topbar {
             height: var(--topbar-height);
 
-            background-color: #ffffff;
-
-            border-bottom: 1px solid var(--border);
+            background: var(--gradient-pastel);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 
             display: flex;
             align-items: center;
@@ -187,76 +225,90 @@
 
             padding: 0 36px;
 
+            gap: 20px;
+
             position: sticky;
             top: 0;
 
-            z-index: 900;
+            z-index: 90;
+            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
         }
 
         .topbar-icon {
-            width: 40px;
-            height: 40px;
+            color: #274472;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            color: #496cbd;
-
-            border-radius: 50%;
-
-            margin-right: 12px;
+            font-size: 18px;
 
             cursor: pointer;
 
-            transition: 0.2s ease;
+            position: relative;
+
+            padding: 8px;
+
+            border-radius: 50%;
+
+            transition: all 0.2s ease;
         }
 
         .topbar-icon:hover {
-            background-color: #f1f5f9;
-        }
-
-        .topbar-icon i {
-            font-size: 17px;
+            background-color: rgba(255, 255, 255, 0.4);
+            color: #102a56;
         }
 
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 10px;
+
+            gap: 12px;
+
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 30px;
+            transition: background 0.2s;
+        }
+
+        .user-profile:hover {
+            background-color: rgba(255, 255, 255, 0.3);
         }
 
         .avatar {
-            width: 34px;
-            height: 34px;
+            width: 38px;
+            height: 38px;
 
             border-radius: 50%;
 
-            background-color: #e2e8f0;
+            background-color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.8);
 
             display: flex;
             align-items: center;
             justify-content: center;
 
-            color: #496cbd;
-        }
+            color: #3b62ac;
 
-        .avatar i {
-            font-size: 15px;
+            font-size: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
             font-size: 14px;
-            font-weight: 600;
 
-            color: #496cbd;
+            font-weight: 700;
+
+            color: #1e3a70;
         }
 
-        /* CONTENT */
+
+    /* =====================================================
+       MAIN CONTENT
+    ===================================================== */
+
         .content {
-            padding: 32px 36px 50px;
-        }
+            padding: 36px;
 
+            flex: 1;
+            background-color: var(--background) !important;
+        }
         .page-title {
             font-size: 28px;
             font-weight: 800;
@@ -672,11 +724,8 @@
                 <li class="nav-item">
 
 
+    <a href="{{ route('notifikasi_siswa') }}">
 
-
-
-
-                    <a href="#">
 
                         <div class="nav-content">
 
@@ -692,7 +741,7 @@
 
                 <li class="nav-item">
 
-                    <a href="#">
+                    <a href="{{ route('profil_siswa') }}">
 
                         <div class="nav-content">
 
@@ -710,11 +759,10 @@
 
 
         <!-- LOGOUT -->
-        <a href="{{ route('login') }}" class="logout-btn">
-
-            <i class="fa-solid fa-xmark"></i>
-            <span>Logout</span>
-        </a>
+<a href="{{ route('login') }}" class="logout-btn">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
 
     </aside>
 
