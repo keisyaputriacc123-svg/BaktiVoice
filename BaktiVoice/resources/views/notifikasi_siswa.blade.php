@@ -657,7 +657,7 @@
                             <span>Notifikasi</span>
                         </div>
                         <span
-                            class="notification-dot nav-notification-dot"
+                            class="notification-dot nav-notification-dot {{ ($unreadCount ?? 0) === 0 ? 'hidden' : '' }}"
                             id="sidebarDot"
                             aria-label="Ada notifikasi belum dibaca"
                         ></span>
@@ -676,10 +676,13 @@
             </ul>
         </div>
 
-<a href="{{ route('login') }}" class="logout-btn">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    <span>Logout</span>
-</a>
+        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="logout-btn" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </aside>
 
     <!-- MAIN WRAPPER -->
@@ -694,7 +697,7 @@
                 aria-label="Buka notifikasi"
             >
                 <i class="fa-regular fa-bell"></i>
-                <span class="notification-dot topbar-dot" id="topbarDot"></span>
+                <span class="notification-dot topbar-dot {{ ($unreadCount ?? 0) === 0 ? 'hidden' : '' }}" id="topbarDot"></span>
             </a>
 
             <div class="user-profile">
@@ -758,125 +761,73 @@
                 <h2 class="section-label">DAFTAR PEMBERITAHUAN</h2>
 
                 <div class="notification-list" id="notificationList">
+                    @forelse($notifications as $notif)
+                        @php
+                            // Mengambil status is_read dari database (false/0 = unread)
+                            $isUnread = !$notif->is_read;
 
-                    <!-- NOTIFIKASI 1: TANGGAPAN WAKASEK -->
-                    <article
-                        class="notification-card unread"
-                        data-category="tanggapan"
-                        data-read="false"
-                    >
-                        <div class="notification-icon icon-tanggapan">
-                            <i class="fa-solid fa-message"></i>
-                        </div>
+                            // Menentukan ikon dan kelas berdasarkan kategori atau tipe pesan
+                            $iconClass = 'fa-solid fa-bell';
+                            $bgIconClass = 'icon-status';
 
-                        <div class="notification-body">
-                            <div class="notification-heading">
-                                <h3 class="notification-title">
-                                    Tanggapan Baru dari Wakasek
-                                </h3>
-                                <span class="notification-dot item-dot"></span>
+                            if ($notif->category == 'tanggapan') {
+                                $iconClass = 'fa-solid fa-message';
+                                $bgIconClass = 'icon-tanggapan';
+                            } elseif ($notif->category == 'tindak-lanjut') {
+                                $iconClass = 'fa-solid fa-handshake';
+                                $bgIconClass = 'icon-tindaklanjut';
+                            }
+                        @endphp
+
+                        <article
+                            class="notification-card {{ $isUnread ? 'unread' : '' }}"
+                            data-category="{{ $notif->category ?? 'status' }}"
+                            data-read="{{ $isUnread ? 'false' : 'true' }}"
+                            data-id="{{ $notif->id_notifikasi }}"
+                        >
+                            <div class="notification-icon {{ $bgIconClass }}">
+                                <i class="{{ $iconClass }}"></i>
                             </div>
 
-                            <p class="notification-message">
-                                Wakasek Sarana memberikan tanggapan pada laporan
-                                Fasilitas Kelas. Buka laporan untuk melihat
-                                informasi selengkapnya.
-                            </p>
+                            <div class="notification-body">
+                                <div class="notification-heading">
+                                    <h3 class="notification-title">
+                                        {{ $notif->title }}
+                                    </h3>
+                                    @if($isUnread)
+                                        <span class="notification-dot item-dot"></span>
+                                    @endif
+                                </div>
 
-                            <div class="notification-meta">
-                                <span>Wakasek Sarana</span>
-                                <span class="meta-separator">•</span>
-                                <span>Hari ini, 10.30</span>
-                            </div>
-                        </div>
+                                <p class="notification-message">
+                                    {{ $notif->message }}
+                                </p>
 
-                        <div class="notification-actions">
-                            <a href="{{ route('riwayat_laporan') }}" class="btn-view">
-                                Lihat Laporan <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                            <button type="button" class="btn-read">
-                                Tandai dibaca
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- NOTIFIKASI 2: TINDAK LANJUT GURU BK -->
-                    <article
-                        class="notification-card unread"
-                        data-category="tindak-lanjut"
-                        data-read="false"
-                    >
-                        <div class="notification-icon icon-tindaklanjut">
-                            <i class="fa-solid fa-handshake"></i>
-                        </div>
-
-                        <div class="notification-body">
-                            <div class="notification-heading">
-                                <h3 class="notification-title">
-                                    Tindak Lanjut Laporan Tersedia
-                                </h3>
-                                <span class="notification-dot item-dot"></span>
+                                <div class="notification-meta">
+                                    <span>{{ $notif->sender_name ?? 'Sistem BaktiVoice' }}</span>
+                                    <span class="meta-separator">•</span>
+                                    <span>{{ $notif->created_at->diffForHumans() }}</span>
+                                </div>
                             </div>
 
-                            <p class="notification-message">
-                                Guru BK telah memberikan tindak lanjut
-                                untuk laporanmu. Silakan buka laporan untuk
-                                membaca informasinya.
-                            </p>
-
-                            <div class="notification-meta">
-                                <span>Guru BK</span>
-                                <span class="meta-separator">•</span>
-                                <span>Hari ini, 09.15</span>
+                            <div class="notification-actions">
+                                <a href="{{ route('riwayat_laporan') }}" class="btn-view">
+                                    Lihat Laporan <i class="fa-solid fa-arrow-right"></i>
+                                </a>
+                                @if($isUnread)
+                                    <button type="button" class="btn-read" onclick="markAsRead('{{ $notif->id_notifikasi }}', this)">
+                                        Tandai dibaca
+                                    </button>
+                                @endif
                             </div>
+                        </article>
+                    @empty
+                        <div class="empty-state" id="dbEmptyState">
+                            <i class="fa-regular fa-bell-slash"></i>
+                            <h3>Tidak Ada Notifikasi</h3>
+                            <p>Belum ada pemberitahuan untuk akunmu saat ini.</p>
                         </div>
-
-                        <div class="notification-actions">
-                            <a href="{{ route('riwayat_laporan') }}" class="btn-view">
-                                Lihat Laporan <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                            <button type="button" class="btn-read">
-                                Tandai dibaca
-                            </button>
-                        </div>
-                    </article>
-
-                    <!-- NOTIFIKASI 3: STATUS LAPORAN -->
-                    <article
-                        class="notification-card"
-                        data-category="status"
-                        data-read="true"
-                    >
-                        <div class="notification-icon icon-status">
-                            <i class="fa-solid fa-rotate"></i>
-                        </div>
-
-                        <div class="notification-body">
-                            <div class="notification-heading">
-                                <h3 class="notification-title">
-                                    Status Laporan Diperbarui
-                                </h3>
-                            </div>
-
-                            <p class="notification-message">
-                                Laporan Fasilitas Toilet telah selesai
-                                ditindaklanjuti oleh pihak sekolah.
-                            </p>
-
-                            <div class="notification-meta">
-                                <span>Admin Sekolah</span>
-                                <span class="meta-separator">•</span>
-                                <span>10 Oktober 2026, 15.00</span>
-                            </div>
-                        </div>
-
-                        <div class="notification-actions">
-                            <a href="{{ route('riwayat_laporan') }}" class="btn-view">
-                                Lihat Laporan <i class="fa-solid fa-arrow-right"></i>
-                            </a>
-                        </div>
-                    </article>
-
+                    @endforelse
                 </div>
 
                 <!-- PESAN JIKA FILTER KOSONG -->
@@ -890,14 +841,73 @@
         </main>
     </div>
 
+    <!-- JAVASCRIPT UNTUK INTERAKSI & AJAX DATABASE -->
     <script>
+        // Fungsi untuk menandai 1 notifikasi sudah dibaca (menyimpan ke database via AJAX)
+        function markAsRead(id, buttonElement) {
+            fetch(`/dashboard/notifikasi/read/${id}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    const card = buttonElement.closest('.notification-card');
+                    card.dataset.read = 'true';
+                    card.classList.remove('unread');
+
+                    const itemDot = card.querySelector('.item-dot');
+                    if (itemDot) itemDot.remove();
+
+                    buttonElement.remove();
+                    updateIndicators();
+                    applyFilter();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Fungsi tombol "Tandai Semua Dibaca" (menyimpan ke database via AJAX)
+        document.getElementById('markAllBtn').addEventListener('click', () => {
+            fetch(`/dashboard/notifikasi/read-all`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    document.querySelectorAll('.notification-card').forEach(card => {
+                        card.dataset.read = 'true';
+                        card.classList.remove('unread');
+
+                        const itemDot = card.querySelector('.item-dot');
+                        if (itemDot) itemDot.remove();
+
+                        const readButton = card.querySelector('.btn-read');
+                        if (readButton) readButton.remove();
+                    });
+
+                    updateIndicators();
+                    applyFilter();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        // Logika Filter dan Indikator
         const filterButtons = document.querySelectorAll('.filter-btn');
         const notificationCards = document.querySelectorAll('.notification-card');
         const emptyState = document.getElementById('emptyState');
 
         let activeFilter = 'semua';
 
-        // Memperbarui indikator berdasarkan notifikasi yang belum dibaca.
+
         function updateIndicators() {
             const unreadCards = [...notificationCards].filter(
                 card => card.dataset.read === 'false'
@@ -906,30 +916,22 @@
             const counts = {
                 'semua': unreadCards.length,
                 'belum-dibaca': unreadCards.length,
-                'status': unreadCards.filter(
-                    card => card.dataset.category === 'status'
-                ).length,
-                'tanggapan': unreadCards.filter(
-                    card => card.dataset.category === 'tanggapan'
-                ).length,
-                'tindak-lanjut': unreadCards.filter(
-                    card => card.dataset.category === 'tindak-lanjut'
-                ).length
+                'status': unreadCards.filter(card => card.dataset.category === 'status').length,
+                'tanggapan': unreadCards.filter(card => card.dataset.category === 'tanggapan').length,
+                'tindak-lanjut': unreadCards.filter(card => card.dataset.category === 'tindak-lanjut').length
             };
 
             document.querySelectorAll('.filter-dot').forEach(dot => {
                 const category = dot.dataset.dot;
-                dot.classList.toggle('hidden', counts[category] === 0);
+                dot.classList.toggle('hidden', (counts[category] || 0) === 0);
             });
 
-            document.getElementById('sidebarDot')
-                .classList.toggle('hidden', counts.semua === 0);
-
-            document.getElementById('topbarDot')
-                .classList.toggle('hidden', counts.semua === 0);
+            const sidebarDot = document.getElementById('sidebarDot');
+            const topbarDot = document.getElementById('topbarDot');
+            if(sidebarDot) sidebarDot.classList.toggle('hidden', counts.semua === 0);
+            if(topbarDot) topbarDot.classList.toggle('hidden', counts.semua === 0);
         }
 
-        // Menampilkan notifikasi sesuai kategori yang dipilih.
         function applyFilter() {
             let visibleCount = 0;
 
@@ -952,7 +954,9 @@
                 if (show) visibleCount++;
             });
 
-            emptyState.hidden = visibleCount !== 0;
+            if(emptyState) {
+                emptyState.hidden = (notificationCards.length === 0) || (visibleCount !== 0);
+            }
         }
 
         filterButtons.forEach(button => {
@@ -967,44 +971,7 @@
             });
         });
 
-        // Tandai satu notifikasi sudah dibaca.
-        notificationCards.forEach(card => {
-            const readButton = card.querySelector('.btn-read');
-
-            if (!readButton) return;
-
-            readButton.addEventListener('click', () => {
-                card.dataset.read = 'true';
-                card.classList.remove('unread');
-
-                const itemDot = card.querySelector('.item-dot');
-                if (itemDot) itemDot.classList.add('hidden');
-
-                readButton.remove();
-
-                updateIndicators();
-                applyFilter();
-            });
-        });
-
-        // Tandai semua notifikasi sudah dibaca.
-        document.getElementById('markAllBtn').addEventListener('click', () => {
-            notificationCards.forEach(card => {
-                card.dataset.read = 'true';
-                card.classList.remove('unread');
-
-                const itemDot = card.querySelector('.item-dot');
-                if (itemDot) itemDot.classList.add('hidden');
-
-                const readButton = card.querySelector('.btn-read');
-                if (readButton) readButton.remove();
-            });
-
-            updateIndicators();
-            applyFilter();
-        });
-
-        // Inisialisasi halaman.
+        // Inisialisasi awal saat halaman dimuat
         updateIndicators();
         applyFilter();
     </script>
