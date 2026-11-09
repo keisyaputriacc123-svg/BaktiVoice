@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfilAdminController;
 use App\Http\Controllers\ProfilSiswaController;
@@ -44,12 +46,24 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->name('logout');
 
 // ================================
-// LUPA PASSWORD
+// LUPA PASSWORD & RESET PASSWORD
 // ================================
-Route::get('/forgot-password', function () {
-    return view('welcome');
-})->name('password.request');
 
+// Menampilkan halaman lupa password
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+
+// Mengirim link reset password
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+// Menampilkan halaman reset password
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+
+// Memproses password baru
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.reset.update');
 
 /* ================================
     REGISTER
