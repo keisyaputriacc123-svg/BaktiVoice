@@ -169,7 +169,7 @@
             text-align: center;
         }
 
-        
+
 
         /* =====================================================
            LOGOUT
@@ -917,20 +917,18 @@
 
                         <!-- LIHAT LAPORAN -->
 
-                        <a
-                            href="{{ route('detail_laporan_siswa') }}"
-                            class="btn btn-primary"
-                        >
-
-                            <i class="fa-regular fa-file-lines"></i>
-
-                            Lihat Laporan
-
-                            <i class="fa-solid fa-arrow-right"></i>
-
-                        </a>
-
-
+                       @if(isset($laporan))
+    <a href="{{ route('detail_laporan_siswa', $laporan->id_laporan ?? $laporan->id) }}" class="btn btn-primary">
+        <i class="fa-regular fa-file-lines"></i>
+        Lihat Laporan
+        <i class="fa-solid fa-arrow-right"></i>
+    </a>
+@else
+    <a href="{{ route('dashboard_siswa') }}" class="btn btn-primary">
+        <i class="fa-solid fa-house"></i>
+        Kembali ke Dashboard
+    </a>
+@endif
                         <!-- KEMBALI KE BERANDA -->
 
                         <a
