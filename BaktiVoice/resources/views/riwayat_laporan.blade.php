@@ -157,7 +157,7 @@ SIDEBAR
             text-align: center;
         }
 
-        
+
 
 
         /* =====================================================
@@ -724,7 +724,7 @@ SIDEBAR
                 <li class="nav-item">
 
 
-    <a href="{{ route('notifikasi_siswa') }}">
+                    <a href="{{ route('notifikasi_siswa') }}">
 
 
                         <div class="nav-content">
@@ -759,10 +759,10 @@ SIDEBAR
 
 
         <!-- LOGOUT -->
-<a href="{{ route('login') }}" class="logout-btn">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    <span>Logout</span>
-</a>
+        <a href="{{ route('login') }}" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
 
     </aside>
 
@@ -823,7 +823,7 @@ SIDEBAR
             <div class="report-list" id="reportList">
                 @forelse($laporans as $laporan)
                     @php
-                        $statusNama = $laporan->status->nama_status ?? 'Pending';
+                        $statusNama = $laporan->status ?? 'Pending';
                         $statusClass = match(strtolower($statusNama)) {
                             'proses', 'diproses' => 'status-diproses',
                             'selesai' => 'status-selesai',
@@ -871,6 +871,7 @@ SIDEBAR
         </main>
 
     </div>
+
 
     <!-- SEARCH JAVASCRIPT -->
     <script>
