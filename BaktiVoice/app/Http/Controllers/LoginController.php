@@ -16,7 +16,7 @@ class LoginController extends Controller
         return view('login'); // Pastikan file blade kamu bernama login.blade.php di folder resources/views
     }
 
-    // Memproses form login dan mengarahkan sesuai role
+  // Memproses form login dan mengarahkan sesuai role
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -28,8 +28,10 @@ class LoginController extends Controller
         // Cek apakah inputan berupa email atau username/NISN
         $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (Auth::attempt([$fieldType => $request->login, 'password' => $request->password], $request->remember)) {
+        if (Auth::attempt([$fieldType => $request->login, 'password' => $request->password], false)) {
             $request->session()->regenerate();
+
+            // AMBIL DATA USER YANG SEDANG LOGIN DI SINI
             $user = Auth::user();
 
             // Redirect berdasarkan role pengguna
