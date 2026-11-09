@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>BaktiVoice - Notifikasi Admin</title>
 
     <!-- Google Fonts: Inter -->
@@ -904,7 +905,7 @@
         <!-- Form Logout -->
         <form action="{{ route('logout') }}" method="POST" style="margin-top: 16px;">
             @csrf
-            <button type="submit" class="logout-btn">
+            <button type="submit" class="logout-btn" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
                 <i class="fa-solid fa-right-from-bracket"></i>
                 <span>Logout</span>
             </button>
@@ -914,7 +915,7 @@
     <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
-        <!-- TOPBAR - STRUKTUR DIPERTAHANKAN -->
+        <!-- TOPBAR -->
         <header class="topbar">
             <div class="topbar-icon" title="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
@@ -952,7 +953,7 @@
                 </button>
             </div>
 
-            <!-- RINGKASAN NOTIFIKASI -->
+            <!-- RINGKASAN NOTIFIKASI (DINAMIS DARI DATABASE) -->
             <section class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon blue">
@@ -960,7 +961,7 @@
                     </div>
                     <div>
                         <div class="stat-label">Total Notifikasi</div>
-                        <div class="stat-value" id="totalCount">5</div>
+                        <div class="stat-value" id="totalCount">{{ $totalCount ?? 0 }}</div>
                     </div>
                 </div>
 
@@ -970,7 +971,7 @@
                     </div>
                     <div>
                         <div class="stat-label">Belum Dibaca</div>
-                        <div class="stat-value" id="unreadCount">4</div>
+                        <div class="stat-value" id="unreadCount">{{ $unreadCount ?? 0 }}</div>
                     </div>
                 </div>
 
@@ -980,7 +981,7 @@
                     </div>
                     <div>
                         <div class="stat-label">Laporan Baru</div>
-                        <div class="stat-value" id="newReportCount">1</div>
+                        <div class="stat-value" id="newReportCount">{{ $newReportCount ?? 0 }}</div>
                     </div>
                 </div>
 
@@ -990,285 +991,81 @@
                     </div>
                     <div>
                         <div class="stat-label">Masukan &amp; Tindak Lanjut</div>
-                        <div class="stat-value" id="feedbackCount">2</div>
+                        <div class="stat-value" id="feedbackCount">{{ $feedbackCount ?? 0 }}</div>
                     </div>
                 </div>
             </section>
 
             <!-- FILTER NOTIFIKASI -->
             <div class="filter-container">
-                <button type="button" class="filter-btn active" data-filter="all">
-                    Semua
-                </button>
-
-                <button type="button" class="filter-btn" data-filter="unread">
-                    Belum Dibaca
-                </button>
-
-                <button type="button" class="filter-btn" data-filter="laporan">
-                    Laporan Baru
-                </button>
-
-                <button type="button" class="filter-btn" data-filter="bk">
-                    Masukan Guru BK
-                </button>
-
-                <button type="button" class="filter-btn" data-filter="wakasek">
-                    Tindak Lanjut Wakasek
-                </button>
-
-                <button type="button" class="filter-btn" data-filter="status">
-                    Status Laporan
-                </button>
+                <button type="button" class="filter-btn active" data-filter="all">Semua</button>
+                <button type="button" class="filter-btn" data-filter="unread">Belum Dibaca</button>
+                <button type="button" class="filter-btn" data-filter="laporan">Laporan Baru</button>
+                <button type="button" class="filter-btn" data-filter="bk">Masukan Guru BK</button>
+                <button type="button" class="filter-btn" data-filter="wakasek">Tindak Lanjut Wakasek</button>
+                <button type="button" class="filter-btn" data-filter="status">Status Laporan</button>
             </div>
 
-            <!-- DAFTAR NOTIFIKASI -->
+            <!-- DAFTAR NOTIFIKASI (LOOPING DARI DATABASE) -->
             <section class="notification-list" id="notificationList">
-
-                <!-- NOTIFIKASI 1: LAPORAN BARU -->
-                <article
-                    class="notification-card unread"
-                    data-category="laporan"
-                >
-                    <div class="notification-icon icon-laporan">
-                        <i class="fa-solid fa-file-circle-plus"></i>
-                    </div>
-
-                    <div class="notification-body">
-                        <div class="notification-title-row">
-                            <h3 class="notification-title">Laporan Baru Diterima</h3>
-                            <span class="type-badge badge-laporan">Laporan Baru</span>
+                @forelse($notifications as $notif)
+                    <article
+                        class="notification-card {{ !$notif->is_read ? 'unread' : '' }}"
+                        data-category="{{ $notif->category ?? 'status' }}"
+                        data-id="{{ $notif->id_notifikasi }}"
+                    >
+                        <div class="notification-icon icon-{{ $notif->category ?? 'status' }}">
+                            <i class="fa-solid fa-bell"></i>
                         </div>
 
-                        <p class="notification-message">
-                            Ada laporan baru berjudul
-                            <strong>“Kendala Fasilitas Kelas”</strong>
-                            yang dikirimkan oleh siswa. Silakan periksa laporan
-                            untuk menentukan status penanganannya.
-                        </p>
+                        <div class="notification-body">
+                            <div class="notification-title-row">
+                                <h3 class="notification-title">{{ $notif->title ?? $notif->judul }}</h3>
+                                <span class="type-badge badge-{{ $notif->category ?? 'status' }}">
+                                    {{ $notif->type_label ?? 'Informasi' }}
+                                </span>
+                            </div>
 
-                        <div class="notification-meta">
-                            <span>
-                                <i class="fa-regular fa-clock"></i>
-                                Hari ini, 09.15
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-user"></i>
-                                Sistem BaktiVoice
-                            </span>
-                        </div>
-                    </div>
+                            <p class="notification-message">
+                                {!! $notif->message ?? $notif->pesan !!}
+                            </p>
 
-                    <div class="unread-dot" title="Belum dibaca"></div>
-
-                    <div class="notification-actions">
-                        <a href="{{ route('dashboard_admin') }}" class="btn-view">
-                            <i class="fa-solid fa-eye"></i>
-                            Lihat Laporan
-                        </a>
-
-                        <button type="button" class="btn-read">
-                            Tandai Dibaca
-                        </button>
-                    </div>
-                </article>
-
-                <!-- NOTIFIKASI 2: MASUKAN GURU BK -->
-                <article
-                    class="notification-card unread"
-                    data-category="bk"
-                >
-                    <div class="notification-icon icon-bk">
-                        <i class="fa-solid fa-comments"></i>
-                    </div>
-
-                    <div class="notification-body">
-                        <div class="notification-title-row">
-                            <h3 class="notification-title">Masukan dari Guru BK</h3>
-                            <span class="type-badge badge-bk">Masukan Guru BK</span>
+                            <div class="notification-meta">
+                                <span>
+                                    <i class="fa-regular fa-clock"></i>
+                                    {{ $notif->created_at->diffForHumans() }}
+                                </span>
+                                @if($notif->is_read)
+                                    <span>
+                                        <i class="fa-regular fa-envelope-open"></i> Sudah dibaca
+                                    </span>
+                                @endif
+                            </div>
                         </div>
 
-                        <p class="notification-message">
-                            Guru BK memberikan masukan terkait laporan
-                            <strong>“Kasus Perundungan Siswa”</strong>.
-                            Tinjau masukan tersebut sebagai bahan pertimbangan
-                            sebelum menentukan langkah penanganan.
-                        </p>
+                        <div class="unread-dot" title="Belum dibaca"></div>
 
-                        <div class="notification-meta">
-                            <span>
-                                <i class="fa-regular fa-clock"></i>
-                                Hari ini, 08.45
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-user-tie"></i>
-                                Guru BK
-                            </span>
+                        <div class="notification-actions">
+                            <a href="{{ route('laporan.show', $notif->id_laporan ?? '#') }}" class="btn-view">
+                                <i class="fa-solid fa-eye"></i> Lihat Laporan
+                            </a>
+
+                            <button type="button" class="btn-read" {{ $notif->is_read ? 'disabled' : '' }}>
+                                @if($notif->is_read)
+                                    <i class="fa-solid fa-check"></i> Sudah Dibaca
+                                @else
+                                    Tandai Dibaca
+                                @endif
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="unread-dot" title="Belum dibaca"></div>
-
-                    <div class="notification-actions">
-                        <a href="{{ route('rekap_laporan') }}" class="btn-view">
-                            <i class="fa-solid fa-eye"></i>
-                            Lihat Laporan
-                        </a>
-
-                        <button type="button" class="btn-read">
-                            Tandai Dibaca
-                        </button>
-                    </div>
-                </article>
-
-                <!-- NOTIFIKASI 3: TINDAK LANJUT WAKASEK -->
-                <article
-                    class="notification-card unread"
-                    data-category="wakasek"
-                >
-                    <div class="notification-icon icon-wakasek">
-                        <i class="fa-solid fa-clipboard-check"></i>
-                    </div>
-
-                    <div class="notification-body">
-                        <div class="notification-title-row">
-                            <h3 class="notification-title">Tindak Lanjut dari Wakasek</h3>
-                            <span class="type-badge badge-wakasek">Tindak Lanjut</span>
-                        </div>
-
-                        <p class="notification-message">
-                            Wakasek memberikan informasi tindak lanjut atas
-                            laporan <strong>“Jadwal Pelajaran Bentrok”</strong>.
-                            Silakan tinjau informasi tersebut untuk proses
-                            pengelolaan laporan selanjutnya.
-                        </p>
-
-                        <div class="notification-meta">
-                            <span>
-                                <i class="fa-regular fa-clock"></i>
-                                Kemarin, 14.30
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-user-tie"></i>
-                                Wakasek
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="unread-dot" title="Belum dibaca"></div>
-
-                    <div class="notification-actions">
-                        <a href="{{ route('rekap_laporan') }}" class="btn-view">
-                            <i class="fa-solid fa-eye"></i>
-                            Lihat Laporan
-                        </a>
-
-                        <button type="button" class="btn-read">
-                            Tandai Dibaca
-                        </button>
-                    </div>
-                </article>
-
-                <!-- NOTIFIKASI 4: STATUS LAPORAN -->
-                <article
-                    class="notification-card unread"
-                    data-category="status"
-                >
-                    <div class="notification-icon icon-status">
-                        <i class="fa-solid fa-arrows-rotate"></i>
-                    </div>
-
-                    <div class="notification-body">
-                        <div class="notification-title-row">
-                            <h3 class="notification-title">Laporan Memerlukan Penanganan</h3>
-                            <span class="type-badge badge-status">Status Laporan</span>
-                        </div>
-
-                        <p class="notification-message">
-                            Laporan <strong>“Kendala Tempat Magang”</strong>
-                            memerlukan peninjauan status oleh Admin Sekolah.
-                            Periksa detail laporan sebelum mengambil keputusan.
-                        </p>
-
-                        <div class="notification-meta">
-                            <span>
-                                <i class="fa-regular fa-clock"></i>
-                                Kemarin, 11.20
-                            </span>
-                            <span>
-                                <i class="fa-solid fa-rotate"></i>
-                                Pengingat peninjauan
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="unread-dot" title="Belum dibaca"></div>
-
-                    <div class="notification-actions">
-                        <a href="{{ route('dashboard_admin') }}" class="btn-view">
-                            <i class="fa-solid fa-eye"></i>
-                            Lihat Laporan
-                        </a>
-
-                        <button type="button" class="btn-read">
-                            Tandai Dibaca
-                        </button>
-                    </div>
-                </article>
-
-                <!-- NOTIFIKASI 5: SUDAH DIBACA -->
-                <article
-                    class="notification-card"
-                    data-category="status"
-                >
-                    <div class="notification-icon icon-status">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-
-                    <div class="notification-body">
-                        <div class="notification-title-row">
-                            <h3 class="notification-title">Informasi Status Laporan</h3>
-                            <span class="type-badge badge-status">Status Laporan</span>
-                        </div>
-
-                        <p class="notification-message">
-                            Informasi pembaruan laporan
-                            <strong>“Jadwal Pelajaran Bentrok”</strong>
-                            tersedia untuk ditinjau melalui halaman pengelolaan
-                            laporan.
-                        </p>
-
-                        <div class="notification-meta">
-                            <span>
-                                <i class="fa-regular fa-clock"></i>
-                                16 Oktober 2026, 10.00
-                            </span>
-                            <span>
-                                <i class="fa-regular fa-envelope-open"></i>
-                                Sudah dibaca
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="unread-dot" title="Belum dibaca"></div>
-
-                    <div class="notification-actions">
-                        <a href="{{ route('dashboard_admin') }}" class="btn-view">
-                            <i class="fa-solid fa-eye"></i>
-                            Lihat Laporan
-                        </a>
-
-                        <button type="button" class="btn-read" disabled>
-                            <i class="fa-solid fa-check"></i>
-                            Sudah Dibaca
-                        </button>
-                    </div>
-                </article>
-
+                    </article>
+                @empty
+                    <!-- Kosong ditangani oleh element empty-state di bawah -->
+                @endforelse
             </section>
 
             <!-- EMPTY STATE -->
-            <div class="empty-state" id="emptyState">
+            <div class="empty-state" id="emptyState" style="display: none;">
                 <div class="empty-icon">
                     <i class="fa-regular fa-bell-slash"></i>
                 </div>
@@ -1282,8 +1079,10 @@
         </main>
     </div>
 
-    <!-- SCRIPT -->
+    <!-- SCRIPT INTERAKSI -->
     <script>
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
         // Dropdown Data Master
         function toggleDropdown(menuId, arrowId) {
             const menu = document.getElementById(menuId);
@@ -1328,7 +1127,7 @@
                 }
             });
 
-            emptyState.classList.toggle('show', visibleCount === 0);
+            emptyState.style.display = (visibleCount === 0 && notificationCards.length > 0) ? 'block' : 'none';
         }
 
         filterButtons.forEach(function(button) {
@@ -1342,71 +1141,74 @@
             });
         });
 
-        // Tandai satu notifikasi sebagai dibaca
+        // Tandai satu notifikasi sebagai dibaca via AJAX
         document.querySelectorAll('.btn-read:not(:disabled)').forEach(function(button) {
             button.addEventListener('click', function() {
                 const card = button.closest('.notification-card');
+                const notifId = card.dataset.id;
 
-                card.classList.remove('unread');
+                fetch(`/dashboard/notifikasi/read/${notifId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        card.classList.remove('unread');
+                        button.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Dibaca';
+                        button.disabled = true;
 
-                button.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Dibaca';
-                button.disabled = true;
+                        const meta = card.querySelector('.notification-meta');
+                        const readLabel = document.createElement('span');
+                        readLabel.innerHTML = '<i class="fa-regular fa-envelope-open"></i> Sudah dibaca';
+                        meta.appendChild(readLabel);
 
-                const meta = card.querySelector('.notification-meta');
-                const readLabel = document.createElement('span');
-
-                readLabel.innerHTML =
-                    '<i class="fa-regular fa-envelope-open"></i> Sudah dibaca';
-
-                meta.appendChild(readLabel);
-
-                updateCounters();
-                updateNotifications();
+                        updateCounters();
+                        updateNotifications();
+                    }
+                });
             });
         });
 
-        // Tandai semua notifikasi sebagai dibaca
+        // Tandai semua notifikasi sebagai dibaca via AJAX
         document.getElementById('markAllRead').addEventListener('click', function() {
-            notificationCards.forEach(function(card) {
-                card.classList.remove('unread');
+            fetch('/dashboard/notifikasi/read-all', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    notificationCards.forEach(function(card) {
+                        card.classList.remove('unread');
+                        const button = card.querySelector('.btn-read');
 
-                const button = card.querySelector('.btn-read');
+                        if (button) {
+                            button.innerHTML = '<i class="fa-solid fa-check"></i> Sudah Dibaca';
+                            button.disabled = true;
+                        }
+                    });
 
-                if (button) {
-                    button.innerHTML =
-                        '<i class="fa-solid fa-check"></i> Sudah Dibaca';
-                    button.disabled = true;
+                    updateCounters();
+                    updateNotifications();
                 }
             });
-
-            updateCounters();
-            updateNotifications();
         });
 
-        // Perbarui jumlah notifikasi
+        // Perbarui jumlah hitungan statistik di badge atas
         function updateCounters() {
-            const total = notificationCards.length;
-
-            const unread = document.querySelectorAll(
-                '.notification-card.unread'
-            ).length;
-
-            const newReports = document.querySelectorAll(
-                '.notification-card[data-category="laporan"]'
-            ).length;
-
-            const feedback = document.querySelectorAll(
-                '.notification-card[data-category="bk"], ' +
-                '.notification-card[data-category="wakasek"]'
-            ).length;
-
-            document.getElementById('totalCount').textContent = total;
+            const unread = document.querySelectorAll('.notification-card.unread').length;
             document.getElementById('unreadCount').textContent = unread;
-            document.getElementById('newReportCount').textContent = newReports;
-            document.getElementById('feedbackCount').textContent = feedback;
+
         }
 
-        updateCounters();
+        // Inisialisasi awal saat halaman dimuat
         updateNotifications();
     </script>
 
