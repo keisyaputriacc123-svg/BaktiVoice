@@ -625,11 +625,7 @@
     <aside class="sidebar">
         <div>
             <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
                 <span class="brand-name">BaktiVoice</span>
             </div>
 
@@ -654,15 +650,13 @@
                         <span>Monitoring</span>
                     </a>
                 </li>
-
-<li class="nav-item">
-    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notifikasi</span>
-        <span class="notification-dot"></span>
-    </a>
-</li>
-
+                <li class="nav-item">
+                    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notifikasi</span>
+                        <span class="notification-dot"></span>
+                    </a>
+                </li>
                 <li class="nav-item active">
                     <a href="{{ route('profil_bk') }}" title="profil">
                         <i class="fa-regular fa-user"></i>
@@ -672,20 +666,18 @@
             </ul>
         </div>
 
-        <a href="{{ route('login') }}" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </a>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </aside>
 
     <div class="main-wrapper">
         <header class="topbar">
-            <a
-                href="{{ route('notifikasi_bk') }}"
-                class="topbar-icon"
-                title="Notifikasi"
-                aria-label="Notifikasi"
-            >
+            <a href="{{ route('notifikasi_bk') }}" class="topbar-icon" title="Notifikasi" aria-label="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
             </a>
 
@@ -759,12 +751,12 @@
                     <p class="identity-note">
                         <i class="fa-solid fa-lock"></i>
                         <br>
-                        Jaga kerahasiaan akun dan pastikan informasi
-                        profil selalu benar.
+                        Jaga kerahasiaan akun dan pastikan informasi profil selalu benar.
                     </p>
                 </section>
 
                 <div>
+                    <!-- Form Informasi Pribadi -->
                     <section class="card">
                         <div class="card-header">
                             <h2 class="card-title">
@@ -777,12 +769,12 @@
                         </div>
 
                         <div class="card-body">
-                            <form id="profileForm">
+                            <form action="{{ route('profil_bk.update') }}" method="POST">
+                                @csrf
+                                @method('PUT')
                                 <div class="form-grid">
                                     <div class="form-group">
-                                        <label for="name" class="form-label">
-                                            Nama Lengkap
-                                        </label>
+                                        <label for="name" class="form-label">Nama Lengkap</label>
                                         <input
                                             type="text"
                                             id="name"
@@ -795,9 +787,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="username" class="form-label">
-                                            Username
-                                        </label>
+                                        <label for="username" class="form-label">Username</label>
                                         <input
                                             type="text"
                                             id="username"
@@ -810,9 +800,7 @@
                                     </div>
 
                                     <div class="form-group full-width">
-                                        <label for="email" class="form-label">
-                                            Alamat Email
-                                        </label>
+                                        <label for="email" class="form-label">Alamat Email</label>
                                         <input
                                             type="email"
                                             id="email"
@@ -831,23 +819,15 @@
                                 <div class="form-footer">
                                     <p class="privacy-note">
                                         <i class="fa-solid fa-lock"></i>
-                                        Role Guru BK tidak dapat diubah
-                                        melalui halaman profil.
+                                        Role Guru BK tidak dapat diubah melalui halaman profil.
                                     </p>
 
                                     <div class="form-actions">
-                                        <a
-                                            href="{{ route('dashboard_bk') }}"
-                                            class="btn-secondary"
-                                        >
+                                        <a href="{{ route('dashboard_bk') }}" class="btn-secondary">
                                             Batal
                                         </a>
 
-                                        <button
-                                            type="button"
-                                            class="btn-primary"
-                                            id="saveButton"
-                                        >
+                                        <button type="submit" class="btn-primary">
                                             <i class="fa-solid fa-floppy-disk"></i>
                                             Simpan Perubahan
                                         </button>
@@ -857,6 +837,7 @@
                         </div>
                     </section>
 
+                   <!-- Form Keamanan Akun (Ubah Password) -->
                     <section class="card" style="margin-top:24px">
                         <div class="card-header">
                             <h2 class="card-title">
@@ -864,25 +845,87 @@
                                 Keamanan Akun
                             </h2>
                             <p class="card-subtitle">
-                                Jaga keamanan akses akun Guru BK.
+                                Perbarui password untuk menjaga keamanan akun.
                             </p>
                         </div>
 
                         <div class="card-body">
-                            <div class="security-row">
-                                <div class="security-icon">
-                                    <i class="fa-solid fa-key"></i>
-                                </div>
-                                <div class="security-info">
-                                    <h3>Password Akun</h3>
-                                    <p>
-                                        Password tidak ditampilkan demi keamanan.
-                                        Jangan membagikan password kepada orang lain.
-                                        Fitur ubah password dapat ditambahkan
-                                        setelah fitur profil terhubung.
-                                    </p>
+                            <div class="alert-info-box" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 12px 16px; display: flex; gap: 10px; margin-bottom: 20px;">
+                                <i class="fa-solid fa-circle-info" style="color: #2563eb; margin-top: 2px;"></i>
+                                <div style="font-size: 13px; color: #1e3a70; line-height: 1.4;">
+                                    <strong>Jaga kerahasiaan password kamu.</strong><br>
+                                    Gunakan password yang kuat dan jangan membagikannya kepada orang lain.
                                 </div>
                             </div>
+
+                        <div class="card-body">
+                            <form action="{{ route('profil_bk.password') }}" method="POST">
+                                @csrf
+                                @method('PUT')
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="current_password" class="form-label">Password Lama *</label>
+                                    <div style="position: relative;">
+                                        <input
+                                            type="password"
+                                            id="current_password"
+                                            name="current_password"
+                                            class="form-control toggle-password"
+                                            placeholder="Masukkan password lama"
+                                            required
+                                            style="padding-right: 40px;"
+                                        >
+                                        <i class="fa-solid fa-eye toggle-eye" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="new_password" class="form-label">Password Baru *</label>
+                                    <div style="position: relative;">
+                                        <input
+                                            type="password"
+                                            id="new_password"
+                                            name="new_password"
+                                            class="form-control toggle-password"
+                                            placeholder="Masukkan password baru"
+                                            required
+                                            style="padding-right: 40px;"
+                                        >
+                                        <i class="fa-solid fa-eye toggle-eye" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);"></i>
+                                    </div>
+                                    <span class="field-hint">Minimal 8 karakter.</span>
+                                </div>
+
+                                <div class="form-group" style="margin-bottom: 20px;">
+                                    <label for="new_password_confirmation" class="form-label">Konfirmasi Password Baru *</label>
+                                    <div style="position: relative;">
+                                        <input
+                                            type="password"
+                                            id="new_password_confirmation"
+                                            name="new_password_confirmation"
+                                            class="form-control toggle-password"
+                                            placeholder="Ulangi password baru"
+                                            required
+                                            style="padding-right: 40px;"
+                                        >
+                                        <i class="fa-solid fa-eye toggle-eye" style="position: absolute; right: 14px; top: 50%; transform: translateY(-50%); cursor: pointer; color: var(--text-muted);"></i>
+                                    </div>
+                                </div>
+
+                                <div class="form-footer">
+                                    <p class="privacy-note">
+                                        <i class="fa-solid fa-lock"></i>
+                                        Jangan membagikan password kepada orang lain.
+                                    </p>
+
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">
+                                            <i class="fa-solid fa-key"></i>
+                                            Ubah Password
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </section>
                 </div>
@@ -890,9 +933,29 @@
         </main>
     </div>
 
+    <!-- JAVASCRIPT UNTUK TOGGLE LIHAT/SEMBUNYI PASSWORD -->
     <script>
-        document.getElementById('saveButton').addEventListener('click', function () {
-            alert('Fitur simpan profil belum dihubungkan ke database.');
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleEyes = document.querySelectorAll('.toggle-eye');
+
+            toggleEyes.forEach(eye => {
+                eye.addEventListener('click', function () {
+                    // Cari input password yang berada di pembungkus yang sama
+                    const input = this.parentElement.querySelector('.toggle-password');
+
+                    if (input) {
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            this.classList.remove('fa-eye');
+                            this.classList.add('fa-eye-slash');
+                        } else {
+                            input.type = 'password';
+                            this.classList.remove('fa-eye-slash');
+                            this.classList.add('fa-eye');
+                        }
+                    }
+                });
+            });
         });
     </script>
 </body>
