@@ -725,109 +725,55 @@
 
         <div>
 
-            <!-- LOGO -->
+
             <div class="brand">
-
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
-
-                <span class="brand-name">
-                    BaktiVoice
-                </span>
-
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
             </div>
 
 
-            <!-- NAVIGASI GURU BK -->
+
             <ul class="nav-menu">
 
 
-                <!-- DASHBOARD -->
+
                 <li class="nav-item active">
 
                     <a href="{{ route('dashboard_bk') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-solid fa-house"></i>
-
-                            <span>
-                                Dashboard
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-solid fa-house"></i><span>Dashboard</span></div>
                     </a>
 
                 </li>
 
 
-                <!-- LAPORAN SISWA -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('LaporanSiswa_bk') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-file-lines"></i>
-
-                            <span>
-                                Laporan Siswa
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-regular fa-file-lines"></i><span>Laporan Siswa</span></div>
                     </a>
 
                 </li>
 
 
-                <!-- MONITORING -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('monitoring_bk') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-eye"></i>
-
-                            <span>
-                                Monitoring
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-regular fa-eye"></i><span>Monitoring</span></div>
                     </a>
 
                 </li>
 
-                <!-- NOTIFIKASI -->
+
                 <li class="nav-item">
-    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notifikasi</span>
-        <span class="notification-dot"></span>
-    </a>
-</li>
-
-                <!-- PROFIL -->
+                    <a href="{{ route('notifikasi_bk') }}">
+                        <div class="nav-content"><i class="fa-solid fa-bell"></i><span>Notifikasi</span></div>
+                    </a>
+                </li>
                 <li class="nav-item">
-
-                    <a href="{{ route('profil_bk') }}" title="Profil">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-user"></i>
-
-                            <span>
-                                Profil
-                            </span>
-
-                        </div>
-
+                    <a href="{{ route('profil_bk') }}">
+                        <div class="nav-content"><i class="fa-regular fa-user"></i><span>Profil</span></div>
                     </a>
 
                 </li>
@@ -838,321 +784,105 @@
         </div>
 
 
-        <!-- LOGOUT -->
+
         <a href="{{ route('login') }}" class="logout-btn">
-
-            <i class="fa-solid fa-right-from-bracket"></i>
-
-            <span>
-                Logout
-            </span>
-
+            <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
         </a>
 
     </aside>
 
-
-
-    <!-- =====================================================
-         MAIN WRAPPER
-    ===================================================== -->
-
+    <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
 
-        <!-- =================================================
-             TOPBAR
-        ================================================= -->
+
 
         <header class="topbar">
-
-                <!-- NOTIFICATION -->
-            <a
-                href="{{ route('notifikasi_bk') }}"
-                class="topbar-icon"
-                title="Notifikasi"
-                aria-label="Buka notifikasi"
-            >
-
-                <i class="fa-regular fa-bell"></i>
-
-            </a>
-
-
-            <!-- USER -->
+            <a href="{{ route('notifikasi_bk') }}" class="topbar-icon" title="Notifikasi"><i class="fa-regular fa-bell"></i></a>
             <div class="user-profile">
-
-                <div class="avatar">
-
-                    <i class="fa-regular fa-user"></i>
-
-                </div>
-
-                <span class="user-name">
-                    {{ Auth::user()->name ?? 'Guru BK' }}
-                </span>
-
+                <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                <span class="user-name">{{ Auth::user()->name ?? 'Guru BK' }}</span>
             </div>
-
         </header>
 
 
 
-        <!-- =================================================
-             MAIN CONTENT
-        ================================================= -->
+
 
         <main class="content">
 
 
-            <!-- WELCOME -->
+
             <section class="welcome-section">
-
-                <h1 class="welcome-title">
-                    Selamat Datang, Guru BK!
-                </h1>
-
-                <p class="welcome-text">
-                    Pantau laporan yang berkaitan dengan siswa.
-                </p>
-
+                <h1 class="welcome-title">Selamat Datang,{{ Auth::user()->name ?? 'Guru BK' }}!</h1>
+                <p class="welcome-text">Pantau laporan yang berkaitan dengan siswa.</p>
             </section>
 
-
-
-            <!-- =================================================
-                 STATISTIK LAPORAN
-            ================================================= -->
-
+            <!-- STATISTIK LAPORAN (DINAMIS) -->
             <section class="stats-grid">
 
 
-                <!-- TOTAL -->
                 <div class="stat-card total">
-
-                    <div class="stat-title">
-                        Total
-                    </div>
-
-                    <div class="stat-value">
-                        12
-                    </div>
-
+                    <div class="stat-title">Total</div>
+                    <div class="stat-value">{{ $totalLaporan }}</div>
                 </div>
-
-<div class="stat-card pending">
-             <div class="stat-title">
-                 Pending
-             </div>
-             <div class="stat-value">
-                 2
-             </div>
-         </div>
-
-                <!-- DIPROSES -->
+                <div class="stat-card pending">
+                    <div class="stat-title">Pending</div>
+                    <div class="stat-value">{{ $pendingLaporan }}</div>
+                </div>
                 <div class="stat-card diproses">
-
-                    <div class="stat-title">
-                        Diproses
-                    </div>
-
-                    <div class="stat-value">
-                        5
-                    </div>
-
+                    <div class="stat-title">Diproses</div>
+                    <div class="stat-value">{{ $diprosesLaporan }}</div>
                 </div>
-
-
-                <!-- SELESAI -->
                 <div class="stat-card selesai">
-
-                    <div class="stat-title">
-                        Selesai
-                    </div>
-
-                    <div class="stat-value">
-                        6
-                    </div>
-
+                    <div class="stat-title">Selesai</div>
+                    <div class="stat-value">{{ $selesaiLaporan }}</div>
                 </div>
-
-
-                <!-- DITOLAK -->
                 <div class="stat-card ditolak">
-
-                    <div class="stat-title">
-                        Ditolak
-                    </div>
-
-                    <div class="stat-value">
-                        1
-                    </div>
-
+                    <div class="stat-title">Ditolak</div>
+                    <div class="stat-value">{{ $ditolakLaporan }}</div>
                 </div>
-
             </section>
 
-
-
-            <!-- =================================================
-                 LAPORAN TERBARU
-            ================================================= -->
-
+            <!-- LAPORAN TERBARU (DINAMIS) -->
             <section>
-
-                <h2 class="section-header">
-                    Laporan Terbaru
-                </h2>
-
-
+                <h2 class="section-header">Laporan Terbaru</h2>
                 <div class="report-list">
+                    @forelse($laporanTerbaru as $laporan)
+                        <div class="report-card">
+                            <div class="report-info-group">
 
+<div class="report-thumbnail">
+    @if($laporan->bukti_url)
+        <img
+            src="{{ asset($laporan->bukti_url) }}"
+            alt="Bukti Laporan"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
+        >
+    @else
+        <i class="fa-regular fa-image"></i>
+    @endif
+</div>
 
-                    <!-- LAPORAN 1 -->
-                    <div class="report-card">
-
-                        <div class="report-info-group">
-
-                            <div class="report-thumbnail">
-
-                                <i class="fa-regular fa-image"></i>
-
-                            </div>
-
-
-                            <div class="report-details">
-
-                                <div class="report-title">
-                                    Perundungan Antar Siswa
+                                <div class="report-details">
+                                    <div class="report-title">{{ $laporan->judul ?? $laporan->kategori }}</div>
+                                    <div class="report-date">{{ $laporan->created_at->format('d M Y') }}</div>
                                 </div>
-
-                                <div class="report-date">
-                                    16 Sep 2026
-                                </div>
-
                             </div>
-
-                        </div>
-
-
-                        <div class="report-actions">
-
-                            <span class="status-badge badge-diproses">
-                                Diproses
-                            </span>
-
-                            <button
-                                class="btn-detail"
-                                title="Detail"
-                            >
-
-                                <i class="fa-solid fa-chevron-right"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- LAPORAN 2 -->
-                    <div class="report-card">
-
-                        <div class="report-info-group">
-
-                            <div class="report-thumbnail">
-
-                                <i class="fa-regular fa-image"></i>
-
+                            <div class="report-actions">
+                                <!-- Badge Status Dinamis -->
+                                <span class="status-badge badge-{{ strtolower($laporan->status) }}">
+                                    {{ ucfirst($laporan->status) }}
+                                </span>
+                               <a href="{{ route('detail_laporan_bk', $laporan->id_laporan) }}" class="btn-detail" title="Detail">
+    <i class="fa-solid fa-chevron-right"></i>
+</a>
                             </div>
-
-
-                            <div class="report-details">
-
-                                <div class="report-title">
-                                    Konflik Antar Siswa
-                                </div>
-
-                                <div class="report-date">
-                                    12 Sep 2026
-                                </div>
-
-                            </div>
-
                         </div>
-
-
-                        <div class="report-actions">
-
-                            <span class="status-badge badge-selesai">
-                                Selesai
-                            </span>
-
-                            <button
-                                class="btn-detail"
-                                title="Detail"
-                            >
-
-                                <i class="fa-solid fa-chevron-right"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <!-- LAPORAN 3 -->
-                    <div class="report-card">
-
-                        <div class="report-info-group">
-
-                            <div class="report-thumbnail">
-
-                                <i class="fa-regular fa-image"></i>
-
-                            </div>
-
-
-                            <div class="report-details">
-
-                                <div class="report-title">
-                                    Keamanan Sekolah
-                                </div>
-
-                                <div class="report-date">
-                                    10 Sep 2026
-                                </div>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="report-actions">
-
-                            <span class="status-badge badge-diproses">
-                                Diproses
-                            </span>
-
-                            <button
-                                class="btn-detail"
-                                title="Detail"
-                            >
-
-                                <i class="fa-solid fa-chevron-right"></i>
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-
+                    @empty
+                        <p style="color: var(--text-muted); text-align: center; padding: 20px;">Belum ada laporan masuk.</p>
+                    @endforelse
                 </div>
-
             </section>
 
 
@@ -1160,6 +890,18 @@
 
     </div>
 
+<!-- SCRIPT DROPDOWN TOGGLE -->
+<!-- JAVASCRIPT TAMBAHAN UNTUK INTERAKSI -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const reportCards = document.querySelectorAll('.report-card');
 
+            reportCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transition = 'all 0.2s ease';
+                });
+            });
+        });
+    </script>
 </body>
 </html>
