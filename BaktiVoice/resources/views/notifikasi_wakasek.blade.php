@@ -585,10 +585,9 @@
 <body>
 
 @php
-    $user = auth()->user();
-    $role = $user->role ?? 'wakasek kesiswaan';
+    $role = strtolower(trim($role ?? auth()->user()->role ?? 'wakasek kesiswaan'));
 
-    $bidang = [
+    $bidangMap = [
         'wakasek kesiswaan' => [
             'nama' => 'Wakasek Kesiswaan',
             'kategori' => 'Kesiswaan',
@@ -619,204 +618,17 @@
         ],
     ];
 
-    abort_unless(isset($bidang[$role]), 403);
+    $jabatan = $bidangMap[$role] ?? $bidangMap['wakasek kesiswaan'];
 
-    $jabatan = $bidang[$role];
+    $targetDashboard  = $jabatan['dashboard'];
+    $targetRekap      = $jabatan['rekap'];
+    $targetMonitoring = $jabatan['monitoring'];
+    $targetProfil     = 'profil_wakasek';
 
-    $routeDashboard = $jabatan['dashboard'];
-    $routeRekap = $jabatan['rekap'];
-    $routeMonitoring = $jabatan['monitoring'];
-    $routeProfil = 'profil_wakasek';
-
-    $semuaNotifikasi = [
-        [
-            'id' => 1,
-            'kategori' => 'Kesiswaan',
-            'type' => 'laporan',
-            'icon' => 'fa-file-circle-plus',
-            'judul' => 'Laporan baru diterima',
-            'pesan' => 'Ada laporan baru terkait kedisiplinan siswa yang perlu ditinjau.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Baru saja',
-            'unread' => true,
-        ],
-        [
-            'id' => 2,
-            'kategori' => 'Kesiswaan',
-            'type' => 'status',
-            'icon' => 'fa-arrows-rotate',
-            'judul' => 'Pembaruan status laporan',
-            'pesan' => 'Status salah satu laporan Kesiswaan telah diperbarui menjadi Diproses.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => '1 jam yang lalu',
-            'unread' => true,
-        ],
-        [
-            'id' => 3,
-            'kategori' => 'Kesiswaan',
-            'type' => 'tanggapan',
-            'icon' => 'fa-comments',
-            'judul' => 'Tanggapan baru tersedia',
-            'pesan' => 'Guru BK atau Admin Sekolah telah memberikan tanggapan pada laporan.',
-            'pengirim' => 'Guru BK',
-            'waktu' => 'Hari ini',
-            'unread' => false,
-        ],
-        [
-            'id' => 4,
-            'kategori' => 'Kesiswaan',
-            'type' => 'tindak-lanjut',
-            'icon' => 'fa-clipboard-check',
-            'judul' => 'Tindak lanjut laporan',
-            'pesan' => 'Ada laporan yang memerlukan tindak lanjut dari bidang Kesiswaan.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Hari ini',
-            'unread' => true,
-        ],
-
-        [
-            'id' => 5,
-            'kategori' => 'Kurikulum',
-            'type' => 'laporan',
-            'icon' => 'fa-file-circle-plus',
-            'judul' => 'Laporan baru diterima',
-            'pesan' => 'Ada laporan baru yang berkaitan dengan kegiatan pembelajaran.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Baru saja',
-            'unread' => true,
-        ],
-        [
-            'id' => 6,
-            'kategori' => 'Kurikulum',
-            'type' => 'status',
-            'icon' => 'fa-arrows-rotate',
-            'judul' => 'Pembaruan status laporan',
-            'pesan' => 'Status laporan bidang Kurikulum telah diperbarui.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => '1 jam yang lalu',
-            'unread' => true,
-        ],
-        [
-            'id' => 7,
-            'kategori' => 'Kurikulum',
-            'type' => 'tanggapan',
-            'icon' => 'fa-comments',
-            'judul' => 'Tanggapan baru tersedia',
-            'pesan' => 'Terdapat tanggapan baru dari Admin Sekolah pada laporan terkait.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => 'Hari ini',
-            'unread' => false,
-        ],
-        [
-            'id' => 8,
-            'kategori' => 'Kurikulum',
-            'type' => 'tindak-lanjut',
-            'icon' => 'fa-clipboard-check',
-            'judul' => 'Tindak lanjut laporan',
-            'pesan' => 'Ada laporan Kurikulum yang perlu ditinjau lebih lanjut.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Hari ini',
-            'unread' => true,
-        ],
-
-        [
-            'id' => 9,
-            'kategori' => 'Sarana dan Prasarana',
-            'type' => 'laporan',
-            'icon' => 'fa-file-circle-plus',
-            'judul' => 'Laporan baru diterima',
-            'pesan' => 'Ada laporan baru mengenai fasilitas atau sarana sekolah.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Baru saja',
-            'unread' => true,
-        ],
-        [
-            'id' => 10,
-            'kategori' => 'Sarana dan Prasarana',
-            'type' => 'status',
-            'icon' => 'fa-arrows-rotate',
-            'judul' => 'Pembaruan status laporan',
-            'pesan' => 'Status laporan fasilitas sekolah telah mengalami perubahan.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => '1 jam yang lalu',
-            'unread' => true,
-        ],
-        [
-            'id' => 11,
-            'kategori' => 'Sarana dan Prasarana',
-            'type' => 'tanggapan',
-            'icon' => 'fa-comments',
-            'judul' => 'Tanggapan baru tersedia',
-            'pesan' => 'Admin Sekolah telah memberikan tanggapan terhadap laporan sarana.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => 'Hari ini',
-            'unread' => false,
-        ],
-        [
-            'id' => 12,
-            'kategori' => 'Sarana dan Prasarana',
-            'type' => 'tindak-lanjut',
-            'icon' => 'fa-clipboard-check',
-            'judul' => 'Tindak lanjut laporan',
-            'pesan' => 'Ada laporan fasilitas yang membutuhkan tindak lanjut.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Hari ini',
-            'unread' => true,
-        ],
-
-        [
-            'id' => 13,
-            'kategori' => 'DUDI',
-            'type' => 'laporan',
-            'icon' => 'fa-file-circle-plus',
-            'judul' => 'Laporan baru diterima',
-            'pesan' => 'Ada laporan baru yang berkaitan dengan bidang DUDI atau kerja sama industri.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Baru saja',
-            'unread' => true,
-        ],
-        [
-            'id' => 14,
-            'kategori' => 'DUDI',
-            'type' => 'status',
-            'icon' => 'fa-arrows-rotate',
-            'judul' => 'Pembaruan status laporan',
-            'pesan' => 'Status laporan bidang DUDI telah diperbarui.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => '1 jam yang lalu',
-            'unread' => true,
-        ],
-        [
-            'id' => 15,
-            'kategori' => 'DUDI',
-            'type' => 'tanggapan',
-            'icon' => 'fa-comments',
-            'judul' => 'Tanggapan baru tersedia',
-            'pesan' => 'Ada tanggapan baru dari Admin Sekolah pada laporan DUDI.',
-            'pengirim' => 'Admin Sekolah',
-            'waktu' => 'Hari ini',
-            'unread' => false,
-        ],
-        [
-            'id' => 16,
-            'kategori' => 'DUDI',
-            'type' => 'tindak-lanjut',
-            'icon' => 'fa-clipboard-check',
-            'judul' => 'Tindak lanjut laporan',
-            'pesan' => 'Ada laporan DUDI yang membutuhkan tindak lanjut.',
-            'pengirim' => 'Sistem BaktiVoice',
-            'waktu' => 'Hari ini',
-            'unread' => true,
-        ],
-    ];
-
-    $notifikasiBidang = array_values(array_filter(
-        $semuaNotifikasi,
-        fn ($item) => $item['kategori'] === $jabatan['kategori']
-    ));
+    $currentUser = $user ?? auth()->user();
 @endphp
 
-<!-- SIDEBAR DISAMAKAN DENGAN DASHBOARD WAKASEK -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
     <div>
         <div class="brand">
@@ -826,28 +638,28 @@
 
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="{{ route($routeDashboard) }}">
+                <a href="{{ route($targetDashboard) }}">
                     <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{ route($routeRekap) }}">
+                <a href="{{ route($targetRekap) }}">
                     <i class="fa-solid fa-chart-column"></i>
                     <span>Rekap</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{ route($routeMonitoring) }}">
+                <a href="{{ route($targetMonitoring) }}">
                     <i class="fa-solid fa-eye"></i>
                     <span>Monitoring</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{ route($routeProfil) }}">
+                <a href="{{ route($targetProfil) }}">
                     <i class="fa-solid fa-user-gear"></i>
                     <span>Profil</span>
                 </a>
@@ -857,7 +669,7 @@
                 <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
                     <i class="fa-solid fa-bell"></i>
                     <span>Notifikasi</span>
-                    <span class="notification-dot"></span>
+                    <span class="notification-dot" id="bellDot"></span>
                 </a>
             </li>
         </ul>
@@ -873,7 +685,7 @@
 </aside>
 
 <div class="main">
-    <!-- TOPBAR DISAMAKAN DENGAN DASHBOARD WAKASEK -->
+    <!-- TOPBAR -->
     <header class="topbar">
         <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
             <i class="fa-regular fa-bell"></i>
@@ -884,7 +696,7 @@
                 <i class="fa-regular fa-user"></i>
             </div>
             <span class="user-name">
-                {{ $jabatan['nama'] }}
+                {{ $currentUser->name ?? $jabatan['nama'] }}
             </span>
         </div>
     </header>
@@ -907,7 +719,7 @@
 
         <section class="summary-card">
             <div>
-                <h2>Halo, {{ $user->name ?? 'Wakasek' }}!</h2>
+                <h2>Halo, {{ $currentUser->name ?? 'Wakasek' }}!</h2>
                 <p>
                     Berikut informasi aktivitas laporan pada bidang
                     {{ $jabatan['kategori'] }}. Periksa notifikasi secara berkala
@@ -964,42 +776,53 @@
                 </button>
             </div>
 
+            <!-- NOTIFIKASI DINAMIS DARI DATABASE SUPABASE -->
             <div class="notification-list" id="notificationList">
-                @forelse ($notifikasiBidang as $notif)
+                @forelse ($notifikasiBidang ?? [] as $notif)
+                    @php
+                        $isUnread  = $notif->unread ?? true;
+                        $notifType = $notif->type ?? 'laporan';
+                        $notifIcon = match($notifType) {
+                            'status' => 'fa-arrows-rotate',
+                            'tanggapan' => 'fa-comments',
+                            'tindak-lanjut' => 'fa-clipboard-check',
+                            default => 'fa-file-circle-plus',
+                        };
+                    @endphp
                     <article
-                        class="notification-card {{ $notif['unread'] ? 'unread' : '' }}"
-                        data-type="{{ $notif['type'] }}"
-                        data-unread="{{ $notif['unread'] ? '1' : '0' }}"
-                        data-id="{{ $notif['id'] }}"
+                        class="notification-card {{ $isUnread ? 'unread' : '' }}"
+                        data-type="{{ $notifType }}"
+                        data-unread="{{ $isUnread ? '1' : '0' }}"
+                        data-id="{{ $notif->id ?? $loop->index }}"
                     >
-                        <div class="notif-icon icon-{{ $notif['type'] }}">
-                            <i class="fa-solid {{ $notif['icon'] }}"></i>
+                        <div class="notif-icon icon-{{ $notifType }}">
+                            <i class="fa-solid {{ $notifIcon }}"></i>
                         </div>
 
                         <div class="notif-body">
                             <div class="notif-title-row">
-                                <div class="notif-title">{{ $notif['judul'] }}</div>
+                                <div class="notif-title">{{ $notif->judul ?? 'Pemberitahuan Sistem' }}</div>
 
-                                @if ($notif['unread'])
+                                @if ($isUnread)
                                     <span class="unread-dot" title="Belum dibaca"></span>
                                 @endif
                             </div>
 
-                            <p class="notif-message">{{ $notif['pesan'] }}</p>
+                            <p class="notif-message">{{ $notif->pesan ?? '-' }}</p>
 
                             <div class="notif-meta">
                                 <span>
                                     <i class="fa-solid fa-user"></i>
-                                    {{ $notif['pengirim'] }}
+                                    {{ $notif->pengirim ?? 'Sistem BaktiVoice' }}
                                 </span>
 
                                 <span>
                                     <i class="fa-regular fa-clock"></i>
-                                    {{ $notif['waktu'] }}
+                                    {{ $notif->created_at ? $notif->created_at->diffForHumans() : 'Baru saja' }}
                                 </span>
 
                                 <span class="type-label">
-                                    @switch($notif['type'])
+                                    @switch($notifType)
                                         @case('laporan')
                                             Laporan Baru
                                             @break
@@ -1012,6 +835,8 @@
                                         @case('tindak-lanjut')
                                             Tindak Lanjut
                                             @break
+                                        @default
+                                            Notifikasi
                                     @endswitch
                                 </span>
                             </div>
@@ -1021,7 +846,7 @@
                     <div class="empty-state" style="display:block">
                         <i class="fa-regular fa-bell-slash"></i>
                         <h3>Belum ada notifikasi</h3>
-                        <p>Notifikasi untuk bidangmu akan ditampilkan di sini.</p>
+                        <p>Notifikasi untuk bidang {{ $jabatan['kategori'] }} akan ditampilkan di sini.</p>
                     </div>
                 @endforelse
             </div>
@@ -1033,10 +858,7 @@
             </div>
         </section>
 
-        <p class="footer-note">
-            <i class="fa-solid fa-circle-info"></i>
-            Notifikasi yang ditampilkan saat ini merupakan data contoh untuk tampilan.
-        </p>
+
     </main>
 </div>
 
@@ -1089,7 +911,9 @@
             }
         });
 
-        emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        if (emptyState) {
+            emptyState.style.display = (visibleCount === 0 && notificationCards.length > 0) ? 'block' : 'none';
+        }
     }
 
     filterButtons.forEach(button => {
@@ -1119,20 +943,22 @@
         });
     });
 
-    markAllReadButton.addEventListener('click', function () {
-        notificationCards.forEach(card => {
-            card.classList.remove('unread');
-            card.dataset.unread = '0';
+    if (markAllReadButton) {
+        markAllReadButton.addEventListener('click', function () {
+            notificationCards.forEach(card => {
+                card.classList.remove('unread');
+                card.dataset.unread = '0';
 
-            const dot = card.querySelector('.unread-dot');
-            if (dot) {
-                dot.remove();
-            }
+                const dot = card.querySelector('.unread-dot');
+                if (dot) {
+                    dot.remove();
+                }
+            });
+
+            updateUnreadIndicators();
+            applyFilter(activeFilter);
         });
-
-        updateUnreadIndicators();
-        applyFilter(activeFilter);
-    });
+    }
 
     updateUnreadIndicators();
     applyFilter('semua');
