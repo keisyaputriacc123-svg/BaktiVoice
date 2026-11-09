@@ -11,6 +11,9 @@ class Tanggapan extends Model
 
     protected $table = 'tanggapan';
 
+    // Nonaktifkan timestamps otomatis karena tabel tidak memiliki kolom created_at / updated_at
+    public $timestamps = false;
+
     // Tentukan primary key sesuai tabel di Supabase
     protected $primaryKey = 'id_tanggapan';
 
