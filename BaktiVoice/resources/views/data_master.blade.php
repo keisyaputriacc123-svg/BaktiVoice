@@ -1,818 +1,684 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BaktiVoice - Data Master</title>
 
-    <!-- Tailwind CSS untuk content body -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<!-- Tailwind CSS untuk content body -->
+<script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font dan ikon -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Font dan ikon -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <style>
-        :root {
-            --primary: #96ace0;
-            --primary-hover: #7b94d1;
-            --background: #eaf1fb;
-            --card-bg: #ffffff;
-            --border: rgba(186, 210, 240, 0.6);
-            --text-main: #2c4a8e;
-            --text-muted: #64748b;
-            --font-family: 'Inter', sans-serif;
-            --sidebar-width: 250px;
-            --topbar-height: 70px;
-            --radius: 12px;
-            --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+<style>
+    :root {
+        --primary: #96ace0;
+        --primary-hover: #7b94d1;
+        --background: #eaf1fb;
+        --card-bg: #ffffff;
+        --border: rgba(186, 210, 240, 0.6);
+        --text-main: #2c4a8e;
+        --text-muted: #64748b;
+        --font-family: 'Inter', sans-serif;
+        --sidebar-width: 250px;
+        --topbar-height: 70px;
+        --radius: 12px;
+        --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
 
-            --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
-            --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
-        }
+        --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+        --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
+    }
 
-        * {
-            box-sizing: border-box;
-        }
+    * {
+        box-sizing: border-box;
+    }
 
-        body {
-            margin: 0;
-            font-family: var(--font-family);
-            background-color: var(--background) !important;
-            color: var(--text-main);
-            min-height: 100vh;
-        }
+    body {
+        margin: 0;
+        font-family: var(--font-family);
+        background-color: var(--background) !important;
+        color: var(--text-main);
+        min-height: 100vh;
+    }
 
-        /* =========================
-        SIDEBAR (PASTEL BLUE)
-        ========================= */
+    /* SIDEBAR */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--gradient-pastel) !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 24px 16px;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
+    }
 
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px 24px;
+    }
+
+    .brand-logo-img {
+        width: 60px;
+        height: 60px;
+        max-width: 60px;
+        object-fit: contain;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand-name {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e3a70 !important;
+        white-space: nowrap;
+    }
+
+    .nav-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .nav-item a,
+    .dropdown-btn {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 16px;
+        color: #274472 !important;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        border-radius: 10px;
+        transition: all 0.25s ease;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+    }
+
+    .nav-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav-item a:hover,
+    .dropdown-btn:hover {
+        background-color: rgba(255, 255, 255, 0.4) !important;
+        color: #102a56 !important;
+        transform: translateX(4px);
+    }
+
+    .nav-item.active > a,
+    .nav-item.active > .dropdown-btn {
+        background-color: #ffffff !important;
+        color: #3b62ac !important;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
+    }
+
+    .nav-item i {
+        font-size: 16px;
+        width: 20px;
+        text-align: center;
+    }
+
+    .arrow-icon {
+        font-size: 12px !important;
+        transition: transform 0.3s ease;
+    }
+
+    .sub-menu {
+        list-style: none;
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        padding-left: 32px;
+        margin-top: 4px;
+    }
+
+    .sub-menu.show {
+        display: flex;
+    }
+
+    .sub-menu a {
+        padding: 8px 12px;
+        font-size: 13px;
+        color: #274472 !important;
+        border-radius: 6px;
+        text-decoration: none;
+        display: block;
+        transition: background 0.2s;
+    }
+
+    .sub-menu a:hover {
+        background-color: rgba(255, 255, 255, 0.4) !important;
+        color: #102a56 !important;
+    }
+
+    .sub-menu a.sub-active {
+        background-color: rgba(255, 255, 255, 0.6) !important;
+        color: #102a56 !important;
+        font-weight: 700;
+    }
+
+    .logout-btn {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        color: #e11d48 !important;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        border-radius: 10px;
+        transition: all 0.2s ease;
+        margin-top: 16px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        text-align: left;
+        width: 100%;
+    }
+
+    .logout-btn:hover {
+        background-color: rgba(255, 255, 255, 0.5) !important;
+        color: #be123c !important;
+    }
+
+    /* MAIN WRAPPER */
+    .main-wrapper {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--background) !important;
+    }
+
+    /* TOPBAR */
+    .topbar {
+        height: var(--topbar-height);
+        min-height: var(--topbar-height);
+        background: var(--gradient-pastel) !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0 36px;
+        gap: 20px;
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
+    }
+
+    .topbar-icon {
+        color: #274472 !important;
+        font-size: 18px;
+        cursor: pointer;
+        position: relative;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.2s ease;
+        border: none;
+        background: none;
+    }
+
+    .topbar-icon:hover {
+        background-color: rgba(255, 255, 255, 0.4) !important;
+        color: #102a56 !important;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        border-radius: 30px;
+        transition: background 0.2s;
+        cursor: pointer;
+    }
+
+    .user-profile:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+
+    .avatar {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background-color: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b62ac !important;
+        font-size: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e3a70 !important;
+    }
+
+    .content-area {
+        flex: 1;
+        min-width: 0;
+        padding: 36px;
+        background-color: var(--background) !important;
+    }
+
+    @media (max-width: 768px) {
         .sidebar {
-            width: var(--sidebar-width);
-            background: var(--gradient-pastel) !important;
-            border-right: 1px solid rgba(255, 255, 255, 0.4);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            z-index: 100;
-            padding: 24px 16px;
-            overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
+            width: 70px;
+            padding: 16px 8px;
         }
 
         .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 0 12px 24px;
+            padding: 0 4px 24px;
+            justify-content: center;
         }
 
         .brand-logo-img {
-            width: 60px;
-            height: 60px;
-            max-width: 60px;
-            object-fit: contain;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            width: 45px;
+            height: 45px;
         }
 
-        .brand-name {
-            font-size: 20px;
-            font-weight: 800;
-            color: #1e3a70 !important;
-            white-space: nowrap;
-        }
-
-        .nav-menu {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+        .brand-name,
+        .nav-item > a span,
+        .dropdown-btn span,
+        .logout-btn span,
+        .arrow-icon,
+        .sub-menu {
+            display: none !important;
         }
 
         .nav-item a,
         .dropdown-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 100%;
-            padding: 12px 16px;
-            color: #274472 !important;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            border-radius: 10px;
-            transition: all 0.25s ease;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-family: inherit;
+            justify-content: center;
+            padding: 12px 8px;
         }
 
         .nav-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .nav-item a:hover,
-        .dropdown-btn:hover {
-            background-color: rgba(255, 255, 255, 0.4) !important;
-            color: #102a56 !important;
-            transform: translateX(4px);
-        }
-
-        .nav-item.active > a,
-        .nav-item.active > .dropdown-btn {
-            background-color: #ffffff !important;
-            color: #3b62ac !important;
-            font-weight: 700;
-            box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
+            justify-content: center;
         }
 
         .nav-item i {
-            font-size: 16px;
-            width: 20px;
-            text-align: center;
+            width: auto;
         }
-
-        .arrow-icon {
-            font-size: 12px !important;
-            transition: transform 0.3s ease;
-        }
-
-        .sub-menu {
-            list-style: none;
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            padding-left: 32px;
-            margin-top: 4px;
-        }
-
-        .sub-menu.show {
-            display: flex;
-        }
-
-        .sub-menu a {
-            padding: 8px 12px;
-            font-size: 13px;
-            color: #274472 !important;
-            border-radius: 6px;
-            text-decoration: none;
-            display: block;
-            transition: background 0.2s;
-        }
-
-        .sub-menu a:hover {
-            background-color: rgba(255, 255, 255, 0.4) !important;
-            color: #102a56 !important;
-        }
-
-        .sub-menu a.sub-active {
-            background-color: rgba(255, 255, 255, 0.6) !important;
-            color: #102a56 !important;
-            font-weight: 700;
-        }
-
-        .logout-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            color: #e11d48 !important;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 14px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            margin-top: 16px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            text-align: left;
-            width: 100%;
-        }
-
-        .logout-btn:hover {
-            background-color: rgba(255, 255, 255, 0.5) !important;
-            color: #be123c !important;
-        }
-
-        /* =========================
-        MAIN WRAPPER
-        ========================= */
 
         .main-wrapper {
-            margin-left: var(--sidebar-width);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--background) !important;
+            margin-left: 70px;
         }
-
-        /* =========================
-        TOPBAR (PASTEL BLUE)
-        ========================= */
 
         .topbar {
-            height: var(--topbar-height);
-            min-height: var(--topbar-height);
-            background: var(--gradient-pastel) !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 0 36px;
-            gap: 20px;
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
-        }
-
-        .topbar-icon {
-            color: #274472 !important;
-            font-size: 18px;
-            cursor: pointer;
-            position: relative;
-            padding: 8px;
-            border-radius: 50%;
-            transition: all 0.2s ease;
-            border: none;
-            background: none;
-        }
-
-        .topbar-icon:hover {
-            background-color: rgba(255, 255, 255, 0.4) !important;
-            color: #102a56 !important;
-        }
-
-        .user-profile {
-            display: flex;
-            align-items: center;
+            padding: 0 16px;
             gap: 12px;
-            padding: 6px 12px;
-            border-radius: 30px;
-            transition: background 0.2s;
-            cursor: pointer;
-        }
-
-        .user-profile:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .avatar {
-            width: 38px;
-            height: 38px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background-color: #ffffff;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #3b62ac !important;
-            font-size: 16px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .user-name {
-            font-size: 14px;
-            font-weight: 700;
-            color: #1e3a70 !important;
+            font-size: 12px;
         }
+    }
 
-        /* CONTENT BODY */
-        .content-area, .content {
-            flex: 1;
-            min-width: 0;
-            padding: 36px;
-            background-color: var(--background) !important;
+    @media (max-width: 480px) {
+        .user-name {
+            display: none;
         }
-
-        /* TAMBAHAN KARTU & TABEL DATA MASTER */
-        .master-card, .stat-card {
-            background-color: var(--card-bg) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .btn-add, .btn-primary {
-            background: var(--gradient-button) !important;
-            color: #ffffff !important;
-            border: none !important;
-            box-shadow: 0 4px 12px rgba(98, 140, 219, 0.25);
-        }
-
-        /* Responsif */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-                padding: 16px 8px;
-            }
-
-            .brand {
-                padding: 0 4px 24px;
-                justify-content: center;
-            }
-
-            .brand-logo-img {
-                width: 45px;
-                height: 45px;
-            }
-
-            .brand-name,
-            .nav-item > a span,
-            .dropdown-btn span,
-            .logout-btn span,
-            .arrow-icon,
-            .sub-menu {
-                display: none !important;
-            }
-
-            .nav-item a,
-            .dropdown-btn {
-                justify-content: center;
-                padding: 12px 8px;
-            }
-
-            .nav-content {
-                justify-content: center;
-            }
-
-            .nav-item i {
-                width: auto;
-            }
-
-            .main-wrapper {
-                margin-left: 70px;
-            }
-
-            .topbar {
-                padding: 0 16px;
-                gap: 12px;
-            }
-
-            .user-name {
-                font-size: 12px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .user-name {
-                display: none;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body>
 
-    <!-- =========================
-        SIDEBAR
-    ========================= -->
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div>
+        <div class="brand">
+            <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+            <span class="brand-name">BaktiVoice</span>
+        </div>
 
-    <aside class="sidebar">
-        <div>
-            <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
-                <span class="brand-name">BaktiVoice</span>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{{ route('dashboard_admin') }}">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>Laporan</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item active">
+                <button type="button" class="dropdown-btn" onclick="toggleDataMaster()" aria-expanded="true">
+                    <div class="nav-content">
+                        <i class="fa-solid fa-database"></i>
+                        <span>Data Master</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow" style="transform: rotate(180deg);"></i>
+                </button>
+
+                <ul class="sub-menu show" id="masterMenu">
+                    <li>
+                        <a href="#" onclick="switchTab('kategori'); return false;" id="sub-kategori">
+                            Kategori Laporan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchTab('status'); return false;" id="sub-status">
+                            Status Laporan
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="switchTab('users'); return false;" id="sub-users" class="sub-active">
+                            User & Role
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('rekap_laporan') }}">
+                    <div class="nav-content">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span>Rekap Laporan</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('notifikasi_admin') }}">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-bell"></i>
+                        <span>Notifikasi</span>
+                    </div>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('profil_admin') }}">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profil</span>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </button>
+    </form>
+</aside>
+
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <button class="topbar-icon" type="button" title="Notifikasi">
+            <i class="fa-regular fa-bell"></i>
+        </button>
+
+        <div class="user-profile">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="user-name">
+                {{ Auth::user()->name ?? 'Admin Sekolah' }}
+            </span>
+        </div>
+    </header>
+
+    <!-- CONTENT BODY DATA MASTER -->
+    <main class="content-area">
+        <div class="p-8 max-w-7xl w-full mx-auto space-y-6">
+
+            <!-- Header Judul -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 class="text-2xl font-extrabold text-blue-900 tracking-tight" id="pageTitle">
+                        Data Master
+                    </h1>
+                    <p class="text-sm text-gray-500 mt-1" id="pageDesc">
+                        Kelola data pengguna serta pembagian hak akses role di lingkungan sekolah.
+                    </p>
+                </div>
+
+                <button onclick="openModal()" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow-sm transition">
+                    <i class="fa-solid fa-plus"></i>
+                    <span id="btnAddText">Tambah User</span>
+                </button>
             </div>
 
-            <ul class="nav-menu">
-
-                <!-- Laporan -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard_admin') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <span>Laporan</span>
-                        </div>
-                    </a>
-                </li>
-
-                <!-- Data Master aktif -->
-                <li class="nav-item active">
-                    <button
-                        type="button"
-                        class="dropdown-btn"
-                        onclick="toggleDataMaster()"
-                        aria-expanded="true"
-                    >
-                        <div class="nav-content">
-                            <i class="fa-solid fa-database"></i>
-                            <span>Data Master</span>
-                        </div>
-
-                        <i
-                            class="fa-solid fa-chevron-down arrow-icon"
-                            id="masterArrow"
-                            style="transform: rotate(180deg);"
-                        ></i>
-                    </button>
-
-                    <ul class="sub-menu show" id="masterMenu">
-                        <li>
-                            <a href="#"
-                               onclick="switchTab('kategori'); return false;"
-                               id="sub-kategori">
-                                Kategori Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#"
-                               onclick="switchTab('status'); return false;"
-                               id="sub-status">
-                                Status Laporan
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#"
-                               onclick="switchTab('users'); return false;"
-                               id="sub-users"
-                               class="sub-active">
-                                User & Role
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Rekap Laporan -->
-                <li class="nav-item">
-                    <a href="{{ route('rekap_laporan') }}">
-                        <div class="nav-content">
-                            <i class="fa-solid fa-chart-column"></i>
-                            <span>Rekap Laporan</span>
-                        </div>
-                    </a>
-                </li>
-
-                <!-- Notifikasi -->
-                <li class="nav-item">
-                    <a href="{{ route('notifikasi_admin') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-bell"></i>
-                            <span>Notifikasi</span>
-                        </div>
-                    </a>
-                </li>
-
-                <!-- Profil -->
-                <li class="nav-item">
-                    <a href="{{ route('profil_admin') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-user"></i>
-                            <span>Profil</span>
-                        </div>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-
-        <!-- Logout -->
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-
-            <button
-                type="submit"
-                class="logout-btn"
-                style="width: 100%; background: none; border: none; cursor: pointer; font-family: inherit; text-align: left;"
-            >
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Logout</span>
-            </button>
-        </form>
-    </aside>
-
-    <!-- =========================
-        MAIN WRAPPER
-    ========================= -->
-
-    <div class="main-wrapper">
-
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <button class="topbar-icon" type="button" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </button>
-
-            <div class="user-profile">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
+            <!-- STATS CARDS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL USERS</span>
+                    <div class="text-3xl font-extrabold text-gray-800 mt-1">{{ $totalUsers ?? 0 }}</div>
                 </div>
 
-                <span class="user-name">
-                    {{ Auth::user()->name ?? 'Admin Sekolah' }}
-                </span>
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL SISWA</span>
+                    <div class="text-3xl font-extrabold text-orange-500 mt-1">{{ $totalSiswa ?? 0 }}</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">GURU BK & WAKASEK</span>
+                    <div class="text-3xl font-extrabold text-emerald-500 mt-1">{{ $totalBkWakasek ?? 0 }}</div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">ADMIN</span>
+                    <div class="text-3xl font-extrabold text-red-500 mt-1">{{ $totalAdmin ?? 0 }}</div>
+                </div>
             </div>
-        </header>
 
-        <!-- =========================
-        CONTENT BODY DATA MASTER
-        ========================= -->
+            <!-- CONTAINER TABEL -->
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 
-        <main class="content-area">
-
-            <!-- Page Header -->
-            <div class="p-8 max-w-7xl w-full mx-auto space-y-6">
-
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                        <h1 class="text-2xl font-extrabold text-blue-900 tracking-tight" id="pageTitle">
-                            Data Master
-                        </h1>
-                        <p class="text-sm text-gray-500 mt-1" id="pageDesc">
-                            Kelola data pengguna serta pembagian hak akses role di lingkungan sekolah.
-                        </p>
+                <!-- TAB 1: USERS & ROLE -->
+                <div id="tab-users" class="tab-content">
+                    <div class="p-4 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row justify-between gap-3">
+                        <form action="{{ url()->current() }}" method="GET" class="relative flex-1 max-w-xs">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gray-400 text-sm"></i>
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau email..." class="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500" onkeydown="if(event.key === 'Enter') this.form.submit();">
+                        </form>
                     </div>
 
-                    <button
-                        onclick="openModal()"
-                        class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2.5 rounded-xl shadow-sm transition"
-                    >
-                        <i class="fa-solid fa-plus"></i>
-                        <span id="btnAddText">Tambah User</span>
-                    </button>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="py-3.5 px-6">Nama Pengguna</th>
+                                    <th class="py-3.5 px-6">Email / Username</th>
+                                    <th class="py-3.5 px-6">Role / Jabatan</th>
+                                    <th class="py-3.5 px-6 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                                @forelse($users ?? [] as $user)
+                                    <tr class="hover:bg-gray-50/60 transition">
+                                        <td class="py-4 px-6">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
+                                                    {{ substr($user->name, 0, 1) }}
+                                                </div>
+                                                <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6 text-gray-500">{{ $user->email }}</td>
+                                        <td class="py-4 px-6">
+                                            @php
+                                                $roleLower = strtolower($user->role);
+                                                $badgeClass = 'bg-gray-100 text-gray-700';
+                                                if ($roleLower === 'admin') {
+                                                    $badgeClass = 'bg-purple-50 text-purple-600';
+                                                } elseif ($roleLower === 'siswa') {
+                                                    $badgeClass = 'bg-orange-50 text-orange-600';
+                                                } elseif (str_contains($roleLower, 'bk') || str_contains($roleLower, 'wakasek')) {
+                                                    $badgeClass = 'bg-teal-50 text-teal-700';
+                                                }
+                                            @endphp
+                                            <span class="px-3 py-1 {{ $badgeClass }} font-semibold text-xs rounded-full capitalize">
+                                                {{ $user->role }}
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6 text-center space-x-2">
+                                            <button type="button" onclick="openEditModal('users', { id: '{{ $user->id_user ?? $user->id }}', name: '{{ addslashes($user->name) }}', email: '{{ $user->email }}', role: '{{ $user->role }}' })" class="text-blue-600 hover:text-blue-800" title="Edit">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
+
+                                            <form action="{{ route('user.destroy', $user->id_user ?? $user->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus user ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
+                                            Belum ada data pengguna yang tersedia.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <!-- STATS CARDS -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL USERS</span>
-                        <div class="text-3xl font-extrabold text-gray-800 mt-1">{{ $totalUsers }}</div>
-                    </div>
+                <!-- TAB 2: KATEGORI LAPORAN -->
+                <div id="tab-kategori" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="py-3.5 px-6">#</th>
+                                    <th class="py-3.5 px-6">Nama Kategori</th>
+                                    <th class="py-3.5 px-6">Penanggung Jawab (Role)</th>
+                                    <th class="py-3.5 px-6 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                                @forelse($kategoris ?? [] as $index => $kategori)
+                                    <tr class="hover:bg-gray-50/60 transition">
+                                        <td class="py-4 px-6">{{ $index + 1 }}</td>
+                                        <td class="py-4 px-6 font-semibold text-gray-800">{{ $kategori->nama_kategori }}</td>
+                                        <td class="py-4 px-6 text-gray-600">
+                                            <span class="px-3 py-1 bg-blue-50 text-blue-700 font-semibold text-xs rounded-full">
+                                                {{ $kategori->penanggung_jawab ?? '-' }}
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6 text-center space-x-2">
+                                            <button type="button" onclick="openEditModal('kategori', { id: '{{ $kategori->id_kategori ?? $kategori->id }}', nama_kategori: '{{ addslashes($kategori->nama_kategori) }}', penanggung_jawab: '{{ addslashes($kategori->penanggung_jawab) }}' })" class="text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer" title="Edit">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
 
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL SISWA</span>
-                        <div class="text-3xl font-extrabold text-orange-500 mt-1">{{ $totalSiswa }}</div>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">GURU BK & WAKASEK</span>
-                        <div class="text-3xl font-extrabold text-emerald-500 mt-1">{{ $totalBkWakasek }}</div>
-                    </div>
-
-                    <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                        <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">Admin</span>
-                        <div class="text-3xl font-extrabold text-red-500 mt-1">{{ $totalAdmin }}</div>
+                                            <form action="{{ route('kategori.destroy', $kategori->id_kategori ?? $kategori->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
+                                            Belum ada data kategori laporan yang tersedia.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- TABLE CONTAINER -->
-                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                <!-- TAB 3: STATUS LAPORAN -->
+                <div id="tab-status" class="tab-content hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                                <tr>
+                                    <th class="py-3.5 px-6">Nama Status</th>
+                                    <th class="py-3.5 px-6">Tampilan Badge</th>
+                                    <th class="py-3.5 px-6">Deskripsi Keterangan</th>
+                                    <th class="py-3.5 px-6 text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                                @forelse($statusLaporan ?? [] as $item)
+                                    <tr class="hover:bg-gray-50/60 transition">
+                                        <td class="py-4 px-6 font-semibold text-gray-800">{{ $item->nama_status }}</td>
+                                        <td class="py-4 px-6">
+                                            <span class="px-3 py-1 font-semibold text-xs rounded-full bg-emerald-100 text-emerald-700">
+                                                {{ $item->nama_status }}
+                                            </span>
+                                        </td>
+                                        <td class="py-4 px-6 text-gray-500">{{ $item->deskripsi_keterangan ?? $item->deskripsi ?? '-' }}</td>
+                                        <td class="py-4 px-6 text-center space-x-2">
+                                            <button type="button" onclick="openEditModal('status', { id: '{{ $item->id_status ?? $item->id }}', nama_status: '{{ addslashes($item->nama_status) }}', deskripsi: '{{ addslashes($item->deskripsi_keterangan ?? $item->deskripsi ?? '') }}' })" class="text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer" title="Edit">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </button>
 
-                   <!-- TAB 1: USERS & ROLE -->
-<div id="tab-users" class="tab-content">
-    <div class="p-4 border-b border-gray-100 bg-gray-50/50 flex flex-col sm:flex-row justify-between gap-3">
-        <!-- Form Pencarian Nama / Email -->
-        <form action="{{ url()->current() }}" method="GET" class="relative flex-1 max-w-xs">
-            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-gray-400 text-sm"></i>
-            <input
-                type="text"
-                name="search"
-                value="{{ request('search') }}"
-                placeholder="Cari nama atau email..."
-                class="w-full pl-9 pr-4 py-2 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
-                onkeydown="if(event.key === 'Enter') this.form.submit();"
-            >
-        </form>
-    </div>
+                                            <form action="{{ route('status.destroy', $item->id_status ?? $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus status ini?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
+                                                    <i class="fa-regular fa-trash-can"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
+                                            Belum ada data status laporan yang tersedia.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full text-left text-sm">
-            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
-                <tr>
-                    <th class="py-3.5 px-6">Nama Pengguna</th>
-                    <th class="py-3.5 px-6">Email / Username</th>
-                    <th class="py-3.5 px-6">Role / Jabatan</th>
-                    <th class="py-3.5 px-6 text-center">Aksi</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
-                @forelse($users as $user)
-                    <tr class="hover:bg-gray-50/60 transition">
-                        <!-- Kolom Nama & Avatar -->
-                        <td class="py-4 px-6">
-                            <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
-                                    {{ substr($user->name, 0, 1) }}
-                                </div>
-                                <span class="font-semibold text-gray-800">{{ $user->name }}</span>
-                            </div>
-                        </td>
-
-                        <!-- Kolom Email -->
-                        <td class="py-4 px-6 text-gray-500">{{ $user->email }}</td>
-
-                        <!-- Kolom Role -->
-                        <td class="py-4 px-6">
-                            @php
-                                $roleLower = strtolower($user->role);
-                                $badgeClass = 'bg-gray-100 text-gray-700';
-                                if ($roleLower === 'admin') {
-                                    $badgeClass = 'bg-purple-50 text-purple-600';
-                                } elseif ($roleLower === 'siswa') {
-                                    $badgeClass = 'bg-orange-50 text-orange-600';
-                                } elseif (str_contains($roleLower, 'bk') || str_contains($roleLower, 'wakasek')) {
-                                    $badgeClass = 'bg-teal-50 text-teal-700';
-                                }
-                            @endphp
-                            <span class="px-3 py-1 {{ $badgeClass }} font-semibold text-xs rounded-full capitalize">
-                                {{ $user->role }}
-                            </span>
-                        </td>
-
-                        <!-- Kolom Aksi -->
-                        <td class="py-4 px-6 text-center space-x-2">
-                            <!-- Tombol Edit (Membuka Modal Dinamis dengan Data User) -->
-                            <button type="button"
-                                    onclick="openEditModal('users', {
-                                        id: '{{ $user->id_user ?? $user->id }}',
-                                        name: '{{ $user->name }}',
-                                        email: '{{ $user->email }}',
-                                        role: '{{ $user->role }}'
-                                    })"
-                                    class="text-blue-600 hover:text-blue-800"
-                                    title="Edit">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </button>
-
-                            <!-- Form Hapus User -->
-                            <form action="{{ route('user.destroy', $user->id_user ?? $user->id) }}"
-                                  method="POST"
-                                  class="inline-block"
-                                  onsubmit="return confirm('Yakin ingin menghapus user ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
-                            Belum ada data pengguna yang tersedia.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
-
-                  <!-- TAB 2: KATEGORI LAPORAN -->
-<div id="tab-kategori" class="tab-content hidden">
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden p-6">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
-                    <tr>
-                        <th class="py-3.5 px-6">#</th>
-                        <th class="py-3.5 px-6">Nama Kategori</th>
-                        <th class="py-3.5 px-6">Penanggung Jawab (Role)</th>
-                        <th class="py-3.5 px-6 text-center">Aksi</th>
-                    </tr>
-                </thead>
-
-                <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
-                    @forelse($kategoris as $index => $kategori)
-                        <tr class="hover:bg-gray-50/60 transition">
-                            <!-- Nomor Urut Otomatis -->
-                            <td class="py-4 px-6 font-bold text-gray-400">{{ $index + 1 }}</td>
-
-                            <!-- Nama Kategori dari Database -->
-                            <td class="py-4 px-6 font-semibold text-gray-800">{{ $kategori->nama_kategori }}</td>
-
-                            <!-- Penanggung Jawab dari Database -->
-                            <td class="py-4 px-6">
-                                <span class="px-3 py-1 bg-indigo-50 text-indigo-700 font-semibold text-xs rounded-full">
-                                    {{ $kategori->penanggung_jawab ?? 'Wakasek / Guru BK' }}
-                                </span>
-                            </td>
-
-                            <!-- Tombol Aksi (Edit & Hapus) -->
-                            <td class="py-4 px-6 text-center space-x-2">
-                                <!-- Tombol Edit Kategori (Memanggil Modal Dinamis) -->
-                                <button type="button"
-                                        onclick="openEditModal('kategori', {
-                                            id: '{{ $kategori->id_kategori ?? $kategori->id }}',
-                                            nama_kategori: '{{ $kategori->nama_kategori }}',
-                                            penanggung_jawab: '{{ $kategori->penanggung_jawab }}'
-                                        })"
-                                        class="text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer"
-                                        title="Edit">
-                                    <i class="fa-regular fa-pen-to-square"></i>
-                                </button>
-
-                                <!-- Form Tombol Hapus Kategori -->
-                                <form action="{{ route('kategori.destroy', $kategori->id_kategori ?? $kategori->id) }}"
-                                      method="POST"
-                                      class="inline-block"
-                                      onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
-                                        <i class="fa-regular fa-trash-can"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <!-- Jika data kategori kosong -->
-                        <tr>
-                            <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
-                                Belum ada data kategori laporan yang tersedia.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            </div>
         </div>
-    </div>
+    </main>
 </div>
 
-                 <!-- TAB 3: STATUS LAPORAN -->
-<div id="tab-status" class="tab-content hidden">
-    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden p-6">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
-                    <tr>
-                        <th class="py-3.5 px-6">Nama Status</th>
-                        <th class="py-3.5 px-6">Tampilan Badge</th>
-                        <th class="py-3.5 px-6">Deskripsi Keterangan</th>
-                        <th class="py-3.5 px-6 text-center">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
-                    @forelse($statusLaporan as $item)
-                    <tr class="hover:bg-gray-50/60 transition">
-                        <td class="py-4 px-6 font-semibold text-gray-800">{{ $item->nama_status }}</td>
-                        <td class="py-4 px-6">
-                            <span class="px-3 py-1 font-semibold text-xs rounded-full bg-emerald-100 text-emerald-700">
-                                {{ $item->nama_status }}
-                            </span>
-                        </td>
-                        <td class="py-4 px-6 text-gray-500">{{ $item->deskripsi_keterangan ?? '-' }}</td>
-
-                        <!-- KOLOM AKSI (Tombol Edit & Hapus) -->
-                        <td class="py-4 px-6 text-center space-x-2">
-                            <!-- Tombol Edit yang memanggil modal dinamis -->
-                            <button type="button"
-                                    onclick="openEditModal('status', {
-                                        id: '{{ $item->id_status ?? $item->id }}',
-                                        nama_status: '{{ $item->nama_status }}',
-                                        deskripsi: '{{ $item->deskripsi_keterangan ?? '' }}'
-                                    })"
-                                    class="text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer"
-                                    title="Edit">
-                                <i class="fa-regular fa-pen-to-square"></i>
-                            </button>
-
-                            <!-- Form Hapus -->
-                            <form action="{{ route('status.destroy', $item->id_status ?? $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus status ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700 bg-transparent border-none cursor-pointer" title="Hapus">
-                                    <i class="fa-regular fa-trash-can"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="4" class="py-6 text-center text-gray-400 text-sm">
-                            Belum ada data status laporan yang tersedia.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL DINAMIS BERSAMA (UNTUK SEMUA TAB) -->
+<!-- MODAL DINAMIS -->
 <div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center hidden p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
         <div class="flex items-center justify-between border-b border-gray-100 pb-3">
@@ -825,7 +691,6 @@
         <form id="formModalData" method="POST" action="{{ route('user.store') }}" class="space-y-4">
             @csrf
 
-
             <input type="hidden" name="active_tab" id="activeTabInput" value="users">
 
             <!-- Input Utama (Nama / Nama Kategori / Nama Status) -->
@@ -833,41 +698,46 @@
                 <label id="inputLabel" class="block text-xs font-bold text-gray-500 uppercase mb-1">
                     Nama Lengkap
                 </label>
-                <input
-                    type="text"
-                    id="inputNama"
-                    name="name"
-                    required
-                    placeholder="Masukkan nama..."
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
-                >
+                <input type="text" id="inputNama" name="name" required placeholder="Masukkan nama..." class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
             </div>
 
-            <!-- Field Deskripsi Keterangan (Khusus Tab Status Laporan) -->
+            <!-- Field Deskripsi Keterangan (Status Laporan) -->
             <div id="statusFields" class="hidden">
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
                     Deskripsi Keterangan
                 </label>
-                <textarea name="deskripsi_keterangan" id="inputDeskripsi" rows="3"
-                    class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
-                    placeholder="Masukkan keterangan singkat..."></textarea>
+                <textarea name="deskripsi" id="inputDeskripsi" rows="3" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500" placeholder="Masukkan keterangan singkat..."></textarea>
             </div>
 
-            <!-- Field Penanggung Jawab (Khusus Kategori Laporan) -->
-            <div id="penanggungJawabField" class="hidden">
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
-                    Penanggung Jawab (Role)
-                </label>
-                <select name="penanggung_jawab" id="inputPenanggungJawab" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
-                    <option value="guru_bk">Guru BK</option>
-                    <option value="wakasek kesiswaan">Wakasek Kesiswaan</option>
-                    <option value="wakasek kurikulum">Wakasek Kurikulum</option>
-                    <option value="wakasek sarana">Wakasek Sarana Prasarana</option>
-                    <option value="wakasek dudi">Wakasek DUDI (Humas)</option>
-                </select>
-            </div>
+            <!-- Field Penanggung Jawab (Kategori Laporan) -->
+           <div id="penanggungJawabField" class="hidden">
+    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
+        Penanggung Jawab (Role)
+    </label>
 
-            <!-- Field Role Akses (Khusus User & Role) -->
+    <select
+        name="penanggung_jawab"
+        id="inputPenanggungJawab"
+        class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
+    >
+        <option value="">Pilih Penanggung Jawab</option>
+
+        @foreach($penanggungJawabs as $role)
+    <option value="{{ $role }}">
+        {{ match($role) {
+            'guru_bk' => 'Guru BK',
+            'wakasek kurikulum' => 'Wakasek Kurikulum',
+            'wakasek kesiswaan' => 'Wakasek Kesiswaan',
+            'wakasek sarana' => 'Wakasek Sarana',
+            'wakasek dudi' => 'Wakasek DUDI',
+            default => ucwords(str_replace('_', ' ', $role))
+        } }}
+    </option>
+@endforeach
+    </select>
+</div>
+
+            <!-- Field Role Akses (User & Role) -->
             <div id="roleSelectField">
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
                     Pilih Role Akses
@@ -883,31 +753,25 @@
                 </select>
             </div>
 
-            <!-- Field Email (Khusus User & Role) -->
+            <!-- Field Email -->
             <div id="emailField">
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label>
                 <input type="email" id="inputEmail" name="email" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
             </div>
 
-            <!-- Field Password (Khusus User & Role) -->
+            <!-- Field Password -->
             <div id="passwordField" class="space-y-1">
                 <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Password</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
                         <i class="fa-solid fa-lock text-sm"></i>
                     </span>
-                    <input
-                        type="password"
-                        name="password"
-                        id="passwordInput"
-                        placeholder="Minimal 8 karakter"
-                        class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500"
-                    >
+                    <input type="password" name="password" id="passwordInput" placeholder="Minimal 8 karakter" class="w-full pl-10 pr-10 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
                 </div>
                 <p id="passwordNote" class="text-[11px] text-gray-400 hidden">*Kosongkan jika tidak ingin mengubah password</p>
             </div>
 
-            <!-- Tombol Aksi -->
+            <!-- Tombol Simpan/Batal -->
             <div class="flex justify-end gap-3 border-t border-gray-100 pt-4">
                 <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-semibold text-gray-500 rounded-xl hover:bg-gray-100">
                     Batal
@@ -920,350 +784,510 @@
     </div>
 </div>
 
-<!-- ========================= -->
-<!--      JAVASCRIPT GABUNGAN  -->
-<!-- ========================= -->
-
+<!-- JAVASCRIPT GABUNGAN -->
 <script>
-let currentTab = 'users';
+    let currentTab = 'users';
 
-// Membuka dan menutup menu Data Master
-function toggleDataMaster() {
-    const menu = document.getElementById('masterMenu');
-    const arrow = document.getElementById('masterArrow');
-    const button = document.querySelector('.dropdown-btn');
+    // ==========================================
+    // 1. TOGGLE MENU DATA MASTER
+    // ==========================================
 
-    if (!menu || !arrow || !button) return;
+    function toggleDataMaster() {
+        const menu = document.getElementById('masterMenu');
+        const arrow = document.getElementById('masterArrow');
+        const button = document.querySelector('.dropdown-btn');
 
-    menu.classList.toggle('show');
+        if (!menu || !arrow || !button) return;
 
-    const isOpen = menu.classList.contains('show');
+        menu.classList.toggle('show');
 
-    arrow.style.transform = isOpen
-        ? 'rotate(180deg)'
-        : 'rotate(0deg)';
+        const isOpen = menu.classList.contains('show');
 
-    button.setAttribute('aria-expanded', isOpen);
-}
+        arrow.style.transform = isOpen
+            ? 'rotate(180deg)'
+            : 'rotate(0deg)';
 
-// Memilih tab Data Master
-function switchTab(tab) {
-    if (!['users', 'kategori', 'status'].includes(tab)) {
-        tab = 'users';
+        button.setAttribute('aria-expanded', isOpen);
     }
 
-    currentTab = tab;
 
-    const activeTabInput = document.getElementById('activeTabInput');
-    if (activeTabInput) {
-        activeTabInput.value = tab;
-    }
+    // ==========================================
+    // 2. PINDAH TAB DATA MASTER
+    // ==========================================
 
-    // 1. Sembunyikan semua konten tab
-    document.querySelectorAll('.tab-content').forEach(el => {
-        el.classList.add('hidden');
-    });
+    function switchTab(tab) {
 
-    // 2. Hapus kelas aktif dari semua menu sidebar
-    document.querySelectorAll('.sub-menu a').forEach(link => {
-        link.classList.remove('sub-active');
-    });
-
-    // 3. Tampilkan konten tab yang dipilih secara eksplisit
-    const activeContent = document.getElementById(`tab-${tab}`);
-    const activeLink = document.getElementById(`sub-${tab}`);
-
-    if (activeContent) {
-        activeContent.classList.remove('hidden');
-    }
-    if (activeLink) {
-        activeLink.classList.add('sub-active');
-    }
-
-    const pageTitle = document.getElementById('pageTitle');
-    const pageDesc = document.getElementById('pageDesc');
-    const btnAddText = document.getElementById('btnAddText');
-
-    const tabSettings = {
-        users: {
-            title: 'Data Master - Users & Role',
-            desc: 'Kelola data pengguna serta pembagian hak akses role di lingkungan sekolah.',
-            button: 'Tambah User'
-        },
-        kategori: {
-            title: 'Data Master - Kategori Laporan',
-            desc: 'Kelola jenis kategori laporan pengaduan beserta penanggung jawab bidang.',
-            button: 'Tambah Kategori'
-        },
-        status: {
-            title: 'Data Master - Status Laporan',
-            desc: 'Kelola tahapan status progres laporan.',
-            button: 'Tambah Status'
+        if (!['users', 'kategori', 'status'].includes(tab)) {
+            tab = 'users';
         }
-    };
 
-    const settings = tabSettings[tab];
+        currentTab = tab;
 
-    if (pageTitle) pageTitle.innerText = settings.title;
-    if (pageDesc) pageDesc.innerText = settings.desc;
-    if (btnAddText) btnAddText.innerText = settings.button;
-}
+        const activeTabInput = document.getElementById('activeTabInput');
 
-// ==========================================
-// 1. MEMBUKA MODAL TAMBAH DATA (DINAMIS TAB)
-// ==========================================
-function openModal() {
-    const modal = document.getElementById('modalData');
-    const form = document.getElementById('formModalData');
-    const modalTitle = document.getElementById('modalTitle');
-    const inputNama = document.getElementById('inputNama');
-    const inputLabel = document.getElementById('inputLabel');
-    const activeTabInput = document.getElementById('activeTabInput');
+        if (activeTabInput) {
+            activeTabInput.value = tab;
+        }
 
-    const roleSelectField = document.getElementById('roleSelectField');
-    const emailField = document.getElementById('emailField');
-    const passwordField = document.getElementById('passwordField');
-    const kategoriFields = document.getElementById('kategoriFields');
-    const statusFields = document.getElementById('statusFields');
-    const penanggungJawabField = document.getElementById('penanggungJawabField');
+        document.querySelectorAll('.tab-content').forEach(el => {
+            el.classList.add('hidden');
+        });
 
-    if (!modal || !form || !modalTitle || !inputNama) {
-        console.error('Elemen modal atau form tidak ditemukan.');
-        return;
+        document.querySelectorAll('.sub-menu a').forEach(link => {
+            link.classList.remove('sub-active');
+        });
+
+        const activeContent = document.getElementById(`tab-${tab}`);
+        const activeLink = document.getElementById(`sub-${tab}`);
+
+        if (activeContent) activeContent.classList.remove('hidden');
+        if (activeLink) activeLink.classList.add('sub-active');
+
+        const pageTitle = document.getElementById('pageTitle');
+        const pageDesc = document.getElementById('pageDesc');
+        const btnAddText = document.getElementById('btnAddText');
+
+        const tabSettings = {
+            users: {
+                title: 'Data Master - Users & Role',
+                desc: 'Kelola data pengguna serta pembagian hak akses role di lingkungan sekolah.',
+                button: 'Tambah User'
+            },
+
+            kategori: {
+                title: 'Data Master - Kategori Laporan',
+                desc: 'Kelola jenis kategori laporan pengaduan beserta penanggung jawab bidang.',
+                button: 'Tambah Kategori'
+            },
+
+            status: {
+                title: 'Data Master - Status Laporan',
+                desc: 'Kelola tahapan status progres laporan.',
+                button: 'Tambah Status'
+            }
+        };
+
+        const settings = tabSettings[tab];
+
+        if (pageTitle) pageTitle.innerText = settings.title;
+        if (pageDesc) pageDesc.innerText = settings.desc;
+        if (btnAddText) btnAddText.innerText = settings.button;
     }
 
-    // Reset Form ke keadaan awal (Mode Tambah)
-    form.reset();
 
-    // Hapus method PUT jika sebelumnya sempat dipakai untuk edit
-    let methodInput = form.querySelector('input[name="_method"]');
-    if (methodInput) methodInput.remove();
+    // ==========================================
+    // 3. FUNGSI BANTUAN MENAMPILKAN FIELD
+    // ==========================================
 
-    if (activeTabInput) {
-        activeTabInput.value = currentTab;
+    function setFieldDisplay(element, visible) {
+        if (!element) return;
+
+        element.style.display = visible ? 'block' : 'none';
     }
 
-    const emailInput = emailField?.querySelector('input');
-    const passwordInput = passwordField?.querySelector('input');
 
-    // Reset required attributes
-    if (emailInput) emailInput.required = false;
-    if (passwordInput) passwordInput.required = false;
+    // ==========================================
+    // 4. TAMBAH DATA BARU
+    // ==========================================
 
-    // Tampilkan / Sembunyikan field berdasarkan tab yang aktif
-    const isUserTab = currentTab === 'users';
-    const isCategoryTab = currentTab === 'kategori';
-    const isStatusTab = currentTab === 'status';
+    function openModal() {
 
-    if (roleSelectField) roleSelectField.classList.toggle('hidden', !isUserTab);
-    if (emailField) emailField.classList.toggle('hidden', !isUserTab);
-    if (passwordField) passwordField.classList.toggle('hidden', !isUserTab);
-    if (kategoriFields) kategoriFields.classList.toggle('hidden', !isCategoryTab);
-    if (statusFields) statusFields.classList.toggle('hidden', !isStatusTab);
-    if (penanggungJawabField) penanggungJawabField.classList.toggle('hidden', !isCategoryTab);
+        const modal = document.getElementById('modalData');
+        const form = document.getElementById('formModalData');
 
-    // Tampilkan catatan password (sembunyikan saat tambah baru)
-    const passwordNote = document.getElementById('passwordNote');
-    if (passwordNote) passwordNote.classList.add('hidden');
+        const modalTitle = document.getElementById('modalTitle');
+        const inputNama = document.getElementById('inputNama');
+        const inputLabel = document.getElementById('inputLabel');
 
-    if (isUserTab) {
-        modalTitle.innerText = 'Tambah User Baru';
-        if (inputLabel) inputLabel.innerText = 'NAMA LENGKAP';
-        form.action = "{{ route('user.store') }}";
+        const roleSelectField = document.getElementById('roleSelectField');
+        const emailField = document.getElementById('emailField');
+        const passwordField = document.getElementById('passwordField');
+        const statusFields = document.getElementById('statusFields');
+        const penanggungJawabField = document.getElementById('penanggungJawabField');
 
-        inputNama.name = 'name';
-        inputNama.placeholder = 'Masukkan nama pengguna...';
+        if (!modal || !form || !inputNama) return;
 
-        if (emailInput) emailInput.required = true;
-        if (passwordInput) passwordInput.required = true;
+        // Bersihkan form
+        form.reset();
 
-    } else if (isCategoryTab) {
-        modalTitle.innerText = 'Tambah Kategori Laporan';
-        if (inputLabel) inputLabel.innerText = 'NAMA KATEGORI';
-        form.action = "{{ route('kategori.store') }}";
+        // Hapus method PUT jika sebelumnya digunakan untuk edit
+        const methodInput = form.querySelector('input[name="_method"]');
 
-        inputNama.name = 'nama_kategori';
-        inputNama.placeholder = 'Masukkan nama kategori...';
+        if (methodInput) {
+            methodInput.remove();
+        }
 
-    } else if (isStatusTab) {
-        modalTitle.innerText = 'Tambah Status Laporan';
-        if (inputLabel) inputLabel.innerText = 'NAMA STATUS';
-        form.action = "{{ route('status.store') }}";
+        // Mengatur tab aktif
+        const activeTabInput = document.getElementById('activeTabInput');
 
-        inputNama.name = 'nama_status';
-        inputNama.placeholder = 'Masukkan nama status (Contoh: Selesai)...';
+        if (activeTabInput) {
+            activeTabInput.value = currentTab;
+        }
+
+        // Mengambil input
+        const emailInput = emailField?.querySelector('input');
+        const passwordInput = passwordField?.querySelector('input');
+        const inputRole = document.getElementById('inputRole');
+        const inputPJ = document.getElementById('inputPenanggungJawab');
+        const inputDeskripsi = document.getElementById('inputDeskripsi');
+
+        // Reset semua validasi
+        inputNama.required = false;
+
+        if (emailInput) emailInput.required = false;
+        if (passwordInput) passwordInput.required = false;
+        if (inputRole) inputRole.required = false;
+        if (inputPJ) inputPJ.required = false;
+        if (inputDeskripsi) inputDeskripsi.required = false;
+
+        // Menentukan tab
+        const isUserTab = currentTab === 'users';
+        const isCategoryTab = currentTab === 'kategori';
+        const isStatusTab = currentTab === 'status';
+
+        // Mengatur tampilan field
+        setFieldDisplay(roleSelectField, isUserTab);
+        setFieldDisplay(emailField, isUserTab);
+        setFieldDisplay(passwordField, isUserTab);
+        setFieldDisplay(statusFields, isStatusTab);
+        setFieldDisplay(penanggungJawabField, isCategoryTab);
+
+        // Reset catatan password
+        const passwordNote = document.getElementById('passwordNote');
+
+        if (passwordNote) {
+            passwordNote.classList.add('hidden');
+        }
+
+        // ======================================
+        // TAMBAH USER
+        // ======================================
+
+        if (isUserTab) {
+
+            modalTitle.innerText = 'Tambah User Baru';
+
+            if (inputLabel) inputLabel.innerText = 'NAMA LENGKAP';
+
+            form.action = "{{ route('user.store') }}";
+
+            inputNama.name = 'name';
+            inputNama.placeholder = 'Masukkan nama pengguna...';
+
+            inputNama.required = true;
+
+            if (emailInput) {
+                emailInput.name = 'email';
+                emailInput.required = true;
+            }
+
+            if (passwordInput) {
+                passwordInput.name = 'password';
+                passwordInput.required = true;
+            }
+
+            if (inputRole) {
+                inputRole.name = 'role';
+                inputRole.required = true;
+            }
+        }
+
+
+        // ======================================
+        // TAMBAH KATEGORI
+        // ======================================
+
+        else if (isCategoryTab) {
+
+            modalTitle.innerText = 'Tambah Kategori Laporan';
+
+            if (inputLabel) inputLabel.innerText = 'NAMA KATEGORI';
+
+            form.action = "{{ route('kategori.store') }}";
+
+            inputNama.name = 'nama_kategori';
+            inputNama.placeholder = 'Masukkan nama kategori...';
+
+            inputNama.required = true;
+
+            if (inputPJ) {
+                inputPJ.name = 'penanggung_jawab';
+                inputPJ.required = true;
+            }
+        }
+
+
+        // ======================================
+        // TAMBAH STATUS
+        // ======================================
+
+        else if (isStatusTab) {
+
+            modalTitle.innerText = 'Tambah Status Laporan';
+
+            if (inputLabel) inputLabel.innerText = 'NAMA STATUS';
+
+            form.action = "{{ route('status.store') }}";
+
+            inputNama.name = 'nama_status';
+            inputNama.placeholder = 'Masukkan nama status...';
+
+            inputNama.required = true;
+        }
+
+        // Tampilkan modal
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
     }
 
-    inputNama.required = true;
 
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-}
 
-// ==========================================
-// 2. MEMBUKA MODAL EDIT DATA (SEMUA TAB)
-// ==========================================
-function openEditModal(tab, data) {
-    const modal = document.getElementById('modalData');
-    const form = document.getElementById('formModalData');
-    const modalTitle = document.getElementById('modalTitle');
-    const inputNama = document.getElementById('inputNama');
-    const inputLabel = document.getElementById('inputLabel');
-    const activeTabInput = document.getElementById('activeTabInput');
+    // ==========================================
+    // 5. EDIT DATA USER, KATEGORI, DAN STATUS
+    // ==========================================
 
-    const roleSelectField = document.getElementById('roleSelectField');
-    const emailField = document.getElementById('emailField');
-    const passwordField = document.getElementById('passwordField');
-    const kategoriFields = document.getElementById('kategoriFields');
-    const statusFields = document.getElementById('statusFields');
-    const penanggungJawabField = document.getElementById('penanggungJawabField');
+    function openEditModal(tab, data) {
 
-    if (!modal || !form) return;
+        const modal = document.getElementById('modalData');
+        const form = document.getElementById('formModalData');
 
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
+        const modalTitle = document.getElementById('modalTitle');
+        const inputNama = document.getElementById('inputNama');
+        const inputLabel = document.getElementById('inputLabel');
 
-    if (activeTabInput) activeTabInput.value = tab;
+        const roleSelectField = document.getElementById('roleSelectField');
+        const emailField = document.getElementById('emailField');
+        const passwordField = document.getElementById('passwordField');
+        const statusFields = document.getElementById('statusFields');
+        const penanggungJawabField = document.getElementById('penanggungJawabField');
 
-    // Tambahkan method HTTP _method = PUT untuk proses update di Laravel
-    let methodInput = form.querySelector('input[name="_method"]');
-    if (!methodInput) {
+        if (!modal || !form || !inputNama || !data) return;
+
+        // Simpan tab yang sedang diedit
+        currentTab = tab;
+
+        // Bersihkan form terlebih dahulu
+        form.reset();
+
+        // Hapus method lama
+        let methodInput = form.querySelector('input[name="_method"]');
+
+        if (methodInput) {
+            methodInput.remove();
+        }
+
+        // Tambahkan method PUT
         methodInput = document.createElement('input');
+
         methodInput.type = 'hidden';
         methodInput.name = '_method';
+        methodInput.value = 'PUT';
+
         form.appendChild(methodInput);
-    }
-    methodInput.value = 'PUT';
 
-    // ------------------------------------
-    // JIKA TAB USERS
-    // ------------------------------------
-    if (tab === 'users') {
-        if (modalTitle) modalTitle.innerText = "Edit Data User";
-        if (inputLabel) inputLabel.innerText = "NAMA LENGKAP";
-        form.action = `/data_master/${data.id}`;
+        // Mengatur tab aktif
+        const activeTabInput = document.getElementById('activeTabInput');
 
-        if (roleSelectField) roleSelectField.classList.remove('hidden');
-        if (emailField) emailField.classList.remove('hidden');
-        if (passwordField) roleSelectField ? passwordField.classList.remove('hidden') : null;
-        if (statusFields) statusFields.classList.add('hidden');
-        if (penanggungJawabField) penanggungJawabField.classList.add('hidden');
-        if (kategoriFields) kategoriFields.classList.add('hidden');
-
-        if (inputNama) {
-            inputNama.name = 'name';
-            inputNama.value = data.name || '';
+        if (activeTabInput) {
+            activeTabInput.value = tab;
         }
 
+        // Mengambil input
         const emailInput = emailField?.querySelector('input');
-        if (emailInput) {
-            emailInput.value = data.email || '';
-            emailInput.required = true;
-        }
+        const passwordInput = passwordField?.querySelector('input');
 
         const inputRole = document.getElementById('inputRole');
-        if (inputRole) inputRole.value = data.role || 'siswa';
+        const inputPJ = document.getElementById('inputPenanggungJawab');
+        const inputDeskripsi = document.getElementById('inputDeskripsi');
 
-        const passwordInput = passwordField?.querySelector('input');
-        if (passwordInput) {
-            passwordInput.value = '';
-            passwordInput.required = false;
+        // Reset semua validasi
+        inputNama.required = true;
+
+        if (emailInput) emailInput.required = false;
+        if (passwordInput) passwordInput.required = false;
+        if (inputRole) inputRole.required = false;
+        if (inputPJ) inputPJ.required = false;
+        if (inputDeskripsi) inputDeskripsi.required = false;
+
+        // Menentukan ID data
+        const id = data.id ?? data.id_user ?? data.id_kategori ?? data.id_status;
+
+        if (!id) {
+            console.error('ID data tidak ditemukan:', data);
+            return;
         }
 
-        const passwordNote = document.getElementById('passwordNote');
-        if (passwordNote) passwordNote.classList.remove('hidden');
 
-    // ------------------------------------
-    // JIKA TAB KATEGORI LAPORAN
-    // ------------------------------------
-    } else if (tab === 'kategori') {
-        if (modalTitle) modalTitle.innerText = "Edit Kategori Laporan";
-        if (inputLabel) inputLabel.innerText = "NAMA KATEGORI";
-        form.action = `/data_master/kategori/${data.id}`;
+        // ======================================
+        // EDIT USER
+        // ======================================
 
-        if (roleSelectField) roleSelectField.classList.add('hidden');
-        if (emailField) emailField.classList.add('hidden');
-        if (passwordField) passwordField.classList.add('hidden');
-        if (statusFields) statusFields.classList.add('hidden');
-        if (penanggungJawabField) penanggungJawabField.classList.remove('hidden');
-        if (kategoriFields) kategoriFields.classList.add('hidden');
+        if (tab === 'users') {
 
-        if (inputNama) {
+            modalTitle.innerText = 'Edit Data User';
+
+            if (inputLabel) inputLabel.innerText = 'NAMA LENGKAP';
+
+            form.action = `/users/${id}`;
+
+            setFieldDisplay(roleSelectField, true);
+            setFieldDisplay(emailField, true);
+            setFieldDisplay(passwordField, true);
+            setFieldDisplay(statusFields, false);
+            setFieldDisplay(penanggungJawabField, false);
+
+            inputNama.name = 'name';
+            inputNama.value = data.name || '';
+
+            if (emailInput) {
+                emailInput.name = 'email';
+                emailInput.value = data.email || '';
+                emailInput.required = true;
+            }
+
+            if (inputRole) {
+                inputRole.name = 'role';
+                inputRole.value = data.role || 'siswa';
+                inputRole.required = true;
+            }
+
+            if (passwordInput) {
+                passwordInput.name = 'password';
+                passwordInput.value = '';
+                passwordInput.required = false;
+            }
+
+            const passwordNote = document.getElementById('passwordNote');
+
+            if (passwordNote) {
+                passwordNote.classList.remove('hidden');
+            }
+        }
+
+
+        // ======================================
+        // EDIT KATEGORI
+        // ======================================
+
+        else if (tab === 'kategori') {
+
+            modalTitle.innerText = 'Edit Kategori Laporan';
+
+            if (inputLabel) inputLabel.innerText = 'NAMA KATEGORI';
+
+            form.action = `/data_master/kategori/${id}`;
+
+            setFieldDisplay(roleSelectField, false);
+            setFieldDisplay(emailField, false);
+            setFieldDisplay(passwordField, false);
+            setFieldDisplay(statusFields, false);
+            setFieldDisplay(penanggungJawabField, true);
+
             inputNama.name = 'nama_kategori';
             inputNama.value = data.nama_kategori || '';
+
+            if (inputPJ) {
+                inputPJ.name = 'penanggung_jawab';
+                inputPJ.value = data.penanggung_jawab || '';
+                inputPJ.required = true;
+            }
+
+            const passwordNote = document.getElementById('passwordNote');
+
+            if (passwordNote) {
+                passwordNote.classList.add('hidden');
+            }
         }
 
-        const inputPJ = document.getElementById('inputPenanggungJawab');
-        if (inputPJ) inputPJ.value = data.penanggung_jawab || '';
 
-        const passwordNote = document.getElementById('passwordNote');
-        if (passwordNote) passwordNote.classList.add('hidden');
+        // ======================================
+        // EDIT STATUS
+        // ======================================
 
-    // ------------------------------------
-    // JIKA TAB STATUS LAPORAN
-    // ------------------------------------
-    } else if (tab === 'status') {
-        if (modalTitle) modalTitle.innerText = "Edit Status Laporan";
-        if (inputLabel) inputLabel.innerText = "NAMA STATUS";
-        form.action = `/data_master/status/${data.id}`;
+        else if (tab === 'status') {
 
-        if (roleSelectField) roleSelectField.classList.add('hidden');
-        if (emailField) emailField.classList.add('hidden');
-        if (passwordField) passwordField.classList.add('hidden');
-        if (penanggungJawabField) penanggungJawabField.classList.add('hidden');
-        if (statusFields) statusFields.classList.remove('hidden');
-        if (kategoriFields) kategoriFields.classList.add('hidden');
+            modalTitle.innerText = 'Edit Status Laporan';
 
-        if (inputNama) {
+            if (inputLabel) inputLabel.innerText = 'NAMA STATUS';
+
+            form.action = `/data_master/status/${id}`;
+
+            setFieldDisplay(roleSelectField, false);
+            setFieldDisplay(emailField, false);
+            setFieldDisplay(passwordField, false);
+            setFieldDisplay(penanggungJawabField, false);
+            setFieldDisplay(statusFields, true);
+
             inputNama.name = 'nama_status';
             inputNama.value = data.nama_status || '';
+
+            if (inputDeskripsi) {
+                inputDeskripsi.name = 'deskripsi';
+                inputDeskripsi.value = data.deskripsi || '';
+            }
+
+            const passwordNote = document.getElementById('passwordNote');
+
+            if (passwordNote) {
+                passwordNote.classList.add('hidden');
+            }
         }
 
-        const inputDeskripsi = document.getElementById('inputDeskripsi');
-        if (inputDeskripsi) inputDeskripsi.value = data.deskripsi || '';
+        else {
+            console.error('Tab edit tidak dikenali:', tab);
+            return;
+        }
 
-        const passwordNote = document.getElementById('passwordNote');
-        if (passwordNote) passwordNote.classList.add('hidden');
+        // Tampilkan modal setelah konfigurasi selesai
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
     }
-}
 
-// Menutup modal
-function closeModal() {
-    const modal = document.getElementById('modalData');
 
-    if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
+
+    // ==========================================
+    // 6. MENUTUP MODAL
+    // ==========================================
+
+    function closeModal() {
+
+        const modal = document.getElementById('modalData');
+        const form = document.getElementById('formModalData');
+
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        if (form) {
+            form.reset();
+
+            const methodInput = form.querySelector('input[name="_method"]');
+
+            if (methodInput) {
+                methodInput.remove();
+            }
+        }
     }
-}
 
-// Fungsi untuk menampilkan / menyembunyikan password (Tombol Mata)
-function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('passwordInput');
-    const eyeIcon = document.getElementById('eyeIcon');
 
-    if (!passwordInput || !eyeIcon) return;
 
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        eyeIcon.classList.remove('fa-eye-slash');
-        eyeIcon.classList.add('fa-eye');
-    } else {
-        passwordInput.type = 'password';
-        eyeIcon.classList.remove('fa-eye');
-        eyeIcon.classList.add('fa-eye-slash');
-    }
-}
+    // ==========================================
+    // 7. MEMUAT TAB SESUAI URL
+    // ==========================================
 
-// Mengaktifkan tab berdasarkan URL saat halaman dimuat
-document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
+    document.addEventListener('DOMContentLoaded', function () {
 
-    if (tabParam) {
-        switchTab(tabParam);
-    } else {
-        switchTab('users');
-    }
-});
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const tabParam = urlParams.get('tab');
+
+        if (tabParam) {
+            switchTab(tabParam);
+        } else {
+            switchTab('users');
+        }
+
+    });
+
 </script>
