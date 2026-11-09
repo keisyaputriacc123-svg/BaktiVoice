@@ -140,7 +140,7 @@
             text-align: center;
         }
 
-        
+
 
         .logout-btn {
             display: flex;
@@ -659,15 +659,11 @@
 
 <body>
 
-    <!-- SIDEBAR -->
+   <!-- SIDEBAR -->
     <aside class="sidebar">
         <div>
             <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
                 <span class="brand-name">BaktiVoice</span>
             </div>
 
@@ -719,37 +715,33 @@
             </ul>
         </div>
 
-<a href="{{ route('login') }}" class="logout-btn">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    <span>Logout</span>
-</a>
+        <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="logout-btn" style="background: none; border: none; width: 100%; text-align: left; cursor: pointer;">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </form>
     </aside>
 
     <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
         <!-- TOPBAR -->
+        <header class="topbar">
+            <a href="{{ route('notifikasi_siswa') }}" class="notification-button" title="Notifikasi">
+                <i class="fa-regular fa-bell"></i>
+            </a>
 
-<header class="topbar">
-    <!-- Ikon Notifikasi -->
-    <a href="{{ route('notifikasi_siswa') }}"
-        class="notification-button"
-        title="Notifikasi">
-        <i class="fa-regular fa-bell"></i>
-    </a>
-
-    <!-- Profil Pengguna -->
-    <div class="user-profile">
-        <div class="avatar">
-            <i class="fa-regular fa-user"></i>
-        </div>
-
-        <span class="user-name">
-            {{ Auth::user()->name ?? 'Nama Siswa' }}
-        </span>
-    </div>
-</header>
-
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <span class="user-name">
+                    {{ Auth::user()->name ?? 'Nama Siswa' }}
+                </span>
+            </div>
+        </header>
 
         <!-- MAIN CONTENT -->
         <main class="content">
@@ -757,178 +749,152 @@
             <!-- JUDUL DAN KODE LAPORAN -->
             <section class="page-header">
                 <div class="page-heading">
-                    <a
-                        href="{{ route('riwayat_laporan') }}"
-                        class="btn-back"
-                        title="Kembali ke Riwayat Laporan"
-                        aria-label="Kembali"
-                    >
+                    <a href="{{ route('riwayat_laporan') }}" class="btn-back" title="Kembali ke Riwayat Laporan" aria-label="Kembali">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
                     <h1 class="page-title">Detail Laporan</h1>
                 </div>
 
-                <!-- Data contoh sementara -->
-                <div class="report-code" id="reportCode">BV001</div>
+                <div class="report-code" id="reportCode">
+                    BV{{ str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
+                </div>
             </section>
 
             <hr class="page-divider">
 
-            <!-- FORM FRONTEND DEMO -->
-            <form id="detailReportForm">
 
-                <!-- INFORMASI LAPORAN -->
-                <section class="report-info-card">
-
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fa-solid fa-folder-open"></i>
-                        </div>
-                        <div>
-                            <span class="info-label">Kategori</span>
-                            <div class="info-value" id="reportCategory">
-                                Sarana dan Prasarana
-                            </div>
+            <!-- INFORMASI LAPORAN -->
+            <section class="report-info-card">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-folder-open"></i>
+                    </div>
+                    <div>
+                        <span class="info-label">Kategori</span>
+                        <div class="info-value">
+                            {{ $laporan->kategori->nama_kategori ?? 'Umum' }}
                         </div>
                     </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fa-regular fa-user"></i>
-                        </div>
-                        <div>
-                            <span class="info-label">Pelapor</span>
-                            <div class="info-value" id="reporterName">
-                                Anonim
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="info-item">
-                        <div class="info-icon">
-                            <i class="fa-regular fa-calendar"></i>
-                        </div>
-                        <div>
-                            <span class="info-label">Tanggal</span>
-                            <div class="info-value" id="reportDate">
-                                14 Sep 2026
-                            </div>
-                        </div>
-                    </div>
-
-
-<div class="info-item">
-    <div class="info-icon">
-        <i class="fa-solid fa-thumbtack"></i>
-    </div>
-
-    <div>
-        <label class="info-label">Status</label>
-
-        <span id="reportStatus" class="status-badge status-diproses">
-            Diproses
-        </span>
-    </div>
-</div>
-
-                </section>
-
-                <!-- ISI LAPORAN -->
-                <section class="report-content-card">
-                    <h2 class="section-title">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        Isi Laporan
-                    </h2>
-
-                    <div class="report-text" id="reportDescription">
-                        Keadaan kursi dan meja di kelas 10 RPL 2 mengalami
-                        kerusakan.
-                    </div>
-                </section>
-
-                <!-- BUKTI PENDUKUNG -->
-                <section class="evidence-card">
-                    <h2 class="section-title">
-                        <i class="fa-regular fa-images"></i>
-                        Bukti Pendukung
-                    </h2>
-
-                    <div class="evidence-preview" id="evidencePreview">
-                        <i class="fa-regular fa-image"></i>
-                    </div>
-
-                    <p class="evidence-caption" id="evidenceCaption">
-                        Belum ada gambar bukti yang ditampilkan.
-                    </p>
-
-                    <!--
-                        Jika sudah ada gambar bukti, ganti area pratinjau
-                        dengan elemen img dan isi src dengan path gambarnya.
-                    -->
-                </section>
-
-                <!-- TOMBOL SIMPAN -->
-                <div class="form-actions">
-                    <button type="submit" class="btn-save">
-                        <i class="fa-solid fa-floppy-disk"></i>
-                        Simpan Perubahan
-                    </button>
                 </div>
 
-                <div class="demo-notice" id="demoNotice" role="status">
-                    <i class="fa-solid fa-circle-check"></i>
-                    <strong>Perubahan demo berhasil diperbarui pada tampilan.</strong>
-                    Status belum disimpan ke database. Fitur penyimpanan akan
-                    dihubungkan setelah integrasi backend.
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-regular fa-user"></i>
+                    </div>
+                    <div>
+                        <span class="info-label">Pelapor</span>
+                        <div class="info-value">
+                            {{ $laporan->anonim ? 'Anonim' : ($laporan->user->name ?? 'Siswa') }}
+                        </div>
+                    </div>
                 </div>
 
-            </form>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-regular fa-calendar"></i>
+                    </div>
+                    <div>
+                        <span class="info-label">Tanggal</span>
+                        <div class="info-value">
+                            {{ $laporan->created_at->format('d M Y') }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fa-solid fa-thumbtack"></i>
+                    </div>
+                    <div>
+                        <label class="info-label">Status</label>
+                        <span id="reportStatus" class="status-badge">
+                            {{ ucfirst($laporan->status ?? 'pending') }}
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ISI LAPORAN -->
+            <section class="report-content-card">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                    {{ $laporan->judul_laporan ?? 'Judul Laporan' }}
+                </h2>
+
+                <div class="report-text">
+                    {{ $laporan->isi_laporan ?? 'Tidak ada keterangan laporan.' }}
+                </div>
+            </section>
+
+            <!-- BUKTI PENDUKUNG -->
+            <section class="evidence-card">
+                <h2 class="section-title">
+                    <i class="fa-regular fa-images"></i>
+                    Bukti Pendukung
+                </h2>
+
+                @if(!empty($laporan->bukti_url))
+                    <div class="evidence-preview">
+                        <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti Laporan">
+                    </div>
+                    <p class="evidence-caption">Foto bukti pendukung laporan.</p>
+                @else
+                    <div class="evidence-preview">
+                        <i class="fa-regular fa-image" style="font-size: 42px;"></i>
+                    </div>
+                    <p class="evidence-caption">Belum ada gambar bukti yang ditampilkan.</p>
+                @endif
+            </section>
+
+            <!-- TANGGAPAN ADMIN -->
+            <section class="tanggapan-card">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-comments"></i>
+                    Tanggapan / Tindak Lanjut Admin
+                </h2>
+
+                @forelse($laporan->tanggapan ?? [] as $tanggapan)
+    <div class="tanggapan-item">
+        <div class="tanggapan-header">
+            <span>{{ $tanggapan->user->name ?? 'Admin' }}</span>
+            <span style="font-weight: normal; color: var(--text-muted);">{{ \Carbon\Carbon::parse($tanggapan->created_at)->format('d M Y H:i') }}</span>
+        </div>
+        <div class="tanggapan-text">
+            {{ $tanggapan->tanggapan }}
+        </div>
+    </div>
+@empty
+    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan atau catatan dari admin untuk laporan ini.</p>
+@endforelse
+            </section>
 
         </main>
     </div>
 
+    <!-- SCRIPT WARNA STATUS -->
+    <script>
+        const reportStatus = document.getElementById('reportStatus');
 
-<script>
-    // FRONTEND DEMO: hanya menampilkan status laporan.
-    const reportStatus = document.getElementById('reportStatus');
+        const statusColors = {
+            'Pending': { background: '#f3f4f6', color: '#4b5563', border: '#d1d5db' },
+            'Diproses': { background: '#fef3c7', color: '#a16207', border: '#f3d28a' },
+            'Proses': { background: '#fef3c7', color: '#a16207', border: '#f3d28a' },
+            'Selesai': { background: '#dcfce7', color: '#15803d', border: '#bbf7d0' },
+            'Ditolak': { background: '#fee2e2', color: '#b91c1c', border: '#fecaca' }
+        };
 
-    // Warna label berdasarkan status laporan.
-    const statusColors = {
-        'Pending': {
-            background: '#f3f4f6',
-            color: '#4b5563',
-            border: '#d1d5db'
-        },
-        'Diproses': {
-            background: '#fef3c7',
-            color: '#a16207',
-            border: '#f3d28a'
-        },
-        'Selesai': {
-            background: '#dcfce7',
-            color: '#15803d',
-            border: '#bbf7d0'
-        },
-        'Ditolak': {
-            background: '#fee2e2',
-            color: '#b91c1c',
-            border: '#fecaca'
+        if (reportStatus) {
+            const currentStatus = reportStatus.textContent.trim();
+            const colors = statusColors[currentStatus];
+
+            if (colors) {
+                reportStatus.style.backgroundColor = colors.background;
+                reportStatus.style.color = colors.color;
+                reportStatus.style.border = '1px solid ' + colors.border;
+            }
         }
-    };
-
-    // Atur warna status yang sedang ditampilkan.
-    if (reportStatus) {
-        const currentStatus = reportStatus.textContent.trim();
-        const colors = statusColors[currentStatus];
-
-        if (colors) {
-            reportStatus.style.backgroundColor = colors.background;
-            reportStatus.style.color = colors.color;
-            reportStatus.style.borderColor = colors.border;
-        }
-    }
-</script>
+    </script>
 
 </body>
 </html>
