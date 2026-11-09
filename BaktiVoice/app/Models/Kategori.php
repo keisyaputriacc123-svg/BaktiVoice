@@ -11,8 +11,9 @@ class Kategori extends Model
 
     protected $table = 'kategori';
 
-    // Beritahu Laravel bahwa primary key tabel ini adalah 'id_kategori'
     protected $primaryKey = 'id_kategori';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'nama_kategori',
