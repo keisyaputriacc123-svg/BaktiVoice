@@ -651,11 +651,7 @@
     <aside class="sidebar">
         <div>
             <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
                 <span class="brand-name">BaktiVoice</span>
             </div>
 
@@ -670,7 +666,7 @@
                 </li>
 
                 <li class="nav-item active">
-                    <a href="{{ url('/dashboard/bk/laporan-siswa') }}">
+                    <a href="{{ route('LaporanSiswa_bk') }}">
                         <div class="nav-content">
                             <i class="fa-regular fa-file-lines"></i>
                             <span>Laporan Siswa</span>
@@ -687,13 +683,13 @@
                     </a>
                 </li>
 
-<li class="nav-item">
-    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notifikasi</span>
-        <span class="notification-dot"></span>
-    </a>
-</li>
+                <li class="nav-item">
+                    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>Notifikasi</span>
+                        <span class="notification-dot"></span>
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a href="{{ route('profil_bk') }}" title="Profil">
@@ -717,9 +713,9 @@
 
         <!-- TOPBAR -->
         <header class="topbar">
-            <div class="topbar-icon" title="Notifikasi">
+            <a href="{{ route('notifikasi_bk') }}" class="topbar-icon" title="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
-            </div>
+            </a>
 
             <div class="user-profile">
                 <div class="avatar">
@@ -738,255 +734,101 @@
             <h1 class="page-title">Laporan Siswa</h1>
 
             <p class="page-description">
-                Kelola dan pantau laporan yang berkaitan dengan siswa.
+                Kelola dan pantau laporan yang berkaitan dengan siswa dari database.
             </p>
 
-            <!-- SEARCH & FILTER -->
-            <section class="filter-bar">
-
+            <!-- SEARCH & FILTER (Form GET agar otomatis memproses filter server-side) -->
+            <form method="GET" action="{{ route('LaporanSiswa_bk') }}" class="filter-bar">
                 <div class="search-box">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input
                         type="text"
-                        id="searchInput"
+                        name="search"
+                        value="{{ request('search') }}"
                         placeholder="Cari laporan..."
                         aria-label="Cari laporan"
                     >
                 </div>
 
-                <select id="statusFilter" class="filter-select"
-                    aria-label="Filter status">
+                <select name="status" class="filter-select" aria-label="Filter status" onchange="this.form.submit()">
                     <option value="">Semua Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Diproses">Diproses</option>
-                    <option value="Selesai">Selesai</option>
-                    <option value="Ditolak">Ditolak</option>
+                    <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="diproses" {{ request('status') == 'diproses' ? 'selected' : '' }}>Diproses</option>
+                    <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                 </select>
 
-                <select id="categoryFilter" class="filter-select"
-                aria-label="Filter kategori">
-                <option value="Kesiswaan">Kesiswaan</option>
-                </select>
+                <select name="category" class="filter-select" aria-label="Filter kategori" onchange="this.form.submit()">
+    <option value="">Semua Kategori</option>
+    @foreach($kategoriList as $cat)
+        <option value="{{ $cat->id_kategori }}" {{ request('category') == $cat->id_kategori ? 'selected' : '' }}>
+            {{ $cat->nama_kategori }}
+        </option>
+    @endforeach
+</select>
+            </form>
 
+            <!-- REPORT LIST DINAMIS -->
+            <section class="report-list" id="reportList">
+                @forelse($laporanList as $laporan)
+                    <article class="report-card">
+                        <div class="report-thumbnail">
+                            @if(isset($laporan->foto) && $laporan->foto)
+                                <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Foto Laporan">
+                            @else
+                                <i class="fa-regular fa-image"></i>
+                            @endif
+                        </div>
+
+                        <div class="report-info">
+                            <h2 class="report-title">{{ $laporan->judul ?? 'Tanpa Judul' }}</h2>
+
+                            <div class="report-meta">
+                                <span>
+                                    <i class="fa-regular fa-calendar"></i>
+                                    {{ $laporan->created_at->format('d M Y') }}
+                                </span>
+                                <span>
+                                    <i class="fa-solid fa-tag"></i>
+                                    {{ $laporan->kategori->nama_kategori ?? 'Umum' }}
+                                </span>
+                            </div>
+
+                            <p class="report-description">
+                                {{ Str::limit($laporan->deskripsi, 100) }}
+                            </p>
+                        </div>
+
+                        <div class="report-actions">
+                            <span class="status-badge badge-{{ strtolower($laporan->status ?? 'pending') }}">
+                                {{ ucfirst($laporan->status ?? 'Pending') }}
+                            </span>
+
+                        <a href="{{ route('detail_laporan_bk', $laporan->id_laporan) }}" class="btn-detail">
+    <i class="fa-solid fa-chevron-right"></i>
+</a>
+                        </div>
+                    </article>
+                @empty
+                    <div class="empty-state">
+                        <i class="fa-regular fa-folder-open"></i>
+                        <strong>Laporan tidak ditemukan</strong>
+                        <p>Coba gunakan kata kunci atau filter yang berbeda.</p>
+                    </div>
+                @endforelse
             </section>
-
-
-<!-- REPORT LIST -->
-<section class="report-list" id="reportList">
-
-    <!-- LAPORAN 1 -->
-    <article class="report-card"
-        data-status="Diproses" data-category="Kesiswaan">
-
-        <div class="report-thumbnail">
-            <i class="fa-regular fa-image"></i>
-        </div>
-
-        <div class="report-info">
-            <h2 class="report-title">Perundungan Antar Siswa</h2>
-
-            <div class="report-meta">
-                <span>
-                    <i class="fa-regular fa-calendar"></i>
-                    16 Sep 2026
-                </span>
-                <span>
-                    <i class="fa-solid fa-tag"></i>
-                    Kesiswaan
-                </span>
-            </div>
-
-            <p class="report-description">
-                Terjadi tindakan perundungan yang dilakukan oleh beberapa
-                siswa terhadap teman sekelasnya.
-            </p>
-        </div>
-
-
-        <div class="report-actions">
-        <span class="status-badge badge-diproses">Diproses</span>
-
-        <a href="{{ route('detail_laporan_bk') }}"
-        class="btn-detail"
-        title="Lihat detail laporan"
-        aria-label="Detail Perundungan Antar Siswa">
-        <i class="fa-solid fa-chevron-right"></i>
-        </a>
-        </div>
-        </article>
-
-    <!-- LAPORAN 2 -->
-    <article class="report-card"
-        data-status="Selesai" data-category="Kesiswaan">
-
-        <div class="report-thumbnail">
-            <i class="fa-regular fa-image"></i>
-        </div>
-
-        <div class="report-info">
-            <h2 class="report-title">Konflik Antar Siswa</h2>
-
-            <div class="report-meta">
-                <span>
-                    <i class="fa-regular fa-calendar"></i>
-                    12 Sep 2026
-                </span>
-                <span>
-                    <i class="fa-solid fa-tag"></i>
-                    Kesiswaan
-                </span>
-            </div>
-
-            <p class="report-description">
-                Terjadi perselisihan antara dua siswa yang berujung
-                pada pertengkaran di lingkungan sekolah.
-            </p>
-        </div>
-
-
-<div class="report-actions">
-    <span class="status-badge badge-selesai">Selesai</span>
-
-        <a href="{{ route('detail_laporan_bk') }}"
-        class="btn-detail"
-        title="Lihat detail laporan"
-        aria-label="Detail Konflik Antar Siswa">
-        <i class="fa-solid fa-chevron-right"></i>
-        </a>
-</div>
-</article>
-
-
-    <!-- LAPORAN 3 -->
-    <article class="report-card"
-        data-status="Ditolak" data-category="Kesiswaan">
-
-        <div class="report-thumbnail">
-            <i class="fa-regular fa-image"></i>
-        </div>
-
-        <div class="report-info">
-            <h2 class="report-title">Pelanggaran Tata Tertib</h2>
-
-            <div class="report-meta">
-                <span>
-                    <i class="fa-regular fa-calendar"></i>
-                    5 Sep 2026
-                </span>
-                <span>
-                    <i class="fa-solid fa-tag"></i>
-                    Kesiswaan
-                </span>
-            </div>
-
-            <p class="report-description">
-                Siswa melanggar tata tertib sekolah dengan membawa
-                barang yang tidak semestinya.
-            </p>
-        </div>
-
-<div class="report-actions">
-    <span class="status-badge badge-ditolak">Ditolak</span>
-
-        <a href="{{ route('detail_laporan_bk') }}"
-        class="btn-detail"
-        title="Lihat detail laporan"
-        aria-label="Detail Pelanggaran Tata Tertib">
-        <i class="fa-solid fa-chevron-right"></i>
-        </a>
-</div>
-</article>
-</section>
-
-            <div class="empty-state" id="emptyState">
-                <i class="fa-regular fa-folder-open"></i>
-                <strong>Laporan tidak ditemukan</strong>
-                <p>Coba gunakan kata kunci atau filter yang berbeda.</p>
-            </div>
 
             <!-- PAGINATION -->
             <div class="pagination-wrapper">
-                <p id="resultInfo">Menampilkan 1-5 dari 5 laporan contoh</p>
-
-                <div class="pagination" aria-label="Navigasi halaman">
-                    <button class="page-btn" type="button" disabled
-                        aria-label="Halaman sebelumnya">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-
-                    <button class="page-btn active" type="button"
-                        aria-current="page">1</button>
-
-                    <button class="page-btn" type="button" disabled
-                        aria-label="Halaman berikutnya">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                <p>Menampilkan data dari database</p>
+                <div>
+                    {{ $laporanList->links() }}
                 </div>
             </div>
 
         </main>
     </div>
 
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const statusFilter = document.getElementById('statusFilter');
-        const categoryFilter = document.getElementById('categoryFilter');
-        const reportCards = Array.from(
-            document.querySelectorAll('.report-card')
-        );
-        const emptyState = document.getElementById('emptyState');
-        const resultInfo = document.getElementById('resultInfo');
-
-        function filterReports() {
-            const keyword = searchInput.value.toLowerCase().trim();
-            const selectedStatus = statusFilter.value;
-            const selectedCategory = categoryFilter.value;
-
-            let visibleCount = 0;
-
-            reportCards.forEach(function(card) {
-                const searchableText = card.innerText.toLowerCase();
-                const status = card.dataset.status;
-                const category = card.dataset.category;
-
-                const matchesKeyword = searchableText.includes(keyword);
-                const matchesStatus =
-                    selectedStatus === '' || status === selectedStatus;
-                const matchesCategory =
-                    selectedCategory === '' || category === selectedCategory;
-
-                const isVisible =
-                    matchesKeyword && matchesStatus && matchesCategory;
-
-                card.style.display = isVisible ? 'flex' : 'none';
-
-                if (isVisible) {
-                    visibleCount++;
-                }
-            });
-
-            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-
-            if (visibleCount === 0) {
-                resultInfo.textContent = 'Tidak ada laporan yang sesuai';
-            } else {
-                resultInfo.textContent =
-                    'Menampilkan ' + visibleCount +
-                    ' dari ' + reportCards.length + ' laporan contoh';
-            }
-        }
-
-        searchInput.addEventListener('input', filterReports);
-        statusFilter.addEventListener('change', filterReports);
-        categoryFilter.addEventListener('change', filterReports);
-
-        function showDetail(title) {
-            alert(
-                'Laporan: ' + title +
-                '\n\nHalaman detail laporan belum dihubungkan.'
-            );
-        }
-    </script>
 
 </body>
 </html>
