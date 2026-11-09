@@ -1,9 +1,9 @@
-
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>BaktiVoice - Profil Admin</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -480,41 +480,7 @@
             border-color: #7b9fe8;
         }
 
-        .security-row {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
 
-        .security-icon {
-            display: flex;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            color: #3b62ac;
-            background: #eaf0ff;
-            border-radius: 10px;
-            font-size: 18px;
-        }
-
-        .security-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .security-info h3 {
-            margin-bottom: 5px;
-            color: #1e3a70;
-            font-size: 14px;
-        }
-
-        .security-info p {
-            color: var(--text-muted);
-            font-size: 12px;
-            line-height: 1.6;
-        }
 
         @media (max-width: 1000px) {
             .profile-layout {
@@ -860,77 +826,94 @@
                     </section>
 
                     <!-- KEAMANAN AKUN -->
-<section class="card security-card">
-    <div class="card-header">
-        <h2 class="card-title">
-            <i class="fa-solid fa-shield-halved" style="color:#96ace0;margin-right:8px"></i>
-            Keamanan Akun
-        </h2>
-        <p class="card-subtitle">
-            Perbarui password untuk menjaga keamanan akun.
-        </p>
-    </div>
+                    <section class="card security-card" style="margin-top: 24px;">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fa-solid fa-shield-halved" style="color:#96ace0;margin-right:8px"></i>
+                                Keamanan Akun
+                            </h2>
+                            <p class="card-subtitle">
+                                Perbarui password untuk menjaga keamanan akun.
+                            </p>
+                        </div>
 
-    <div class="card-body">
-        <!-- Alert Info Box -->
-        <div class="alert-info-box" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 12px 16px; display: flex; gap: 10px; margin-bottom: 20px;">
-            <i class="fa-solid fa-circle-info" style="color: #2563eb; margin-top: 2px;"></i>
-            <div style="font-size: 13px; color: #1e3a70; line-height: 1.4;">
-                <strong>Jaga kerahasiaan password kamu.</strong><br>
-                Gunakan password yang kuat dan jangan membagikannya kepada orang lain.
-            </div>
-        </div>
+                        <div class="card-body">
+                            <div class="alert-info-box" style="background-color: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 12px 16px; display: flex; gap: 10px; margin-bottom: 20px;">
+                                <i class="fa-solid fa-circle-info" style="color: #2563eb; margin-top: 2px;"></i>
+                                <div style="font-size: 13px; color: #1e3a70; line-height: 1.4;">
+                                    <strong>Jaga kerahasiaan password kamu.</strong><br>
+                                    Gunakan password yang kuat dan jangan membagikannya kepada orang lain.
+                                </div>
+                            </div>
 
-        <form action="{{ route('password.update') }}" method="POST">
-            @csrf
-            @method('PUT')
+                            <form action="{{ route('password.update') }}" method="POST">
+                                @csrf
+                                @method('PUT')
 
-            <!-- Password Lama -->
-            <div class="form-group" style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
-                    Password Lama <span style="color: #ef4444;">*</span>
-                </label>
-                <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
-                    <i class="fa-solid fa-lock" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
-                    <input type="password" name="current_password" class="form-input" placeholder="Masukkan password lama" style="width: 100%; padding: 12px 40px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; color: #334155; background-color: #f8fafc;" required>
-                    <i class="fa-regular fa-eye" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
-                </div>
-            </div>
+                                <!-- Password Lama -->
+                                <div class="form-group" style="margin-bottom: 18px;">
+                                    <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
+                                        Password Lama <span style="color: #ef4444;">*</span>
+                                    </label>
+                                    <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+                                        <i class="fa-solid fa-lock" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
+                                        <input type="password" name="current_password" class="form-control" placeholder="Masukkan password lama" style="padding-left: 40px; padding-right: 40px;" required>
+                                        <i class="fa-regular fa-eye toggle-password" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
+                                    </div>
+                                </div>
 
-            <!-- Password Baru -->
-            <div class="form-group" style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
-                    Password Baru <span style="color: #ef4444;">*</span>
-                </label>
-                <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
-                    <i class="fa-solid fa-key" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
-                    <input type="password" name="password" class="form-input" placeholder="Masukkan password baru" style="width: 100%; padding: 12px 40px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; color: #334155; background-color: #f8fafc;" required>
-                    <i class="fa-regular fa-eye" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
-                </div>
-                <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Minimal 8 karakter.</div>
-            </div>
+                                <!-- Password Baru -->
+                                <div class="form-group" style="margin-bottom: 18px;">
+                                    <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
+                                        Password Baru <span style="color: #ef4444;">*</span>
+                                    </label>
+                                    <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+                                        <i class="fa-solid fa-key" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
+                                        <input type="password" name="password" class="form-control" placeholder="Masukkan password baru" style="padding-left: 40px; padding-right: 40px;" required>
+                                        <i class="fa-regular fa-eye toggle-password" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
+                                    </div>
+                                    <div style="font-size: 11px; color: #94a3b8; margin-top: 6px;">Minimal 8 karakter.</div>
+                                </div>
 
-            <!-- Konfirmasi Password Baru -->
-            <div class="form-group" style="margin-bottom: 18px;">
-                <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
-                    Konfirmasi Password Baru <span style="color: #ef4444;">*</span>
-                </label>
-                <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
-                    <i class="fa-solid fa-key" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
-                    <input type="password" name="password_confirmation" class="form-input" placeholder="Ulangi password baru" style="width: 100%; padding: 12px 40px; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 14px; color: #334155; background-color: #f8fafc;" required>
-                    <i class="fa-regular fa-eye" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
-                </div>
-            </div>
+                                <!-- Konfirmasi Password Baru -->
+                                <div class="form-group" style="margin-bottom: 18px;">
+                                    <label style="display: block; font-size: 13px; font-weight: 700; color: #1e3a70; margin-bottom: 8px;">
+                                        Konfirmasi Password Baru <span style="color: #ef4444;">*</span>
+                                    </label>
+                                    <div class="input-wrapper" style="position: relative; display: flex; align-items: center;">
+                                        <i class="fa-solid fa-key" style="position: absolute; left: 14px; color: #94a3b8; font-size: 14px;"></i>
+                                        <input type="password" name="password_confirmation" class="form-control" placeholder="Ulangi password baru" style="padding-left: 40px; padding-right: 40px;" required>
+                                        <i class="fa-regular fa-eye toggle-password" style="position: absolute; right: 14px; color: #94a3b8; font-size: 14px; cursor: pointer;"></i>
+                                    </div>
+                                </div>
 
-            <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #4772c7 0%, #3b62ac 100%); color: #ffffff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 98, 172, 0.25);">
-                <i class="fa-solid fa-key"></i> Ubah Password
-            </button>
-        </form>
-    </div>
-</section>  
+                                <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #4772c7 0%, #3b62ac 100%); margin-top: 10px;">
+                                    <i class="fa-solid fa-key"></i> Ubah Password
+                                </button>
+                            </form>
+                        </div>
+                    </section>
                 </div>
             </div>
         </main>
     </div>
+
+    <!-- Script JavaScript untuk toggle show/hide password -->
+    <script>
+        document.querySelectorAll('.toggle-password').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const input = this.previousElementSibling;
+                if (input && input.type === 'password') {
+                    input.type = 'text';
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                } else if (input) {
+                    input.type = 'password';
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
