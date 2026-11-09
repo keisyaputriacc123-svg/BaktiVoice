@@ -10,32 +10,69 @@ use Illuminate\Support\Facades\Hash;
 
 class DataMasterController extends Controller
 {
-    // 1. Menampilkan halaman Data Master beserta data dari database
+    // ==========================================
+    // 1. MENAMPILKAN HALAMAN DATA MASTER
+    // ==========================================
+
     public function index(Request $request)
     {
         $search = $request->input('search');
 
+        // Menampilkan data user dengan pencarian
         $users = User::when($search, function ($query, $search) {
             return $query->where('name', 'like', "%{$search}%")
                          ->orWhere('email', 'like', "%{$search}%");
         })->get();
 
+        // Menghitung jumlah user
         $totalUsers = User::count();
         $totalSiswa = User::where('role', 'siswa')->count();
-        $totalBkWakasek = User::whereIn('role', ['guru_bk', 'wakasek kurikulum', 'wakasek kesiswaan', 'wakasek dudi', 'wakasek sarana'])->count();
+
+        $totalBkWakasek = User::whereIn('role', [
+            'guru_bk',
+            'wakasek kurikulum',
+            'wakasek kesiswaan',
+            'wakasek dudi',
+            'wakasek sarana'
+        ])->count();
+
         $totalAdmin = User::where('role', 'admin')->count();
 
+        // Mengambil data kategori dan status laporan
         $kategoris = Kategori::all();
         $statusLaporan = StatusLaporan::all();
         $statuses = $statusLaporan;
 
-        return view('data_master', compact('users', 'totalUsers', 'totalSiswa', 'totalBkWakasek', 'totalAdmin', 'kategoris', 'statusLaporan', 'statuses'));
+        // Daftar role penanggung jawab (Statistik array agar opsi select di modal selalu muncul)
+        $penanggungJawabs = [
+            'guru_bk',
+            'wakasek kurikulum',
+            'wakasek kesiswaan',
+            'wakasek sarana',
+            'wakasek dudi'
+        ];
+
+        return view('data_master', compact(
+            'users',
+            'totalUsers',
+            'totalSiswa',
+            'totalBkWakasek',
+            'totalAdmin',
+            'kategoris',
+            'statusLaporan',
+            'statuses',
+            'penanggungJawabs'
+        ));
     }
 
-    // 2. Menyimpan Data User Baru
+
+    // ==========================================
+    // 2. MENAMBAHKAN USER BARU
+    // ==========================================
+
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'role' => 'required|string',
@@ -43,121 +80,171 @@ class DataMasterController extends Controller
         ]);
 
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'username' => strtolower(str_replace(' ', '_', $request->name)) . rand(10, 99),
-            'role' => strtolower($request->role),
-            'password' => Hash::make($request->password),
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'username' => strtolower(str_replace(' ', '_', $validated['name'])) . rand(10, 99),
+            'role' => strtolower($validated['role']),
+            'password' => Hash::make($validated['password']),
         ]);
 
-        return redirect()->route('data_master', ['tab' => 'users'])
-                    ->with('success', 'User berhasil ditambahkan!');
+        return redirect()->route('data_master', [
+            'tab' => 'users'
+        ])->with('success', 'User berhasil ditambahkan!');
     }
 
-    // 3. Menambah Kategori Baru (Sesuai Route Baru)
+
+    // ==========================================
+    // 3. MENAMBAHKAN KATEGORI LAPORAN
+    // ==========================================
+
     public function storeKategori(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_kategori' => 'required|string|max:255',
+            'penanggung_jawab' => 'required|string|max:255',
         ]);
 
         Kategori::create([
-            'nama_kategori' => $request->nama_kategori,
-            'penanggung_jawab' => $request->penanggung_jawab ?? 'Guru BK / Wakasek',
+            'nama_kategori' => $validated['nama_kategori'],
+            'penanggung_jawab' => $validated['penanggung_jawab'],
         ]);
 
-        return redirect()->route('data_master', ['tab' => 'kategori'])
-            ->with('success', 'Kategori berhasil ditambahkan!');
+        return redirect()->route('data_master', [
+            'tab' => 'kategori'
+        ])->with('success', 'Kategori laporan berhasil ditambahkan!');
     }
 
-    // 4. Menambah Status Baru (Sesuai Route Baru)
+
+    // ==========================================
+    // 4. MENAMBAHKAN STATUS LAPORAN
+    // ==========================================
+
     public function storeStatus(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'nama_status' => 'required|string|max:255',
         ]);
 
         StatusLaporan::create([
-            'nama_status' => $request->nama_status,
+            'nama_status' => $validated['nama_status'],
         ]);
 
-        return redirect()->route('data_master', ['tab' => 'status'])
-            ->with('success', 'Status berhasil ditambahkan!');
+        return redirect()->route('data_master', [
+            'tab' => 'status'
+        ])->with('success', 'Status berhasil ditambahkan!');
     }
 
-    // 5. Edit Status Laporan
+
+    // ==========================================
+    // 5. MENGAMBIL DATA STATUS UNTUK EDIT
+    // ==========================================
+
     public function editStatus($id)
     {
-        $status = StatusLaporan::findOrFail($id);
+        $status = StatusLaporan::where('id_status', $id)->firstOrFail();
+
         return view('edit_status', compact('status'));
     }
 
-    // 6. Update Status Laporan
+
+    // ==========================================
+    // 6. MEMPERBARUI STATUS LAPORAN
+    // ==========================================
+
     public function updateStatus(Request $request, int $id)
     {
-        $status = StatusLaporan::findOrFail($id);
+        $status = StatusLaporan::where('id_status', $id)->firstOrFail();
 
-        $request->validate([
+        $validated = $request->validate([
             'nama_status' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string|max:1000',
         ]);
 
         $status->update([
-            'nama_status' => $request->nama_status,
-            'deskripsi' => $request->deskripsi ?? $status->deskripsi,
+            'nama_status' => $validated['nama_status'],
+            'deskripsi' => $validated['deskripsi'] ?? ($status->deskripsi ?? null),
         ]);
 
-        return redirect()->route('data_master', ['tab' => 'status'])->with('success', 'Status laporan berhasil diperbarui!');
+        return redirect()->route('data_master', [
+            'tab' => 'status'
+        ])->with('success', 'Status laporan berhasil diperbarui!');
     }
 
-    // 7. Hapus Status Laporan
+
+    // ==========================================
+    // 7. MENGHAPUS STATUS LAPORAN
+    // ==========================================
+
     public function destroyStatus(int $id)
     {
-        $status = StatusLaporan::findOrFail($id);
+        $status = StatusLaporan::where('id_status', $id)->firstOrFail();
         $status->delete();
 
-        return redirect()->route('data_master', ['tab' => 'status'])->with('success', 'Status laporan berhasil dihapus!');
+        return redirect()->route('data_master', [
+            'tab' => 'status'
+        ])->with('success', 'Status laporan berhasil dihapus!');
     }
 
-    // 8. Hapus Kategori Laporan
+
+    // ==========================================
+    // 8. MENGHAPUS KATEGORI LAPORAN
+    // ==========================================
+
     public function destroyKategori(int $id)
     {
         $kategori = Kategori::where('id_kategori', $id)->firstOrFail();
         $kategori->delete();
 
-        return redirect()->route('data_master', ['tab' => 'kategori'])->with('success', 'Kategori laporan berhasil dihapus!');
+        return redirect()->route('data_master', [
+            'tab' => 'kategori'
+        ])->with('success', 'Kategori laporan berhasil dihapus!');
     }
 
-    // 9. Update Kategori Laporan
-    public function updateKategori(Request $request, int $id)
+
+    // ==========================================
+    // 9. MEMPERBARUI KATEGORI LAPORAN
+    // ==========================================
+
+    public function updateKategori(Request $request, $id)
     {
+        $validated = $request->validate([
+            'nama_kategori' => 'required|string|max:255',
+            'penanggung_jawab' => 'required|string|max:255',
+        ]);
+
         $kategori = Kategori::where('id_kategori', $id)->firstOrFail();
 
-        $request->validate([
-            'nama_kategori' => 'required|string|max:255',
-        ]);
-
         $kategori->update([
-            'nama_kategori' => $request->nama_kategori,
-            'penanggung_jawab' => $request->penanggung_jawab ?? $kategori->penanggung_jawab,
+            'nama_kategori' => $validated['nama_kategori'],
+            'penanggung_jawab' => $validated['penanggung_jawab'],
         ]);
 
-        return redirect()->route('data_master', ['tab' => 'kategori'])->with('success', 'Kategori laporan berhasil diperbarui!');
+        return redirect()->route('data_master', [
+            'tab' => 'kategori'
+        ])->with('success', 'Kategori laporan berhasil diperbarui!');
     }
 
-    // 10. Memperbarui data User
+
+    // ==========================================
+    // 10. MEMPERBARUI DATA USER
+    // ==========================================
+
     public function update(Request $request, int $id)
     {
-        $user = User::where('id_user', $id)->firstOrFail();
+        $user = User::where('id_user', $id)->orWhere('id_user', $id)->firstOrFail();
 
-        $request->validate([
+        $primaryKey = isset($user->id_user) ? 'id_user' : 'id_user';
+        $keyValue = $user->$primaryKey;
+
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id . ',id_user',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $keyValue . ',' . $primaryKey,
             'role' => 'required|string',
         ]);
 
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = strtolower($request->role);
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+        $user->role = strtolower($validated['role']);
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
@@ -165,15 +252,23 @@ class DataMasterController extends Controller
 
         $user->save();
 
-        return redirect()->route('data_master', ['tab' => 'users'])->with('success', 'Data user berhasil diperbarui!');
+        return redirect()->route('data_master', [
+            'tab' => 'users'
+        ])->with('success', 'Data user berhasil diperbarui!');
     }
 
-    // 11. Menghapus data user
+
+    // ==========================================
+    // 11. MENGHAPUS DATA USER
+    // ==========================================
+
     public function destroy(int $id)
     {
-        $user = User::where('id_user', $id)->firstOrFail();
+        $user = User::where('id_user', $id)->orWhere('id', $id)->firstOrFail();
         $user->delete();
 
-        return redirect()->route('data_master', ['tab' => 'users'])->with('success', 'Data user berhasil dihapus!');
+        return redirect()->route('data_master', [
+            'tab' => 'users'
+        ])->with('success', 'Data user berhasil dihapus!');
     }
 }
