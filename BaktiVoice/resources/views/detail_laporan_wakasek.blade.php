@@ -743,7 +743,7 @@
 <body>
 
 @php
-    $role = auth()->user()->role ?? 'wakasek kesiswaan';
+    $role = $role ?? auth()->user()->role ?? 'wakasek kesiswaan';
 
     $bidang = [
         'wakasek kesiswaan' => [
@@ -778,21 +778,14 @@
 
     $jabatan = $bidang[$role] ?? $bidang['wakasek kesiswaan'];
 
-    $contohLaporan = [
-        'kode' => 'LAP-2026-001',
-        'judul' => 'Kendala Fasilitas dan Lingkungan Sekolah',
-        'tanggal' => '22 Oktober 2026',
-        'pelapor' => 'Siswa (Anonim)',
-        'kategori' => $jabatan['kategori'],
-        'status' => 'Diproses',
-        'bukti' => null,
-        'isi' => 'Saya ingin melaporkan adanya kendala yang perlu mendapat perhatian di lingkungan sekolah.
+    // Definisikan variabel target route agar sesuai dengan pemanggilan di sidebar
+    $targetDashboard  = $jabatan['route_dashboard'];
+    $targetRekap      = $jabatan['route_rekap'];
+    $targetMonitoring = $jabatan['route_monitoring'];
 
-Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Saya berharap ada solusi yang baik agar kegiatan belajar mengajar dapat berlangsung dengan nyaman.',
-    ];
-
-    $statusClass = match (strtolower($contohLaporan['status'])) {
-        'diproses' => 'diproses',
+    $statusLaporan = strtolower($laporan->status ?? 'pending');
+    $statusClass = match ($statusLaporan) {
+        'proses' => 'proses',
         'selesai' => 'selesai',
         'ditolak' => 'ditolak',
         default => 'pending',
@@ -808,42 +801,37 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
         </div>
 
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="{{ route($jabatan['route_dashboard']) }}">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
+    <li class="nav-item">
+        <a href="{{ route($targetDashboard) }}">
+            <i class="fa-solid fa-house"><span>Dashboard</span></i>
+        </a>
+    </li>
 
-            <li class="nav-item">
-                <a href="{{ route($jabatan['route_rekap']) }}">
-                    <i class="fa-solid fa-chart-column"></i>
-                    <span>Rekap</span>
-                </a>
-            </li>
+    <li class="nav-item">
+        <a href="{{ route($targetRekap) }}">
+            <i class="fa-solid fa-chart-column"><span>Rekap</span></i>
+        </a>
+    </li>
 
-            <li class="nav-item active">
-                <a href="{{ route($jabatan['route_monitoring']) }}">
-                    <i class="fa-solid fa-eye"></i>
-                    <span>Monitoring</span>
-                </a>
-            </li>
+    <li class="nav-item active">
+        <a href="#">
+            <i class="fa-solid fa-eye"><span>Monitoring</span></i>
+        </a>
+    </li>
 
-            <li class="nav-item">
-                <a href="{{ route('profil_wakasek') }}">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Profil</span>
-                </a>
-            </li>
+    <li class="nav-item">
+        <a href="{{ route('profil_wakasek') }}">
+            <i class="fa-solid fa-user-gear"><span>Profil</span></i>
+        </a>
+    </li>
 
-            <li class="nav-item">
-                <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
-                    <i class="fa-solid fa-bell"></i>
-                    <span>Notifikasi</span>
-                    <span class="notification-dot"></span>
-                </a>
-            </li>
-        </ul>
+    <li class="nav-item">
+        <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
+            <i class="fa-solid fa-bell"><span>Notifikasi</span></i>
+            <span class="notification-dot"></span>
+        </a>
+    </li>
+</ul>
     </div>
 
     <form action="{{ route('logout') }}" method="POST">
@@ -858,15 +846,15 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
 <!-- MAIN WRAPPER & TOPBAR -->
 <div class="main-wrapper">
     <header class="topbar">
-        <div class="topbar-icon" title="Notifikasi">
+        <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
             <i class="fa-regular fa-bell"></i>
-        </div>
+        </a>
 
         <div class="user-profile">
             <div class="avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-            <span class="user-name">{{ $jabatan['nama'] }}</span>
+            <span class="user-name">{{ $user->name ?? $jabatan['nama'] }}</span>
         </div>
     </header>
 
@@ -908,11 +896,11 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                         <i class="fa-solid fa-file-lines"></i>
                     </div>
 
-                    <h3 class="report-title">{{ $contohLaporan['judul'] }}</h3>
+                    <h3 class="report-title">{{ $laporan->judul ?? $laporan->deskripsi ?? 'Laporan Pengaduan' }}</h3>
 
                     <div class="report-code">
                         <i class="fa-solid fa-hashtag"></i>
-                        {{ $contohLaporan['kode'] }}
+                        LAP-{{ $laporan->id_laporan ?? $laporan->id }}
                     </div>
 
                     <div class="info-list">
@@ -922,7 +910,7 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                             </div>
                             <div class="info-content">
                                 <span class="info-label">Tanggal Laporan</span>
-                                <span class="info-value">{{ $contohLaporan['tanggal'] }}</span>
+                                <span class="info-value">{{ $laporan->created_at ? $laporan->created_at->format('d M Y') : '-' }}</span>
                             </div>
                         </div>
 
@@ -932,7 +920,7 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                             </div>
                             <div class="info-content">
                                 <span class="info-label">Pelapor</span>
-                                <span class="info-value">{{ $contohLaporan['pelapor'] }}</span>
+                                <span class="info-value">{{ $laporan->pelapor->name ?? 'Siswa (Anonim)' }}</span>
                             </div>
                         </div>
 
@@ -942,7 +930,7 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                             </div>
                             <div class="info-content">
                                 <span class="info-label">Kategori Laporan</span>
-                                <span class="info-value">{{ $contohLaporan['kategori'] }}</span>
+                                <span class="info-value">{{ ucfirst($laporan->id_kategori ?? $jabatan['kategori']) }}</span>
                             </div>
                         </div>
 
@@ -954,21 +942,23 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                                 <span class="info-label">Status Laporan</span>
                                 <span class="status-badge {{ $statusClass }}">
                                     <i class="fa-solid fa-circle"></i>
-                                    {{ $contohLaporan['status'] }}
+                                    {{ ucfirst($laporan->status ?? 'pending') }}
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <button type="button" class="evidence-button" id="evidenceButton">
-                        <i class="fa-solid fa-paperclip"></i>
-                        Lihat Bukti Laporan
-                    </button>
-
-                    <p class="demo-note">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Bukti laporan akan dihubungkan setelah integrasi database.
-                    </p>
+                    @if(!empty($laporan->bukti))
+                        <a href="{{ asset('storage/' . $laporan->bukti) }}" target="_blank" class="evidence-button">
+                            <i class="fa-solid fa-paperclip"></i>
+                            Lihat Bukti Laporan
+                        </a>
+                    @else
+                        <button type="button" class="evidence-button" onclick="alert('Tidak ada bukti gambar yang dilampirkan pada laporan ini.')">
+                            <i class="fa-solid fa-paperclip"></i>
+                            Lihat Bukti Laporan
+                        </button>
+                    @endif
                 </section>
             </div>
 
@@ -982,7 +972,7 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                         <span>Isi Laporan</span>
                     </div>
 
-                    <div class="report-content">{{ $contohLaporan['isi'] }}</div>
+                    <div class="report-content">{{ $laporan->isi ?? $laporan->deskripsi ?? 'Tidak ada isi laporan.' }}</div>
 
                     <div class="report-meta">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -1002,8 +992,14 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                         Tuliskan tindak lanjut atau langkah penanganan terhadap laporan ini dengan jelas.
                     </p>
 
-                    <!-- Form diperbarui dengan enctype untuk mendukung unggah file gambar -->
-                    <form id="followUpForm" method="POST" enctype="multipart/form-data">
+                    @if(session('success'))
+                        <div class="success-message show" role="status" style="margin-bottom: 15px;">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span>{{ session('success') }}</span>
+                        </div>
+                    @endif
+
+                    <form action="{{ route('wakasek.laporan.tanggapan', $laporan->id_laporan ?? $laporan->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label class="form-label" for="followUpText">
                             Isi Tindak Lanjut
@@ -1018,7 +1014,7 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                                 maxlength="2000"
                                 placeholder="Tuliskan tindak lanjut laporan di sini..."
                                 required
-                            ></textarea>
+                            >{{ old('tanggapan', $laporan->tanggapan ?? '') }}</textarea>
                         </div>
 
                         <div class="textarea-footer">
@@ -1029,48 +1025,39 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
                             <span id="characterCount">0 / 2000 karakter</span>
                         </div>
 
-<!-- INPUT UPLOAD BUKTI GAMBAR -->
-<div style="margin-top: 18px;">
-    <label class="form-label">
-        Lampirkan Bukti Gambar <span style="font-weight: normal; color: var(--text-muted);">(Opsional)</span>
-    </label>
-    
-    <div class="custom-file-upload" id="fileUploadContainer" onclick="document.getElementById('buktiTanggapan').click();">
-        <input 
-            type="file" 
-            name="bukti_tanggapan" 
-            id="buktiTanggapan" 
-            accept="image/*"
-            style="display: none;"
-            onchange="previewFileName(this)"
-        >
-        <div class="upload-content">
-            <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-            <div class="upload-text">
-                <span id="fileNameText">Klik untuk mengunggah gambar bukti</span>
-                <p>Format: JPG, JPEG, PNG (Maks. 2MB)</p>
-            </div>
-        </div>
-    </div>
-</div>
+                        <div style="margin-top: 18px;">
+                            <label class="form-label">
+                                Lampirkan Bukti Gambar <span style="font-weight: normal; color: var(--text-muted);">(Opsional)</span>
+                            </label>
+
+                            <div class="custom-file-upload" id="fileUploadContainer" onclick="document.getElementById('buktiTanggapan').click();">
+                                <input
+                                    type="file"
+                                    name="bukti_tanggapan"
+                                    id="buktiTanggapan"
+                                    accept="image/*"
+                                    style="display: none;"
+                                    onchange="previewFileName(this)"
+                                >
+                                <div class="upload-content">
+                                    <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                                    <div class="upload-text">
+                                        <span id="fileNameText">Klik untuk mengunggah gambar bukti</span>
+                                        <p>Format: JPG, JPEG, PNG (Maks. 2MB)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <button type="submit" class="save-button">
                             <i class="fa-solid fa-floppy-disk"></i>
                             Simpan Tindak Lanjut
                         </button>
 
-                        <div class="success-message" id="demoMessage" role="status">
-                            <i class="fa-solid fa-circle-check"></i>
-                            <span>
-                                Ini masih tampilan demo. Tindak lanjut belum disimpan ke database.
-                            </span>
-                        </div>
+
                     </form>
 
-                    <p class="demo-note">
-                        <i class="fa-solid fa-circle-info"></i>
-                        Penyimpanan akan dihubungkan oleh tim backend.
-                    </p>
+
                 </section>
             </div>
         </div>
@@ -1078,40 +1065,27 @@ Mohon agar laporan ini dapat ditinjau dan ditindaklanjuti oleh pihak terkait. Sa
 </div>
 
 <script>
-    // Penghitung karakter
+
     const followUpText = document.getElementById('followUpText');
     const characterCount = document.getElementById('characterCount');
 
-    followUpText.addEventListener('input', function () {
-        characterCount.textContent = this.value.length + ' / 2000 karakter';
-    });
-
-    // Demo frontend saja
-    document.getElementById('followUpForm').addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        if (!followUpText.value.trim()) {
-            followUpText.focus();
-            return;
-        }
-
-        document.getElementById('demoMessage').classList.add('show');
-    });
-
-    // Tombol bukti sementara
-    document.getElementById('evidenceButton').addEventListener('click', function () {
-        alert('Fitur bukti laporan akan dihubungkan setelah integrasi database.');
-    });
-    function previewFileName(input) {
-    const fileNameText = document.getElementById('fileNameText');
-    if (input.files && input.files[0]) {
-        fileNameText.textContent = 'Gambar dipilih: ' + input.files[0].name;
-        fileNameText.style.color = '#15803d'; // Warna hijau penanda berhasil
-    } else {
-        fileNameText.textContent = 'Klik untuk mengunggah gambar bukti';
-        fileNameText.style.color = 'var(--text-main)';
+    if (followUpText) {
+        characterCount.textContent = followUpText.value.length + ' / 2000 karakter';
+        followUpText.addEventListener('input', function () {
+            characterCount.textContent = this.value.length + ' / 2000 karakter';
+        });
     }
-}
+
+    function previewFileName(input) {
+        const fileNameText = document.getElementById('fileNameText');
+        if (input.files && input.files[0]) {
+            fileNameText.textContent = 'Gambar dipilih: ' + input.files[0].name;
+            fileNameText.style.color = '#15803d';
+        } else {
+            fileNameText.textContent = 'Klik untuk mengunggah gambar bukti';
+            fileNameText.style.color = 'var(--text-main)';
+        }
+    }
 </script>
 
 </body>
