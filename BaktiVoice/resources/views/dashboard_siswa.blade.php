@@ -491,7 +491,7 @@ body {
 
 <body>
 
-    <!-- SIDEBAR -->
+   <!-- SIDEBAR -->
     <aside class="sidebar">
         <div>
             <div class="brand">
@@ -531,12 +531,8 @@ body {
                     </a>
                 </li>
 
-<li class="nav-item">
-
-
-    <a href="{{ route('notifikasi_siswa') }}">
-
-
+                <li class="nav-item">
+                    <a href="{{ route('notifikasi_siswa') }}">
                         <div class="nav-content">
 
                             <i class="fa-regular fa-bell"></i>
@@ -558,10 +554,10 @@ body {
             </ul>
         </div>
 
-<a href="{{ route('login') }}" class="logout-btn">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    <span>Logout</span>
-</a>
+        <a href="{{ route('login') }}" class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </a>
     </aside>
 
     <!-- MAIN WRAPPER -->
@@ -569,21 +565,21 @@ body {
 
 
         <!-- TOPBAR -->
-<header class="topbar">
-    <a href="{{ route('notifikasi_siswa') }}" class="topbar-icon" title="Notifikasi">
-        <i class="fa-regular fa-bell"></i>
-    </a>
+        <header class="topbar">
+            <a href="{{ route('notifikasi_siswa') }}" class="topbar-icon" title="Notifikasi">
+                <i class="fa-regular fa-bell"></i>
+            </a>
 
-    <div class="user-profile">
-        <div class="avatar"><i class="fa-regular fa-user"></i></div>
-        <span class="user-name">{{ Auth::user()->name ?? 'Nama Siswa' }}</span>
-    </div>
-</header>
+            <div class="user-profile">
+                <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                <span class="user-name">{{ Auth::user()->name ?? 'Nama Siswa' }}</span>
+            </div>
+        </header>
 
         <!-- MAIN CONTENT -->
         <main class="content">
 
-            <!-- WELCOME SECTION (Udah dibersihin dari duplikat) -->
+            <!-- WELCOME SECTION -->
             <section class="welcome-section">
                 <div class="welcome-content">
                     <h1 class="welcome-title">
@@ -599,7 +595,7 @@ body {
                 </a>
             </section>
 
-            <!-- STATISTIK DINAMIS (TOTAL, PENDING, DIPROSES, SELESAI, DITOLAK) -->
+            <!-- STATISTIK DINAMIS -->
             <section class="stats-grid">
                 <div class="stat-card total">
                     <div class="stat-title">Total</div>
@@ -635,12 +631,12 @@ body {
                         <div class="report-card">
                             <div class="report-info-group">
                                 <div class="report-thumbnail">
-                                    @if($laporan->bukti_url)
-                                        <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti">
-                                    @else
-                                        <i class="fa-regular fa-image"></i>
-                                    @endif
-                                </div>
+    @if(!empty($laporan->bukti_url))
+        <img src="{{ asset('storage/' . $laporan->bukti_url) }}" alt="Bukti">
+    @else
+        <i class="fa-regular fa-image"></i>
+    @endif
+</div>
                                 <div class="report-details">
                                     <div class="report-title">{{ $laporan->judul_laporan }}</div>
                                     <div class="report-date">{{ $laporan->created_at->format('d M Y') }}</div>
@@ -649,7 +645,7 @@ body {
 
                             <div class="report-actions">
                                 @php
-                                    $statusName = $laporan->status->nama_status ?? 'Pending';
+                                    $statusName = $laporan->status ?? 'Pending';
                                     $badgeClass = match(strtolower($statusName)) {
                                         'proses', 'diproses' => 'badge-diproses',
                                         'selesai' => 'badge-selesai',
@@ -673,5 +669,22 @@ body {
 
     </div>
 
+    <!-- SCRIPT DROPDOWN TOGGLE -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Contoh efek interaktif saat kartu laporan diklik
+            const reportCards = document.querySelectorAll('.report-card');
+
+            reportCards.forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Memastikan navigasi tetap berjalan normal ke halaman detail
+                    const detailLink = this.querySelector('.btn-detail');
+                    if (detailLink && e.target !== detailLink && !detailLink.contains(e.target)) {
+                        window.location.href = detailLink.href;
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
