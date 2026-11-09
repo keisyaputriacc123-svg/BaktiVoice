@@ -572,9 +572,11 @@
 
 <body>
 
+<body>
+
 @php
     $user = auth()->user();
-    $role = $user->role ?? 'wakasek kesiswaan';
+    $role = strtolower(trim($user->role ?? 'wakasek kesiswaan'));
 
     $bidang = [
         'wakasek kesiswaan' => [
@@ -582,24 +584,28 @@
             'dashboard' => 'wakasek.kesiswaan.dashboard',
             'rekap' => 'wakasek.kesiswaan.rekap',
             'monitoring' => 'wakasek.kesiswaan.monitoring',
+            'notifikasi' => 'wakasek.kesiswaan.notifikasi',
         ],
         'wakasek kurikulum' => [
             'nama' => 'Wakasek Kurikulum',
             'dashboard' => 'wakasek.kurikulum.dashboard',
             'rekap' => 'wakasek.kurikulum.rekap',
             'monitoring' => 'wakasek.kurikulum.monitoring',
+            'notifikasi' => 'wakasek.kurikulum.notifikasi',
         ],
         'wakasek sarana' => [
-            'nama' => 'Wakasek Sarana',
+            'nama' => 'Wakasek Sarana dan Prasarana',
             'dashboard' => 'wakasek.sarana.dashboard',
             'rekap' => 'wakasek.sarana.rekap',
             'monitoring' => 'wakasek.sarana.monitoring',
+            'notifikasi' => 'wakasek.sarana.notifikasi',
         ],
         'wakasek dudi' => [
             'nama' => 'Wakasek DUDI',
             'dashboard' => 'wakasek.dudi.dashboard',
             'rekap' => 'wakasek.dudi.rekap',
             'monitoring' => 'wakasek.dudi.monitoring',
+            'notifikasi' => 'wakasek.dudi.notifikasi',
         ],
     ];
 
@@ -607,6 +613,7 @@
     $routeDashboard = $jabatan['dashboard'];
     $routeRekap = $jabatan['rekap'];
     $routeMonitoring = $jabatan['monitoring'];
+    $routeNotifikasi = $jabatan['notifikasi'];
 
     $namaPengguna = $user->name ?? 'Wakasek';
     $inisial = strtoupper(substr(trim($namaPengguna), 0, 1));
@@ -642,15 +649,15 @@
                 </a>
             </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('profil_wakasek') }}">
-                        <i class="fa-solid fa-user-gear"></i>
-                        <span>Profil</span>
-                    </a>
-                </li>
+            <li class="nav-item active">
+                <a href="{{ route('profil_wakasek') }}">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Profil</span>
+                </a>
+            </li>
 
             <li class="nav-item">
-                <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
+                <a href="{{ route($routeNotifikasi) }}" class="nav-notification">
                     <i class="fa-solid fa-bell"></i>
                     <span>Notifikasi</span>
                     <span class="notification-dot"></span>
@@ -659,7 +666,7 @@
         </ul>
     </div>
 
-    <form action="{{ url('/logout') }}" method="POST">
+    <form action="{{ route('logout') }}" method="POST">
         @csrf
         <button type="submit" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i>
@@ -673,9 +680,9 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <div class="topbar-icon" title="Notifikasi">
+        <a href="{{ route($routeNotifikasi) }}" class="topbar-icon" title="Notifikasi">
             <i class="fa-regular fa-bell"></i>
-        </div>
+        </a>
 
         <div class="user-profile">
             <div class="avatar">
@@ -768,32 +775,32 @@
                             @enderror
                         </div>
 
-{{-- EMAIL --}}
-<div class="form-group">
-    <label for="email" class="form-label">
-        Email
-        <span class="required">*</span>
-    </label>
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                Email
+                                <span class="required">*</span>
+                            </label>
 
-    <div class="input-wrapper">
-        <i class="fa-regular fa-envelope input-icon"></i>
+                            <div class="input-wrapper">
+                                <i class="fa-regular fa-envelope input-icon"></i>
 
-        <input
-            type="email"
-            id="email"
-            name="email"
-            class="form-control @error('email') is-invalid @enderror"
-            value="{{ old('email', $user->email) }}"
-            placeholder="Masukkan alamat email"
-            maxlength="255"
-            required
-        >
-    </div>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    class="form-control @error('email') is-invalid @enderror"
+                                    value="{{ old('email', $user->email) }}"
+                                    placeholder="Masukkan alamat email"
+                                    maxlength="255"
+                                    required
+                                >
+                            </div>
 
-    @error('email')
-        <p class="field-error">{{ $message }}</p>
-    @enderror
-</div>
+                            @error('email')
+                                <p class="field-error">{{ $message }}</p>
+                            @enderror
+                        </div>
+
                         <button type="submit" class="btn-primary">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
                         </button>
