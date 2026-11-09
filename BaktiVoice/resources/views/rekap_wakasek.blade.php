@@ -604,184 +604,89 @@
 <body>
 
 @php
-    $role = auth()->user()->role ?? 'wakasek kesiswaan';
+    $role = $role ?? auth()->user()->role ?? 'wakasek kesiswaan';
 
-    $bidang = [
+    $bidangMap = [
         'wakasek kesiswaan' => [
             'nama' => 'Wakasek Kesiswaan',
             'kategori' => 'Kesiswaan',
             'dashboard' => 'wakasek.kesiswaan.dashboard',
-            'rekap' => 'wakasek.kesiswaan.rekap',
-            'monitoring' => 'wakasek.kesiswaan.monitoring',
-            'profil' => 'profil_wakasek',
+            'rekap' => 'wakasek.kesiswaan.rekap'
         ],
         'wakasek kurikulum' => [
             'nama' => 'Wakasek Kurikulum',
             'kategori' => 'Kurikulum',
             'dashboard' => 'wakasek.kurikulum.dashboard',
-            'rekap' => 'wakasek.kurikulum.rekap',
-            'monitoring' => 'wakasek.kurikulum.monitoring',
-            'profil' => 'profil_wakasek',
+            'rekap' => 'wakasek.kurikulum.rekap'
         ],
-        'wakasek sarana' => [
+        'wakasek sarana'    => [
             'nama' => 'Wakasek Sarana',
             'kategori' => 'Sarana dan Prasarana',
             'dashboard' => 'wakasek.sarana.dashboard',
-            'rekap' => 'wakasek.sarana.rekap',
-            'monitoring' => 'wakasek.sarana.monitoring',
-            'profil' => 'profil_wakasek',
+            'rekap' => 'wakasek.sarana.rekap'
         ],
-        'wakasek dudi' => [
+        'wakasek dudi'      => [
             'nama' => 'Wakasek DUDI',
             'kategori' => 'DUDI',
             'dashboard' => 'wakasek.dudi.dashboard',
-            'rekap' => 'wakasek.dudi.rekap',
-            'monitoring' => 'wakasek.dudi.monitoring',
-            'profil' => 'profil_wakasek',
+            'rekap' => 'wakasek.dudi.rekap'
         ],
     ];
 
-    $jabatan =$bidang[$role] ?? $bidang['wakasek kesiswaan'];
-    $routeDashboard =$jabatan['dashboard'];
-    $routeRekap =$jabatan['rekap'];
-    $routeMonitoring = $jabatan['monitoring'];
-    $routeProfil = $jabatan['profil'];
+    $jabatan = $bidangMap[$role] ?? $bidangMap['wakasek kesiswaan'];
 
-    $laporanSemua = [
-        [
-            'id' => 'LAP-001',
-            'judul' => 'Perundungan Antar Siswa',
-            'kategori' => 'Kesiswaan',
-            'tanggal' => '2026-09-16',
-            'status' => 'Diproses',
-        ],
-        [
-            'id' => 'LAP-002',
-            'judul' => 'Konflik Antar Siswa',
-            'kategori' => 'Kesiswaan',
-            'tanggal' => '2026-09-17',
-            'status' => 'Pending',
-        ],
-        [
-            'id' => 'LAP-003',
-            'judul' => 'Pelanggaran Tata Tertib',
-            'kategori' => 'Kesiswaan',
-            'tanggal' => '2026-09-18',
-            'status' => 'Selesai',
-        ],
-        [
-            'id' => 'LAP-004',
-            'judul' => 'Kendala Pelaksanaan Pembelajaran',
-            'kategori' => 'Kurikulum',
-            'tanggal' => '2026-09-15',
-            'status' => 'Diproses',
-        ],
-        [
-            'id' => 'LAP-005',
-            'judul' => 'Masukan Jadwal Pelajaran',
-            'kategori' => 'Kurikulum',
-            'tanggal' => '2026-09-19',
-            'status' => 'Selesai',
-        ],
-        [
-            'id' => 'LAP-006',
-            'judul' => 'Kerusakan Meja dan Kursi',
-            'kategori' => 'Sarana dan Prasarana',
-            'tanggal' => '2026-09-14',
-            'status' => 'Pending',
-        ],
-        [
-            'id' => 'LAP-007',
-            'judul' => 'Fasilitas Kelas Perlu Perbaikan',
-            'kategori' => 'Sarana dan Prasarana',
-            'tanggal' => '2026-09-20',
-            'status' => 'Ditolak',
-        ],
-        [
-            'id' => 'LAP-008',
-            'judul' => 'Masukan Kegiatan Praktik Industri',
-            'kategori' => 'DUDI',
-            'tanggal' => '2026-09-13',
-            'status' => 'Diproses',
-        ],
-        [
-            'id' => 'LAP-009',
-            'judul' => 'Evaluasi Kerja Sama Industri',
-            'kategori' => 'DUDI',
-            'tanggal' => '2026-09-21',
-            'status' => 'Pending',
-        ],
-    ];
+    // Definisikan variabel target route secara eksplisit
+    $targetDashboard = $jabatan['dashboard'];
+    $targetRekap     = $jabatan['rekap'];
 
-    $laporan = array_values(array_filter($laporanSemua,
-        fn ($item) => $item['kategori'] ===$jabatan['kategori']
-    ));
-
-    $jumlahStatus = [
-        'Pending' => 0,
-        'Diproses' => 0,
-        'Selesai' => 0,
-        'Ditolak' => 0,
-    ];
-
-    foreach ($laporan as$item) {
-        if (isset($jumlahStatus[$item['status']])) {
-            $jumlahStatus[$item['status']]++;
-        }
-    }
-
-    $namaPengguna = auth()->user()->name ?? $jabatan['nama'];
+    $namaPengguna = $user->name ?? $jabatan['nama'];
 @endphp
 
 <!-- SIDEBAR SAMAKAN PERSIS DENGAN DASHBOARD -->
+
 <aside class="sidebar">
     <div>
         <div class="brand">
-            <img
-                src="{{ asset('images/logo BaktiVoice.png') }}"
-                alt="Logo BaktiVoice"
-                class="brand-logo-img"
-            >
+            <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
             <span class="brand-name">BaktiVoice</span>
         </div>
 
-        <ul class="nav-menu">
+       <ul class="nav-menu">
             <li class="nav-item">
-                <a href="{{ route($routeDashboard) }}">
+                <a href="{{ route($targetDashboard) }}">
                     <i class="fa-solid fa-house"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
 
             <li class="nav-item active">
-                <a href="{{ route($routeRekap) }}">
+                <a href="{{ route($targetRekap) }}">
                     <i class="fa-solid fa-chart-column"></i>
                     <span>Rekap</span>
                 </a>
             </li>
 
             <li class="nav-item">
-                <a href="{{ route($routeMonitoring) }}">
+                <a href="#">
                     <i class="fa-solid fa-eye"></i>
                     <span>Monitoring</span>
                 </a>
             </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('profil_wakasek') }}">
-                        <i class="fa-solid fa-user-gear"></i>
-                        <span>Profil</span>
-                    </a>
-                </li>
+            <li class="nav-item">
+                <a href="{{ route('profil_wakasek') }}">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Profil</span>
+                </a>
+            </li>
 
-                <li class="nav-item">
-                    <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
-                        <i class="fa-solid fa-bell"></i>
-                        <span>Notifikasi</span>
-                        <span class="notification-dot"></span>
-                    </a>
-                </li>
-
+            <li class="nav-item">
+                <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifikasi</span>
+                    <span class="notification-dot"></span>
+                </a>
+            </li>
         </ul>
     </div>
 
@@ -794,23 +699,20 @@
     </form>
 </aside>
 
-<!-- MAIN WRAPPER BERADA DI SINI SAMA PERSIS DENGAN DASHBOARD -->
+<!-- MAIN WRAPPER -->
 <div class="main-wrapper">
 
-    <!-- TOPBAR SAMAKAN PERSIS DENGAN DASHBOARD -->
+
     <header class="topbar">
-        <div class="topbar-icon" title="Notifikasi">
+        <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
             <i class="fa-regular fa-bell"></i>
-        </div>
+        </a>
 
         <div class="user-profile">
             <div class="avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-
-            <span class="user-name">
-                {{ $namaPengguna }}
-            </span>
+            <span class="user-name">{{ $namaPengguna }}</span>
         </div>
     </header>
 
@@ -826,36 +728,38 @@
             Pantau dan tinjau rekap pengaduan siswa bidang {{ $jabatan['kategori'] }}.
         </p>
 
-        <!-- CARDS STATISTIK DISAMAKAN GAYA DASHBOARD -->
+        <!-- STATISTIK DINAMIS -->
         <section class="stats-grid">
             <div class="stat-card total">
                 <div class="stat-title">Total</div>
-                <div class="stat-value">{{ count($laporan) }}</div>
+                <div class="stat-value">{{ $total ?? 0 }}</div>
+            </div>
+
+            <div class="stat-card pending">
+                <div class="stat-title">Pending</div>
+                <div class="stat-value">{{ $pending ?? 0 }}</div>
             </div>
 
             <div class="stat-card diproses">
                 <div class="stat-title">Diproses</div>
-                <div class="stat-value">{{ $jumlahStatus['Diproses'] }}</div>
+                <div class="stat-value">{{ $diproses ?? 0 }}</div>
             </div>
 
             <div class="stat-card selesai">
                 <div class="stat-title">Selesai</div>
-                <div class="stat-value">{{ $jumlahStatus['Selesai'] }}</div>
+                <div class="stat-value">{{ $selesai ?? 0 }}</div>
             </div>
 
             <div class="stat-card ditolak">
                 <div class="stat-title">Ditolak</div>
-                <div class="stat-value">{{ $jumlahStatus['Ditolak'] }}</div>
+                <div class="stat-value">{{ $ditolak ?? 0 }}</div>
             </div>
         </section>
 
         <section class="panel">
             <div class="panel-header">
                 <h2>Daftar Rekap Laporan</h2>
-                <p>
-                    Gunakan pencarian dan filter untuk menemukan laporan
-                    berdasarkan judul, status, atau periode.
-                </p>
+                <p>Gunakan pencarian untuk menemukan laporan berdasarkan judul atau ID.</p>
             </div>
 
             <div class="filters">
@@ -872,96 +776,87 @@
 
                 <select id="statusFilter" class="control" aria-label="Filter status">
                     <option value="">Semua Status</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Diproses">Diproses</option>
-                    <option value="Selesai">Selesai</option>
-                    <option value="Ditolak">Ditolak</option>
-                </select>
-
-                <select id="periodFilter" class="control" aria-label="Filter periode">
-                    <option value="">Semua Periode</option>
-                    <option value="2026-09">September 2026</option>
-                    <option value="2026-08">Agustus 2026</option>
-                    <option value="2026-07">Juli 2026</option>
+                    <option value="pending">Pending</option>
+                    <option value="proses">Proses</option>
+                    <option value="selesai">Selesai</option>
+                    <option value="ditolak">Ditolak</option>
                 </select>
             </div>
 
             <div class="table-wrap">
-    <table>
-        <thead>
-            <tr>
-                <th>No.</th>
-                <th>Informasi Laporan</th>
-                <th>Kategori</th>
-                <th>Tanggal</th>
-                <th>Status</th>
-                <th>Detail</th>
-            </tr>
-        </thead>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Informasi Laporan</th>
+                            <th>Kategori</th>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
 
-        <tbody id="reportTable">
-            @forelse ($laporan as $item)
-                @php
-                    $kelasStatus = [
-                        'Pending' => 'badge-pending',
-                        'Diproses' => 'badge-diproses',
-                        'Selesai' => 'badge-selesai',
-                        'Ditolak' => 'badge-ditolak',
-                    ][$item['status']] ?? 'badge-pending';
+                    <tbody id="reportTable">
+                        @forelse ($laporanList as $item)
+                            @php
+                                $statusLower = strtolower($item->status ?? 'pending');
+                                $kelasStatus = match($statusLower) {
+                                    'proses' => 'badge-proses',
+                                    'selesai' => 'badge-selesai',
+                                    'ditolak' => 'badge-ditolak',
+                                    default => 'badge-pending',
+                                };
 
-                    $tanggalTampil = \Carbon\Carbon::parse(
-                        $item['tanggal']
-                    )->translatedFormat('d M Y');
-                @endphp
+                                $tanggalTampil = $item->created_at ? $item->created_at->format('d M Y') : '-';
+                            @endphp
 
-                <tr
-                    class="report-row"
-                    data-search="{{ strtolower($item['judul'].' '.$item['id']) }}"
-                    data-status="{{ $item['status'] }}"
-                    data-date="{{ $item['tanggal'] }}"
-                >
-                    <td>{{ $loop->iteration }}</td>
+                            <tr
+                                class="report-row"
+                                data-search="{{ strtolower(($item->judul ?? $item->deskripsi).' '.($item->id_laporan ?? $item->id)) }}"
+                                data-status="{{ $statusLower }}"
+                            >
+                                <td>{{ $loop->iteration }}</td>
 
-                    <td>
-                        <div class="report-title">
-                            {{ $item['judul'] }}
-                        </div>
-                        <div class="report-id">
-                            ID: {{ $item['id'] }}
-                        </div>
-                    </td>
+                                <td>
+                                    <div class="report-title">
+                                        {{ $item->judul ?? $item->deskripsi ?? 'Laporan Pengaduan' }}
+                                    </div>
+                                    <div class="report-id">
+                                        ID: LAP-{{ $item->id_laporan ?? $item->id }}
+                                    </div>
+                                </td>
 
-                    <td>{{ $item['kategori'] }}</td>
-                    <td>{{ $tanggalTampil }}</td>
+                                <td>{{ ucfirst($jabatan['kategori']) }}</td>
+                                <td>{{ $tanggalTampil }}</td>
 
-                    <td>
-                        <span class="status-badge {{ $kelasStatus }}">
-                            {{ $item['status'] }}
-                        </span>
-                    </td>
+                                <td>
+                                    <span class="status-badge {{ $kelasStatus }}">
+                                        {{ ucfirst($item->status ?? 'Pending') }}
+                                    </span>
+                                </td>
 
-                    <td>
-                        <button
-                            type="button"
-                            class="btn-detail"
-                            title="Detail laporan"
-                            aria-label="Lihat detail {{ $item['judul'] }}"
-                            onclick="showDetail('{{ $item['id'] }}', '{{ addslashes($item['judul']) }}', '{{ $item['status'] }}')"
-                        >
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="6" class="empty-state">
-                        Belum ada laporan pada kategori ini.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
-</div>
+                                <td>
+                                    <a
+                                        href="{{ route('wakasek.laporan.detail', $item->id_laporan ?? $item->id) }}"
+                                        class="btn-detail"
+                                        title="Detail laporan"
+                                        aria-label="Lihat detail laporan"
+                                    >
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="empty-state">
+                                    <i class="fa-solid fa-folder-open"></i>
+                                    Belum ada laporan pada kategori ini.
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
 
             <div id="noResults" class="empty-state" style="display:none">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -970,7 +865,7 @@
 
             <div class="table-footer">
                 <span id="resultCount">
-                    Menampilkan {{ count($laporan) }} laporan
+                    Menampilkan {{ count($laporanList) }} laporan
                 </span>
 
                 <button type="button" class="reset-button" onclick="resetFilters()">
@@ -986,25 +881,26 @@
 <script>
     const searchInput = document.getElementById('searchInput');
     const statusFilter = document.getElementById('statusFilter');
-    const periodFilter = document.getElementById('periodFilter');
+
     const rows = Array.from(document.querySelectorAll('.report-row'));
 
     function filterReports() {
         const keyword = searchInput.value.trim().toLowerCase();
-        const selectedStatus = statusFilter.value;
-        const selectedPeriod = periodFilter.value;
+        const selectedStatus = statusFilter.value.toLowerCase();
         let visibleCount = 0;
 
         rows.forEach((row) => {
             const searchText = row.dataset.search || '';
             const status = row.dataset.status || '';
-            const date = row.dataset.date || '';
+
 
             const matchKeyword = searchText.includes(keyword);
             const matchStatus = !selectedStatus || status === selectedStatus;
-            const matchPeriod = !selectedPeriod || date.startsWith(selectedPeriod);
 
-            const visible = matchKeyword && matchStatus && matchPeriod;
+
+
+
+            const visible = matchKeyword && matchStatus;
 
             row.style.display = visible ? '' : 'none';
 
@@ -1012,32 +908,22 @@
         });
 
         document.getElementById('noResults').style.display =
-            visibleCount === 0 ? 'block' : 'none';
+            visibleCount === 0 && rows.length > 0 ? 'block' : 'none';
 
         document.getElementById('resultCount').textContent =
             `Menampilkan ${visibleCount} dari ${rows.length} laporan`;
     }
 
-    searchInput.addEventListener('input', filterReports);
-    statusFilter.addEventListener('change', filterReports);
-    periodFilter.addEventListener('change', filterReports);
+    if (searchInput) searchInput.addEventListener('input', filterReports);
+    if (statusFilter) statusFilter.addEventListener('change', filterReports);
 
     function resetFilters() {
-        searchInput.value = '';
-        statusFilter.value = '';
-        periodFilter.value = '';
+        if (searchInput) searchInput.value = '';
+        if (statusFilter) statusFilter.value = '';
         filterReports();
     }
 
-    function showDetail(id, judul, status) {
-        alert(
-            'Detail Laporan (data sementara)\n\n' +
-            'ID: ' + id + '\n' +
-            'Judul: ' + judul + '\n' +
-            'Status: ' + status +
-            '\n\nHalaman detail laporan akan dihubungkan pada tahap berikutnya.'
-        );
-    }
+
 </script>
 
 </body>
