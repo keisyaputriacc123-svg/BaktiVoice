@@ -851,396 +851,397 @@
 
 <body>
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <div>
-            <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
-                <span class="brand-name">BaktiVoice</span>
-            </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Dashboard</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('LaporanSiswa_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <span>Laporan Siswa</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="nav-item active">
-                    <a href="{{ route('monitoring_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-eye"></i>
-                            <span>Monitoring</span>
-                        </div>
-                    </a>
-                </li>
-
-<li class="nav-item">
-    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notifikasi</span>
-        <span class="notification-dot"></span>
-    </a>
-</li>
-
-                <li class="nav-item">
-                    <a href="{{ route('profil_bk') }}" title="Profil">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-user"></i>
-                            <span>Profil</span>
-                        </div>
-                    </a>
-                </li>
-            </ul>
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div>
+        <div class="brand">
+            <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                alt="Logo BaktiVoice" class="brand-logo-img">
+            <span class="brand-name">BaktiVoice</span>
         </div>
 
-        <a href="{{ route('login') }}" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </a>
-    </aside>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{{ route('dashboard_bk') }}">
+                    <div class="nav-content">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+            </li>
 
-    <!-- MAIN WRAPPER -->
-    <div class="main-wrapper">
+            <li class="nav-item">
+                <a href="{{ route('LaporanSiswa_bk') }}">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>Laporan Siswa</span>
+                    </div>
+                </a>
+            </li>
 
-        <!-- TOPBAR -->
-        <header class="topbar">
-            <div class="topbar-icon" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </div>
-
-            <div class="user-profile">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-
-                <span class="user-name">
-                    {{ Auth::user()->name ?? 'Guru BK' }}
-                </span>
-            </div>
-        </header>
-
-        <!-- MAIN CONTENT -->
-        <main class="content">
-
-            <!-- HEADER -->
-            <section class="page-heading">
-                <div>
-                    <div class="breadcrumb">
-                        Dashboard <i class="fa-solid fa-chevron-right" style="font-size:9px;margin:0 7px;"></i>
+            <li class="nav-item active">
+                <a href="{{ route('monitoring_bk') }}">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-eye"></i>
                         <span>Monitoring</span>
                     </div>
+                </a>
+            </li>
 
-                    <h1 class="page-title">Monitoring Laporan</h1>
+            <li class="nav-item">
+                <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifikasi</span>
+                </a>
+            </li>
 
-                    <p class="page-description">
-                        Pantau status dan perkembangan laporan siswa kategori Kesiswaan.
-                    </p>
-                </div>
-
-                <div class="period-label">
-                    <i class="fa-regular fa-calendar" style="margin-right:7px;"></i>
-                    Periode September 2026
-                </div>
-            </section>
-
-            <!-- STATISTICS -->
-            <section class="stats-grid">
-
-                <div class="stat-card total">
-                    <div class="stat-top">
-                        <span class="stat-label">Total Laporan</span>
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-layer-group"></i>
-                        </div>
+            <li class="nav-item">
+                <a href="{{ route('profil_bk') }}" title="Profil">
+                    <div class="nav-content">
+                        <i class="fa-regular fa-user"></i>
+                        <span>Profil</span>
                     </div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-note">Seluruh laporan Kesiswaan</div>
-                </div>
-
-                <div class="stat-card pending">
-                    <div class="stat-top">
-                        <span class="stat-label">Pending</span>
-                        <div class="stat-icon">
-                            <i class="fa-regular fa-clock"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">2</div>
-                    <div class="stat-note">Menunggu tindak lanjut</div>
-                </div>
-
-                <div class="stat-card diproses">
-                    <div class="stat-top">
-                        <span class="stat-label">Diproses</span>
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-arrows-rotate"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">4</div>
-                    <div class="stat-note">Sedang ditangani</div>
-                </div>
-
-                <div class="stat-card selesai">
-                    <div class="stat-top">
-                        <span class="stat-label">Selesai</span>
-                        <div class="stat-icon">
-                            <i class="fa-solid fa-circle-check"></i>
-                        </div>
-                    </div>
-                    <div class="stat-value">5</div>
-                    <div class="stat-note">Sudah ditindaklanjuti</div>
-                </div>
-
-                <!-- KARTU DITOLAK (BARU) -->
-    <div class="stat-card ditolak">
-        <div class="stat-top">
-            <span class="stat-label">Ditolak</span>
-            <div class="stat-icon">
-                <i class="fa-solid fa-circle-xmark"></i>
-            </div>
-        </div>
-        <div class="stat-value">1</div>
-        <div class="stat-note">Laporan ditolak</div>
+                </a>
+            </li>
+        </ul>
     </div>
 
-</section>
+    <a href="{{ route('login') }}" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</aside>
 
-            </section>
+<!-- MAIN WRAPPER -->
+<div class="main-wrapper">
 
-            <!-- REJECTED STAT + ANALYTICS -->
-            <section class="analytics-grid">
+    <!-- TOPBAR -->
+    <header class="topbar">
+        <a href="{{ route('notifikasi_bk') }}"
+            class="topbar-icon" title="Notifikasi">
+            <i class="fa-regular fa-bell"></i>
+        </a>
 
-                <!-- CATEGORY -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <div>
-                            <h2 class="panel-title">Laporan Berdasarkan Kategori</h2>
-                            <p class="panel-subtitle">
-                                Distribusi laporan yang menjadi cakupan Guru BK.
-                            </p>
-                        </div>
+        <div class="user-profile">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="user-name">
+                {{ Auth::user()->name ?? 'Guru BK' }}
+            </span>
+        </div>
+    </header>
 
-                        <div class="panel-icon">
-                            <i class="fa-solid fa-chart-column"></i>
-                        </div>
-                    </div>
+    <!-- MAIN CONTENT -->
+    <main class="content">
 
-                    <div class="category-summary">
-                        <div class="category-top">
-                            <div class="category-icon">
-                                <i class="fa-solid fa-users"></i>
-                            </div>
-
-                            <div style="flex:1;">
-                                <div class="category-name">Kesiswaan</div>
-                                <div class="category-caption">Kategori laporan Guru BK</div>
-                            </div>
-
-                            <div class="category-count">
-                                12 <small>laporan</small>
-                            </div>
-                        </div>
-
-                        <div class="progress-track">
-                            <div class="progress-fill"></div>
-                        </div>
-
-                        <div class="category-footer">
-                            <span>Seluruh laporan yang dipantau</span>
-                            <strong>100%</strong>
-                        </div>
-                    </div>
-
-                    <div class="category-note">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <span>
-                            Monitoring Guru BK difokuskan pada kategori Kesiswaan.
-                            Kategori lain tidak ditampilkan pada halaman ini.
-                        </span>
-                    </div>
+        <!-- HEADER -->
+        <section class="page-heading">
+            <div>
+                <div class="breadcrumb">
+                    Dashboard
+                    <i class="fa-solid fa-chevron-right"
+                        style="font-size:9px;margin:0 7px;"></i>
+                    <span>Monitoring</span>
                 </div>
 
-                <!-- STATUS BREAKDOWN -->
-                <div class="panel">
-                    <div class="panel-header">
-                        <div>
-                            <h2 class="panel-title">Ringkasan Status</h2>
-                            <p class="panel-subtitle">
-                                Jumlah laporan menurut status saat ini.
-                            </p>
-                        </div>
+                <h1 class="page-title">Monitoring Laporan Kesiswaan</h1>
 
-                        <div class="panel-icon">
-                            <i class="fa-solid fa-chart-pie"></i>
-                        </div>
-                    </div>
+                <p class="page-description">
+                    Pantau status dan perkembangan laporan siswa
+                    khusus kategori Kesiswaan.
+                </p>
+            </div>
 
-                    <div class="status-list">
+            <div class="period-label">
+                <i class="fa-regular fa-calendar"
+                    style="margin-right:7px;"></i>
+                Realtime Database
+            </div>
+        </section>
 
-                        <div class="status-row">
-                            <span class="status-name">Pending</span>
-                            <div class="status-track">
-                                <div class="status-fill fill-pending"></div>
-                            </div>
-                            <span class="status-number">2</span>
-                        </div>
+        <!-- STATISTICS -->
+        <section class="stats-grid">
 
-                        <div class="status-row">
-                            <span class="status-name">Diproses</span>
-                            <div class="status-track">
-                                <div class="status-fill fill-diproses"></div>
-                            </div>
-                            <span class="status-number">4</span>
-                        </div>
-
-                        <div class="status-row">
-                            <span class="status-name">Selesai</span>
-                            <div class="status-track">
-                                <div class="status-fill fill-selesai"></div>
-                            </div>
-                            <span class="status-number">5</span>
-                        </div>
-
-                        <div class="status-row">
-                            <span class="status-name">Ditolak</span>
-                            <div class="status-track">
-                                <div class="status-fill fill-ditolak"></div>
-                            </div>
-                            <span class="status-number">1</span>
-                        </div>
-
-                    </div>
-
-                    <div class="status-legend">
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#a855f7;"></span>
-                            Pending
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#f59e0b;"></span>
-                            Diproses
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#22c55e;"></span>
-                            Selesai
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot" style="background:#ef4444;"></span>
-                            Ditolak
-                        </div>
+            <div class="stat-card total">
+                <div class="stat-top">
+                    <span class="stat-label">Total Laporan Kesiswaan</span>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-layer-group"></i>
                     </div>
                 </div>
+                <div class="stat-value">{{ $totalLaporan }}</div>
+                <div class="stat-note">Seluruh laporan Kesiswaan</div>
+            </div>
 
-            </section>
+            <div class="stat-card pending">
+                <div class="stat-top">
+                    <span class="stat-label">Pending</span>
+                    <div class="stat-icon">
+                        <i class="fa-regular fa-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ $pendingLaporan }}</div>
+                <div class="stat-note">Menunggu tindak lanjut</div>
+            </div>
 
-            <!-- MONTHLY PROGRESS -->
-            <section class="panel monthly-panel">
+            <div class="stat-card diproses">
+                <div class="stat-top">
+                    <span class="stat-label">Diproses</span>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ $diprosesLaporan }}</div>
+                <div class="stat-note">Sedang ditangani</div>
+            </div>
 
+            <div class="stat-card selesai">
+                <div class="stat-top">
+                    <span class="stat-label">Selesai</span>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ $selesaiLaporan }}</div>
+                <div class="stat-note">Sudah ditindaklanjuti</div>
+            </div>
+
+            <div class="stat-card ditolak">
+                <div class="stat-top">
+                    <span class="stat-label">Ditolak</span>
+                    <div class="stat-icon">
+                        <i class="fa-solid fa-circle-xmark"></i>
+                    </div>
+                </div>
+                <div class="stat-value">{{ $ditolakLaporan }}</div>
+                <div class="stat-note">Laporan ditolak</div>
+            </div>
+
+        </section>
+
+        <!-- ANALYTICS -->
+        <section class="analytics-grid">
+
+            <!-- CATEGORY -->
+            <div class="panel">
                 <div class="panel-header">
                     <div>
-                        <h2 class="panel-title">Perkembangan Laporan</h2>
+                        <h2 class="panel-title">
+                            Monitoring Kategori Kesiswaan
+                        </h2>
                         <p class="panel-subtitle">
-                            Perbandingan jumlah laporan berdasarkan status pada September 2026.
+                            Distribusi laporan khusus kategori Kesiswaan.
                         </p>
                     </div>
 
-                    <div class="monthly-total">
-                        <i class="fa-solid fa-file-lines" style="margin-right:5px;"></i>
-                        12 Laporan
+                    <div class="panel-icon">
+                        <i class="fa-solid fa-chart-column"></i>
                     </div>
                 </div>
 
-                <div class="chart-legend">
+                <div class="category-summary">
+                    <div class="category-top">
+                        <div class="category-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+
+                        <div style="flex:1;">
+                            <div class="category-name">Kesiswaan</div>
+                            <div class="category-caption">
+                                Total laporan Kesiswaan
+                            </div>
+                        </div>
+
+                        <div class="category-count">
+                            {{ $totalLaporan }}
+                            <small>laporan</small>
+                        </div>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-fill"
+                            style="width: {{ $persenKesiswaan }}%;">
+                        </div>
+                    </div>
+
+                    <div class="category-footer">
+                        <span>Data kategori Kesiswaan</span>
+                        <strong>{{ $persenKesiswaan }}%</strong>
+                    </div>
+                </div>
+
+                <div class="category-note">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>
+                        Monitoring Guru BK hanya menampilkan laporan
+                        dengan kategori Kesiswaan.
+                    </span>
+                </div>
+            </div>
+
+            <!-- STATUS BREAKDOWN -->
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h2 class="panel-title">Ringkasan Status</h2>
+                        <p class="panel-subtitle">
+                            Status laporan kategori Kesiswaan.
+                        </p>
+                    </div>
+
+                    <div class="panel-icon">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                </div>
+
+                <div class="status-list">
+
+                    <div class="status-row">
+                        <span class="status-name">Pending</span>
+                        <div class="status-track">
+                            <div class="status-fill fill-pending"></div>
+                        </div>
+                        <span class="status-number">{{ $pendingLaporan }}</span>
+                    </div>
+
+                    <div class="status-row">
+                        <span class="status-name">Diproses</span>
+                        <div class="status-track">
+                            <div class="status-fill fill-diproses"></div>
+                        </div>
+                        <span class="status-number">{{ $diprosesLaporan }}</span>
+                    </div>
+
+                    <div class="status-row">
+                        <span class="status-name">Selesai</span>
+                        <div class="status-track">
+                            <div class="status-fill fill-selesai"></div>
+                        </div>
+                        <span class="status-number">{{ $selesaiLaporan }}</span>
+                    </div>
+
+                    <div class="status-row">
+                        <span class="status-name">Ditolak</span>
+                        <div class="status-track">
+                            <div class="status-fill fill-ditolak"></div>
+                        </div>
+                        <span class="status-number">{{ $ditolakLaporan }}</span>
+                    </div>
+
+                </div>
+
+                <div class="status-legend">
                     <div class="legend-item">
                         <span class="legend-dot" style="background:#a855f7;"></span>
                         Pending
                     </div>
-
                     <div class="legend-item">
                         <span class="legend-dot" style="background:#f59e0b;"></span>
                         Diproses
                     </div>
-
                     <div class="legend-item">
                         <span class="legend-dot" style="background:#22c55e;"></span>
                         Selesai
                     </div>
-
                     <div class="legend-item">
                         <span class="legend-dot" style="background:#ef4444;"></span>
                         Ditolak
                     </div>
                 </div>
-
-                <div class="chart-area">
-
-                    <div class="month-row">
-                        <span class="month-name">September</span>
-
-                        <div class="stacked-track"
-                             role="img"
-                             aria-label="September: 2 pending, 4 diproses, 5 selesai, 1 ditolak">
-                            <div class="stacked-segment segment-pending" title="Pending: 2"></div>
-                            <div class="stacked-segment segment-diproses" title="Diproses: 4"></div>
-                            <div class="stacked-segment segment-selesai" title="Selesai: 5"></div>
-                            <div class="stacked-segment segment-ditolak" title="Ditolak: 1"></div>
-                        </div>
-
-                        <span class="month-total">12</span>
-                    </div>
-
-                </div>
-
-                <div class="chart-footnote">
-                    <i class="fa-solid fa-circle-info"></i>
-                    <span>
-                        Grafik menggunakan data contoh. Setiap warna menunjukkan
-                        jumlah laporan pada status terkait, dan seluruh status
-                        berjumlah 12 laporan.
-                    </span>
-                </div>
-
-            </section>
-
-            <!-- INSIGHT -->
-            <section class="insight-card">
-                <div class="insight-icon">
-                    <i class="fa-solid fa-lightbulb"></i>
-                </div>
-
-                <div>
-                    <h3 class="insight-title">Ringkasan Monitoring</h3>
-                    <p class="insight-text">
-                        Dari 12 laporan Kesiswaan, 5 laporan telah selesai,
-                        4 sedang diproses, 2 masih pending, dan 1 ditolak.
-                        Guru BK dapat memprioritaskan peninjauan laporan pending
-                        agar dapat segera ditindaklanjuti.
-                    </p>
-                </div>
-            </section>
-
-            <div class="footer-note">
-                BaktiVoice &copy; 2026 · Monitoring Guru BK
             </div>
 
-        </main>
-    </div>
+        </section>
 
+        <!-- PROGRESS -->
+        <section class="panel monthly-panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2 class="panel-title">
+                        Perkembangan Laporan Kesiswaan
+                    </h2>
+                    <p class="panel-subtitle">
+                        Grafik proporsi status laporan Kesiswaan.
+                    </p>
+                </div>
+
+                <div class="monthly-total">
+                    <i class="fa-solid fa-file-lines"
+                        style="margin-right:5px;"></i>
+                    {{ $totalLaporan }} Laporan
+                </div>
+            </div>
+
+            <div class="chart-area">
+
+                <div class="month-row">
+                    <span class="month-name">Kesiswaan</span>
+
+                    <div class="stacked-track">
+                        <div class="stacked-segment segment-pending"
+                            title="Pending: {{ $pendingLaporan }}"
+                            style="width: {{ $totalLaporan > 0 ? ($pendingLaporan / $totalLaporan) * 100 : 0 }}%;">
+                        </div>
+
+                        <div class="stacked-segment segment-diproses"
+                            title="Diproses: {{ $diprosesLaporan }}"
+                            style="width: {{ $totalLaporan > 0 ? ($diprosesLaporan / $totalLaporan) * 100 : 0 }}%;">
+                        </div>
+
+                        <div class="stacked-segment segment-selesai"
+                            title="Selesai: {{ $selesaiLaporan }}"
+                            style="width: {{ $totalLaporan > 0 ? ($selesaiLaporan / $totalLaporan) * 100 : 0 }}%;">
+                        </div>
+
+                        <div class="stacked-segment segment-ditolak"
+                            title="Ditolak: {{ $ditolakLaporan }}"
+                            style="width: {{ $totalLaporan > 0 ? ($ditolakLaporan / $totalLaporan) * 100 : 0 }}%;">
+                        </div>
+                    </div>
+
+                    <span class="month-total">{{ $totalLaporan }}</span>
+                </div>
+
+            </div>
+
+            <div class="chart-footnote">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>
+                    Grafik menampilkan perbandingan status seluruh laporan
+                    kategori Kesiswaan.
+                </span>
+            </div>
+
+        </section>
+
+        <!-- INSIGHT -->
+        <section class="insight-card">
+            <div class="insight-icon">
+                <i class="fa-solid fa-lightbulb"></i>
+            </div>
+
+            <div>
+                <h3 class="insight-title">Ringkasan Monitoring Kesiswaan</h3>
+
+                <p class="insight-text">
+                    Dari total {{ $totalLaporan }} laporan Kesiswaan,
+                    sebanyak {{ $selesaiLaporan }} telah selesai,
+                    {{ $diprosesLaporan }} sedang diproses,
+                    {{ $pendingLaporan }} masih menunggu, dan
+                    {{ $ditolakLaporan }} ditolak.
+                    Guru BK dapat memprioritaskan peninjauan laporan
+                    yang masih pending.
+                </p>
+            </div>
+        </section>
+
+        <div class="footer-note">
+            BaktiVoice &copy; 2026 · Monitoring Guru BK
+        </div>
+
+    </main>
+</div>
 </body>
 </html>
