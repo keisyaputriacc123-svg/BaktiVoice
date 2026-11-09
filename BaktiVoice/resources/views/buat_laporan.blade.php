@@ -168,7 +168,7 @@
             text-align: center;
         }
 
-        
+
 
 
         /* =====================================================
@@ -1113,13 +1113,12 @@
                         <label class="form-label">
                             Judul Laporan<span class="required">*</span>
                         </label>
-
                         <input
                             type="text"
-                            name="judul_laporan"
+                            name="judul"
                             class="form-input"
-                            placeholder="Masukkan Judul Laporan"
-                            value="{{ old('judul_laporan') }}"
+                            placeholder="Masukkan judul laporan..."
+                            value="{{ old('judul') }}"
                             required
                         >
                     </div>
