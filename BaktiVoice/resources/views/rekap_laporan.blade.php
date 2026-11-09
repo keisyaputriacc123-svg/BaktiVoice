@@ -653,51 +653,30 @@
 
         <div>
 
-            <!-- Logo -->
+
             <div class="brand">
-
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img">
-
-                <span class="brand-name">
-                    BaktiVoice
-                </span>
-
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
             </div>
 
 
-            <!-- Navigation -->
+
             <ul class="nav-menu">
 
-                <!-- LAPORAN -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('dashboard_admin') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-file-lines"></i>
-
-                            <span>
-                                Laporan
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-regular fa-file-lines"></i><span>Laporan</span></div>
                     </a>
 
                 </li>
 
 
-            <!-- MENU DATA MASTER (DROPDOWN) -->
+
                 <li class="nav-item">
                     <button class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
-                        <div class="nav-content">
-                            <i class="fa-solid fa-database"></i>
-                            <span>Data Master</span>
-                        </div>
+                        <div class="nav-content"><i class="fa-solid fa-database"></i><span>Data Master</span></div>
                         <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
                     <ul class="sub-menu" id="masterMenu">
@@ -708,61 +687,31 @@
                 </li>
 
 
-                <!-- REKAP LAPORAN -->
+
                 <li class="nav-item active">
 
                     <a href="{{ route('rekap_laporan') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-solid fa-chart-column"></i>
-
-                            <span>
-                                Rekap Laporan
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-solid fa-chart-column"></i><span>Rekap Laporan</span></div>
                     </a>
 
                 </li>
 
 
-                <!-- NOTIFIKASI -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('notifikasi_admin') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-bell"></i>
-
-                            <span>
-                                Notifikasi
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-regular fa-bell"></i><span>Notifikasi</span></div>
                     </a>
 
                 </li>
 
 
-                <!-- PROFIL -->
+
                 <li class="nav-item">
 
                     <a href="{{ route('profil_admin') }}">
-
-                        <div class="nav-content">
-
-                            <i class="fa-regular fa-user"></i>
-
-                            <span>
-                                Profil
-                            </span>
-
-                        </div>
-
+                        <div class="nav-content"><i class="fa-regular fa-user"></i><span>Profil</span></div>
                     </a>
 
                 </li>
@@ -771,332 +720,136 @@
 
         </div>
 
-
-        <!-- LOGOUT -->
-        <a
-            href="{{ route('login') }}"
-            class="logout-btn">
-
-            <i class="fa-solid fa-right-from-bracket"></i>
-
-            <span>
-                Logout
-            </span>
-
-        </a>
-
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+            </button>
+        </form>
     </aside>
 
-
-    <!-- =====================================================
-        MAIN WRAPPER
-    ====================================================== -->
-
+    <!-- MAIN WRAPPER -->
     <div class="main-wrapper">
 
 
-        <!-- =================================================
-            TOPBAR
-        ================================================== -->
+
 
         <header class="topbar">
-
-            <div
-                class="topbar-icon"
-                title="Notifikasi">
-
-                <i class="fa-regular fa-bell"></i>
-
-            </div>
-
-
+            <div class="topbar-icon" title="Notifikasi"><i class="fa-regular fa-bell"></i></div>
             <div class="user-profile">
-
-                <div class="avatar">
-
-                    <i class="fa-regular fa-user"></i>
-
-                </div>
-
-                <span class="user-name">
-                    Admin Sekolah
-                </span>
-
+                <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                <span class="user-name">{{ auth()->user()->name ?? 'Admin Sekolah' }}</span>
             </div>
-
         </header>
 
 
 
-        <!-- =================================================
-            CONTENT
-        ================================================== -->
+
 
         <main class="content">
+            <h1 class="page-title">Rekap Laporan</h1>
 
-
-            <!-- PAGE TITLE -->
-
-            <h1 class="page-title">
-                Rekap Laporan
-            </h1>
-
-
-
-            <!-- =================================================
-                FILTER
-            ================================================== -->
-
-            <section class="filter-wrapper">
-
+            <!-- FORM FILTER (GET) -->
+            <form action="{{ route('rekap_laporan') }}" method="GET" class="filter-wrapper">
                 <div class="filter-grid">
 
 
-                    <!-- KATEGORI -->
+
 
                     <div class="filter-group">
-
-                        <label
-                            for="kategori"
-                            class="filter-label">
-
-                            Kategori
-
-                        </label>
-
-                        <select
-                            id="kategori"
-                            class="filter-select">
-
-                            <option value="">
-                                Semua Kategori
-                            </option>
-
-                            <option value="Kesiswaan">
-                                Kesiswaan
-                            </option>
-
-                            <option value="Kurikulum">
-                                Kurikulum
-                            </option>
-
-                            <option value="Sarana dan Prasarana">
-                                Sarana dan Prasarana
-                            </option>
-
-                            <option value="DUDI">
-                                DUDI
-                            </option>
-
+                        <label for="kategori" class="filter-label">Kategori</label>
+                        <select id="kategori" name="kategori" class="filter-select">
+                            <option value="">Semua Kategori</option>
+                            @foreach($kategoriList as $kat)
+                                <option value="{{ $kat->id_kategori }}" {{ request('kategori') == $kat->id_kategori ? 'selected' : '' }}>
+                                    {{ $kat->nama_kategori }}
+                                </option>
+                            @endforeach
                         </select>
 
                     </div>
 
 
 
-                    <!-- STATUS -->
+
 
                     <div class="filter-group">
-
-                        <label
-                            for="status"
-                            class="filter-label">
-
-                            Status
-
-                        </label>
-
-                        <select
-                            id="status"
-                            class="filter-select">
-
-                            <option value="">
-                                Semua Status
-                            </option>
-
-                            <option value="Pending">
-                                Pending
-                            </option>
-
-                            <option value="Diproses">
-                                Diproses
-                            </option>
-
-                            <option value="Selesai">
-                                Selesai
-                            </option>
-
-                            <option value="Ditolak">
-                                Ditolak
-                            </option>
-
-                        </select>
+                        <label for="status" class="filter-label">Status</label>
+                        <select id="status" name="status" class="filter-select">
+    <option value="">Semua Status</option>
+    <option value="Pending" {{ request('status') == 'Pending' ? 'selected' : '' }}>Pending</option>
+    <option value="Proses" {{ request('status') == 'Proses' ? 'selected' : '' }}>Diproses</option>
+    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>Selesai</option>
+    <option value="Ditolak" {{ request('status') == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+</select>
 
                     </div>
 
 
 
-                    <!-- TANGGAL -->
+
 
                     <div class="filter-group">
-
-                        <label
-                            for="tanggal"
-                            class="filter-label">
-
-                            Pilih Tanggal
-
-                        </label>
-
-                        <input
-                            type="date"
-                            id="tanggal"
-                            class="filter-date">
-
+                        <label for="tanggal" class="filter-label">Pilih Tanggal</label>
+                        <input type="date" id="tanggal" name="tanggal" value="{{ request('tanggal') }}" class="filter-date">
                     </div>
 
 
 
-                    <!-- BUTTON -->
+
 
                     <div class="filter-group">
-
-                        <button
-                            type="button"
-                            class="filter-button"
-                            onclick="tampilkanData()">
-
-                            <i class="fa-solid fa-filter"></i>
-
-                            Tampilkan
-
+                        <button type="submit" class="filter-button">
+                            <i class="fa-solid fa-filter"></i> Tampilkan
                         </button>
 
                     </div>
 
                 </div>
+            </form>
 
-            </section>
-
-
-
-            <!-- =================================================
-                STATISTICS
-            ================================================== -->
-
+            <!-- STATISTICS -->
             <section class="stats-grid">
 
 
-                <!-- TOTAL -->
+
 
                 <div class="stat-card total">
-
-                    <div class="stat-title">
-                        TOTAL
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="totalCount">
-
-                        24
-
-                    </div>
-
+                    <div class="stat-title">TOTAL</div>
+                    <div class="stat-value" id="totalCount">{{ $totalLaporan ?? 0 }}</div>
                 </div>
-
-                <!-- PENDING  -->
-    <div class="stat-card pending">
-        <div class="stat-title">
-            PENDING
-        </div>
-        <div class="stat-value" id="pendingCount">
-            3
-        </div>
-    </div>
-
-                <!-- DIPROSES -->
-
+                <div class="stat-card pending">
+                    <div class="stat-title">PENDING</div>
+                    <div class="stat-value" id="pendingCount">{{ $pendingCount ?? 0 }}</div>
+                </div>
                 <div class="stat-card diproses">
-
-                    <div class="stat-title">
-                        DIPROSES
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="diprosesCount">
-
-                        12
-
-                    </div>
-
+                    <div class="stat-title">DIPROSES</div>
+                    <div class="stat-value" id="diprosesCount">{{ $diprosesCount ?? 0 }}</div>
                 </div>
-
-
-
-                <!-- SELESAI -->
-
                 <div class="stat-card selesai">
-
-                    <div class="stat-title">
-                        SELESAI
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="selesaiCount">
-
-                        7
-
-                    </div>
-
+                    <div class="stat-title">SELESAI</div>
+                    <div class="stat-value" id="selesaiCount">{{ $selesaiCount ?? 0 }}</div>
                 </div>
-
-
-
-                <!-- DITOLAK -->
-
                 <div class="stat-card ditolak">
-
-                    <div class="stat-title">
-                        DITOLAK
-                    </div>
-
-                    <div
-                        class="stat-value"
-                        id="ditolakCount">
-
-                        5
-
-                    </div>
-
+                    <div class="stat-title">DITOLAK</div>
+                    <div class="stat-value" id="ditolakCount">{{ $ditolakCount ?? 0 }}</div>
                 </div>
-
             </section>
 
-
-
-            <!-- =================================================
-                TABLE
-            ================================================== -->
+            <!-- TABLE -->
 
             <section class="table-card">
 
 
-                <!-- TABLE HEADER -->
+
 
                 <div class="table-header">
-
-                    <h2 class="table-title">
-                        Daftar Laporan
-                    </h2>
-
+                    <h2 class="table-title">Daftar Laporan</h2>
                 </div>
 
 
 
-                <!-- TABLE -->
+
 
                 <div class="table-wrapper">
 
@@ -1105,191 +858,44 @@
                         <thead>
 
                             <tr>
-
-                                <th>
-                                    ID
-                                </th>
-
-                                <th>
-                                    Laporan
-                                </th>
-
-                                <th>
-                                    Kategori
-                                </th>
-
-                                <th>
-                                    Status
-                                </th>
-
-                                <th>
-                                    Tanggal
-                                </th>
-
-                                <th>
-                                    Aksi
-                                </th>
-
+                                <th>ID</th>
+                                <th>Laporan</th>
+                                <th>Kategori</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
                             </tr>
 
                         </thead>
 
 
                         <tbody id="reportTableBody">
-
-
-                            <!-- DATA 1 -->
-
-                            <tr
-                                data-kategori="Sarana dan Prasarana"
-                                data-status="Diproses"
-                                data-tanggal="2026-09-14">
-
-                                <td>
-                                    BV001
-                                </td>
-
-                                <td>
-                                    Fasilitas Kelas
-                                </td>
-
-                                <td>
-                                    Sarana dan Prasarana
-                                </td>
-
-                                <td>
-
-                                    <span class="status-badge badge-diproses">
-                                        Diproses
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    14 Sep 2026
-                                </td>
-
-                                <td>
-
-                                    <a
-                                        href="{{ route('laporan_admin', 4) }}"
-                                        class="btn-view">
-
-                                        <span>
-                                            Lihat
+                            @forelse($laporans as $item)
+                                @php
+    $namaStatus = strtolower($item->status ?? 'pending');
+@endphp
+                                <tr>
+                                    <td>BV{{ str_pad($item->id_laporan, 3, '0', STR_PAD_LEFT) }}</td>
+                                    <td>{{ $item->judul_laporan }}</td>
+                                    <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
+                                    <td>
+                                        <span class="status-badge badge-{{ $namaStatus }}">
+                                            {{ ucfirst($namaStatus) }}
                                         </span>
-
-                                        <i class="fa-regular fa-eye"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DATA 2 -->
-
-                            <tr
-                                data-kategori="Sarana dan Prasarana"
-                                data-status="Selesai"
-                                data-tanggal="2026-09-12">
-
-                                <td>
-                                    BV002
-                                </td>
-
-                                <td>
-                                    Fasilitas Toilet
-                                </td>
-
-                                <td>
-                                    Sarana dan Prasarana
-                                </td>
-
-                                <td>
-
-                                    <span class="status-badge badge-selesai">
-                                        Selesai
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    12 Sep 2026
-                                </td>
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="btn-view">
-
-                                        <span>
-                                            Lihat
-                                        </span>
-
-                                        <i class="fa-regular fa-eye"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
-
-                            <!-- DATA 3 -->
-
-                            <tr
-                                data-kategori="Kesiswaan"
-                                data-status="Ditolak"
-                                data-tanggal="2026-09-09">
-
-                                <td>
-                                    BV003
-                                </td>
-
-                                <td>
-                                    Keamanan Sekolah
-                                </td>
-
-                                <td>
-                                    Kesiswaan
-                                </td>
-
-                                <td>
-
-                                    <span class="status-badge badge-ditolak">
-                                        Ditolak
-                                    </span>
-
-                                </td>
-
-                                <td>
-                                    9 Sep 2026
-                                </td>
-
-                                <td>
-
-                                    <a
-                                        href="#"
-                                        class="btn-view">
-
-                                        <span>
-                                            Lihat
-                                        </span>
-
-                                        <i class="fa-regular fa-eye"></i>
-
-                                    </a>
-
-                                </td>
-
-                            </tr>
-
-
+                                    </td>
+                                    <td>{{ $item->created_at->format('d M Y') }}</td>
+                                    <td>
+                                        <a href="{{ route('laporan.show', $item->id_laporan) }}" class="btn-view">
+                                            <span>Lihat</span>
+                                            <i class="fa-regular fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="empty-row">Belum ada data rekap laporan yang tersedia.</td>
+                                </tr>
+                            @endforelse
                         </tbody>
 
                     </table>
@@ -1305,170 +911,21 @@
 
 
 
-    <!-- =====================================================
-        JAVASCRIPT
-    ====================================================== -->
+
 
     <script>
 
-        /* ==========================================
-        DROPDOWN DATA MASTER
-        ========================================== */
+
 
         function toggleDropdown(menuId, arrowId) {
-
-            const menu =
-                document.getElementById(menuId);
-
-            const arrow =
-                document.getElementById(arrowId);
-
-
+            const menu = document.getElementById(menuId);
+            const arrow = document.getElementById(arrowId);
             menu.classList.toggle('show');
-
-
-            if (menu.classList.contains('show')) {
-
-                arrow.style.transform =
-                    'rotate(180deg)';
-
-            } else {
-
-                arrow.style.transform =
-                    'rotate(0deg)';
-
-            }
-
+            arrow.style.transform = menu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
-
-
-
-        /* ==========================================
-        FILTER LAPORAN
-        ========================================== */
-
-        function tampilkanData() {
-
-            const kategori =
-                document
-                    .getElementById('kategori')
-                    .value;
-
-            const status =
-                document
-                    .getElementById('status')
-                    .value;
-
-            const tanggal =
-                document
-                    .getElementById('tanggal')
-                    .value;
-
-
-            const rows =
-                document.querySelectorAll(
-                    '#reportTableBody tr'
-                );
-
-
-            let total = 0;
-
-            let diproses = 0;
-
-            let selesai = 0;
-
-            let ditolak = 0;
-
-
-            rows.forEach(row => {
-
-                const rowKategori =
-                    row.dataset.kategori;
-
-                const rowStatus =
-                    row.dataset.status;
-
-                const rowTanggal =
-                    row.dataset.tanggal;
-
-
-                const cocokKategori =
-                    kategori === '' ||
-                    rowKategori === kategori;
-
-
-                const cocokStatus =
-                    status === '' ||
-                    rowStatus === status;
-
-
-                const cocokTanggal =
-                    tanggal === '' ||
-                    rowTanggal === tanggal;
-
-
-                if (
-                    cocokKategori &&
-                    cocokStatus &&
-                    cocokTanggal
-                ) {
-
-                    row.style.display = '';
-
-                    total++;
-
-
-                    if (rowStatus === 'Diproses') {
-
-                        diproses++;
-
-                    }
-
-                    if (rowStatus === 'Selesai') {
-
-                        selesai++;
-
-                    }
-
-                    if (rowStatus === 'Ditolak') {
-
-                        ditolak++;
-
-                    }
-
-                } else {
-
-                    row.style.display = 'none';
-
-                }
-
-            });
-
-
-            /* Update jumlah */
-
-            document.getElementById(
-                'totalCount'
-            ).textContent = total;
-
-
-            document.getElementById(
-                'diprosesCount'
-            ).textContent = diproses;
-
-
-            document.getElementById(
-                'selesaiCount'
-            ).textContent = selesai;
-
-
-            document.getElementById(
-                'ditolakCount'
-            ).textContent = ditolak;
-
-        }
-
     </script>
+
+
 
 </body>
 
