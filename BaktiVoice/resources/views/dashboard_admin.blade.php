@@ -537,7 +537,7 @@
                 <div class="avatar">
                     <i class="fa-regular fa-user"></i>
                 </div>
-                <span class="user-name">Admin Sekolah</span>
+                <span class="user-name">{{ Auth::user()->name ?? 'Admin Sekolah' }}</span>
             </div>
         </header>
 
@@ -545,93 +545,99 @@
         <main class="content">
             <h1 class="page-title">Dashboard</h1>
 
-           <!-- 5 SUMMARY STATS CARDS -->
-<section class="stats-grid">
-    <div class="stat-card total">
-        <div class="stat-title">Total</div>
-        <div class="stat-value">24</div>
-    </div>
-    <div class="stat-card pending">
-        <div class="stat-title">Pending</div>
-        <div class="stat-value">3</div>
-    </div>
-    <div class="stat-card diproses">
-        <div class="stat-title">Diproses</div>
-        <div class="stat-value">12</div>
-    </div>
-    <div class="stat-card selesai">
-        <div class="stat-title">Selesai</div>
-        <div class="stat-value">7</div>
-    </div>
-    <div class="stat-card ditolak">
-        <div class="stat-title">Ditolak</div>
-        <div class="stat-value">5</div>
-    </div>
-</section>
+            <!-- 5 SUMMARY STATS CARDS (DINAMIS) -->
+            <section class="stats-grid">
+                <div class="stat-card total">
+                    <div class="stat-title">Total</div>
+                    <div class="stat-value">{{ $totalLaporan ?? 0 }}</div>
+                </div>
+                <div class="stat-card pending">
+                    <div class="stat-title">Pending</div>
+                    <div class="stat-value">{{ $pendingCount ?? 0 }}</div>
+                </div>
+                <div class="stat-card diproses">
+                    <div class="stat-title">Diproses</div>
+                    <div class="stat-value">{{ $diprosesCount ?? 0 }}</div>
+                </div>
+                <div class="stat-card selesai">
+                    <div class="stat-title">Selesai</div>
+                    <div class="stat-value">{{ $selesaiCount ?? 0 }}</div>
+                </div>
+                <div class="stat-card ditolak">
+                    <div class="stat-title">Ditolak</div>
+                    <div class="stat-value">{{ $ditolakCount ?? 0 }}</div>
+                </div>
+            </section>
 
-            <!-- LAPORAN TERBARU SECTION -->
-            <section>
-                <h2 class="section-header">Laporan Terbaru</h2>
+            <!-- LAPORAN TERBARU SECTION (DINAMIS) -->
+           <section>
+    <h2 class="section-header">Laporan Terbaru</h2>
 
-                <div class="report-list">
-                    <!-- Item 1: Kasus Perundungan Siswa -->
-                    <div class="report-card">
-                        <div class="report-info-group">
-                            <div class="report-thumbnail">
-                                <i class="fa-regular fa-image"></i>
-                            </div>
-                            <div class="report-details">
-                                <div class="report-title">Kasus Perundungan Siswa</div>
-                                <div class="report-date">14 Sep 2026</div>
-                            </div>
-                        </div>
-                        <div class="report-actions">
-                            <span class="status-badge badge-diproses">Diproses</span>
-                            <button class="btn-dropdown" title="Detail">
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </button>
-                        </div>
+    <div class="report-list">
+
+        @forelse($laporanTerbaru as $item)
+
+            <div class="report-card">
+
+                <div class="report-info-group">
+
+                    <div class="report-thumbnail">
+                        @if($item->bukti_url)
+                            <img
+                                src="{{ asset($item->bukti_url) }}"
+                                alt="Bukti Laporan"
+                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
+                            >
+                        @else
+                            <i class="fa-regular fa-image"></i>
+                        @endif
                     </div>
 
-                    <!-- Item 2: Jadwal Pelajaran Bentrok -->
-                    <div class="report-card">
-                        <div class="report-info-group">
-                            <div class="report-thumbnail">
-                                <i class="fa-regular fa-image"></i>
-                            </div>
-                            <div class="report-details">
-                                <div class="report-title">Jadwal Pelajaran Bentrok</div>
-                                <div class="report-date">12 Sep 2026</div>
-                            </div>
+                    <div class="report-details">
+                        <div class="report-title">
+                            {{ $item->judul_laporan }}
                         </div>
-                        <div class="report-actions">
-                            <span class="status-badge badge-selesai">Selesai</span>
-                            <button class="btn-dropdown" title="Detail">
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </button>
-                        </div>
-                    </div>
 
-                    <!-- Item 3: Kendala Tempat Magang -->
-                    <div class="report-card">
-                        <div class="report-info-group">
-                            <div class="report-thumbnail">
-                                <i class="fa-regular fa-image"></i>
-                            </div>
-                            <div class="report-details">
-                                <div class="report-title">Kendala Tempat Magang</div>
-                                <div class="report-date">9 Sep 2026</div>
-                            </div>
-                        </div>
-                        <div class="report-actions">
-                            <span class="status-badge badge-ditolak">Ditolak</span>
-                            <button class="btn-dropdown" title="Detail">
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </button>
+                        <div class="report-date">
+                            {{ $item->created_at->format('d M Y') }}
                         </div>
                     </div>
 
                 </div>
+
+                <div class="report-actions">
+
+                    @php
+                        $namaStatus = strtolower($item->status ?? 'pending');
+                    @endphp
+
+                    <span class="status-badge badge-{{ $namaStatus }}">
+                        {{ ucfirst($namaStatus) }}
+                    </span>
+
+                    <a
+                        href="{{ route('laporan.show', $item->id_laporan) }}"
+                        class="btn-dropdown"
+                        title="Detail"
+                    >
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+
+                </div>
+
+            </div>
+
+        @empty
+
+            <div class="empty-state">
+                <i class="fa-regular fa-folder-open"
+                   style="font-size: 32px; margin-bottom: 8px;"></i>
+                <p>Belum ada laporan terbaru.</p>
+            </div>
+
+        @endforelse
+
+    </div>
             </section>
         </main>
     </div>
