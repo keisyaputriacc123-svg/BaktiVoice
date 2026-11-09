@@ -707,11 +707,7 @@
     <aside class="sidebar">
         <div>
             <div class="brand">
-                <img
-                    src="{{ asset('images/logo BaktiVoice.png') }}"
-                    alt="Logo BaktiVoice"
-                    class="brand-logo-img"
-                >
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
                 <span class="brand-name">BaktiVoice</span>
             </div>
 
@@ -726,11 +722,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <button
-                        type="button"
-                        class="dropdown-btn"
-                        onclick="toggleDropdown('masterMenu', 'masterArrow')"
-                    >
+                    <button type="button" class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
                         <div class="nav-content">
                             <i class="fa-solid fa-database"></i>
                             <span>Data Master</span>
@@ -788,22 +780,13 @@
 
         {{-- TOPBAR --}}
         <header class="topbar">
-            <a
-                href="{{ route('notifikasi_admin') }}"
-                class="topbar-icon"
-                title="Notifikasi"
-                aria-label="Notifikasi"
-            >
+            <a href="{{ route('notifikasi_admin') }}" class="topbar-icon" title="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
             </a>
 
             <div class="user-profile">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <span class="user-name">
-                    {{ auth()->user()->name ?? 'Admin Sekolah' }}
-                </span>
+                <div class="avatar"><i class="fa-regular fa-user"></i></div>
+                <span class="user-name">{{ auth()->user()->name ?? 'Admin Sekolah' }}</span>
             </div>
         </header>
 
@@ -812,12 +795,7 @@
 
             <div class="page-heading">
                 <div class="heading-left">
-                    <a
-                        href="{{ route('laporan_admin') }}"
-                        class="back-btn"
-                        title="Kembali ke daftar laporan"
-                        aria-label="Kembali"
-                    >
+                    <a href="{{ route('dashboard_admin') }}" class="back-btn" title="Kembali">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
@@ -826,58 +804,48 @@
 
                 <div class="report-code">
                     <i class="fa-regular fa-file-lines"></i>
-                    <span>
-                        {{ $laporan->kode_laporan ?? 'BV001' }}
-                    </span>
+                    <span>{{ $laporan->id_laporan ?? 'BV001' }}</span>
                 </div>
             </div>
 
             <div class="detail-card">
 
-                <div id="alertMessage" class="alert-message" role="alert"></div>
+                @if(session('success'))
+                    <div class="alert-message success show">
+                        <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+                    </div>
+                @endif
 
                 <hr class="detail-divider">
 
-                <form id="detailReportForm">
-
+                {{-- FORM DINAMIS KE CONTROLLER --}}
+                <form action="{{ route('laporan.updateStatus', $laporan->id_laporan) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
-                    <input
-                        type="hidden"
-                        id="reportId"
-                        value="{{ $laporan->id_laporan ?? '' }}"
-                    >
-
-                    {{-- INFORMASI LAPORAN --}}
                     <section class="metadata-grid">
 
                         <div class="metadata-item">
-                            <label for="kategori">Kategori</label>
-                            <div class="metadata-value" id="kategori">
+                            <label>Kategori</label>
+                            <div class="metadata-value">
                                 <i class="fa-solid fa-layer-group"></i>
-                                {{ $laporan->kategori->nama_kategori
-                                    ?? $laporan->kategori->nama
-                                    ?? 'Fasilitas' }}
+                                {{ $laporan->kategori->nama_kategori ?? '-' }}
                             </div>
                         </div>
 
                         <div class="metadata-item">
-                            <label for="pelapor">Pelapor</label>
-                            <div class="metadata-value" id="pelapor">
+                            <label>Pelapor</label>
+                            <div class="metadata-value">
                                 <i class="fa-regular fa-user"></i>
-                                {{ ($laporan->anonim ?? false)
-                                    ? 'Anonim'
-                                    : ($laporan->user->name ?? 'Anonim') }}
+                                {{ $laporan->anonim ? 'Anonim' : ($laporan->user->name ?? 'Siswa') }}
                             </div>
                         </div>
 
                         <div class="metadata-item">
-                            <label for="tanggal">Tanggal Laporan</label>
-                            <div class="metadata-value" id="tanggal">
+                            <label>Tanggal Laporan</label>
+                            <div class="metadata-value">
                                 <i class="fa-regular fa-calendar"></i>
-                                {{ isset($laporan->created_at)
-                                    ? \Carbon\Carbon::parse($laporan->created_at)->format('d M Y')
-                                    : '14 Sep 2026' }}
+                                {{ $laporan->created_at->format('d M Y, H:i') }}
                             </div>
                         </div>
 
@@ -885,116 +853,70 @@
                             <label for="reportStatus">Status Laporan</label>
                             <select class="status-select" id="reportStatus" name="status">
                                 @php
-                                    $statusSekarang = strtolower(
-                                        $laporan->status->nama_status
-                                        ?? $laporan->status->nama
-                                        ?? $laporan->status_laporan
-                                        ?? 'Diproses'
-                                    );
+                                    $statusSekarang = strtolower($laporan->status ?? 'pending');
                                 @endphp
-
-                                <option value="Pending"
-                                    {{ $statusSekarang === 'pending' ? 'selected' : '' }}>
-                                    Pending
-                                </option>
-
-                                <option value="Diproses"
-                                    {{ $statusSekarang === 'diproses' ? 'selected' : '' }}>
-                                    Diproses
-                                </option>
-
-                                <option value="Selesai"
-                                    {{ $statusSekarang === 'selesai' ? 'selected' : '' }}>
-                                    Selesai
-                                </option>
-
-                                <option value="Ditolak"
-                                    {{ $statusSekarang === 'ditolak' ? 'selected' : '' }}>
-                                    Ditolak
-                                </option>
+                                <option value="pending" {{ $statusSekarang === 'pending' ? 'selected' : '' }}>Pending</option>
+<option value="proses" {{ $statusSekarang === 'proses' ? 'selected' : '' }}>Diproses</option>
+<option value="selesai" {{ $statusSekarang === 'selesai' ? 'selected' : '' }}>Selesai</option>
+<option value="ditolak" {{ $statusSekarang === 'ditolak' ? 'selected' : '' }}>Ditolak</option>
                             </select>
                         </div>
 
                     </section>
 
-                    {{-- ISI LAPORAN --}}
+
                     <section class="form-section">
                         <h2 class="section-title">
-                            <i class="fa-regular fa-file-lines"></i>
-                            Isi Laporan
+                            <i class="fa-regular fa-file-lines"></i> Isi Laporan
                         </h2>
 
                         <div class="report-description">
-                            {{ $laporan->isi_laporan
-                                ?? 'Keadaan kursi dan meja di kelas 10 RPL 2 mengalami kerusakan.' }}
+                            {{ $laporan->isi_laporan }}
                         </div>
                     </section>
 
-                    {{-- BUKTI PENDUKUNG --}}
+
                     <section class="form-section">
                         <h2 class="section-title">
-                            <i class="fa-regular fa-images"></i>
-                            Bukti Pendukung
+                            <i class="fa-regular fa-images"></i> Bukti Pendukung
                         </h2>
 
-                        <div class="evidence-wrapper">
-                            @php
-                                $bukti = $laporan->buktiLaporan
-                                    ?? $laporan->bukti
-                                    ?? null;
 
-                                $fileBukti = is_string($bukti)
-                                    ? $bukti
-                                    : ($bukti->path_file
-                                        ?? $bukti->file_path
-                                        ?? $bukti->nama_file
-                                        ?? null);
-                            @endphp
+<div class="evidence-wrapper">
+    @if($laporan->bukti_url)
+        <a
+            href="{{ asset($laporan->bukti_url) }}"
+            target="_blank"
+            class="evidence-item"
+        >
+            <img
+                src="{{ asset($laporan->bukti_url) }}"
+                alt="Bukti Laporan"
+            >
+        </a>
+    @else
+        <div class="no-evidence" style="color: var(--text-muted); font-size: 13px;">
+            Tidak ada bukti lampiran.
+        </div>
+    @endif
+</div>
 
-                            @if ($fileBukti)
-                                <a
-                                    href="{{ asset('storage/' . $fileBukti) }}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="evidence-item"
-                                    title="Lihat bukti pendukung"
-                                >
-                                    <img
-                                        src="{{ asset('storage/' . $fileBukti) }}"
-                                        alt="Bukti pendukung laporan"
-                                    >
-                                </a>
-                            @else
-                                <div class="evidence-item" title="Bukti belum tersedia">
-                                    <i class="fa-regular fa-image"></i>
-                                </div>
-                            @endif
-                        </div>
                     </section>
 
-                    {{-- TANGGAPAN ADMIN --}}
+
                     <section class="form-section">
                         <h2 class="section-title">
-                            <i class="fa-regular fa-comment-dots"></i>
-                            Isi Tanggapan
+                            <i class="fa-regular fa-comment-dots"></i> Isi Tanggapan
                         </h2>
-
-                        <textarea
-                            class="response-textarea"
-                            id="responseText"
-                            name="tanggapan"
-                            placeholder="Tuliskan tanggapan atau tindak lanjut terhadap laporan ini..."
-                        >{{ $laporan->tanggapanTerbaru->isi_tanggapan ?? '' }}</textarea>
+                        <textarea class="response-textarea" name="tanggapan" placeholder="Tuliskan tanggapan atau tindak lanjut terhadap laporan ini...">{{ optional($laporan->tanggapan->last())->tanggapan ?? '' }}</textarea>
                     </section>
 
-                    {{-- ACTION BUTTON --}}
+
                     <div class="form-footer">
                         <p class="form-note">
-                            <i class="fa-solid fa-circle-info"></i>
-                            Periksa status dan tanggapan sebelum menyimpan perubahan.
+                            <i class="fa-solid fa-circle-info"></i> Periksa status dan tanggapan sebelum menyimpan perubahan.
                         </p>
-
-                        <button type="submit" class="btn-save" id="saveButton">
+                        <button type="submit" class="btn-save">
                             <i class="fa-solid fa-floppy-disk"></i>
                             <span>Simpan Perubahan</span>
                         </button>
@@ -1011,31 +933,10 @@
             const arrow = document.getElementById(arrowId);
 
             menu.classList.toggle('show');
-
-            arrow.style.transform = menu.classList.contains('show')
-                ? 'rotate(180deg)'
-                : 'rotate(0deg)';
+            arrow.style.transform = menu.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        /*
-         * Form ini belum mengirim perubahan ke database.
-         * Integrasi penyimpanan dilakukan setelah nama field dan
-         * format request pada controller dikonfirmasi.
-         */
-        document.getElementById('detailReportForm').addEventListener('submit', function (event) {
-            event.preventDefault();
 
-            const alertMessage = document.getElementById('alertMessage');
-
-            alertMessage.className = 'alert-message show error';
-            alertMessage.textContent =
-                'Tampilan detail laporan sudah siap. Penyimpanan status dan tanggapan perlu dihubungkan ke controller Laravel terlebih dahulu.';
-
-            alertMessage.scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest'
-            });
-        });
     </script>
 
 </body>
