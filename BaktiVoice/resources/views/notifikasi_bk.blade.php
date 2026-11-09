@@ -424,212 +424,379 @@
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div>
-            <div class="brand">
-                <img src="{{ asset('images/logo BaktiVoice.png') }}"
-                     alt="Logo BaktiVoice" class="brand-logo-img">
-                <span class="brand-name">BaktiVoice</span>
-            </div>
 
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="{{ route('dashboard_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-solid fa-house"></i>
-                            <span>Dashboard</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('LaporanSiswa_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <span>Laporan Siswa</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a href="{{ route('monitoring_bk') }}">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-eye"></i>
-                            <span>Monitoring</span>
-                        </div>
-                    </a>
-                </li>
-
-                <li class="nav-item">
-    <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-        <i class="fa-solid fa-bell"></i>
-        <span>Notifikasi</span>
-        <span class="notification-dot"></span>
-    </a>
-</li>
-                <li class="nav-item">
-                    <a href="{{ route('profil_bk') }}" title="Profil">
-                        <div class="nav-content">
-                            <i class="fa-regular fa-user"></i>
-                            <span>Profil</span>
-                        </div>
-                    </a>
-                </li>
-
-            </ul>
+    <!-- SIDEBAR -->
+<aside class="sidebar">
+    <div>
+        <div class="brand">
+            <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                 alt="Logo BaktiVoice"
+                 class="brand-logo-img">
+            <span class="brand-name">BaktiVoice</span>
         </div>
 
-        <a href="{{ route('login') }}" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </a>
-    </aside>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="{{ route('dashboard_bk') }}">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
 
-    <div class="main-wrapper">
-        <header class="topbar">
-            <a href="{{ route('notifikasi_bk') }}"
-               class="topbar-icon" title="Notifikasi"
-               aria-label="Buka notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </a>
+            <li class="nav-item">
+                <a href="{{ route('LaporanSiswa_bk') }}">
+                    <i class="fa-regular fa-file-lines"></i>
+                    <span>Laporan Siswa</span>
+                </a>
+            </li>
 
-            <div class="user-profile">
-                <div class="avatar">
+            <li class="nav-item">
+                <a href="{{ route('monitoring_bk') }}">
+                    <i class="fa-regular fa-eye"></i>
+                    <span>Monitoring</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('notifikasi_bk') }}" class="active">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>Notifikasi</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('profil_bk') }}" title="Profil">
                     <i class="fa-regular fa-user"></i>
-                </div>
-                <span class="user-name">
-                    {{ Auth::user()->name ?? 'Guru BK' }}
-                </span>
-            </div>
-        </header>
-
-        <main class="content">
-            <h1 class="page-title">Notifikasi</h1>
-            <p class="page-subtitle">
-                Pantau laporan siswa, pembaruan status, dan tindak lanjut yang perlu diperhatikan.
-            </p>
-
-            <section class="notification-panel">
-                <div class="notification-heading">
-                    <h2>Aktivitas Terbaru</h2>
-                    <button type="button" class="mark-all" id="markAll">
-                        Tandai semua dibaca
-                    </button>
-                </div>
-
-                <div class="filter-list">
-                    <button type="button" class="filter-btn active" data-filter="semua">Semua</button>
-                    <button type="button" class="filter-btn" data-filter="belum">Belum Dibaca</button>
-                    <button type="button" class="filter-btn" data-filter="laporan">Laporan Siswa</button>
-                    <button type="button" class="filter-btn" data-filter="status">Status Laporan</button>
-                    <button type="button" class="filter-btn" data-filter="tindak-lanjut">Tindak Lanjut</button>
-                </div>
-
-                <div class="notification-list" id="notificationList">
-                    <article class="notification-card unread" data-type="laporan">
-                        <div class="notification-icon">
-                            <i class="fa-solid fa-file-circle-exclamation"></i>
-                        </div>
-                        <div class="notification-body">
-                            <h3 class="notification-title">Laporan Siswa Baru</h3>
-                            <p class="notification-message">
-                                Ada laporan baru terkait perundungan antar siswa yang perlu ditinjau.
-                            </p>
-                            <span class="notification-meta">Contoh notifikasi · Guru BK</span>
-                        </div>
-                        <span class="unread-dot" aria-label="Belum dibaca"></span>
-                    </article>
-
-                    <article class="notification-card unread" data-type="status">
-                        <div class="notification-icon">
-                            <i class="fa-solid fa-clipboard-check"></i>
-                        </div>
-                        <div class="notification-body">
-                            <h3 class="notification-title">Pembaruan Status Laporan</h3>
-                            <p class="notification-message">
-                                Status laporan konflik antar siswa telah diperbarui. Silakan periksa detail laporan.
-                            </p>
-                            <span class="notification-meta">Contoh notifikasi · Status laporan</span>
-                        </div>
-                        <span class="unread-dot" aria-label="Belum dibaca"></span>
-                    </article>
-
-                    <article class="notification-card" data-type="tindak-lanjut">
-                        <div class="notification-icon">
-                            <i class="fa-solid fa-comments"></i>
-                        </div>
-                        <div class="notification-body">
-                            <h3 class="notification-title">Tindak Lanjut Perlu Diperiksa</h3>
-                            <p class="notification-message">
-                                Periksa catatan tindak lanjut pada laporan yang sedang ditangani.
-                            </p>
-                            <span class="notification-meta">Contoh notifikasi · Tindak lanjut</span>
-                        </div>
-                        <span class="unread-dot" aria-label="Belum dibaca"></span>
-                    </article>
-                </div>
-
-                <div class="empty-state" id="emptyState">
-                    Tidak ada notifikasi untuk filter ini.
-                </div>
-            </section>
-        </main>
+                    <span>Profil</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
-    <script>
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const notificationCards = document.querySelectorAll('.notification-card');
-        const emptyState = document.getElementById('emptyState');
+    <a href="{{ route('login') }}" class="logout-btn">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</aside>
 
-        function applyFilter(filter) {
-            let visibleCount = 0;
+<!-- MAIN CONTENT -->
+<div class="main-wrapper">
 
-            notificationCards.forEach(card => {
-                const type = card.dataset.type;
-                const isUnread = card.classList.contains('unread');
+    <header class="topbar">
+        <div class="user-profile">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
 
-                const show =
-                    filter === 'semua' ||
-                    (filter === 'belum' && isUnread) ||
-                    (filter === type);
+            <span class="user-name">
+                {{ Auth::user()->name ?? 'Guru BK' }}
+            </span>
+        </div>
+    </header>
 
-                card.style.display = show ? 'flex' : 'none';
+    <main class="content">
 
-                if (show) visibleCount++;
-            });
+        <h1 class="page-title">Notifikasi Guru BK</h1>
 
-            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
-        }
+        <p class="page-subtitle">
+            Pantau laporan kategori Kesiswaan, pembaruan status,
+            dan tindak lanjut yang perlu diperhatikan.
+        </p>
 
-        filterButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                filterButtons.forEach(item => item.classList.remove('active'));
-                button.classList.add('active');
-                applyFilter(button.dataset.filter);
-            });
-        });
+        <section class="notification-panel">
+
+            <!-- HEADING NOTIFIKASI -->
+            <div class="notification-heading">
+                <h2>
+                    Aktivitas Kesiswaan
+                    (<span id="unreadCount">{{ $unreadCount ?? 0 }}</span>
+                    Belum Dibaca)
+                </h2>
+
+                <button type="button"
+                        class="mark-all"
+                        id="markAll">
+                    Tandai semua dibaca
+                </button>
+            </div>
+
+            <!-- FILTER NOTIFIKASI -->
+            <div class="filter-list">
+                <button type="button"
+                        class="filter-btn active"
+                        data-filter="semua">
+                    Semua
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="belum">
+                    Belum Dibaca
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="laporan">
+                    Laporan Siswa
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="status">
+                    Status Laporan
+                </button>
+
+                <button type="button"
+                        class="filter-btn"
+                        data-filter="tindak-lanjut">
+                    Tindak Lanjut
+                </button>
+            </div>
+
+            <!-- DAFTAR NOTIFIKASI -->
+            <div class="notification-list" id="notificationList">
+
+                @forelse($notifications as $notif)
+
+                    @php
+                        $isUnread = !$notif->is_read;
+
+                        $iconClass = match($notif->type ?? 'laporan') {
+                            'laporan' => 'fa-solid fa-file-circle-exclamation',
+                            'status' => 'fa-solid fa-clipboard-check',
+                            'tindak-lanjut' => 'fa-solid fa-comments',
+                            default => 'fa-solid fa-bell'
+                        };
+                    @endphp
+
+                    <article
+                        class="notification-card {{ $isUnread ? 'unread' : '' }}"
+                        data-id="{{ $notif->id_notifikasi }}"
+                        data-type="{{ $notif->type ?? 'laporan' }}">
+
+                        <div class="notification-icon">
+                            <i class="{{ $iconClass }}"></i>
+                        </div>
+
+                        <div class="notification-body">
+
+                            <h3 class="notification-title">
+                                {{ $notif->judul }}
+                            </h3>
+
+                            <p class="notification-message">
+                                {{ $notif->pesan }}
+                            </p>
+
+                            <span class="notification-meta">
+                                {{ $notif->created_at->diffForHumans() }}
+                                · Guru BK
+                            </span>
+
+                        </div>
+
+                        @if($isUnread)
+                            <span class="unread-dot"
+                                  aria-label="Belum dibaca">
+                            </span>
+                        @endif
+
+                    </article>
+
+                @empty
+
+                    <p class="notification-message">
+                        Belum ada notifikasi Kesiswaan.
+                    </p>
+
+                @endforelse
+
+            </div>
+
+            <!-- PESAN KETIKA FILTER TIDAK MENEMUKAN DATA -->
+            <div class="empty-state"
+                 id="emptyState"
+                 style="display: none;">
+                Tidak ada notifikasi Kesiswaan untuk filter ini.
+            </div>
+
+        </section>
+
+    </main>
+</div>
+
+<!-- JAVASCRIPT & AJAX -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const notificationCards = document.querySelectorAll('.notification-card');
+    const emptyState = document.getElementById('emptyState');
+    const unreadCountElement = document.getElementById('unreadCount');
+    const markAllButton = document.getElementById('markAll');
+
+    let unreadCount = Number(unreadCountElement.textContent) || 0;
+
+    // MEMPERBARUI JUMLAH NOTIFIKASI BELUM DIBACA
+    function updateUnreadCount() {
+        unreadCountElement.textContent = unreadCount;
+    }
+
+    // FILTER NOTIFIKASI
+    function applyFilter(filter) {
+
+        let visibleCount = 0;
 
         notificationCards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.remove('unread');
-                const dot = card.querySelector('.unread-dot');
-                if (dot) dot.setAttribute('aria-label', 'Sudah dibaca');
 
-                const activeFilter = document.querySelector('.filter-btn.active');
-                if (activeFilter) applyFilter(activeFilter.dataset.filter);
-            });
+            const type = card.dataset.type;
+            const isUnread = card.classList.contains('unread');
+
+            const show =
+                filter === 'semua' ||
+                (filter === 'belum' && isUnread) ||
+                filter === type;
+
+            card.style.display = show ? 'flex' : 'none';
+
+            if (show) {
+                visibleCount++;
+            }
         });
 
-        document.getElementById('markAll').addEventListener('click', () => {
-            notificationCards.forEach(card => {
-                card.classList.remove('unread');
-                const dot = card.querySelector('.unread-dot');
-                if (dot) dot.setAttribute('aria-label', 'Sudah dibaca');
+        if (emptyState) {
+            emptyState.style.display =
+                visibleCount === 0 ? 'block' : 'none';
+        }
+    }
+
+    // KLIK TOMBOL FILTER
+    filterButtons.forEach(button => {
+
+        button.addEventListener('click', function () {
+
+            filterButtons.forEach(item => {
+                item.classList.remove('active');
             });
 
-            const activeFilter = document.querySelector('.filter-btn.active');
-            if (activeFilter) applyFilter(activeFilter.dataset.filter);
+            this.classList.add('active');
+
+            applyFilter(this.dataset.filter);
         });
-    </script>
+
+    });
+
+    // MENANDAI SATU NOTIFIKASI SUDAH DIBACA
+    notificationCards.forEach(card => {
+
+        card.addEventListener('click', function () {
+
+            if (!card.classList.contains('unread')) {
+                return;
+            }
+
+            const notifId = card.dataset.id;
+
+            fetch(`/dashboard/bk/notifikasi/${notifId}/read`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Gagal memperbarui notifikasi.');
+                }
+
+                card.classList.remove('unread');
+
+                const dot = card.querySelector('.unread-dot');
+
+                if (dot) {
+                    dot.remove();
+                }
+
+                unreadCount = Math.max(0, unreadCount - 1);
+
+                updateUnreadCount();
+
+                const activeFilter =
+                    document.querySelector('.filter-btn.active');
+
+                if (activeFilter) {
+                    applyFilter(activeFilter.dataset.filter);
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Notifikasi gagal ditandai sudah dibaca.');
+            });
+
+        });
+
+    });
+
+    // MENANDAI SEMUA NOTIFIKASI SUDAH DIBACA
+    if (markAllButton) {
+
+        markAllButton.addEventListener('click', function () {
+
+            fetch('/dashboard/bk/notifikasi/mark-all', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error('Gagal memperbarui notifikasi.');
+                }
+
+                notificationCards.forEach(card => {
+
+                    card.classList.remove('unread');
+
+                    const dot = card.querySelector('.unread-dot');
+
+                    if (dot) {
+                        dot.remove();
+                    }
+
+                });
+
+                unreadCount = 0;
+
+                updateUnreadCount();
+
+                const activeFilter =
+                    document.querySelector('.filter-btn.active');
+
+                if (activeFilter) {
+                    applyFilter(activeFilter.dataset.filter);
+                }
+
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Notifikasi gagal diperbarui.');
+            });
+
+        });
+
+    }
+
+    // FILTER AWAL SAAT HALAMAN DIBUKA
+    applyFilter('semua');
+
+});
+</script>
+
 </body>
 </html>
