@@ -4,11 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfilAdminController;
+use App\Http\Controllers\ProfilSiswaController;
+use App\Http\Controllers\ProfilBkController;
 use App\Http\Controllers\DataMasterController;
 use App\Http\Controllers\TanggapanController;
 use App\Http\Controllers\StatusLaporanController;
+use App\Http\Controllers\DashboardWakasekController;
+use App\Http\Controllers\DashboardBkController;
+use App\Http\Controllers\LaporanSiswaBkController;
+use App\Http\Controllers\MonitoringBkController;
 use App\Http\Controllers\KategoriLaporanController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\NotifikasiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +24,7 @@ use Illuminate\Validation\Rule;
 use App\Models\User;
 
 
-// ======
+// ================================
 // LANDING PAGE
 // ================================
 Route::get('/', function () {
@@ -80,88 +88,79 @@ Route::post('/register', function (\Illuminate\Http\Request $request) {
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
 
-Route::get('/dashboard_admin', function () {
-    return view('dashboard_admin');
-})->name('dashboard_admin');
+    Route::get('/dashboard_admin', [AdminController::class, 'index'])->name('dashboard_admin');
 
-// --------------------------------
-// DATA MASTER
-// --------------------------------
-Route::get('/data_master', [DataMasterController::class, 'index'])->name('data_master');
+    // Route Update Status Laporan
+    Route::get('/admin/laporan/{id}', [AdminController::class, 'show'])->name('laporan.show');
+    Route::put('/admin/laporan/{id}/update-status', [AdminController::class, 'updateStatus'])->name('laporan.updateStatus');
 
-Route::post('/data_master/store', [DataMasterController::class, 'store'])->name('data_master.store');
-Route::post('/data_master/status', [DataMasterController::class, 'store'])->name('status.store');
-Route::post('/data_master/kategori', [DataMasterController::class, 'store'])->name('kategori.store');
-Route::post('/users/store', [DataMasterController::class, 'store'])->name('user.store');
+    // Route Halaman & Proses Profil Admin
+    Route::get('/dashboard/admin/profil', [AdminController::class, 'profil'])->name('profil_admin');
+    Route::put('/admin/profil/update', [AdminController::class, 'updateProfil'])->name('profil_admin.update');
+    Route::put('/admin/password/update', [AdminController::class, 'updatePassword'])->name('password.update');
 
-Route::put('/data_master/{id}', [DataMasterController::class, 'update'])->name('data_master.update');
-Route::put('/users/{id}', [DataMasterController::class, 'update'])->name('user.update');
-Route::delete('/data_master/{id}', [DataMasterController::class, 'destroy'])->name('data_master.destroy');
-Route::delete('/user/{id}', [DataMasterController::class, 'destroy'])->name('user.destroy');
+    // --------------------------------
+    // DATA MASTER
+    // --------------------------------
+    Route::get('/data_master', [DataMasterController::class, 'index'])
+        ->name('data_master');
 
-Route::get('/data_master/status/{id}/edit', [DataMasterController::class, 'editStatus'])->name('status.edit');
-Route::put('/data_master/status/{id}', [DataMasterController::class, 'updateStatus'])->name('status.update');
-Route::delete('/data_master/status/{id}', [DataMasterController::class, 'destroyStatus'])->name('status.destroy');
+    // USER
+    Route::post('/users/store', [DataMasterController::class, 'store'])
+        ->name('user.store');
 
-Route::put('/data_master/kategori/{id}', [DataMasterController::class, 'updateKategori'])->name('kategori.update');
-Route::post('/data_master/kategori', [DataMasterController::class, 'store'])->name('kategori.store');
-Route::delete('/data_master/kategori/{id}', [DataMasterController::class, 'destroyKategori'])->name('kategori.destroy');
+    Route::put('/users/{id}', [DataMasterController::class, 'update'])
+        ->name('user.update');
 
-// --------------------------------
-// HALAMAN LAPORAN ADMIN (DIUPDATE)
-// --------------------------------
+    Route::delete('/user/{id}', [DataMasterController::class, 'destroy'])
+        ->name('user.destroy');
 
-// Menampilkan daftar atau halaman detail laporan admin berdasarkan ID
-Route::get('/laporan_admin/{id?}', [LaporanController::class, 'showAdmin'])->name('laporan_admin');
+    // KATEGORI
+    Route::post('/data_master/kategori', [DataMasterController::class, 'storeKategori'])
+        ->name('kategori.store');
 
-// Route untuk mengubah status laporan dari tombol aksi admin
-Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
+    Route::put('/data_master/kategori/{id}', [DataMasterController::class, 'updateKategori'])
+        ->name('kategori.update');
 
-// Route untuk menyimpan tanggapan admin
-Route::post('/api/laporan/{id}/tanggapan', [TanggapanController::class, 'store'])->name('laporan.tanggapan');
+    Route::delete('/data_master/kategori/{id}', [DataMasterController::class, 'destroyKategori'])
+        ->name('kategori.destroy');
 
+    // STATUS
+    Route::post('/data_master/status', [DataMasterController::class, 'storeStatus'])
+        ->name('status.store');
 
-// --------------------------------
-// HALAMAN REKAP LAPORAN
-// --------------------------------
-Route::get('/rekap_laporan', [LaporanController::class, 'rekapAdmin'])->name('rekap_laporan');
+    Route::put('/data_master/status/{id}', [DataMasterController::class, 'updateStatus'])
+        ->name('status.update');
 
+    Route::delete('/data_master/status/{id}', [DataMasterController::class, 'destroyStatus'])
+        ->name('status.destroy');
 
-// --------------------------------
-// HALAMAN NOTIFIKASI ADMIN
-// --------------------------------
-Route::get('/dashboard/admin/notifikasi', function () {
-    return view('notifikasi_admin');
-})->name('notifikasi_admin');
+    // --------------------------------
+    // HALAMAN LAPORAN ADMIN
+    // --------------------------------
+    Route::get('/laporan_admin/{id?}', [LaporanController::class, 'showAdmin'])->name('laporan_admin');
+    Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
+    Route::post('/api/laporan/{id}/tanggapan', [TanggapanController::class, 'store'])->name('laporan.tanggapan');
 
+    // --------------------------------
+    // HALAMAN REKAP LAPORAN
+    // --------------------------------
+    Route::get('/rekap_laporan', [AdminController::class, 'rekap'])->name('rekap_laporan');
 
-// --------------------------------
-// HALAMAN PROFIL ADMIN
-// --------------------------------
-Route::get('/dashboard/admin/profil', [ProfilAdminController::class, 'index'])
-    ->name('profil_admin');
+    // --------------------------------
+    // HALAMAN NOTIFIKASI ADMIN (DINAMIS DB)
+    // --------------------------------
+    Route::get('/dashboard/admin/notifikasi', [NotifikasiController::class, 'index'])
+        ->defaults('viewName', 'notifikasi_admin')
+        ->name('notifikasi_admin');
 
-Route::put('/dashboard/admin/profil', [ProfilAdminController::class, 'update'])
-    ->name('profil_admin.update');
+    // --------------------------------
+    // HALAMAN PROFIL ADMIN (ALTERNATIF)
+    // --------------------------------
+    Route::get('/dashboard/admin/profil-alt', [ProfilAdminController::class, 'index'])->name('profil_admin.alt');
+    Route::put('/dashboard/admin/profil-alt', [ProfilAdminController::class, 'update'])->name('profil_admin.alt.update');
 
 });
-
-// Route untuk Update Password Siswa
-    Route::put('/dashboard/siswa/profil/password', function (\Illuminate\Http\Request $request) {
-        $user = User::findOrFail(\Illuminate\Support\Facades\Auth::id());
-
-        $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
-        $user->save();
-
-        return redirect()
-            ->route('profil_admin')
-            ->with('success', 'Password berhasil diperbarui!');
-    })->name('password.update');
 
 
 // ================================
@@ -169,55 +168,46 @@ Route::put('/dashboard/admin/profil', [ProfilAdminController::class, 'update'])
 // ================================
 Route::middleware('auth')->group(function () {
 
-Route::get('/siswa/dashboard', function () {
-    if (Auth::user()->role !== 'siswa') {
-        abort(403, 'Akses ditolak.');
-    }
-    return view('dashboard_siswa');
-})->name('dashboard_siswa');
+    Route::get('/siswa/dashboard', [LaporanController::class, 'dashboardSiswa'])->name('dashboard_siswa');
 
-// --------------------------------
-// BUAT LAPORAN
-// --------------------------------
-Route::get('/buat_laporan', [LaporanController::class, 'create'])->name('buat_laporan');
-Route::post('/buat_laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
+    // --------------------------------
+    // BUAT LAPORAN
+    // --------------------------------
+    Route::get('/buat_laporan', [LaporanController::class, 'create'])->name('buat_laporan');
+    Route::post('/buat_laporan/store', [LaporanController::class, 'store'])->name('laporan.store');
 
-// --------------------------------
-// RIWAYAT LAPORAN
-// --------------------------------
-Route::get('/siswa/riwayat', [LaporanController::class, 'riwayat'])->name('riwayat_laporan');
+    // --------------------------------
+    // RIWAYAT LAPORAN
+    // --------------------------------
+    Route::get('/siswa/riwayat', [LaporanController::class, 'riwayat'])->name('riwayat_laporan');
 
-// --------------------------------
-// KONFIRMASI LAPORAN
-// --------------------------------
-Route::get('/konfirmasi_laporan/{id?}', [LaporanController::class, 'konfirmasi'])
-    ->name('konfirmasi_laporan');
+    // --------------------------------
+    // KONFIRMASI LAPORAN
+    // --------------------------------
+    Route::get('/konfirmasi_laporan/{id?}', [LaporanController::class, 'konfirmasi'])
+        ->name('konfirmasi_laporan');
 
-// --------------------------------
-// DETAIL LAPORAN SISWA
-// --------------------------------
-Route::get('/siswa/detail_laporan', function () {
-    return view('detail_laporan_siswa');
-})->name('detail_laporan_siswa');
+    // --------------------------------
+    // DETAIL LAPORAN SISWA
+    // --------------------------------
+    Route::get('/siswa/detail_laporan/{id}', [LaporanController::class, 'show'])->name('detail_laporan_siswa');
 
-// --------------------------------
-// NOTIFIKASI SISWA
-// --------------------------------
-Route::get('/dashboard/siswa/notifikasi', function () {
-    return view('notifikasi_siswa');
-})->name('notifikasi_siswa');
+    // --------------------------------
+    // NOTIFIKASI SISWA (DINAMIS DB)
+    // --------------------------------
+    Route::get('/dashboard/siswa/notifikasi', [NotifikasiController::class, 'index'])
+        ->defaults('viewName', 'notifikasi_siswa')
+        ->name('notifikasi_siswa');
 
-// --------------------------------
-// PROFIL SISWA
-// --------------------------------
+    // --------------------------------
+    // PROFIL SISWA
+    // --------------------------------
     Route::get('/dashboard/siswa/profil', function () {
         return view('profil_siswa');
     })->name('profil_siswa');
 
-    Route::put('/dashboard/siswa/profil', function (\Illuminate\Http\Request $request) {
-        $user = User::findOrFail(
-            \Illuminate\Support\Facades\Auth::id()
-        );
+    Route::put('/dashboard/siswa/profil', function (Request $request) {
+        $user = User::findOrFail(Auth::id());
 
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -225,21 +215,21 @@ Route::get('/dashboard/siswa/notifikasi', function () {
                 'required',
                 'string',
                 'max:255',
-                \Illuminate\Validation\Rule::unique('users', 'username')
+                Rule::unique('users', 'username')
                     ->ignore($user->id_user, 'id_user'),
             ],
             'email' => [
                 'required',
                 'email',
                 'max:255',
-                \Illuminate\Validation\Rule::unique('users', 'email')
+                Rule::unique('users', 'email')
                     ->ignore($user->id_user, 'id_user'),
             ],
             'nisn' => [
                 'nullable',
                 'string',
                 'max:20',
-                \Illuminate\Validation\Rule::unique('users', 'nisn')
+                Rule::unique('users', 'nisn')
                     ->ignore($user->id_user, 'id_user'),
             ],
         ]);
@@ -256,234 +246,125 @@ Route::get('/dashboard/siswa/notifikasi', function () {
             ->with('success', 'Profil berhasil diperbarui!');
     })->name('profil_siswa.update');
 
-// Route untuk Update Password Siswa
-    Route::put('/dashboard/siswa/profil/password', function (\Illuminate\Http\Request $request) {
-        $user = User::findOrFail(\Illuminate\Support\Facades\Auth::id());
+    // Route untuk Update Password Siswa
+    Route::put('/dashboard/siswa/profil/password', function (Request $request) {
+        $user = User::findOrFail(Auth::id());
 
         $request->validate([
             'current_password' => ['required', 'current_password'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $user->password = \Illuminate\Support\Facades\Hash::make($request->password);
+        $user->password = Hash::make($request->password);
         $user->save();
 
         return redirect()
             ->route('profil_siswa')
             ->with('success', 'Password berhasil diperbarui!');
-    })->name('password.update');
-    });
+    })->name('password.siswa.update');
+
+});
+
+
 // ================================
 // DASHBOARD GURU BK
 // ================================
 
-Route::get('/bk/dashboard', function () {
-    return view('dashboard_bk');
-})->name('dashboard_bk');
+Route::middleware('auth')->group(function () {
+    Route::get('/bk/dashboard', [DashboardBkController::class, 'index'])->name('dashboard_bk');
 
-Route::get('/siswa/dashboard', [LaporanController::class, 'dashboardSiswa'])->name('dashboard_siswa');
+    Route::get('/dashboard/bk/LaporanSiswa', [LaporanSiswaBkController::class, 'index'])->name('LaporanSiswa_bk');
 
-Route::get('/dashboard/bk/LaporanSiswa', function () {
-    return view('LaporanSiswa_bk');
-})->name('LaporanSiswa_bk');
+    // ROUTE DETAIL & TINDAK LANJUT
+    Route::get('/dashboard/bk/laporan/{id}', [LaporanSiswaBkController::class, 'show'])->name('detail_laporan_bk');
+    Route::post('/dashboard/bk/laporan/{id}/tindak-lanjut', [LaporanSiswaBkController::class, 'updateTindakLanjut'])->name('laporan.tindak_lanjut');
 
-Route::get('/dashboard/bk/detail_laporan', function () {
-    return view('DetailLaporan_bk');
-})->name('detail_laporan_bk');
+    Route::get('/dashboard/bk/monitoring', [MonitoringBkController::class, 'index'])->name('monitoring_bk');
 
+    // NOTIFIKASI GURU BK (DINAMIS DB)
+    Route::get('/dashboard/bk/notifikasi', [NotifikasiController::class, 'index'])
+        ->defaults('viewName', 'notifikasi_bk')
+        ->name('notifikasi_bk');
 
-Route::get('/dashboard/bk/monitoring', function () {
-    return view('monitoring_bk');
-})->name('monitoring_bk');
+    Route::post('/dashboard/bk/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
+    Route::post('/dashboard/bk/notifikasi/mark-all', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.readAll');
 
-Route::get('/dashboard/bk/notifikasi', function () {
-    return view('notifikasi_bk');
-})->name('notifikasi_bk');
+    // Route halaman profil BK
+    Route::get('/dashboard/bk/profil', [ProfilBkController::class, 'index'])->name('profil_bk');
 
-Route::get('/dashboard/bk/profil', function () {
-    return view('profil_bk');
-})->name('profil_bk');
+    // Route untuk update informasi profil
+    Route::put('/dashboard/bk/profil', [ProfilBkController::class, 'update'])->name('profil_bk.update');
+
+    // Route untuk update password
+    Route::put('/dashboard/bk/profil/password', [ProfilBkController::class, 'updatePassword'])->name('profil_bk.password');
+});
 
 
 // ================================
 // DASHBOARD WAKASEK
 // ================================
 
-Route::get('/wakasek/kesiswaan/dashboard', function () {
-    return view('dashboard_wakasek');
-})->name('wakasek.kesiswaan.dashboard');
-
-
-Route::get('/wakasek/kurikulum/dashboard', function () {
-    return view('dashboard_wakasek');
-})->name('wakasek.kurikulum.dashboard');
-
-Route::get('/wakasek/sarana/dashboard', function () {
-    return view('dashboard_wakasek');
-})->name('wakasek.sarana.dashboard');
-
-Route::get('/wakasek/dudi/dashboard', function () {
-    return view('dashboard_wakasek');
-})->name('wakasek.dudi.dashboard');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wakasek/kesiswaan/dashboard', [DashboardWakasekController::class, 'kesiswaan'])->name('wakasek.kesiswaan.dashboard');
+    Route::get('/wakasek/kurikulum/dashboard', [DashboardWakasekController::class, 'kurikulum'])->name('wakasek.kurikulum.dashboard');
+    Route::get('/wakasek/sarana/dashboard', [DashboardWakasekController::class, 'sarana'])->name('wakasek.sarana.dashboard');
+    Route::get('/wakasek/dudi/dashboard', [DashboardWakasekController::class, 'dudi'])->name('wakasek.dudi.dashboard');
+});
 
 // ------------------------------------
 // REKAP LAPORAN WAKASEK
 // ------------------------------------
 
-Route::get('/wakasek/kesiswaan/rekap', function () {
-return view('rekap_wakasek');
-})->name('wakasek.kesiswaan.rekap');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wakasek/kesiswaan/rekap', [DashboardWakasekController::class, 'rekapKesiswaan'])->name('wakasek.kesiswaan.rekap');
+    Route::get('/wakasek/kurikulum/rekap', [DashboardWakasekController::class, 'rekapKurikulum'])->name('wakasek.kurikulum.rekap');
+    Route::get('/wakasek/sarana/rekap', [DashboardWakasekController::class, 'rekapSarana'])->name('wakasek.sarana.rekap');
+    Route::get('/wakasek/dudi/rekap', [DashboardWakasekController::class, 'rekapDudi'])->name('wakasek.dudi.rekap');
 
-Route::get('/wakasek/kurikulum/rekap', function () {
-    return view('rekap_wakasek');
-})->name('wakasek.kurikulum.rekap');
-
-Route::get('/wakasek/sarana/rekap', function () {
-    return view('rekap_wakasek');
-})->name('wakasek.sarana.rekap');
-
-Route::get('/wakasek/dudi/rekap', function () {
-    return view('rekap_wakasek');
-})->name('wakasek.dudi.rekap');
+    // Detail Laporan & Tanggapan Wakasek
+    Route::get('/wakasek/laporan/{id}', [DashboardWakasekController::class, 'detailLaporan'])->name('wakasek.laporan.detail');
+    Route::post('/wakasek/laporan/{id}/tanggapan', [DashboardWakasekController::class, 'simpanTanggapan'])->name('wakasek.laporan.tanggapan');
+});
 
 
- // ------------------------------------
- // MONITORING WAKASEK
- // ------------------------------------
+// ------------------------------------
+// MONITORING WAKASEK
+// ------------------------------------
 
-Route::get('/wakasek/kesiswaan/monitoring', function () {
-    return view('monitoring_wakasek');
-})->name('wakasek.kesiswaan.monitoring');
-
-Route::get('/wakasek/kurikulum/monitoring', function () {
-    return view('monitoring_wakasek');
-})->name('wakasek.kurikulum.monitoring');
-
-Route::get('/wakasek/sarana/monitoring', function () {
-    return view('monitoring_wakasek');
-})->name('wakasek.sarana.monitoring');
-
-Route::get('/wakasek/dudi/monitoring', function () {
-    return view('monitoring_wakasek');
-})->name('wakasek.dudi.monitoring');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wakasek/kesiswaan/monitoring', [DashboardWakasekController::class, 'monitoringKesiswaan'])->name('wakasek.kesiswaan.monitoring');
+    Route::get('/wakasek/kurikulum/monitoring', [DashboardWakasekController::class, 'monitoringKurikulum'])->name('wakasek.kurikulum.monitoring');
+    Route::get('/wakasek/sarana/monitoring', [DashboardWakasekController::class, 'monitoringSarana'])->name('wakasek.sarana.monitoring');
+    Route::get('/wakasek/dudi/monitoring', [DashboardWakasekController::class, 'monitoringDudi'])->name('wakasek.dudi.monitoring');
+});
 
 // --------------------------------
 // PROFIL WAKASEK
 // --------------------------------
-Route::middleware('auth')->group(function () {
-
-    // Menampilkan profil untuk seluruh role Wakasek
-    Route::get('/wakasek/profil', function () {
-        $role = Auth::user()->role ?? 'wakasek kesiswaan';
-
-        $dashboardRoutes = [
-            'wakasek kesiswaan' => 'wakasek.kesiswaan.dashboard',
-            'wakasek kurikulum' => 'wakasek.kurikulum.dashboard',
-            'wakasek sarana' => 'wakasek.sarana.dashboard',
-            'wakasek dudi' => 'wakasek.dudi.dashboard',
-        ];
-
-        abort_unless(array_key_exists($role, $dashboardRoutes), 403);
-
-        return view('profil_wakasek', [
-            'routeDashboard' => $dashboardRoutes[$role],
-        ]);
-    })->name('profil_wakasek');
-
-    // Menyimpan perubahan informasi pribadi
-    Route::put('/wakasek/profil', function (Request $request) {
-        $user = User::findOrFail(Auth::id());
-
-        $role = $user->role;
-
-        $dashboardRoutes = [
-            'wakasek kesiswaan' => 'wakasek.kesiswaan.dashboard',
-            'wakasek kurikulum' => 'wakasek.kurikulum.dashboard',
-            'wakasek sarana' => 'wakasek.sarana.dashboard',
-            'wakasek dudi' => 'wakasek.dudi.dashboard',
-        ];
-
-        abort_unless(array_key_exists($role, $dashboardRoutes), 403);
-
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'username' => [
-                'required', 'string', 'max:255',
-                Rule::unique('users', 'username')
-                    ->ignore($user->id_user, 'id_user'),
-            ],
-            'email' => [
-                'required', 'email', 'max:255',
-                Rule::unique('users', 'email')
-                    ->ignore($user->id_user, 'id_user'),
-            ],
-        ]);
-
-        $user->name = $validated['name'];
-        $user->username = $validated['username'];
-        $user->email = $validated['email'];
-        $user->save();
-
-        return redirect()
-            ->route('profil_wakasek')
-            ->with('success', 'Profil berhasil diperbarui!');
-    })->name('profil_wakasek.update');
-
-    // Mengubah password akun
-    Route::put('/wakasek/profil/password', function (Request $request) {
-        $user = User::findOrFail(Auth::id());
-
-        $role = $user->role;
-
-        abort_unless(in_array($role, [
-            'wakasek kesiswaan',
-            'wakasek kurikulum',
-            'wakasek sarana',
-            'wakasek dudi',
-        ], true), 403);
-
-        $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            'current_password.current_password' =>
-                'Password lama yang kamu masukkan tidak sesuai.',
-            'password.min' =>
-                'Password baru minimal 8 karakter.',
-            'password.confirmed' =>
-                'Konfirmasi password baru tidak cocok.',
-        ]);
-
-        $user->password = Hash::make($validated['password']);
-        $user->save();
-
-        return redirect()
-            ->route('profil_wakasek')
-            ->with('success_password', 'Password berhasil diubah!');
-    })->name('profil_wakasek.password.update');
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/wakasek/profil', [DashboardWakasekController::class, 'profil'])->name('profil_wakasek');
+    Route::put('/wakasek/profil', [DashboardWakasekController::class, 'updateProfil'])->name('profil_wakasek.update');
+    Route::put('/wakasek/profil/password', [DashboardWakasekController::class, 'updatePassword'])->name('profil_wakasek.password.update');
 });
 
-// --------------------------------
+// ------------------------------------
 // NOTIFIKASI WAKASEK
-// --------------------------------
+// ------------------------------------
 
+Route::middleware(['auth'])->prefix('wakasek')->name('wakasek.')->group(function () {
+    Route::get('/kesiswaan/notifikasi', [DashboardWakasekController::class, 'notifikasiKesiswaan'])->name('kesiswaan.notifikasi');
+    Route::get('/kurikulum/notifikasi', [DashboardWakasekController::class, 'notifikasiKurikulum'])->name('kurikulum.notifikasi');
+    Route::get('/sarana/notifikasi', [DashboardWakasekController::class, 'notifikasiSarana'])->name('sarana.notifikasi');
+    Route::get('/dudi/notifikasi', [DashboardWakasekController::class, 'notifikasiDudi'])->name('dudi.notifikasi');
 
-Route::middleware('auth')->get('/wakasek/notifikasi', function () {
-    $role = Auth::user()->role ?? '';
+    // Route umum jika diakses langsung
+    Route::get('/notifikasi', [DashboardWakasekController::class, 'notifikasiKesiswaan'])->name('notifikasi');
+});
 
-    abort_unless(in_array($role, [
-        'wakasek kesiswaan',
-        'wakasek kurikulum',
-        'wakasek sarana',
-        'wakasek dudi',
-    ], true), 403);
-
-    return view('notifikasi_wakasek');
-})->name('wakasek.notifikasi');
-
-
-Route::get('/wakasek/detail_laporan', function () {
-    return view('detail_laporan_wakasek');
+// ================================
+// GLOBAL ROUTE AKSI NOTIFIKASI (UNIVERSAL)
+// ================================
+Route::middleware(['auth'])->group(function () {
+    Route::post('/dashboard/notifikasi/read/{id}', [DashboardWakasekController::class, 'tandaiDibaca'])->name('notifikasi.read');
+    Route::post('/dashboard/notifikasi/read-all', [DashboardWakasekController::class, 'tandaiSemuaDibaca'])->name('notifikasi.readAll');
 });
