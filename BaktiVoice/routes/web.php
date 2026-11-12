@@ -209,9 +209,15 @@ Route::middleware('auth')->group(function () {
     // --------------------------------
     // NOTIFIKASI SISWA (DINAMIS DB)
     // --------------------------------
-    Route::get('/dashboard/siswa/notifikasi', [NotifikasiController::class, 'index'])
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/siswa/notifikasi', [NotifikasiController::class, 'index'])
         ->defaults('viewName', 'notifikasi_siswa')
         ->name('notifikasi_siswa');
+
+    // Route untuk AJAX tandai sudah dibaca
+    Route::post('/dashboard/notifikasi/read/{id}', [NotifikasiController::class, 'markAsRead']);
+    Route::post('/dashboard/notifikasi/read-all', [NotifikasiController::class, 'markAllAsRead']);
+});
 
     // --------------------------------
     // PROFIL SISWA
