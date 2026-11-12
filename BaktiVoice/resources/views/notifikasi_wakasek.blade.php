@@ -666,7 +666,7 @@
             </li>
 
             <li class="nav-item active">
-                <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
+                <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="nav-notification">
                     <i class="fa-solid fa-bell"></i>
                     <span>Notifikasi</span>
                     <span class="notification-dot" id="bellDot"></span>
@@ -685,9 +685,10 @@
 </aside>
 
 <div class="main">
-    <!-- TOPBAR -->
+
+   <!-- TOPBAR -->
     <header class="topbar">
-        <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
+        <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="topbar-icon" title="Notifikasi">
             <i class="fa-regular fa-bell"></i>
         </a>
 
@@ -739,10 +740,13 @@
                     <p>Notifikasi laporan untuk bidang {{ $jabatan['kategori'] }}</p>
                 </div>
 
-                <button type="button" class="mark-all-btn" id="markAllRead">
-                    <i class="fa-solid fa-check-double"></i>
-                    Tandai semua dibaca
-                </button>
+                <form action="{{ route('notifikasi.readAll') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit" class="mark-all-btn" id="markAllRead">
+                        <i class="fa-solid fa-check-double"></i>
+                        Tandai semua dibaca
+                    </button>
+                </form>
             </div>
 
             <div class="filters" id="notificationFilters">
@@ -778,22 +782,27 @@
 
             <!-- NOTIFIKASI DINAMIS DARI DATABASE SUPABASE -->
             <div class="notification-list" id="notificationList">
-                @forelse ($notifikasiBidang ?? [] as $notif)
-                    @php
-                        $isUnread  = $notif->unread ?? true;
-                        $notifType = $notif->type ?? 'laporan';
-                        $notifIcon = match($notifType) {
-                            'status' => 'fa-arrows-rotate',
-                            'tanggapan' => 'fa-comments',
-                            'tindak-lanjut' => 'fa-clipboard-check',
-                            default => 'fa-file-circle-plus',
-                        };
-                    @endphp
+
+@forelse ($notifikasiBidang ?? [] as $notif)
+    @php
+        // Status dibaca dari database
+        $isUnread = !$notif->is_read;
+
+        $notifType = $notif->type ?? 'laporan';
+
+        $notifIcon = match($notifType) {
+            'status' => 'fa-arrows-rotate',
+            'tanggapan' => 'fa-comments',
+            'tindak-lanjut' => 'fa-clipboard-check',
+            default => 'fa-file-circle-plus',
+        };
+    @endphp
+
                     <article
                         class="notification-card {{ $isUnread ? 'unread' : '' }}"
                         data-type="{{ $notifType }}"
                         data-unread="{{ $isUnread ? '1' : '0' }}"
-                        data-id="{{ $notif->id ?? $loop->index }}"
+                        data-id="{{ $notif->id_notifikasi }}"
                     >
                         <div class="notif-icon icon-{{ $notifType }}">
                             <i class="fa-solid {{ $notifIcon }}"></i>
