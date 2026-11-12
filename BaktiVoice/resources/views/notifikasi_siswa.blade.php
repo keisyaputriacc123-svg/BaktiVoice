@@ -790,25 +790,25 @@
                             </div>
 
                             <div class="notification-body">
-                                <div class="notification-heading">
-                                    <h3 class="notification-title">
-                                        {{ $notif->title }}
-                                    </h3>
-                                    @if($isUnread)
-                                        <span class="notification-dot item-dot"></span>
-                                    @endif
-                                </div>
+    <div class="notification-heading">
+        <h3 class="notification-title">
+            {{ $notif->judul ?? $notif->title }}
+        </h3>
+        @if($isUnread)
+            <span class="notification-dot item-dot"></span>
+        @endif
+    </div>
 
-                                <p class="notification-message">
-                                    {{ $notif->message }}
-                                </p>
+    <p class="notification-message">
+        {{ $notif->pesan ?? $notif->message }}
+    </p>
 
-                                <div class="notification-meta">
-                                    <span>{{ $notif->sender_name ?? 'Sistem BaktiVoice' }}</span>
-                                    <span class="meta-separator">•</span>
-                                    <span>{{ $notif->created_at->diffForHumans() }}</span>
-                                </div>
-                            </div>
+    <div class="notification-meta">
+        <span>{{ $notif->sender_name ?? 'Sistem BaktiVoice' }}</span>
+        <span class="meta-separator">•</span>
+        <span>{{ $notif->created_at->diffForHumans() }}</span>
+    </div>
+</div>
 
                             <div class="notification-actions">
                                 <a href="{{ route('riwayat_laporan') }}" class="btn-view">
