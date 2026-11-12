@@ -582,9 +582,9 @@
                 <div class="report-info-group">
 
                     <div class="report-thumbnail">
-                        @if($item->bukti_url)
+                        @if($item->buktiLaporan && $item->buktiLaporan->count() > 0)
                             <img
-                                src="{{ asset($item->bukti_url) }}"
+                                src="{{ asset($item->buktiLaporan->first()->file_path) }}"
                                 alt="Bukti Laporan"
                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
                             >
@@ -595,7 +595,7 @@
 
                     <div class="report-details">
                         <div class="report-title">
-                            {{ $item->judul_laporan }}
+                            {{ $item->judul }}
                         </div>
 
                         <div class="report-date">
