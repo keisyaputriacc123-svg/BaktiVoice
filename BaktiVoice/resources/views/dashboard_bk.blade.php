@@ -852,17 +852,17 @@
                         <div class="report-card">
                             <div class="report-info-group">
 
-<div class="report-thumbnail">
-    @if($laporan->bukti_url)
-        <img
-            src="{{ asset($laporan->bukti_url) }}"
-            alt="Bukti Laporan"
-            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
-        >
-    @else
-        <i class="fa-regular fa-image"></i>
-    @endif
-</div>
+                                <div class="report-thumbnail">
+                                    @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
+                                        <img
+                                            src="{{ asset($laporan->buktiLaporan->first()->file_path) }}"
+                                            alt="Bukti Laporan"
+                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;"
+                                        >
+                                    @else
+                                        <i class="fa-regular fa-image"></i>
+                                    @endif
+                                </div>
 
                                 <div class="report-details">
                                     <div class="report-title">{{ $laporan->judul ?? $laporan->kategori }}</div>
@@ -874,9 +874,9 @@
                                 <span class="status-badge badge-{{ strtolower($laporan->status) }}">
                                     {{ ucfirst($laporan->status) }}
                                 </span>
-                               <a href="{{ route('detail_laporan_bk', $laporan->id_laporan) }}" class="btn-detail" title="Detail">
-    <i class="fa-solid fa-chevron-right"></i>
-</a>
+                                <a href="{{ route('detail_laporan_bk', $laporan->id_laporan) }}" class="btn-detail" title="Detail">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </a>
                             </div>
                         </div>
                     @empty
@@ -890,7 +890,7 @@
 
     </div>
 
-<!-- SCRIPT DROPDOWN TOGGLE -->
+
 <!-- JAVASCRIPT TAMBAHAN UNTUK INTERAKSI -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
