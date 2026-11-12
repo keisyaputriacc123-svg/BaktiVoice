@@ -837,9 +837,9 @@ SIDEBAR
                        data-title="{{ $laporan->judul_laporan }}"
                        data-date="{{ $laporan->created_at->format('d M Y') }}">
 
-                        <div class="report-image">
-                            @if($laporan->bukti_url)
-                                <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti">
+                       <div class="report-image">
+                            @if($laporan->buktiLaporan && $laporan->buktiLaporan->isNotEmpty())
+                                <img src="{{ asset($laporan->buktiLaporan->first()->file_path) }}" alt="Bukti">
                             @else
                                 <i class="fa-regular fa-image"></i>
                             @endif
