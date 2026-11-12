@@ -513,11 +513,14 @@
                     Belum Dibaca)
                 </h2>
 
-                <button type="button"
-                        class="mark-all"
-                        id="markAll">
-                    Tandai semua dibaca
-                </button>
+                <form action="{{ route('notifikasi.readAll') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="submit"
+                            class="mark-all"
+                            id="markAll">
+                        Tandai semua dibaca
+                    </button>
+                </form>
             </div>
 
             <!-- FILTER NOTIFIKASI -->
