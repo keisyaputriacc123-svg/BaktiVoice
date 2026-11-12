@@ -102,6 +102,13 @@ class AdminController extends Controller
         ];
 
         $inputStatus = strtolower(trim($request->status));
+        // Mapping atau pastikan hasilnya huruf kecil
+$statusMap = [
+    'pending' => 'pending',
+    'proses' => 'proses',
+    'selesai' => 'selesai',
+    'ditolak' => 'ditolak'
+];
 
         // Gunakan mapping jika ada, atau fallback ke ucfirst jika tidak ditemukan
         $laporan->status = $statusMap[$inputStatus] ?? ucfirst($inputStatus);
