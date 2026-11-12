@@ -719,17 +719,29 @@
                     </p>
                 </div>
 
-                <div class="content-section">
-                    <h3 class="section-title">Bukti Laporan</h3>
-                    <div class="evidence-box">
-                        @if(isset($laporan->foto) && $laporan->foto)
-                            <img src="{{ asset('storage/' . $laporan->foto) }}" alt="Bukti Laporan">
-                        @else
-                            <i class="fa-regular fa-image"></i>
-                            <p>Tidak ada lampiran foto bukti.</p>
-                        @endif
-                    </div>
+               <div class="content-section">
+    <h3 class="section-title">Bukti Laporan</h3>
+    <div class="evidence-box" style="padding: 15px;">
+        @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
+            @foreach($laporan->buktiLaporan as $bukti)
+                <div style="margin-bottom: 12px; text-align: center;">
+                    <a href="{{ asset($bukti->file_path) }}" target="_blank" style="display: inline-block;">
+                        <img src="{{ asset($bukti->file_path) }}" alt="Bukti Laporan" style="max-width: 250px; max-height: 180px; border-radius: 8px; object-fit: cover; display: block; margin-bottom: 8px; border: 1px solid #cbd6eb;">
+                    </a>
+                    <br>
+                    <a href="{{ asset($bukti->file_path) }}" target="_blank" class="evidence-button" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 6px 12px; background: #eaf1fb; border-radius: 6px; color: #2c4a8e; font-size: 12px; font-weight: 600;">
+                        <i class="fa-solid fa-paperclip"></i> Lihat Bukti Full Size
+                    </a>
                 </div>
+            @endforeach
+        @else
+            <div style="text-align: center; color: #9aa8c1; padding: 20px;">
+                <i class="fa-regular fa-image" style="font-size: 35px; margin-bottom: 8px;"></i>
+                <p style="font-size: 12px;">Tidak ada lampiran foto bukti.</p>
+            </div>
+        @endif
+    </div>
+</div>
 
                 <!-- FORM SIMPAN TINDAK LANJUT -->
                 <div class="content-section">
