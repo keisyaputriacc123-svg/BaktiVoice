@@ -876,32 +876,25 @@
                     </section>
 
 
-                    <section class="form-section">
-                        <h2 class="section-title">
-                            <i class="fa-regular fa-images"></i> Bukti Pendukung
-                        </h2>
+                   <section class="form-section">
+    <h2 class="section-title">
+        <i class="fa-regular fa-images"></i> Bukti Pendukung
+    </h2>
 
-
-<div class="evidence-wrapper">
-    @if($laporan->bukti_url)
-        <a
-            href="{{ asset($laporan->bukti_url) }}"
-            target="_blank"
-            class="evidence-item"
-        >
-            <img
-                src="{{ asset($laporan->bukti_url) }}"
-                alt="Bukti Laporan"
-            >
-        </a>
-    @else
-        <div class="no-evidence" style="color: var(--text-muted); font-size: 13px;">
-            Tidak ada bukti lampiran.
-        </div>
-    @endif
-</div>
-
-                    </section>
+    <div class="evidence-wrapper">
+        @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
+            @foreach($laporan->buktiLaporan as $bukti)
+                <a href="{{ asset($bukti->file_path) }}" target="_blank" class="evidence-item">
+                    <img src="{{ asset($bukti->file_path) }}" alt="Bukti Laporan">
+                </a>
+            @endforeach
+        @else
+            <div class="no-evidence" style="color: var(--text-muted); font-size: 13px;">
+                Tidak ada bukti lampiran.
+            </div>
+        @endif
+    </div>
+</section>
 
 
                     <section class="form-section">
