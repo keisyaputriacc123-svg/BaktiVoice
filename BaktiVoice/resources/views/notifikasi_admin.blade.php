@@ -943,14 +943,17 @@
                     </p>
                 </div>
 
-                <button
-                    type="button"
-                    class="btn-mark-all"
-                    id="markAllRead"
-                >
-                    <i class="fa-solid fa-check-double"></i>
-                    Tandai Semua Dibaca
-                </button>
+                <form action="{{ route('notifikasi.readAll') }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="btn-mark-all"
+                        id="markAllRead"
+                    >
+                        <i class="fa-solid fa-check-double"></i>
+                        Tandai Semua Dibaca
+                    </button>
+                </form>
             </div>
 
             <!-- RINGKASAN NOTIFIKASI (DINAMIS DARI DATABASE) -->
