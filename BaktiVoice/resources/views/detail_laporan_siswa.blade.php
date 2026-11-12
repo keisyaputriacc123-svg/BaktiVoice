@@ -729,9 +729,7 @@
 
         <!-- TOPBAR -->
         <header class="topbar">
-            <a href="{{ route('notifikasi_siswa') }}" class="notification-button" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </a>
+
 
             <div class="user-profile">
                 <div class="avatar">
@@ -749,14 +747,14 @@
             <!-- JUDUL DAN KODE LAPORAN -->
             <section class="page-header">
                 <div class="page-heading">
-                    <a href="{{ route('riwayat_laporan') }}" class="btn-back" title="Kembali ke Riwayat Laporan" aria-label="Kembali">
+                    <a href="{{ route('riwayat_laporan') }}" class="btn-back" title="Kembali ke Riwayat Laporan">
                         <i class="fa-solid fa-arrow-left"></i>
                     </a>
 
                     <h1 class="page-title">Detail Laporan</h1>
                 </div>
 
-                <div class="report-code" id="reportCode">
+                <div class="report-code">
                     BV{{ str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
                 </div>
             </section>
@@ -797,7 +795,7 @@
                     <div>
                         <span class="info-label">Tanggal</span>
                         <div class="info-value">
-                            {{ $laporan->created_at->format('d M Y') }}
+                            {{ $laporan->created_at ? $laporan->created_at->format('d M Y') : '-' }}
                         </div>
                     </div>
                 </div>
@@ -815,15 +813,15 @@
                 </div>
             </section>
 
-            <!-- ISI LAPORAN -->
+            <!-- ISI LAPORAN (Diperbaiki memanggil kolom judul) -->
             <section class="report-content-card">
                 <h2 class="section-title">
                     <i class="fa-solid fa-pen-to-square"></i>
-                    {{ $laporan->judul_laporan ?? 'Judul Laporan' }}
+                    {{ $laporan->judul ?? $laporan->judul?? 'Judul Laporan' }}
                 </h2>
 
                 <div class="report-text">
-                    {{ $laporan->isi_laporan ?? 'Tidak ada keterangan laporan.' }}
+                    {{ $laporan->isi_laporan ?? $laporan->deskripsi ?? 'Tidak ada keterangan laporan.' }}
                 </div>
             </section>
 
@@ -834,11 +832,23 @@
                     Bukti Pendukung
                 </h2>
 
-                @if(!empty($laporan->bukti_url))
-                    <div class="evidence-preview">
-                        <img src="{{ asset($laporan->bukti_url) }}" alt="Bukti Laporan">
+                @php
+                    $idLaporan = $laporan->id_laporan ?? $laporan->id;
+                    $buktiList = DB::table('bukti_laporan')->where('id_laporan', $idLaporan)->get();
+                @endphp
+
+                @if($buktiList->count() > 0)
+                    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                        @foreach($buktiList as $bukti)
+                            <div>
+                                <div class="evidence-preview">
+                                    <img src="{{ asset($bukti->file_path) }}" alt="Bukti Laporan">
+                                </div>
+                                <a href="{{ asset($bukti->file_path) }}" target="_blank" class="evidence-link">Lihat Full Size</a>
+                            </div>
+                        @endforeach
                     </div>
-                    <p class="evidence-caption">Foto bukti pendukung laporan.</p>
+                    <p class="evidence-caption">Foto atau berkas bukti pendukung laporan.</p>
                 @else
                     <div class="evidence-preview">
                         <i class="fa-regular fa-image" style="font-size: 42px;"></i>
@@ -855,18 +865,20 @@
                 </h2>
 
                 @forelse($laporan->tanggapan ?? [] as $tanggapan)
-    <div class="tanggapan-item">
-        <div class="tanggapan-header">
-            <span>{{ $tanggapan->user->name ?? 'Admin' }}</span>
-            <span style="font-weight: normal; color: var(--text-muted);">{{ \Carbon\Carbon::parse($tanggapan->created_at)->format('d M Y H:i') }}</span>
-        </div>
-        <div class="tanggapan-text">
-            {{ $tanggapan->tanggapan }}
-        </div>
-    </div>
-@empty
-    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan atau catatan dari admin untuk laporan ini.</p>
-@endforelse
+                    <div class="tanggapan-item">
+                        <div class="tanggapan-header">
+                            <span>{{ $tanggapan->user->name ?? 'Admin' }}</span>
+                            <span style="font-weight: normal; color: var(--text-muted);">
+                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->format('d M Y H:i') }}
+                            </span>
+                        </div>
+                        <div class="tanggapan-text">
+                            {{ $tanggapan->tanggapan }}
+                        </div>
+                    </div>
+                @empty
+                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan atau catatan dari admin untuk laporan ini.</p>
+                @endforelse
             </section>
 
         </main>
