@@ -1100,13 +1100,10 @@
             <!-- CARD FORM LAPORAN -->
             <div class="report-card">
 
-                <form
-                    class="report-form"
-                    action="{{ route('laporan.store') }}"
-                    method="POST"
-                    enctype="multipart/form-data"
-                >
-                    @csrf
+                <form action="{{ route('laporan.store') }}" method="POST" enctype="multipart/form-data">
+    @csrf
+    <!-- input-input form dan input type="file" -->
+
 
                     <!-- JUDUL LAPORAN -->
                     <div class="form-group">
