@@ -948,19 +948,32 @@
                         </div>
                     </div>
 
-                    @if(!empty($laporan->bukti))
-                        <a href="{{ asset('storage/' . $laporan->bukti) }}" target="_blank" class="evidence-button">
-                            <i class="fa-solid fa-paperclip"></i>
-                            Lihat Bukti Laporan
-                        </a>
-                    @else
-                        <button type="button" class="evidence-button" onclick="alert('Tidak ada bukti gambar yang dilampirkan pada laporan ini.')">
-                            <i class="fa-solid fa-paperclip"></i>
-                            Lihat Bukti Laporan
-                        </button>
-                    @endif
+                  <div class="content-section">
+    <h3 class="section-title">Bukti Laporan</h3>
+    <div class="evidence-box" style="padding: 15px;">
+        @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
+            @foreach($laporan->buktiLaporan as $bukti)
+                <div style="margin-bottom: 12px; text-align: center;">
+                    <a href="{{ asset($bukti->file_path) }}" target="_blank" style="display: inline-block;">
+                        <img src="{{ asset($bukti->file_path) }}" alt="Bukti Laporan" style="max-width: 250px; max-height: 180px; border-radius: 8px; object-fit: cover; display: block; margin-bottom: 8px; border: 1px solid #cbd6eb;">
+                    </a>
+                    <br>
+                    <a href="{{ asset($bukti->file_path) }}" target="_blank" class="evidence-button" style="display: inline-flex; align-items: center; gap: 6px; text-decoration: none; padding: 6px 12px; background: #eaf1fb; border-radius: 6px; color: #2c4a8e; font-size: 12px; font-weight: 600;">
+                        <i class="fa-solid fa-paperclip"></i> Lihat Bukti Full Size
+                    </a>
+                </div>
+            @endforeach
+        @else
+            <button type="button" class="evidence-button" onclick="alert('Tidak ada bukti gambar yang dilampirkan pada laporan ini.')" style="border: none; background: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; color: #9aa8c1; width: 100%; padding: 20px;">
+                <i class="fa-regular fa-image" style="font-size: 35px;"></i>
+                <p style="font-size: 12px;">Tidak ada lampiran foto bukti.</p>
+            </button>
+        @endif
+    </div>
+</div>
                 </section>
             </div>
+
 
             <!-- KOLOM KANAN -->
             <div class="right-column">
@@ -972,7 +985,7 @@
                         <span>Isi Laporan</span>
                     </div>
 
-                    <div class="report-content">{{ $laporan->isi ?? $laporan->deskripsi ?? 'Tidak ada isi laporan.' }}</div>
+                    <div class="report-content">{{ $laporan->isi_laporan ?? $laporan->deskripsi ?? $laporan->keterangan ?? $laporan->isi ?? 'Tidak ada isi laporan.' }}</div>
 
                     <div class="report-meta">
                         <i class="fa-solid fa-shield-halved"></i>
@@ -1014,7 +1027,7 @@
                                 maxlength="2000"
                                 placeholder="Tuliskan tindak lanjut laporan di sini..."
                                 required
-                            >{{ old('tanggapan', $laporan->tanggapan ?? '') }}</textarea>
+                            >{{ old('tanggapan') }}</textarea>
                         </div>
 
                         <div class="textarea-footer">
