@@ -141,8 +141,8 @@ class LaporanController extends Controller
 
     /**
      * Menyimpan Laporan Baru
-     * Sekaligus membuat notifikasi untuk Guru BK
-     * jika kategori laporan adalah Kesiswaan.
+     * Mengirim notifikasi kepada Siswa, Admin,
+     * Guru BK, dan Wakasek sesuai bidangnya.
      */
     public function store(Request $request)
     {
@@ -251,37 +251,88 @@ class LaporanController extends Controller
                 ]);
             }
 
+            // 6. Menentukan kategori laporan
+            $namaKategori = strtolower(
+                trim($kategori->nama_kategori)
+            );
 
-            // 6. Memeriksa apakah kategori adalah Kesiswaan
-            if (
-                strtolower(trim($kategori->nama_kategori))
-                === 'kesiswaan'
-            ) {
+            // A. Admin selalu menerima semua laporan baru
+            $adminUsers = User::where('role', 'admin')->get();
 
-                // Mengambil semua akun Guru BK
-                $guruBk = User::where('role', 'guru_bk')->get();
+            // B. Siswa pembuat laporan
+            $siswaUser = User::where('id_user', $userId)->get();
 
-                // Membuat notifikasi untuk setiap Guru BK
-                foreach ($guruBk as $guru) {
+            // C. Guru BK hanya menerima kategori Kesiswaan
+            $bkUsers = collect();
 
-                    Notifikasi::create([
-                        'id_user' => $guru->id_user,
-                        'id_laporan' => $laporan->id_laporan,
-                        'judul' => 'Laporan Kesiswaan Baru',
-                        'pesan' =>
-                            'Ada laporan Kesiswaan baru yang perlu diperiksa.',
-                        'type' => 'laporan',
-                        'is_read' => false,
-                    ]);
-                }
+            if (str_contains($namaKategori, 'kesiswaan')) {
+                $bkUsers = User::where('role', 'guru_bk')->get();
             }
 
+            // D. Menentukan Wakasek berdasarkan kategori laporan
+            $roleWakasekTarget = match (true) {
 
-            // 7. Menyelesaikan transaksi
+                str_contains($namaKategori, 'kurikulum')
+                    => 'wakasek kurikulum',
+
+                str_contains($namaKategori, 'sarana')
+                    => 'wakasek sarana',
+
+                str_contains($namaKategori, 'dudi')
+                    => 'wakasek dudi',
+
+                str_contains($namaKategori, 'kesiswaan')
+                    => 'wakasek kesiswaan',
+
+                default => null,
+            };
+
+            // Mengambil akun Wakasek sesuai bidangnya
+            $wakasekUsers = collect();
+
+            if ($roleWakasekTarget !== null) {
+
+                $wakasekUsers = User::whereRaw(
+                    'LOWER(TRIM(role::text)) = ?',
+                    [$roleWakasekTarget]
+                )->get();
+            }
+
+            // E. Menggabungkan seluruh penerima notifikasi
+            $targetUsers = $adminUsers
+                ->merge($siswaUser)
+                ->merge($bkUsers)
+                ->merge($wakasekUsers)
+                ->unique('id_user');
+
+            // 7. Membuat notifikasi untuk setiap penerima
+            foreach ($targetUsers as $targetUser) {
+
+                $isSiswa = ($targetUser->id_user == $userId);
+
+                $judulNotifikasi = $isSiswa
+                    ? 'Laporan Terkirim'
+                    : 'Laporan Baru: ' . $kategori->nama_kategori;
+
+                $pesanNotifikasi = $isSiswa
+                    ? 'Laporan Anda berhasil dikirim dan sedang menunggu pemeriksaan.'
+                    : 'Ada laporan baru yang masuk dan perlu diperiksa di bidang Anda.';
+
+                Notifikasi::create([
+                    'id_user' => $targetUser->id_user,
+                    'id_laporan' => $laporan->id_laporan,
+                    'id_kategori' => $laporan->id_kategori,
+                    'judul' => $judulNotifikasi,
+                    'pesan' => $pesanNotifikasi,
+                    'type' => 'laporan',
+                    'is_read' => false,
+                ]);
+            }
+
+            // 8. Menyelesaikan transaksi
             DB::commit();
 
-
-            // 8. Mengarahkan siswa ke halaman konfirmasi
+            // 9. Mengarahkan siswa ke halaman konfirmasi
             return redirect()->route(
                 'konfirmasi_laporan',
                 ['id' => $laporan->id_laporan]
@@ -311,75 +362,4 @@ class LaporanController extends Controller
     }
 
 
-    /**
-     * Menampilkan Halaman Detail Laporan Admin
-     */
-    public function showAdmin($id = null)
-    {
-        if ($id) {
-
-            $laporan = Laporan::with([
-                'kategori',
-                'user',
-                'tanggapan.user'
-            ])->findOrFail($id);
-
-            return view('detail_laporan_admin', compact('laporan'));
-        }
-
-        $laporans = Laporan::with([
-            'kategori',
-            'user',
-            'tanggapan.user'
-        ])->latest()->get();
-
-        return view('laporan_admin', compact('laporans'));
-    }
-
-
-    /**
-     * Menampilkan Rekap Laporan Admin
-     */
-    public function rekapAdmin(Request $request)
-    {
-        $query = Laporan::with(['kategori', 'user']);
-
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        if ($request->filled('search')) {
-
-            $search = $request->search;
-
-            $query->where(function ($q) use ($search) {
-                $q->where('judul', 'like', "%{$search}%")
-                    ->orWhere('isi_laporan', 'like', "%{$search}%");
-            });
-        }
-
-        $laporans = $query
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-
-        $totalLaporan = Laporan::count();
-
-        $laporanPending = Laporan::where('status', 'pending')->count();
-
-        $laporanDiproses = Laporan::where('status', 'proses')->count();
-
-        $laporanSelesai = Laporan::where('status', 'selesai')->count();
-
-        $laporanDitolak = Laporan::where('status', 'ditolak')->count();
-
-        return view('rekap_laporan', compact(
-            'laporans',
-            'totalLaporan',
-            'laporanPending',
-            'laporanDiproses',
-            'laporanSelesai',
-            'laporanDitolak'
-        ));
-    }
 }
