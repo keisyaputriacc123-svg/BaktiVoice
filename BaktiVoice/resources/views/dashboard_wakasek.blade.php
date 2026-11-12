@@ -1189,7 +1189,7 @@
 <body>
 
     @php
-        // Pengaman variabel agar tidak error jika controller belum mengirimkan variabel tertentu
+
         $total = $total ?? 0;
         $pending = $pending ?? 0;
         $diproses = $diproses ?? 0;
@@ -1203,7 +1203,7 @@
             ['nama' => 'DUDI', 'jumlah' => 0],
         ];
 
-        // Logika penyesuaian teks berdasarkan role user yang login
+
         $roleMapping = [
             'wakasek kesiswaan' => ['nama' => 'Wakasek Kesiswaan', 'kategori' => 'Kesiswaan', 'monitoring' => 'wakasek.kesiswaan.monitoring'],
             'wakasek kurikulum' => ['nama' => 'Wakasek Kurikulum', 'kategori' => 'Kurikulum', 'monitoring' => 'wakasek.kurikulum.monitoring'],
@@ -1213,6 +1213,28 @@
 
         $currentRole = $role ?? auth()->user()->role ?? 'wakasek kesiswaan';
         $jabatan = $roleMapping[$currentRole] ?? ['nama' => 'Wakasek', 'kategori' => 'Kesiswaan', 'monitoring' => 'wakasek.kesiswaan.monitoring'];
+
+        // Rute Dinamis berdasarkan role
+        $dashboardRoute = match($currentRole) {
+            'wakasek kurikulum' => route('wakasek.kurikulum.dashboard'),
+            'wakasek sarana' => route('wakasek.sarana.dashboard'),
+            'wakasek dudi' => route('wakasek.dudi.dashboard'),
+            default => route('wakasek.kesiswaan.dashboard'),
+        };
+
+        $rekapRoute = match($currentRole) {
+            'wakasek kurikulum' => route('wakasek.kurikulum.rekap'),
+            'wakasek sarana' => route('wakasek.sarana.rekap'),
+            'wakasek dudi' => route('wakasek.dudi.rekap'),
+            default => route('wakasek.kesiswaan.rekap'),
+        };
+
+        $notifRoute = match($currentRole) {
+            'wakasek kurikulum' => route('wakasek.kurikulum.notifikasi'),
+            'wakasek sarana' => route('wakasek.sarana.notifikasi'),
+            'wakasek dudi' => route('wakasek.dudi.notifikasi'),
+            default => route('wakasek.kesiswaan.notifikasi'),
+        };
     @endphp
 
     <aside class="sidebar">
@@ -1224,37 +1246,47 @@
 
             <ul class="nav-menu">
                 <li class="nav-item active">
-                    <a href="{{ url('/dashboard/wakasek') }}">
-                        <i class="fa-solid fa-house"></i>
-                        <span>Dashboard</span>
+                    <a href="{{ $dashboardRoute }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Dashboard</span>
+                        </div>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('wakasek.kesiswaan.rekap') }}">
-                        <i class="fa-solid fa-chart-column"></i>
-                        <span>Rekap</span>
+                    <a href="{{ $rekapRoute }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Rekap</span>
+                        </div>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route($jabatan['monitoring']) }}">
-                        <i class="fa-solid fa-eye"></i>
-                        <span>Monitoring</span>
+                        <div class="nav-content">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Monitoring</span>
+                        </div>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('profil_wakasek') }}">
-                        <i class="fa-solid fa-user-gear"></i>
-                        <span>Profil</span>
+                        <div class="nav-content">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span>Profil</span>
+                        </div>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
-                        <i class="fa-solid fa-bell"></i>
-                        <span>Notifikasi</span>
+                    <a href="{{ $notifRoute }}" class="nav-notification">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-bell"></i>
+                            <span>Notifikasi</span>
+                        </div>
                         <span class="notification-dot"></span>
                     </a>
                 </li>
@@ -1273,11 +1305,11 @@
     <div class="main-wrapper">
 
         <header class="topbar">
-            <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
+            <a href="{{ $notifRoute }}" class="topbar-icon" title="Notifikasi">
                 <i class="fa-regular fa-bell"></i>
             </a>
 
-           <div class="user-profile">
+            <div class="user-profile">
                 <div class="avatar">
                     <i class="fa-regular fa-user"></i>
                 </div>
@@ -1355,7 +1387,11 @@
                         <article class="report-card">
                             <div class="report-info">
                                 <div class="report-thumbnail">
-                                    <i class="fa-regular fa-image"></i>
+                                    @if($lap->buktiLaporan && $lap->buktiLaporan->count() > 0)
+                                       <img src="{{ asset($lap->buktiLaporan->first()->file_path) }}" alt="Bukti Laporan" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <i class="fa-regular fa-image"></i>
+                                    @endif
                                 </div>
 
                                 <div>
@@ -1378,7 +1414,7 @@
                                     {{ ucfirst($lap->status ?? 'Pending') }}
                                 </span>
 
-                                <!-- Tombol detail laporan yang sudah dihubungkan -->
+
                                 <a href="{{ route('wakasek.laporan.detail', $lap->id_laporan ?? $lap->id) }}" class="btn-detail" title="Detail laporan">
                                     <i class="fa-solid fa-chevron-right"></i>
                                 </a>
@@ -1395,10 +1431,10 @@
         </main>
     </div>
 
-    <!-- JAVASCRIPT UNTUK DASHBOARD WAKASEK -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Animasi Hitung Angka (Counter Up) pada Kartu Statistik
+
             const statValues = document.querySelectorAll('.stat-value');
 
             statValues.forEach(counter => {
