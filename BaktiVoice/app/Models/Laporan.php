@@ -20,7 +20,7 @@ class Laporan extends Model
         'judul',
         'isi_laporan',
         'anonim',
-        'bukti_url',
+        'file_path',
     ];
 
     // Relasi ke Kategori
@@ -58,6 +58,16 @@ class Laporan extends Model
     {
         return $this->hasMany(
             Tanggapan::class,
+            'id_laporan',
+            'id_laporan'
+        );
+    }
+
+    // Relasi ke Bukti Laporan (Tambahan untuk mengambil data foto bukti)
+    public function buktiLaporan()
+    {
+        return $this->hasMany(
+            BuktiLaporan::class,
             'id_laporan',
             'id_laporan'
         );
