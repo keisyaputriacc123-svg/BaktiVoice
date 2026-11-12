@@ -631,14 +631,14 @@ body {
                         <div class="report-card">
                             <div class="report-info-group">
                                 <div class="report-thumbnail">
-    @if(!empty($laporan->bukti_url))
-        <img src="{{ asset('storage/' . $laporan->bukti_url) }}" alt="Bukti">
-    @else
-        <i class="fa-regular fa-image"></i>
-    @endif
-</div>
+                                    @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
+                                        <img src="{{ asset($laporan->buktiLaporan->first()->file_path) }}" alt="Bukti">
+                                    @else
+                                        <i class="fa-regular fa-image"></i>
+                                    @endif
+                                </div>
                                 <div class="report-details">
-                                    <div class="report-title">{{ $laporan->judul_laporan }}</div>
+                                    <div class="report-title">{{ $laporan->judul }}</div>
                                     <div class="report-date">{{ $laporan->created_at->format('d M Y') }}</div>
                                 </div>
                             </div>
