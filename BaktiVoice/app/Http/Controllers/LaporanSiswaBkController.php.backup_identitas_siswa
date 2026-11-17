@@ -1,0 +1,117 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Laporan;
+use App\Models\Kategori;
+use App\Models\Notifikasi;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+class LaporanSiswaBkController extends Controller
+{
+    // Menampilkan laporan khusus kategori Kesiswaan
+    public function index(Request $request)
+    {
+        $search = $request->input('search');
+        $status = $request->input('status');
+
+        // WAJIB: Hanya mengambil laporan kategori Kesiswaan
+        $query = Laporan::with('kategori')
+            ->whereHas('kategori', function ($q) {
+                $q->where('nama_kategori', 'Kesiswaan');
+            })
+            ->latest();
+
+        // Pencarian laporan
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('judul', 'like', "%{$search}%")
+                  ->orWhere('isi_laporan', 'like', "%{$search}%"); // Diperbarui dari 'deskripsi' ke 'isi_laporan'
+            });
+        }
+
+        // Filter status
+        if ($status) {
+            $query->whereRaw('status::text ILIKE ?', [$status]);
+        }
+        // Pagination
+        $laporanList = $query->paginate(5)->withQueryString();
+
+        // Dropdown hanya menampilkan kategori Kesiswaan
+        $kategoriList = Kategori::where(
+            'nama_kategori',
+            'Kesiswaan'
+        )->get();
+
+        return view(
+            'LaporanSiswa_bk',
+            compact('laporanList', 'kategoriList')
+        );
+    }
+
+    // Detail laporan hanya boleh dibuka jika kategorinya Kesiswaan
+    public function show($id)
+    {
+        $laporan = Laporan::with('kategori')
+            ->whereHas('kategori', function ($q) {
+                $q->where('nama_kategori', 'Kesiswaan');
+            })
+            ->findOrFail($id);
+
+        return view('detail_laporan_bk', compact('laporan'));
+    }
+
+   // Menyimpan tindak lanjut Guru BK ke tabel tanggapan
+    public function updateTindakLanjut(Request $request, $id)
+    {
+        $request->validate([
+            'tindak_lanjut' => 'required|string',
+        ]);
+
+        // Pastikan laporan termasuk kategori Kesiswaan
+        $laporan = Laporan::whereHas('kategori', function ($q) {
+                $q->where('nama_kategori', 'Kesiswaan');
+            })
+            ->findOrFail($id);
+
+        \App\Models\Tanggapan::create([
+            'id_laporan' => $id,
+            'id_user'    => Auth::id() ?? 1,
+            'tanggapan'  => $request->tindak_lanjut,
+        ]);
+
+        // Kirim notifikasi tindak lanjut kepada siswa
+        Notifikasi::create([
+            'id_user'    => $laporan->id_user,
+            'id_laporan' => $laporan->id_laporan,
+            'judul'      => 'Tindak Lanjut Laporan',
+            'pesan'      => (Auth::user()?->name ?? 'Guru BK')
+                . ' memberikan tindak lanjut pada laporan "'
+                . $laporan->judul . '".',
+            'type'       => 'tindak-lanjut',
+            'is_read'    => false,
+        ]);
+
+        // Kirim notifikasi masukan Guru BK kepada Admin
+        $adminUsers = User::where('role', 'admin')->get();
+
+        foreach ($adminUsers as $admin) {
+            Notifikasi::create([
+                'id_user'    => $admin->id_user,
+                'id_laporan' => $laporan->id_laporan,
+                'judul'      => 'Masukan Guru BK',
+                'pesan'      => (Auth::user()?->name ?? 'Guru BK')
+                    . ' memberikan tindak lanjut pada laporan "'
+                    . $laporan->judul . '".',
+                'type'       => 'masukan-bk',
+                'is_read'    => false,
+            ]);
+        }
+
+        return redirect()
+            ->route('detail_laporan_bk', $id)
+            ->with('success', 'Catatan tindak lanjut berhasil disimpan!');
+    }
+}

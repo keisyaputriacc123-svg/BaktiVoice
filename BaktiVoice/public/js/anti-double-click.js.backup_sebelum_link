@@ -1,0 +1,66 @@
+(function () {
+    'use strict';
+
+    const CLICK_WINDOW = 900;
+    const SUBMIT_WINDOW = 1500;
+
+    const lastClick = new WeakMap();
+    const lastSubmit = new WeakMap();
+
+    // Mencegah klik ganda pada tombol yang sama
+    document.addEventListener('click', function (event) {
+        const target = event.target instanceof Element
+            ? event.target
+            : null;
+
+        const button = target?.closest(
+            'button, input[type="submit"], input[type="image"]'
+        );
+
+        if (
+            !button ||
+            button.disabled ||
+            button.hasAttribute('data-no-double-click')
+        ) {
+            return;
+        }
+
+        const now = Date.now();
+        const previous = lastClick.get(button) || 0;
+
+        if (now - previous < CLICK_WINDOW) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+        }
+
+        lastClick.set(button, now);
+    }, true);
+
+    // Mencegah form terkirim dua kali
+    document.addEventListener('submit', function (event) {
+        const form = event.target;
+
+        if (
+            !(form instanceof HTMLFormElement) ||
+            form.hasAttribute('data-no-double-click')
+        ) {
+            return;
+        }
+
+        const now = Date.now();
+        const previous = lastSubmit.get(form) || 0;
+
+        if (now - previous < SUBMIT_WINDOW) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+        }
+
+        lastSubmit.set(form, now);
+
+        window.setTimeout(function () {
+            lastSubmit.delete(form);
+        }, SUBMIT_WINDOW);
+    }, true);
+})();

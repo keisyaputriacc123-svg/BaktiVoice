@@ -206,6 +206,19 @@ class LaporanController extends Controller
                 ->with('error', 'Silakan login terlebih dahulu.');
         }
 
+                       $cekDuplikat = Laporan::where('id_user', $userId)
+            ->where('id_kategori', $validated['id_kategori'])
+            ->where('judul', $validated['judul'])
+            ->where('isi_laporan', $validated['isi_laporan'])
+            ->whereDate('created_at', today())
+            ->exists();
+
+        if ($cekDuplikat) {
+            return back()
+                ->withInput()
+                ->with('error', 'Anda sudah pernah mengirim laporan yang sama hari ini.');
+        }
+
         DB::beginTransaction();
 
         $filePath = null;

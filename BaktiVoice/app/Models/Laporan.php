@@ -16,7 +16,7 @@ class Laporan extends Model
     protected $fillable = [
         'id_user',
         'id_kategori',
-        'id_status',
+        'status',
         'judul',
         'isi_laporan',
         'anonim',
@@ -30,16 +30,6 @@ class Laporan extends Model
             Kategori::class,
             'id_kategori',
             'id_kategori'
-        );
-    }
-
-    // Relasi ke Status Laporan
-    public function status()
-    {
-        return $this->belongsTo(
-            StatusLaporan::class,
-            'id_status',
-            'id_status'
         );
     }
 
@@ -63,7 +53,7 @@ class Laporan extends Model
         );
     }
 
-    // Relasi ke Bukti Laporan (Tambahan untuk mengambil data foto bukti)
+    // Relasi ke Bukti Laporan
     public function buktiLaporan()
     {
         return $this->hasMany(

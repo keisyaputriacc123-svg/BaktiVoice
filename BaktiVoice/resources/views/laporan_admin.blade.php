@@ -1143,7 +1143,7 @@
                             </div>
 
                             @php
-                                $statusName = $laporan->status->nama_status ?? $laporan->status ?? 'Menunggu';
+                                $statusName = $laporan->status ?? 'Menunggu';
                                 $badgeClass = 'badge-pending';
                                 if (strtolower($statusName) == 'diproses' || strtolower($statusName) == 'proses') {
                                     $badgeClass = 'badge-diproses';
