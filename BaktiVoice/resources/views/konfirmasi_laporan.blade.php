@@ -919,6 +919,38 @@
             text-decoration: none;
             font-weight: 600;
         }
+
+/* PERBAIKAN BREADCRUMB KONFIRMASI */
+.content {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: center !important;
+}
+
+.content > .breadcrumb {
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.6;
+}
+
+.content > .confirmation-wrapper {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .content > .breadcrumb {
+        gap: 7px;
+        font-size: 12px;
+        margin-bottom: 20px;
+    }
+}
 </style>
 
 </head>
