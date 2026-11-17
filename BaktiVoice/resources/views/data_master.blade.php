@@ -1098,7 +1098,7 @@
 </div>
 
 <!-- MODAL DINAMIS -->
-<div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center hidden p-4">
+<div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center {{ $errors->any() ? "flex" : "hidden" }} p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
         <div class="flex items-center justify-between border-b border-gray-100 pb-3">
             <h3 id="modalTitle" class="text-lg font-bold text-[#2c4a8e]">Tambah Data</h3>
@@ -1109,6 +1109,14 @@
 
         <form id="formModalData" method="POST" action="{{ route('user.store') }}" class="space-y-4">
             @csrf
+@if ($errors->any())
+    <div class="bg-red-50 border border-red-200 text-red-700 rounded-xl p-3 text-sm">
+        <p class="font-semibold mb-1">Data belum berhasil disimpan:</p>
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
 
             <input type="hidden" name="active_tab" id="activeTabInput" value="users">
 
