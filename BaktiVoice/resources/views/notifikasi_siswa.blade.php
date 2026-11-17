@@ -175,6 +175,15 @@
             box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
         }
 
+        .topbar-right-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            height: 100%;
+        }
+
         .topbar-icon {
             color: #274472;
             font-size: 18px;
@@ -231,7 +240,7 @@
             height: 8px;
             min-width: 8px;
             border-radius: 50%;
-            background: var(--red);
+            background: #22c55e;
         }
 
         .notification-dot.hidden {
@@ -604,7 +613,348 @@
                 font-size: 12px;
             }
         }
-        </style>
+        
+    /* RESPONSIVE RESTORE FROM STASH - SELECTIVE */
+    .topbar-mobile-brand,
+    .mobile-bottom-nav {
+        display: none;
+    }
+@media (max-width: 768px) {
+
+    /* SIDEBAR */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* MAIN WRAPPER */
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* TOPBAR */
+    .topbar {
+        height: 60px;
+        padding: 0 16px;
+        justify-content: space-between;
+        gap: 10px;
+
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+    }
+
+        .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-left: auto;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .topbar-mobile-brand img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .topbar-mobile-brand span {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+    /* ICON NOTIFIKASI TETAP MUNCUL */
+    .topbar-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 18px;
+        padding: 8px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    /* CONTENT */
+    .content {
+        padding: 20px 16px 90px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    .page-title {
+        font-size: 25px;
+    }
+
+    .page-description {
+        font-size: 12px;
+    }
+
+    .btn-mark-all {
+        padding: 10px 12px;
+        font-size: 11px;
+    }
+
+    /* FILTER */
+    .filter-container {
+        gap: 8px;
+        margin-bottom: 20px;
+    }
+
+    .filter-btn {
+        padding: 9px 11px;
+        font-size: 11px;
+        gap: 6px;
+    }
+
+    /* NOTIFICATION CARD */
+    .notification-card {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .notification-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 16px;
+    }
+
+    .notification-title {
+        font-size: 13px;
+    }
+
+    .notification-message {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .notification-meta {
+        font-size: 10px;
+    }
+
+    .notification-actions {
+        gap: 12px;
+    }
+
+    /* MOBILE BOTTOM NAVIGATION */
+    .mobile-bottom-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        min-height: 66px;
+
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+
+        border-top: 1px solid #93c5fd;
+        box-shadow: 0 -3px 12px rgba(123, 159, 232, 0.12);
+
+        z-index: 1000;
+        padding: 7px 3px;
+    }
+
+    .mobile-bottom-nav a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        color: #274472;
+        text-decoration: none;
+        font-size: 9.5px;
+        font-weight: 600;
+        min-width: 0;
+    }
+
+    .mobile-bottom-nav a i {
+        font-size: 18px;
+    }
+
+    .mobile-bottom-nav a.active {
+        color: #315ca8;
+        font-weight: 800;
+    }
+
+    .mobile-bottom-nav a.active i {
+        color: #315ca8;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .content {
+        padding: 18px 14px 90px;
+    }
+
+    .page-heading {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .btn-mark-all {
+        align-self: flex-start;
+    }
+
+    .notification-card {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        grid-template-areas:
+            "icon body"
+            "actions actions";
+
+        gap: 12px;
+        padding: 14px;
+    }
+
+    .notification-icon {
+        grid-area: icon;
+    }
+
+    .notification-body {
+        grid-area: body;
+        min-width: 0;
+    }
+
+    .notification-actions {
+        grid-area: actions;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 12px;
+        width: 100%;
+        padding-top: 8px;
+        border-top: 1px solid var(--border);
+    }
+
+    .notification-title {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .notification-message {
+        font-size: 11px;
+    }
+
+    .notification-meta {
+        font-size: 10px;
+    }
+
+    .filter-container {
+        gap: 7px;
+    }
+
+    .filter-btn {
+        padding: 8px 9px;
+        font-size: 10px;
+    }
+
+    .empty-state {
+        padding: 35px 15px;
+    }
+}
+        .notification-card[hidden] {
+            display: none !important;
+        }
+    
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -653,14 +1003,15 @@
                 <li class="nav-item active">
                     <a href="{{ route('notifikasi_siswa') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
-                        <span
-                            class="notification-dot nav-notification-dot {{ ($unreadCount ?? 0) === 0 ? 'hidden' : '' }}"
-                            id="sidebarDot"
-                            aria-label="Ada notifikasi belum dibaca"
-                        ></span>
+                        
                     </a>
                 </li>
 
@@ -689,29 +1040,47 @@
     <div class="main-wrapper">
 
         <!-- TOPBAR -->
-        <header class="topbar">
+        <header class="topbar"><div class="topbar-mobile-brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                     alt="Logo" class="topbar-logo-img">
+                <span class="topbar-brand-name">BaktiVoice</span>
+            </div>
+<div class="topbar-right-group">            
+
             <a
                 href="{{ route('notifikasi_siswa') }}"
                 class="topbar-icon"
                 title="Notifikasi"
                 aria-label="Buka notifikasi"
             >
-                <i class="fa-regular fa-bell"></i>
-                <span class="notification-dot topbar-dot {{ ($unreadCount ?? 0) === 0 ? 'hidden' : '' }}" id="topbarDot"></span>
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+                
             </a>
 
-            <div class="user-profile">
+            <a href="{{ route('profil_siswa') }}" class="user-profile" style="text-decoration: none; color: inherit;">
                 <div class="avatar">
                     <i class="fa-regular fa-user"></i>
                 </div>
                 <span class="user-name">
                     {{ Auth::user()->name ?? 'Nama Siswa' }}
                 </span>
-            </div>
-        </header>
+            </a>
+        </div></header>
 
         <!-- KONTEN NOTIFIKASI -->
         <main class="content">
+
+    <div class="breadcrumb">
+        <a href="{{ route('dashboard_siswa') }}">Dashboard</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+        <span>Notifikasi</span>
+    </div>
+
 
             <div class="page-heading">
                 <div>
@@ -770,10 +1139,10 @@
                             $iconClass = 'fa-solid fa-bell';
                             $bgIconClass = 'icon-status';
 
-                            if ($notif->category == 'tanggapan') {
+                            if ($notif->type == 'tanggapan') {
                                 $iconClass = 'fa-solid fa-message';
                                 $bgIconClass = 'icon-tanggapan';
-                            } elseif ($notif->category == 'tindak-lanjut') {
+                            } elseif ($notif->type == 'tindak-lanjut') {
                                 $iconClass = 'fa-solid fa-handshake';
                                 $bgIconClass = 'icon-tindaklanjut';
                             }
@@ -781,7 +1150,7 @@
 
                         <article
                             class="notification-card {{ $isUnread ? 'unread' : '' }}"
-                            data-category="{{ $notif->category ?? 'status' }}"
+                            data-category="{{ in_array($notif->type, ['tanggapan', 'tindak-lanjut']) ? $notif->type : 'status' }}"
                             data-read="{{ $isUnread ? 'false' : 'true' }}"
                             data-id="{{ $notif->id_notifikasi }}"
                         >
@@ -805,7 +1174,7 @@
 
     <div class="notification-meta">
         <span>{{ $notif->sender_name ?? 'Sistem BaktiVoice' }}</span>
-        <span class="meta-separator">•</span>
+        <span class="meta-separator">Ã¢â‚¬Â¢</span>
         <span>{{ $notif->created_at->diffForHumans() }}</span>
     </div>
 </div>
@@ -976,5 +1345,57 @@
         applyFilter();
     </script>
 
+<div class="mobile-bottom-nav">
+        <a href="{{ route('dashboard_siswa') }}" class="{{ request()->routeIs('dashboard_siswa') ? 'active' : '' }}">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+
+        <a href="{{ route('buat_laporan') }}" class="{{ request()->routeIs('buat_laporan') ? 'active' : '' }}">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Laporan</span>
+        </a>
+
+        <a href="{{ route('riwayat_laporan') }}" class="{{ request()->routeIs('riwayat_laporan') ? 'active' : '' }}">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Riwayat</span>
+        </a>
+
+        <a href="{{ route('notifikasi_siswa') }}" class="{{ request()->routeIs('notifikasi_siswa') ? 'active' : '' }}">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            <span>Notif</span>
+        </a>
+
+        <a href="{{ route('profil_siswa') }}" class="{{ request()->routeIs('profil_siswa') ? 'active' : '' }}">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
+
+        <!-- Form & Tombol Logout Mobile (Menyesuaikan route('logout') POST kamu) -->
+    <form method="POST" action="{{ route('logout') }}" id="mobile-bottom-logout-form" style="display: none;">
+        @csrf
+    </form>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();" class="mobile-logout-link" title="Logout">
+        <i class="fa-solid fa-right-from-bracket" style="color: #e11d48;"></i>
+        <span style="color: #e11d48;">Logout</span>
+    </a>
+    </div>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

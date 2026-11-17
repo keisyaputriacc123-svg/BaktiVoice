@@ -427,8 +427,9 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: #ef7777;
-            display: inline-block;
+            background: #22c55e;
+            display: none;
+            flex-shrink: 0;
         }
 
         .notification-list {
@@ -532,7 +533,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #6e91e1;
+            background: #22c55e;
             flex-shrink: 0;
             margin-top: 6px;
         }
@@ -579,7 +580,259 @@
             .topbar { padding: 0 18px; }
             .user-name { display: none; }
         }
-    </style>
+    
+        /* ===== RESPONSIVE MOBILE WAKASEK ===== */
+
+        .topbar-mobile-brand {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .topbar-brand-name {
+            font-size: 17px;
+            font-weight: 800;
+            color: #2c4a8e;
+        }
+
+        .topbar-right-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        .mobile-logout-form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: #496cbd;
+            font-family: inherit;
+            font-size: 9px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 7px 2px;
+            border-radius: 12px;
+        }
+
+        .mobile-nav-item i {
+            font-size: 17px;
+        }
+
+        .mobile-nav-item.active {
+            color: #2c4a8e;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .mobile-logout,
+        .mobile-logout i {
+            color: #e11d48;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none !important;
+            }
+
+            .main,
+            .main-wrapper {
+                margin-left: 0 !important;
+                width: 100% !important;
+                min-width: 0;
+            }
+
+            .topbar {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                width: 100%;
+                height: 60px;
+                min-height: 60px;
+                box-sizing: border-box;
+                padding: 0 14px !important;
+                display: flex;
+                align-items: center;
+                justify-content: space-between !important;
+                gap: 8px;
+                background: linear-gradient(
+                    120deg,
+                    #dbeafe,
+                    #bfdbfe,
+                    #93c5fd
+                ) !important;
+                border-bottom: 1px solid rgba(255,255,255,0.5);
+                box-shadow: 0 2px 10px rgba(44,74,142,0.08);
+            }
+
+            .topbar-mobile-brand {
+                display: flex;
+                flex-shrink: 0;
+            }
+
+            .topbar-right-group {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .content {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                padding: 20px 14px 115px !important;
+            }
+
+            .mobile-bottom-nav {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1100;
+                min-height: 66px;
+                box-sizing: border-box;
+                padding: 6px 5px calc(6px + env(safe-area-inset-bottom));
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                gap: 2px;
+                background: linear-gradient(
+                    120deg,
+                    #dbeafe,
+                    #bfdbfe,
+                    #93c5fd
+                );
+                border-top: 1px solid rgba(255,255,255,0.7);
+                box-shadow: 0 -3px 14px rgba(44,74,142,0.10);
+            }
+
+            .mobile-logout-form {
+                display: flex;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .mobile-logout {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .topbar {
+                padding: 0 9px !important;
+            }
+
+            .topbar-brand-name {
+                font-size: 15px;
+            }
+
+            .topbar-right-group {
+                gap: 8px;
+            }
+
+            .mobile-nav-item {
+                font-size: 8px;
+            }
+
+            .mobile-nav-item i {
+                font-size: 15px;
+            }
+        }
+
+    
+/* ===== MOBILE TOPBAR USER POSITION FIX ===== */
+@media (max-width: 768px) {
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+
+    .topbar-right-group .user-profile {
+        order: -1 !important;
+    }
+}
+/* ===== END MOBILE TOPBAR USER POSITION FIX ===== */
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -667,9 +920,13 @@
 
             <li class="nav-item active">
                 <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="nav-notification">
-                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-icon-wrapper">
+<i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                     <span>Notifikasi</span>
-                    <span class="notification-dot" id="bellDot"></span>
                 </a>
             </li>
         </ul>
@@ -688,21 +945,41 @@
 
    <!-- TOPBAR -->
     <header class="topbar">
-        <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="topbar-icon" title="Notifikasi">
-            <i class="fa-regular fa-bell"></i>
-        </a>
+        <div class="topbar-mobile-brand">
+            <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                 alt="Logo BaktiVoice"
+                 class="topbar-logo-img">
+            <span class="topbar-brand-name">BaktiVoice</span>
+        </div>
 
-        <div class="user-profile">
-            <div class="avatar">
-                <i class="fa-regular fa-user"></i>
-            </div>
-            <span class="user-name">
-                {{ $currentUser->name ?? $jabatan['nama'] }}
-            </span>
+        <div class="topbar-right-group">
+            <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="topbar-icon" title="Notifikasi">
+                <span class="notification-icon-wrapper">
+<i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            </a>
+
+            <a href="{{ route('profil_wakasek') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <span class="user-name">
+                    {{ $currentUser->name ?? $jabatan['nama'] }}
+                </span>
+            </a>
         </div>
     </header>
 
     <main class="content">
+            <div class="breadcrumb">
+                <a href="{{ route('dashboard_wakasek') }}">Dashboard</a>
+                <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+                <span>Notifikasi</span>
+            </div>
+
         <div class="page-heading">
             <div>
                 <h1>Notifikasi</h1>
@@ -740,7 +1017,7 @@
                     <p>Notifikasi laporan untuk bidang {{ $jabatan['kategori'] }}</p>
                 </div>
 
-                <form action="{{ route('notifikasi.readAll') }}" method="POST" style="display: inline;">
+                <form action="{{ route('wakasek.notifikasi.readAll') }}" method="POST" style="display: inline;">
                     @csrf
                     <button type="submit" class="mark-all-btn" id="markAllRead">
                         <i class="fa-solid fa-check-double"></i>
@@ -757,26 +1034,36 @@
 
                 <button type="button" class="filter-btn" data-filter="belum">
                     Belum Dibaca
+                
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button" class="filter-btn" data-filter="laporan">
                     <i class="fa-solid fa-file-circle-plus"></i>
                     Laporan Baru
+                
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button" class="filter-btn" data-filter="status">
                     <i class="fa-solid fa-arrows-rotate"></i>
                     Pembaruan Status
+                
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button" class="filter-btn" data-filter="tanggapan">
                     <i class="fa-solid fa-comments"></i>
                     Tanggapan
+                
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button" class="filter-btn" data-filter="tindak-lanjut">
                     <i class="fa-solid fa-clipboard-check"></i>
                     Tindak Lanjut
+                
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -871,24 +1158,83 @@
     </main>
 </div>
 
+<nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+    <a href="{{ route($targetDashboard) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route($targetRekap) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route($targetMonitoring) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route('wakasek.' . str_replace('wakasek ', '', $role) . '.notifikasi') }}" class="mobile-nav-item active">
+        <span class="notification-icon-wrapper">
+<i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route($targetProfil) }}" class="mobile-nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </button>
+    </form>
+</nav>
 <script>
     const filterButtons = document.querySelectorAll('.filter-btn');
     const notificationCards = document.querySelectorAll('.notification-card');
     const emptyState = document.getElementById('emptyState');
     const markAllReadButton = document.getElementById('markAllRead');
+    const markAllReadForm = markAllReadButton?.closest('form');
+    const csrfToken = markAllReadForm?.querySelector('input[name="_token"]')?.value;
+    const readUrlTemplate = @json(route('wakasek.notifikasi.read', ['id' => '__ID__']));
     const allUnreadDot = document.getElementById('allUnreadDot');
     const bellDot = document.getElementById('bellDot');
 
     let activeFilter = 'semua';
 
     function updateUnreadIndicators() {
+        filterButtons.forEach(button => {
+            const filter = button.dataset.filter;
+            const dot = button.querySelector('.filter-dot');
+
+            if (!dot) return;
+
+            const unreadCount = Array.from(notificationCards).filter(card => {
+                const isUnread = card.dataset.unread === '1';
+
+                if (!isUnread) return false;
+
+                if (filter === 'semua' || filter === 'belum') {
+                    return true;
+                }
+
+                return card.dataset.type === filter;
+            }).length;
+
+            dot.style.display = unreadCount > 0 ? 'inline-block' : 'none';
+        });
+
         const unreadExists = Array.from(notificationCards).some(card => {
             return card.dataset.unread === '1';
         });
-
-        if (allUnreadDot) {
-            allUnreadDot.style.display = unreadExists ? 'inline-block' : 'none';
-        }
 
         if (bellDot) {
             bellDot.style.display = unreadExists ? 'block' : 'none';
@@ -935,37 +1281,96 @@
     });
 
     notificationCards.forEach(card => {
-        card.addEventListener('click', function () {
-            this.classList.remove('unread');
-            this.dataset.unread = '0';
-
-            const dot = this.querySelector('.unread-dot');
-            if (dot) {
-                dot.remove();
+        card.addEventListener('click', async function () {
+            if (this.dataset.unread !== '1') {
+                return;
             }
 
-            updateUnreadIndicators();
+            try {
+                const response = await fetch(
+                    readUrlTemplate.replace('__ID__', encodeURIComponent(this.dataset.id)),
+                    {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': csrfToken,
+                            'Accept': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    }
+                );
 
-            if (activeFilter === 'belum') {
-                applyFilter('belum');
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Gagal memperbarui notifikasi.');
+                }
+
+                this.classList.remove('unread');
+                this.dataset.unread = '0';
+
+                const dot = this.querySelector('.unread-dot');
+                if (dot) {
+                    dot.remove();
+                }
+
+                updateUnreadIndicators();
+
+                if (activeFilter === 'belum') {
+                    applyFilter('belum');
+                }
+            } catch (error) {
+                alert('Notifikasi gagal ditandai dibaca. Silakan coba lagi.');
+                console.error(error);
             }
         });
     });
 
     if (markAllReadButton) {
-        markAllReadButton.addEventListener('click', function () {
-            notificationCards.forEach(card => {
-                card.classList.remove('unread');
-                card.dataset.unread = '0';
+        markAllReadButton.addEventListener('click', async function (event) {
+            event.preventDefault();
 
-                const dot = card.querySelector('.unread-dot');
-                if (dot) {
-                    dot.remove();
+            if (!markAllReadForm || !csrfToken) {
+                alert('Form atau token keamanan tidak ditemukan.');
+                return;
+            }
+
+            markAllReadButton.disabled = true;
+
+            try {
+                const response = await fetch(markAllReadForm.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken,
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || 'Gagal memperbarui notifikasi.');
                 }
-            });
 
-            updateUnreadIndicators();
-            applyFilter(activeFilter);
+                notificationCards.forEach(card => {
+                    card.classList.remove('unread');
+                    card.dataset.unread = '0';
+
+                    const dot = card.querySelector('.unread-dot');
+                    if (dot) {
+                        dot.remove();
+                    }
+                });
+
+                updateUnreadIndicators();
+                applyFilter(activeFilter);
+
+            } catch (error) {
+                alert('Semua notifikasi gagal ditandai dibaca. Silakan coba lagi.');
+                console.error(error);
+            } finally {
+                markAllReadButton.disabled = false;
+            }
         });
     }
 
@@ -973,5 +1378,15 @@
     applyFilter('semua');
 </script>
 
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

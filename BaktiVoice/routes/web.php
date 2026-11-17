@@ -153,7 +153,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // HALAMAN LAPORAN ADMIN
     // --------------------------------
     Route::get('/laporan_admin/{id?}', [LaporanController::class, 'showAdmin'])->name('laporan_admin');
-    Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('laporan.updateStatus');
+    Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('api.laporan.updateStatus');
     Route::post('/api/laporan/{id}/tanggapan', [TanggapanController::class, 'store'])->name('laporan.tanggapan');
 
     // --------------------------------
@@ -167,6 +167,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/dashboard/admin/notifikasi', [NotifikasiController::class, 'index'])
         ->defaults('viewName', 'notifikasi_admin')
         ->name('notifikasi_admin');
+
+    Route::post('/dashboard/admin/notifikasi/read/{id}', [NotifikasiController::class, 'markAsRead'])
+        ->name('admin.notifikasi.read');
+
+    Route::post('/dashboard/admin/notifikasi/read-all', [NotifikasiController::class, 'markAllAsRead'])
+        ->name('admin.notifikasi.readAll');
 
     // --------------------------------
     // HALAMAN PROFIL ADMIN (ALTERNATIF)
@@ -252,12 +258,23 @@ Route::middleware('auth')->group(function () {
                 Rule::unique('users', 'nisn')
                     ->ignore($user->id_user, 'id_user'),
             ],
+            'kelas' => ['nullable', 'string', 'max:50'],
+            'jurusan' => [
+    'nullable',
+    Rule::in([
+        'Bisnis Ritel Pemasaran',
+        'Pengembangan Perangkat Lunak dan Gim',
+        'Desain Komunikasi Visual',
+    ]),
+],
         ]);
 
         $user->name = $validated['name'];
         $user->username = $validated['username'];
         $user->email = $validated['email'];
         $user->nisn = $validated['nisn'] ?? null;
+        $user->kelas = $validated['kelas'] ?? null;
+        $user->jurusan = $validated['jurusan'] ?? null;
 
         $user->save();
 
@@ -385,6 +402,7 @@ Route::middleware(['auth'])->prefix('wakasek')->name('wakasek.')->group(function
 // GLOBAL ROUTE AKSI NOTIFIKASI (UNIVERSAL)
 // ================================
 Route::middleware(['auth'])->group(function () {
-    Route::post('/dashboard/notifikasi/read/{id}', [DashboardWakasekController::class, 'tandaiDibaca'])->name('notifikasi.read');
-    Route::post('/dashboard/notifikasi/read-all', [DashboardWakasekController::class, 'tandaiSemuaDibaca'])->name('notifikasi.readAll');
+    Route::post('/dashboard/wakasek/notifikasi/read/{id}', [DashboardWakasekController::class, 'tandaiDibaca'])->name('wakasek.notifikasi.read');
+    Route::post('/dashboard/wakasek/notifikasi/read-all', [DashboardWakasekController::class, 'tandaiSemuaDibaca'])->name('wakasek.notifikasi.readAll');
 });
+

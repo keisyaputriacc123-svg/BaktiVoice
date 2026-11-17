@@ -75,19 +75,59 @@ class StatusLaporanController extends Controller
     /**
      * KHUSUS: Mengubah status laporan dari halaman detail admin (laporan_admin.blade.php)
      */
-    public function updateStatus(Request $request, $id)
-    {
-        $request->validate([
-            'status_id' => 'required',
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:pending,proses,selesai,ditolak',
+        'tanggapan' => 'nullable|string|max:2000',
+    ]);
+
+    // Cari laporan
+    $laporan = Laporan::where('id_laporan', $id)->firstOrFail();
+
+    // Simpan perubahan status
+    $laporan->status = $request->status;
+    $laporan->save();
+
+    // Ambil tanggapan dari form
+    $isiTanggapan = trim($request->tanggapan ?? '');
+
+    // Ambil tanggapan terakhir
+    $tanggapanTerakhir = $laporan->tanggapan()
+        ->orderByDesc('id_tanggapan')
+        ->first();
+
+    // Simpan hanya jika tanggapan benar-benar baru atau berubah
+    if (
+        $isiTanggapan !== '' &&
+        $isiTanggapan !== trim($tanggapanTerakhir?->tanggapan ?? '')
+    ) {
+        // Simpan tanggapan
+        $tanggapanBaru = new \App\Models\Tanggapan();
+
+        $tanggapanBaru->id_laporan = $laporan->id_laporan;
+        $tanggapanBaru->id_user = auth()->id();
+        $tanggapanBaru->tanggapan = $isiTanggapan;
+        $tanggapanBaru->created_at = now();
+        $tanggapanBaru->save();
+
+        // Kirim notifikasi kepada siswa
+        \App\Models\Notifikasi::create([
+            'id_user' => $laporan->id_user,
+            'id_laporan' => $laporan->id_laporan,
+            'judul' => 'Tanggapan Baru',
+            'pesan' => (auth()->user()?->name ?? 'Admin Sekolah')
+                . ' memberikan tanggapan pada laporan "'
+                . $laporan->judul . '".',
+            'type' => 'tanggapan',
+            'is_read' => false,
         ]);
-
-        // Cari laporan berdasarkan primary key 'id_laporan' di database Supabase
-        $laporan = Laporan::where('id_laporan', $id)->firstOrFail();
-
-        // Simpan perubahan ke kolom id_status
-        $laporan->id_status = $request->status_id;
-        $laporan->save();
-
-        return redirect()->back()->with('success', 'Status laporan berhasil diperbarui!');
     }
+
+    return redirect()->back()->with(
+        'success',
+        'Status dan tanggapan laporan berhasil diperbarui!'
+    );
 }
+}
+

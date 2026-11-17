@@ -341,7 +341,7 @@
             width: 9px;
             height: 9px;
             border-radius: 50%;
-            background: #4772c7;
+            background: #22c55e;
             flex-shrink: 0;
             margin-top: 6px;
         }
@@ -349,8 +349,118 @@
         .notification-card:not(.unread) .unread-dot {
             visibility: hidden;
         }
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
 
-        .empty-state {
+
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+
+
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+ 
+        .filter-dot {
+            display: none;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            flex-shrink: 0;
+            margin-left: 7px;
+        }
+.empty-state {
             display: none;
             text-align: center;
             color: var(--text-muted);
@@ -420,7 +530,293 @@
                 font-size: 15px;
             }
         }
-    </style>
+    
+/* ==========================================
+   RESPONSIVE RESTORATION - GURU BK FINAL
+   ========================================== */
+
+.topbar-mobile-brand {
+    display: none;
+    align-items: center;
+    gap: 9px;
+}
+
+.topbar-logo-img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.topbar-brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c4a8e;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        height: 60px !important;
+        min-height: 60px;
+        padding: 0 14px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: #fff;
+    }
+
+    .topbar-mobile-brand {
+        display: flex !important;
+        flex-shrink: 0;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .user-profile {
+        display: flex !important;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+    }
+
+    .user-name {
+        max-width: 105px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    .content,
+    .main-content {
+        width: 100% !important;
+        max-width: 100%;
+        margin-left: 0 !important;
+        box-sizing: border-box;
+        padding-bottom: 110px !important;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        display: flex !important;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 66px;
+        padding: 7px 3px;
+        padding-bottom: max(7px, env(safe-area-inset-bottom));
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 15px rgba(65, 105, 170, 0.12);
+        border-top: 1px solid rgba(255,255,255,0.65);
+        box-sizing: border-box;
+    }
+
+    .mobile-nav-item {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: #46669f;
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: transparent;
+        border: none;
+        padding: 5px 1px;
+        cursor: pointer;
+    }
+
+    .mobile-nav-item i {
+        font-size: 17px;
+    }
+
+    .mobile-nav-item.active {
+        color: #244b91;
+    }
+
+    .mobile-nav-item.active i {
+        transform: translateY(-2px);
+    }
+
+    .mobile-nav-logout,
+    .mobile-nav-logout-form {
+        color: #a34455;
+    }
+
+    .mobile-nav-logout-form {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mobile-nav-logout-form button {
+        width: 100%;
+    }
+
+    .content img,
+    .main-content img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .topbar-brand-name {
+        font-size: 14px;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .user-name {
+        max-width: 75px;
+        font-size: 11px;
+    }
+
+    .content,
+    .main-content {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .mobile-nav-item {
+        font-size: 9px;
+        gap: 4px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 15px;
+    }
+
+    .topbar {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .topbar-right-group {
+        gap: 7px;
+    }
+}
+
+
+/* FIX WARNA TOPBAR MOBILE GURU BK */
+@media (max-width: 768px) {
+    .topbar {
+        background: var(--gradient-pastel) !important;
+        background-image: var(--gradient-pastel) !important;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -459,7 +855,12 @@
 
             <li class="nav-item">
                 <a href="{{ route('notifikasi_bk') }}" class="active">
-                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-icon-wrapper">
+<i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                     <span>Notifikasi</span>
                 </a>
             </li>
@@ -473,28 +874,54 @@
         </ul>
     </div>
 
-    <a href="{{ route('login') }}" class="logout-btn">
+    <button type="submit" form="logoutFormBK" class="logout-btn">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Logout</span>
-    </a>
+    </button>
 </aside>
 
 <!-- MAIN CONTENT -->
 <div class="main-wrapper">
 
     <header class="topbar">
-        <div class="user-profile">
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
+
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_bk') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+<i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_bk') }}" class="user-profile" style="text-decoration: none; color: inherit;">
             <div class="avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-
             <span class="user-name">
                 {{ Auth::user()->name ?? 'Guru BK' }}
             </span>
-        </div>
-    </header>
+        </a>
+    </div>
+</header>
 
     <main class="content">
+            <div class="breadcrumb">
+                <a href="{{ route('dashboard_bk') }}">Dashboard</a>
+                <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+                <span>Notifikasi</span>
+            </div>
+
 
         <h1 class="page-title">Notifikasi Guru BK</h1>
 
@@ -529,30 +956,35 @@
                         class="filter-btn active"
                         data-filter="semua">
                     Semua
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button"
                         class="filter-btn"
                         data-filter="belum">
                     Belum Dibaca
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button"
                         class="filter-btn"
                         data-filter="laporan">
                     Laporan Siswa
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button"
                         class="filter-btn"
                         data-filter="status">
                     Status Laporan
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
 
                 <button type="button"
                         class="filter-btn"
                         data-filter="tindak-lanjut">
                     Tindak Lanjut
+                    <span class="filter-dot" aria-hidden="true"></span>
                 </button>
             </div>
 
@@ -593,7 +1025,7 @@
 
                             <span class="notification-meta">
                                 {{ $notif->created_at->diffForHumans() }}
-                                · Guru BK
+                                ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚ÂÃƒâ€šÃ‚Â¬ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â¢ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Guru BK
                             </span>
 
                         </div>
@@ -645,6 +1077,30 @@ document.addEventListener('DOMContentLoaded', function () {
         unreadCountElement.textContent = unreadCount;
     }
 
+    // MEMPERBARUI DOT HIJAU PADA TAB FILTER
+    function updateFilterDots() {
+        filterButtons.forEach(button => {
+            const filter = button.dataset.filter;
+
+            const hasUnread = Array.from(notificationCards).some(card => {
+                if (!card.classList.contains('unread')) {
+                    return false;
+                }
+
+                if (filter === 'semua' || filter === 'belum') {
+                    return true;
+                }
+
+                return card.dataset.type === filter;
+            });
+
+            const dot = button.querySelector('.filter-dot');
+
+            if (dot) {
+                dot.style.display = hasUnread ? 'inline-block' : 'none';
+            }
+        });
+    }
     // FILTER NOTIFIKASI
     function applyFilter(filter) {
 
@@ -725,6 +1181,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 unreadCount = Math.max(0, unreadCount - 1);
 
                 updateUnreadCount();
+                updateFilterDots();
 
                 const activeFilter =
                     document.querySelector('.filter-btn.active');
@@ -777,6 +1234,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 unreadCount = 0;
 
                 updateUnreadCount();
+                updateFilterDots();
 
                 const activeFilter =
                     document.querySelector('.filter-btn.active');
@@ -796,10 +1254,49 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // FILTER AWAL SAAT HALAMAN DIBUKA
+    updateFilterDots();
     applyFilter('semua');
 
 });
 </script>
 
+<nav class="mobile-bottom-nav" aria-label="Navigasi utama">    <a href="{{ route('dashboard_bk') }}" class="mobile-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>    <a href="{{ route('LaporanSiswa_bk') }}" class="mobile-nav-item">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Laporan</span>
+    </a>    <a href="{{ route('monitoring_bk') }}" class="mobile-nav-item">
+        <i class="fa-regular fa-eye"></i>
+        <span>Monitoring</span>
+    </a>    <a href="{{ route('notifikasi_bk') }}" class="mobile-nav-item active">
+        <span class="notification-icon-wrapper">
+<i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>    <a href="{{ route('profil_bk') }}" class="mobile-nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>    <button type="submit" form="logoutFormBK" class="mobile-nav-item mobile-nav-logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </button>
+</nav>
+<form id="logoutFormBK" method="POST" action="{{ route('logout') }}" style="display:none;">
+    @csrf
+</form>
+
+<script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+

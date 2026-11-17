@@ -12,6 +12,7 @@ class BuktiLaporan extends Model
     protected $table = 'bukti_laporan';
     protected $primaryKey = 'id_bukti';
 
+    const UPDATED_AT = null;
     protected $fillable = [
         'id_laporan',
         'file_path',

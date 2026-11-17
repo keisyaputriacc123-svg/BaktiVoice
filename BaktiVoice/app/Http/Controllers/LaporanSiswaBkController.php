@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Laporan;
 use App\Models\Kategori;
+use App\Models\Notifikasi;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LaporanSiswaBkController extends Controller
@@ -52,7 +54,7 @@ class LaporanSiswaBkController extends Controller
     // Detail laporan hanya boleh dibuka jika kategorinya Kesiswaan
     public function show($id)
     {
-        $laporan = Laporan::with('kategori')
+        $laporan = Laporan::with(['kategori', 'user'])
             ->whereHas('kategori', function ($q) {
                 $q->where('nama_kategori', 'Kesiswaan');
             })
@@ -80,8 +82,37 @@ class LaporanSiswaBkController extends Controller
             'tanggapan'  => $request->tindak_lanjut,
         ]);
 
+        // Kirim notifikasi tindak lanjut kepada siswa
+        Notifikasi::create([
+            'id_user'    => $laporan->id_user,
+            'id_laporan' => $laporan->id_laporan,
+            'judul'      => 'Tindak Lanjut Laporan',
+            'pesan'      => (Auth::user()?->name ?? 'Guru BK')
+                . ' memberikan tindak lanjut pada laporan "'
+                . $laporan->judul . '".',
+            'type'       => 'tindak-lanjut',
+            'is_read'    => false,
+        ]);
+
+        // Kirim notifikasi masukan Guru BK kepada Admin
+        $adminUsers = User::where('role', 'admin')->get();
+
+        foreach ($adminUsers as $admin) {
+            Notifikasi::create([
+                'id_user'    => $admin->id_user,
+                'id_laporan' => $laporan->id_laporan,
+                'judul'      => 'Masukan Guru BK',
+                'pesan'      => (Auth::user()?->name ?? 'Guru BK')
+                    . ' memberikan tindak lanjut pada laporan "'
+                    . $laporan->judul . '".',
+                'type'       => 'masukan-bk',
+                'is_read'    => false,
+            ]);
+        }
+
         return redirect()
             ->route('detail_laporan_bk', $id)
             ->with('success', 'Catatan tindak lanjut berhasil disimpan!');
     }
 }
+

@@ -698,7 +698,265 @@
                 height: 32px;
             }
         }
-    </style>
+
+/* ==========================================================
+   RESPONSIVE MOBILE - DETAIL LAPORAN ADMIN
+   ========================================================== */
+
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-height: 100vh;
+        min-width: 0 !important;
+    }
+
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        position: sticky;
+        top: 0;
+        z-index: 900;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .topbar-brand-name {
+        color: #274472;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .user-name {
+        display: none !important;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 24px 18px 105px !important;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 66px;
+        padding: 7px 3px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 14px rgba(55, 90, 150, 0.12);
+        z-index: 1100;
+    }
+
+    .mobile-bottom-nav > a,
+    .mobile-nav-dropdown > button {
+        flex: 1;
+        min-width: 0;
+        min-height: 50px;
+        padding: 5px 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: #42618f;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .mobile-bottom-nav > a i,
+    .mobile-nav-dropdown > button i {
+        font-size: 17px;
+    }
+
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 9px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mobile-nav-dropdown {
+        position: relative;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-data-master-menu {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 185px;
+        padding: 7px;
+        flex-direction: column;
+        gap: 4px;
+        background: #fff;
+        border: 1px solid #dbeafe;
+        border-radius: 13px;
+        box-shadow: 0 5px 20px rgba(40, 70, 120, 0.18);
+    }
+
+    .mobile-data-master-menu.show {
+        display: flex;
+    }
+
+    .mobile-data-master-menu a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 10px;
+        border-radius: 8px;
+        color: #365783;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .mobile-logout-link i,
+    .mobile-logout-link span {
+        color: #e11d48 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 8px;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -749,7 +1007,12 @@
                 <li class="nav-item">
                     <a href="{{ route('notifikasi_admin') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
                     </a>
@@ -780,18 +1043,43 @@
 
         {{-- TOPBAR --}}
         <header class="topbar">
-            <a href="{{ route('notifikasi_admin') }}" class="topbar-icon" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </a>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
 
-            <div class="user-profile">
-                <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                <span class="user-name">{{ auth()->user()->name ?? 'Admin Sekolah' }}</span>
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_admin') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_admin') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
             </div>
-        </header>
+            <span class="user-name">{{ auth()->user()->name ?? 'Admin Sekolah' }}</span>
+        </a>
+    </div>
+</header>
 
         {{-- MAIN CONTENT --}}
         <main class="content">
+            <div class="breadcrumb">
+                <a href="{{ route('dashboard_admin') }}">Dashboard</a>
+                <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+                <span>Detail Laporan</span>
+            </div>
+
 
             <div class="page-heading">
                 <div class="heading-left">
@@ -804,7 +1092,7 @@
 
                 <div class="report-code">
                     <i class="fa-regular fa-file-lines"></i>
-                    <span>{{ $laporan->id_laporan ?? 'BV001' }}</span>
+                    <span>{{ 'BV' . str_pad($laporan->id_laporan ?? 1, 3, '0', STR_PAD_LEFT) }}</span>
                 </div>
             </div>
 
@@ -819,7 +1107,9 @@
                 <hr class="detail-divider">
 
                 {{-- FORM DINAMIS KE CONTROLLER --}}
-                <form action="{{ route('laporan.updateStatus', $laporan->id_laporan) }}" method="POST">
+                <form action="{{ route('laporan.updateStatus', $laporan->id_laporan) }}"
+      method="POST"
+      id="formUpdateStatusAdmin">
                     @csrf
                     @method('PUT')
 
@@ -837,7 +1127,15 @@
                             <label>Pelapor</label>
                             <div class="metadata-value">
                                 <i class="fa-regular fa-user"></i>
-                                {{ $laporan->anonim ? 'Anonim' : ($laporan->user->name ?? 'Siswa') }}
+                                @if($laporan->anonim)
+                                    <strong>Anonim</strong>
+                                @else
+                                    <div>
+                                        <strong>{{ $laporan->user->name ?? 'Siswa' }}</strong>
+                                        <div>Kelas: {{ $laporan->user->kelas ?? '-' }}</div>
+                                        <div>Jurusan: {{ $laporan->user->jurusan ?? '-' }}</div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -909,16 +1207,82 @@
                         <p class="form-note">
                             <i class="fa-solid fa-circle-info"></i> Periksa status dan tanggapan sebelum menyimpan perubahan.
                         </p>
-                        <button type="submit" class="btn-save">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                            <span>Simpan Perubahan</span>
-                        </button>
+                        <button type="submit" class="btn-save" id="btnSimpanPerubahanAdmin">
+    <i class="fa-solid fa-floppy-disk" id="iconSimpanPerubahanAdmin"></i>
+    <span id="textSimpanPerubahanAdmin">Simpan Perubahan</span>
+</button>
                     </div>
 
                 </form>
             </div>
         </main>
     </div>
+
+<!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
+    <a href="{{ route('dashboard_admin') }}">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <div class="mobile-nav-dropdown">
+        <button type="button"
+                class="mobile-nav-dropdown-btn"
+                onclick="toggleMobileDataMasterMenu()"
+                aria-expanded="false"
+                id="mobileDataMasterButton">
+            <i class="fa-solid fa-database"></i>
+            <span>Data Master</span>
+        </button>
+
+        <div class="mobile-data-master-menu" id="mobileDataMasterMenu">
+            <a href="{{ route('data_master', ['tab' => 'users']) }}">
+                <i class="fa-solid fa-users"></i>
+                <span>User & Role</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Kategori Laporan</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'status']) }}">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Status Laporan</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="{{ route('rekap_laporan') }}">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route('notifikasi_admin') }}">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_admin') }}">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form method="POST" action="{{ route('logout') }}"
+          id="mobile-bottom-logout-form" style="display:none;">
+        @csrf
+    </form>
+
+    <a href="#"
+       class="mobile-logout-link"
+       onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</div>
 
     <script>
         function toggleDropdown(menuId, arrowId) {
@@ -930,7 +1294,70 @@
         }
 
 
-    </script>
 
+        function toggleMobileDataMasterMenu() {
+            const menu = document.getElementById('mobileDataMasterMenu');
+            const button = document.getElementById('mobileDataMasterButton');
+
+            if (!menu || !button) return;
+
+            menu.classList.toggle('show');
+            button.setAttribute(
+                'aria-expanded',
+                menu.classList.contains('show') ? 'true' : 'false'
+            );
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.querySelector('.mobile-nav-dropdown');
+
+            if (dropdown && !dropdown.contains(event.target)) {
+                const menu = document.getElementById('mobileDataMasterMenu');
+                const button = document.getElementById('mobileDataMasterButton');
+
+                if (menu) menu.classList.remove('show');
+                if (button) button.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+    <!-- ANTI DOUBLE CLICK SIMPAN PERUBAHAN -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        const form = document.getElementById('formUpdateStatusAdmin');
+        const button = document.getElementById('btnSimpanPerubahanAdmin');
+        const icon = document.getElementById('iconSimpanPerubahanAdmin');
+        const text = document.getElementById('textSimpanPerubahanAdmin');
+
+        if (!form || !button || !icon || !text) return;
+
+        form.addEventListener('submit', function (event) {
+
+            if (form.dataset.submitting === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            form.dataset.submitting = 'true';
+
+            button.disabled = true;
+            button.style.opacity = '0.7';
+            button.style.cursor = 'not-allowed';
+
+            icon.className = 'fa-solid fa-spinner fa-spin';
+            text.textContent = 'Menyimpan...';
+
+        });
+
+    });
+    </script>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+

@@ -38,6 +38,24 @@ class DashboardWakasekController extends Controller
         ];
     }
 
+    // Mengambil ID kategori sesuai role Wakasek yang login
+    private function getKategoriWakasek()
+    {
+        $user = Auth::user();
+
+        abort_unless($user, 403);
+
+        $role = strtolower(trim($user->role ?? ''));
+
+        foreach ($this->getRoleMap() as $bidang => $roleMap) {
+            if ($role === $roleMap) {
+                return $this->getMapping()[$bidang];
+            }
+        }
+
+        abort(403, 'Anda tidak memiliki akses sebagai Wakasek.');
+    }
+
     // =========================================
     // DASHBOARD WAKASEK
     // =========================================
@@ -198,18 +216,17 @@ class DashboardWakasekController extends Controller
     public function detailLaporan($id)
     {
         $user = Auth::user();
+        $idKategori = $this->getKategoriWakasek();
 
-        $laporan = Laporan::findOrFail($id);
+        $laporan = Laporan::with([
+            'kategori',
+            'user',
+            'buktiLaporan',
+        ])
+            ->where('id_kategori', $idKategori)
+            ->findOrFail($id);
 
-        $mapKategori = [
-            1 => 'wakasek kesiswaan',
-            2 => 'wakasek kurikulum',
-            3 => 'wakasek sarana',
-            4 => 'wakasek dudi',
-        ];
-
-        $role = $mapKategori[$laporan->id_kategori]
-            ?? ($user->role ?? 'wakasek kesiswaan');
+        $role = $user->role;
 
         return view('detail_laporan_wakasek', compact(
             'laporan',
@@ -224,44 +241,96 @@ class DashboardWakasekController extends Controller
 
     public function simpanTanggapan(Request $request, $id)
     {
+        $idKategori = $this->getKategoriWakasek();
+
         $request->validate([
             'tanggapan' => 'required|string|max:2000',
             'bukti_tanggapan' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $laporan = Laporan::findOrFail($id);
+        $laporan = Laporan::with('kategori')
+            ->where('id_kategori', $idKategori)
+            ->findOrFail($id);
 
-        $dataUpdate = [
+        // Simpan tindak lanjut ke tabel tanggapan
+        \App\Models\Tanggapan::create([
+            'id_laporan' => $laporan->id_laporan,
+            'id_user' => Auth::id() ?? 1,
             'tanggapan' => $request->tanggapan,
-            'status' => 'proses',
-        ];
+        ]);
 
+        // Simpan bukti ke tabel bukti_laporan jika ada upload
         if ($request->hasFile('bukti_tanggapan')) {
-
-            if (
-                !empty($laporan->bukti_tanggapan) &&
-                Storage::disk('public')->exists($laporan->bukti_tanggapan)
-            ) {
-                Storage::disk('public')->delete(
-                    $laporan->bukti_tanggapan
-                );
-            }
-
             $path = $request->file('bukti_tanggapan')
                 ->store('tanggapan', 'public');
 
-            $dataUpdate['bukti_tanggapan'] = $path;
+            $laporan->buktiLaporan()->create([
+                'file_path' => $path,
+            ]);
         }
 
-        $laporan->update($dataUpdate);
+        // Ubah status laporan menjadi diproses
+        $laporan->update([
+            'status' => 'proses',
+        ]);
 
+        // Kirim notifikasi kepada siswa pemilik laporan
+        Notifikasi::create([
+            'id_user' => $laporan->id_user,
+            'id_laporan' => $laporan->id_laporan,
+            'judul' => 'Tindak Lanjut Laporan',
+            'pesan' => (Auth::user()->name ?? 'Wakasek')
+                . ' memberikan tindak lanjut pada laporan "'
+                . $laporan->judul . '".',
+            'type' => 'tindak-lanjut',
+            'is_read' => false,
+        ]);
+
+        // Kirim notifikasi tindak lanjut Wakasek kepada seluruh Admin
+        $adminUsers = User::where('role', 'admin')->get();
+
+        foreach ($adminUsers as $admin) {
+            Notifikasi::create([
+                'id_user' => $admin->id_user,
+                'id_laporan' => $laporan->id_laporan,
+                'judul' => 'Tindak Lanjut Wakasek',
+                'pesan' => (Auth::user()?->name ?? 'Wakasek')
+                    . ' memberikan tindak lanjut pada laporan "'
+                    . $laporan->judul . '".',
+                'type' => 'tindak-lanjut-wakasek',
+                'is_read' => false,
+            ]);
+        }
+
+        // Kirim notifikasi kepada seluruh Guru BK
+        // Hanya untuk tindak lanjut Wakasek Kesiswaan pada laporan Kesiswaan
+        $namaKategori = strtolower(trim($laporan->kategori?->nama_kategori ?? ''));
+        $rolePengguna = strtolower(trim(Auth::user()?->role ?? ''));
+
+        if (
+            str_contains($namaKategori, 'kesiswaan') &&
+            $rolePengguna === 'wakasek kesiswaan'
+        ) {
+            $bkUsers = User::where('role', 'guru_bk')->get();
+
+            foreach ($bkUsers as $bk) {
+                Notifikasi::create([
+                    'id_user' => $bk->id_user,
+                    'id_laporan' => $laporan->id_laporan,
+                    'judul' => 'Tindak Lanjut Kesiswaan',
+                    'pesan' => (Auth::user()?->name ?? 'Wakasek Kesiswaan')
+                        . ' memberikan tindak lanjut pada laporan "'
+                        . $laporan->judul . '".',
+                    'type' => 'tindak-lanjut',
+                    'is_read' => false,
+                ]);
+            }
+        }
         return back()->with(
             'success',
             'Tindak lanjut dan tanggapan berhasil disimpan!'
         );
     }
-
-    // =========================================
     // MONITORING
     // =========================================
 

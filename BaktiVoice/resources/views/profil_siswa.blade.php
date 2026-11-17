@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -179,6 +179,15 @@
             top: 0;
             z-index: 90;
             box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
+        }
+
+        .topbar-right-group {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+            height: 100%;
         }
 
         .topbar-icon {
@@ -677,7 +686,249 @@
                 flex-wrap: wrap;
             }
         }
-        </style>
+
+    /* RESPONSIVE RESTORE FROM STASH - SELECTIVE */
+    .topbar-mobile-brand,
+    .mobile-bottom-nav {
+        display: none;
+    }
+@media (max-width: 768px) {
+
+    /* Sidebar disembunyikan */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* Main wrapper memenuhi layar */
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* Topbar mobile */
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        justify-content: space-between;
+        gap: 12px;
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .topbar-mobile-brand img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .topbar-mobile-brand span {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+    .topbar-right-group {
+        gap: 8px;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    /* Konten */
+    .content {
+        padding: 24px 18px 90px;
+    }
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    /* Form */
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full-width {
+        grid-column: auto;
+    }
+
+    .card-header,
+    .card-body {
+        padding: 18px;
+    }
+
+    .form-footer {
+        align-items: stretch;
+    }
+
+    .form-actions {
+        width: 100%;
+    }
+
+    .form-actions button,
+    .form-actions a {
+        flex: 1;
+    }
+
+    .security-row {
+        align-items: flex-start;
+        flex-wrap: wrap;
+    }
+
+    /* MOBILE BOTTOM NAVIGATION */
+.mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    min-height: 66px;
+    background: linear-gradient(
+        135deg,
+        #dbeafe 0%,
+        #bfdbfe 50%,
+        #93c5fd 100%
+    );
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 -4px 15px rgba(123, 159, 232, 0.15);
+    justify-content: space-around;
+    align-items: center;
+    padding: 6px 4px;
+    z-index: 1000;
+}
+
+.mobile-bottom-nav a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    color: #274472;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.mobile-bottom-nav a i {
+    font-size: 18px;
+}
+
+.mobile-bottom-nav a.active {
+    color: #3b62ac;
+    font-weight: 800;
+}
+
+.mobile-bottom-nav a.active i {
+    transform: translateY(-2px);
+}
+
+.mobile-bottom-nav .mobile-logout-link {
+    color: #e11d48;
+}
+}
+
+/* FIX TOPBAR MOBILE PROFIL */
+@media (max-width: 768px) {
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .topbar-mobile-brand {
+        flex-shrink: 0;
+        margin-right: auto !important;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 12px !important;
+        margin-left: auto !important;
+        height: 100%;
+    }
+
+    .topbar-right-group .topbar-icon,
+    .topbar-right-group .user-profile {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        position: relative !important;
+    }
+
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+}
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}</style>
         <head>
 
 <body>
@@ -725,7 +976,12 @@
                 <li class="nav-item">
                     <a href="{{ route('notifikasi_siswa') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
                     </a>
@@ -755,25 +1011,36 @@
     <div class="main-wrapper">
 
         <!-- TOPBAR -->
-        <header class="topbar">
+        <header class="topbar"><div class="topbar-mobile-brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                     alt="Logo" class="topbar-logo-img">
+                <span class="topbar-brand-name">BaktiVoice</span>
+            </div>
+<div class="topbar-right-group">
+
             <a
                 href="{{ route('notifikasi_siswa') }}"
                 class="topbar-icon"
                 title="Notifikasi"
                 aria-label="Notifikasi"
             >
-                <i class="fa-regular fa-bell"></i>
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
             </a>
 
-            <div class="user-profile">
+            <a href="{{ route('profil_siswa') }}" class="user-profile" style="text-decoration: none; color: inherit;">
                 <div class="avatar">
                     <i class="fa-regular fa-user"></i>
                 </div>
                 <span class="user-name">
                     {{ Auth::user()->name ?? 'Nama Siswa' }}
                 </span>
-            </div>
-        </header>
+            </a>
+        </div></header>
 
         <!-- CONTENT -->
         <main class="content">
@@ -861,6 +1128,7 @@
 
                         <div class="card-body">
                             <form
+                                id="formProfilSiswa"
                                 action="{{ route('profil_siswa.update') }}"
                                 method="POST"
                             >
@@ -947,6 +1215,49 @@
                                         @enderror
                                     </div>
 
+                                    <div class="form-group">
+                                        <label for="kelas" class="form-label">
+                                            Kelas
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="kelas"
+                                            name="kelas"
+                                            class="form-control"
+                                            value="{{ old('kelas', Auth::user()->kelas) }}"
+                                            maxlength="50"
+                                            placeholder="Contoh: XII PPLG 1"
+                                        >
+                                        @error('kelas')
+                                            <span class="field-error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="jurusan" class="form-label">
+                                            Jurusan
+                                        </label>
+                                        <select
+                                            id="jurusan"
+                                            name="jurusan"
+                                            class="form-control"
+                                        >
+                                            <option value="">Pilih Jurusan</option>
+                                            <option value="Bisnis Ritel Pemasaran" {{ old('jurusan', Auth::user()->jurusan) == 'Bisnis Ritel Pemasaran' ? 'selected' : '' }}>
+                                                Bisnis Ritel Pemasaran
+                                            </option>
+                                            <option value="Pengembangan Perangkat Lunak dan Gim" {{ old('jurusan', Auth::user()->jurusan) == 'Pengembangan Perangkat Lunak dan Gim' ? 'selected' : '' }}>
+                                                Pengembangan Perangkat Lunak dan Gim
+                                            </option>
+                                            <option value="Desain Komunikasi Visual" {{ old('jurusan', Auth::user()->jurusan) == 'Desain Komunikasi Visual' ? 'selected' : '' }}>
+                                                Desain Komunikasi Visual
+                                            </option>
+                                        </select>
+                                        @error('jurusan')
+                                            <span class="field-error">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
                                 </div>
 
                                 <div class="form-footer">
@@ -958,16 +1269,31 @@
 
                                     <div class="form-actions">
                                         <a
-                                            href="{{ route('dashboard_siswa') }}"
-                                            class="btn-secondary"
-                                        >
-                                            Batal
-                                        </a>
+    href="{{ route('dashboard_siswa') }}"
+    class="btn-secondary"
+    id="btnBatalProfil"
+>
+    <span id="batalProfilText">
+        Batal
+    </span>
 
-                                        <button type="submit" class="btn-primary">
-                                            <i class="fa-solid fa-floppy-disk"></i>
-                                            Simpan Perubahan
-                                        </button>
+    <span id="batalProfilSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Kembali...
+    </span>
+</a>
+
+                                        <button type="submit" class="btn-primary" id="btnSimpanProfil">
+    <span id="simpanProfilText">
+        <i class="fa-solid fa-floppy-disk"></i>
+        Simpan Perubahan
+    </span>
+
+    <span id="simpanProfilSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Menyimpan Perubahan...
+    </span>
+</button>
                                     </div>
                                 </div>
                             </form>
@@ -996,7 +1322,10 @@
                                 </div>
                             </div>
 
-                            <form action="{{ route('password.siswa.update') }}" method="POST">
+                            <form
+                            id="formUbahPassword"
+                            action="{{ route('password.siswa.update') }}"
+                            method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -1037,9 +1366,22 @@
                                     </div>
                                 </div>
 
-                                <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #4772c7 0%, #3b62ac 100%); color: #ffffff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 98, 172, 0.25);">
-                                    <i class="fa-solid fa-key"></i> Ubah Password
-                                </button>
+                                <button
+    type="submit"
+    class="btn-submit"
+    id="btnUbahPassword"
+    style="background: linear-gradient(135deg, #4772c7 0%, #3b62ac 100%); color: #ffffff; border: none; padding: 12px 24px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 12px rgba(59, 98, 172, 0.25);"
+>
+    <span id="ubahPasswordText">
+        <i class="fa-solid fa-key"></i>
+        Ubah Password
+    </span>
+
+    <span id="ubahPasswordSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Mengubah Password...
+    </span>
+</button>
                             </form>
                         </div>
                     </section>
@@ -1072,7 +1414,136 @@
                     }
                 });
             });
+        // 1. Simpan Perubahan Profil
+const formProfil = document.getElementById('formProfilSiswa');
+const btnSimpan = document.getElementById('btnSimpanProfil');
+const simpanText = document.getElementById('simpanProfilText');
+const simpanSpinner = document.getElementById('simpanProfilSpinner');
+
+if (formProfil && btnSimpan && simpanText && simpanSpinner) {
+    formProfil.addEventListener('submit', function (event) {
+
+        if (formProfil.dataset.submitting === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        formProfil.dataset.submitting = 'true';
+
+        btnSimpan.disabled = true;
+        btnSimpan.style.opacity = '0.7';
+        btnSimpan.style.cursor = 'not-allowed';
+
+        simpanText.style.display = 'none';
+        simpanSpinner.style.display = 'inline-block';
+
+    });
+}
+
+
+// 2. Tombol Batal
+const btnBatal = document.getElementById('btnBatalProfil');
+const batalText = document.getElementById('batalProfilText');
+const batalSpinner = document.getElementById('batalProfilSpinner');
+
+if (btnBatal && batalText && batalSpinner) {
+    btnBatal.addEventListener('click', function (event) {
+
+        if (btnBatal.dataset.loading === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        btnBatal.dataset.loading = 'true';
+
+        btnBatal.style.pointerEvents = 'none';
+        btnBatal.style.opacity = '0.7';
+        btnBatal.style.cursor = 'not-allowed';
+
+        batalText.style.display = 'none';
+        batalSpinner.style.display = 'inline-block';
+
+    });
+}
+
+
+// 3. Ubah Password
+const formPassword = document.getElementById('formUbahPassword');
+const btnPassword = document.getElementById('btnUbahPassword');
+const passwordText = document.getElementById('ubahPasswordText');
+const passwordSpinner = document.getElementById('ubahPasswordSpinner');
+
+if (formPassword && btnPassword && passwordText && passwordSpinner) {
+    formPassword.addEventListener('submit', function (event) {
+
+        if (formPassword.dataset.submitting === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        formPassword.dataset.submitting = 'true';
+
+        btnPassword.disabled = true;
+        btnPassword.style.opacity = '0.7';
+        btnPassword.style.cursor = 'not-allowed';
+
+        passwordText.style.display = 'none';
+        passwordSpinner.style.display = 'inline-block';
+
+    });
+}
         });
     </script>
+<div class="mobile-bottom-nav">
+        <a href="{{ route('dashboard_siswa') }}" class="{{ request()->routeIs('dashboard_siswa') ? 'active' : '' }}">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+
+        <a href="{{ route('buat_laporan') }}" class="{{ request()->routeIs('buat_laporan') ? 'active' : '' }}">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Laporan</span>
+        </a>
+
+        <a href="{{ route('riwayat_laporan') }}" class="{{ request()->routeIs('riwayat_laporan') ? 'active' : '' }}">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Riwayat</span>
+        </a>
+
+        <a href="{{ route('notifikasi_siswa') }}" class="{{ request()->routeIs('notifikasi_siswa') ? 'active' : '' }}">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            <span>Notif</span>
+        </a>
+
+        <a href="{{ route('profil_siswa') }}" class="{{ request()->routeIs('profil_siswa') ? 'active' : '' }}">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
+
+        <!-- Form & Tombol Logout Mobile (Menyesuaikan route('logout') POST kamu) -->
+    <form method="POST" action="{{ route('logout') }}" id="mobile-bottom-logout-form" style="display: none;">
+        @csrf
+    </form>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();" class="mobile-logout-link" title="Logout">
+        <i class="fa-solid fa-right-from-bracket" style="color: #e11d48;"></i>
+        <span style="color: #e11d48;">Logout</span>
+    </a>
+    </div>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

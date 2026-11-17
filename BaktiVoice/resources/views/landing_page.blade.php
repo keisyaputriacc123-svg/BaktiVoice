@@ -18,7 +18,7 @@
             --background: #d2e3f4;
             --card-bg: #9eafdf;
             --border: #f3f4f6;
-            --text-main: #1f2937;
+            --text-main: #2c4a8e;
             --text-muted: #64748b;
             --font-family: 'Inter', sans-serif;
             --radius-md: 12px;
@@ -171,13 +171,13 @@
             font-size: 42px;
             font-weight: 800;
             line-height: 1.15;
-            color: #0f172a;
+            color: #1e3a70;
             margin-bottom: 16px;
         }
 
         .hero-desc {
             font-size: 16px;
-            color: #334155;
+            color: #64748b;
             margin-bottom: 32px;
             max-width: 100%;
         }
@@ -390,7 +390,7 @@
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 8px;
-            color: var(--text-main, #1e293b);
+            color: var(--text-main, #2c4a8e);
         }
 
         .feature-desc {
@@ -475,7 +475,7 @@
             font-size: 28px;
             font-weight: 800;
             margin-bottom: 8px;
-            color: var(--text-main, #1e293b);
+            color: var(--text-main, #2c4a8e);
         }
 
         .section-subtitle {
@@ -530,7 +530,7 @@
             font-size: 16px;
             font-weight: 700;
             margin-bottom: 6px;
-            color: var(--text-main, #1e293b);
+            color: var(--text-main, #2c4a8e);
         }
 
         .step-desc {
@@ -601,7 +601,7 @@
         .faq-card h3 {
             font-size: 16px;
             font-weight: 700;
-            color: var(--text-main, #1e293b);
+            color: var(--text-main, #2c4a8e);
             margin-bottom: 10px;
         }
 
@@ -649,7 +649,137 @@
             .steps-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
         }
-    </style>
+    
+/* SECTION KONTAK */
+.contact-section {
+    padding: 75px 0;
+    background: #eaf1fb;
+}
+.contact-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+.contact-heading h2 {
+    color: #2c4a8e;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.contact-heading p {
+    color: #64748b;
+}
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.contact-card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #dce7f8;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+.contact-card i {
+    color: #628cdb;
+    font-size: 24px;
+    width: 30px;
+}
+.contact-card h3 {
+    color: #2c4a8e;
+    font-size: 16px;
+    margin-bottom: 6px;
+}
+.contact-card p, .contact-card a {
+    color: #64748b;
+    font-size: 14px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+@media(max-width:768px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}
+/* FOOTER CLASSIC BAKTIVOICE */
+.bv-footer {
+    background: #203b68;
+    color: #ffffff;
+    padding: 65px 0 28px;
+}
+.bv-footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+    gap: 40px;
+}
+.bv-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.bv-footer-brand img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 12px;
+}
+.bv-footer h3 {
+    color: #ffffff;
+    font-size: 15px;
+    margin-bottom: 22px;
+}
+.bv-footer p, .bv-footer a {
+    color: #d3e1f7;
+    font-size: 13px;
+    line-height: 1.9;
+}
+.bv-footer a {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 7px;
+    overflow-wrap: anywhere;
+}
+.bv-footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+.bv-footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.2);
+    margin-top: 45px;
+    padding-top: 22px;
+    color: #c3d3ec;
+    font-size: 12px;
+}
+@media(max-width:768px) {
+    .bv-footer-grid {
+        grid-template-columns: repeat(2,1fr);
+        gap: 30px 20px;
+    }
+}
+@media(max-width:480px) {
+    .bv-footer-grid {
+        grid-template-columns: 1fr;
+    }
+}.bv-footer {
+    background: #dce8f8 !important;
+    color: #2c4a8e !important;
+}
+.bv-footer h3,
+.bv-footer strong {
+    color: #2c4a8e !important;
+}
+.bv-footer p,
+.bv-footer a {
+    color: #526b99 !important;
+}
+.bv-footer a:hover {
+    color: #4772c7 !important;
+}
+.bv-footer-bottom {
+    border-color: #c2d3ed !important;
+    color: #526b99 !important;
+}</style>
 </head>
 <body>
 
@@ -695,7 +825,7 @@
                     <div class="hero-mascot" id="baviContainer">
 
                         <div class="bavi-speech" id="baviSpeech" role="status" aria-live="polite">
-                            Hai, Sobat Bakti! 👋
+                            Hai, Sobat Bakti! ðŸ‘‹
                             <br>
                             Aku Bavi, siap menemanimu!
                     </div>
@@ -833,28 +963,50 @@
 </section>
 
     <!-- FOOTER -->
-    <footer class="footer" id="kontak">
-        <div class="container footer-container">
+    <footer class="bv-footer" id="kontak">
+    <div class="container">
+        <div class="bv-footer-grid">
+
             <div>
-                <div class="brand-logo-group">
-                    <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo" class="brand-logo-img">
-                    <span class="brand-title" style="font-size: 16px;">BaktiVoice</span>
+                <div class="bv-footer-brand">
+                    <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice">
+                    <strong>BaktiVoice</strong>
                 </div>
+                <p>
+                    Suara Siswa, Perubahan Sekolah.
+                    Wadah aspirasi dan pelaporan untuk
+                    menciptakan lingkungan sekolah yang lebih baik.
+                </p>
             </div>
 
-            <ul class="footer-links">
-                <li><a href="#beranda">Beranda</a></li>
-                <li><a href="#tentang">Tentang</a></li>
-                <li><a href="#fitur">Fitur</a></li>
-                <li><a href="#cara-kerja">Cara Kerja</a></li>
-                <li><a href="#kontak">Kontak</a></li>
-            </ul>
-
-            <div class="footer-copy">
-                &copy; 2026 BaktiVoice. SMK Budi Bakti Ciwidey
+            <div>
+                <h3>TENTANG</h3>
+                <a href="#tentang">Tentang BaktiVoice</a>
+                <a href="#faq">Bantuan & FAQ</a>
             </div>
+
+            <div>
+                <h3>JELAJAHI</h3>
+                <a href="#beranda">Beranda</a>
+                <a href="#fitur">Fitur</a>
+                <a href="#cara-kerja">Cara Kerja</a>
+            </div>
+
+            <div>
+                <h3>KONTAK</h3>
+                <p>Jl. Babakan Tiga No.82, Ciwidey, Bandung Regency, West Java 40973</p>
+                <a href="tel:+6285285648525">085285648525</a>
+                <a href="https://www.smkbbc.sch.id" target="_blank">www.smkbbc.sch.id</a>
+                <a href="https://www.instagram.com/info_smkbudibakticiwidey/" target="_blank">@info_smkbudibakticiwidey</a>
+            </div>
+
         </div>
-    </footer>
+
+        <div class="bv-footer-bottom">
+            &copy; 2026 BaktiVoice. SMK Budi Bakti Ciwidey. All Rights Reserved.
+        </div>
+    </div>
+</footer>
 
 
 <script>
@@ -896,9 +1048,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // SAPAAN BAVI
     // =========================
     const pesanBavi = [
-        'Hai, Sobat Bakti! 👋 Aku Bavi, siap menemanimu!',
-        'Punya aspirasi untuk sekolah? Yuk, sampaikan suaramu! 💙',
-        'Jangan ragu untuk berbagi saran demi sekolah yang lebih baik! ✨'
+        'Hai, Sobat Bakti! ðŸ‘‹ Aku Bavi, siap menemanimu!',
+        'Punya aspirasi untuk sekolah? Yuk, sampaikan suaramu! ðŸ’™',
+        'Jangan ragu untuk berbagi saran demi sekolah yang lebih baik! âœ¨'
     ];
 
     let pesanIndex = 0;
@@ -911,9 +1063,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }
 
         speech.innerHTML = pesanBavi[pesanIndex]
-            .replace(' 👋', ' 👋')
-            .replace(' 💙', ' 💙')
-            .replace(' ✨', ' ✨');
+            .replace(' ðŸ‘‹', ' ðŸ‘‹')
+            .replace(' ðŸ’™', ' ðŸ’™')
+            .replace(' âœ¨', ' âœ¨');
 
         speech.classList.add('show');
 
@@ -957,5 +1109,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+

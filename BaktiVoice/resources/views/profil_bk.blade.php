@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -618,7 +618,280 @@
                 flex: 1;
             }
         }
-    </style>
+
+/* ==========================================
+   RESPONSIVE RESTORATION - GURU BK FINAL
+   ========================================== */
+
+.topbar-mobile-brand {
+    display: none;
+    align-items: center;
+    gap: 9px;
+}
+
+.topbar-logo-img {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+}
+
+.topbar-brand-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c4a8e;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        height: 60px !important;
+        min-height: 60px;
+        padding: 0 14px !important;
+        display: flex !important;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: #fff;
+    }
+
+    .topbar-mobile-brand {
+        display: flex !important;
+        flex-shrink: 0;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-icon {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .user-profile {
+        display: flex !important;
+        align-items: center;
+        gap: 7px;
+        min-width: 0;
+    }
+
+    .user-name {
+        max-width: 105px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    .content,
+    .main-content {
+        width: 100% !important;
+        max-width: 100%;
+        margin-left: 0 !important;
+        box-sizing: border-box;
+        padding-bottom: 110px !important;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        display: flex !important;
+        justify-content: space-around;
+        align-items: center;
+        min-height: 66px;
+        padding: 7px 3px;
+        padding-bottom: max(7px, env(safe-area-inset-bottom));
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 15px rgba(65, 105, 170, 0.12);
+        border-top: 1px solid rgba(255,255,255,0.65);
+        box-sizing: border-box;
+    }
+
+    .mobile-nav-item {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        color: #46669f;
+        text-decoration: none;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 600;
+        white-space: nowrap;
+        background: transparent;
+        border: none;
+        padding: 5px 1px;
+        cursor: pointer;
+    }
+
+    .mobile-nav-item i {
+        font-size: 17px;
+    }
+
+    .mobile-nav-item.active {
+        color: #244b91;
+    }
+
+    .mobile-nav-item.active i {
+        transform: translateY(-2px);
+    }
+
+    .mobile-nav-logout,
+    .mobile-nav-logout-form {
+        color: #a34455;
+    }
+
+    .mobile-nav-logout-form {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mobile-nav-logout-form button {
+        width: 100%;
+    }
+
+    .content img,
+    .main-content img {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .topbar-brand-name {
+        font-size: 14px;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .user-name {
+        max-width: 75px;
+        font-size: 11px;
+    }
+
+    .content,
+    .main-content {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
+@media (max-width: 380px) {
+
+    .mobile-nav-item {
+        font-size: 9px;
+        gap: 4px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 15px;
+    }
+
+    .topbar {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+
+    .topbar-right-group {
+        gap: 7px;
+    }
+}
+
+
+/* FIX WARNA TOPBAR MOBILE GURU BK */
+@media (max-width: 768px) {
+    .topbar {
+        background: var(--gradient-pastel) !important;
+        background-image: var(--gradient-pastel) !important;
+    }
+}
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}</style>
 </head>
 
 <body>
@@ -652,9 +925,14 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('notifikasi_bk') }}" class="nav-notification">
-                        <i class="fa-solid fa-bell"></i>
+                        <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                         <span>Notifikasi</span>
-                        <span class="notification-dot"></span>
+                        
                     </a>
                 </li>
                 <li class="nav-item active">
@@ -677,19 +955,36 @@
 
     <div class="main-wrapper">
         <header class="topbar">
-            <a href="{{ route('notifikasi_bk') }}" class="topbar-icon" title="Notifikasi" aria-label="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </a>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
 
-            <div class="user-profile">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-                <span class="user-name">
-                    {{ Auth::user()->name ?? 'Guru BK' }}
-                </span>
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_bk') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_bk') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
             </div>
-        </header>
+            <span class="user-name">
+                {{ Auth::user()->name ?? 'Guru BK' }}
+            </span>
+        </a>
+    </div>
+</header>
 
         <main class="content">
             <div class="breadcrumb">
@@ -769,7 +1064,7 @@
                         </div>
 
                         <div class="card-body">
-                            <form action="{{ route('profil_bk.update') }}" method="POST">
+                            <form id="formProfilBK" action="{{ route('profil_bk.update') }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <div class="form-grid">
@@ -823,14 +1118,13 @@
                                     </p>
 
                                     <div class="form-actions">
-                                        <a href="{{ route('dashboard_bk') }}" class="btn-secondary">
-                                            Batal
+                                       <a href="{{ route('dashboard_bk') }}" class="btn-secondary" id="btnBatalProfilBK">
+                                        Batal
                                         </a>
-
-                                        <button type="submit" class="btn-primary">
-                                            <i class="fa-solid fa-floppy-disk"></i>
-                                            Simpan Perubahan
-                                        </button>
+                                        <button type="submit" class="btn-primary" id="btnSimpanProfilBK">
+    <i class="fa-solid fa-floppy-disk"></i>
+    Simpan Perubahan
+</button>
                                     </div>
                                 </div>
                             </form>
@@ -859,7 +1153,7 @@
                             </div>
 
                         <div class="card-body">
-                            <form action="{{ route('profil_bk.password') }}" method="POST">
+                            <form id="formPasswordBK" action="{{ route('profil_bk.password') }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -919,10 +1213,12 @@
                                     </p>
 
                                     <div class="form-actions">
-                                        <button type="submit" class="btn-primary">
-                                            <i class="fa-solid fa-key"></i>
-                                            Ubah Password
-                                        </button>
+<div class="form-actions">
+    <button type="submit" class="btn-primary" id="btnUbahPasswordBK">
+        <i class="fa-solid fa-key"></i>
+        Ubah Password
+    </button>
+</div>
                                     </div>
                                 </div>
                             </form>
@@ -958,5 +1254,135 @@
             });
         });
     </script>
+<nav class="mobile-bottom-nav" aria-label="Navigasi utama">    <a href="{{ route('dashboard_bk') }}" class="mobile-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>    <a href="{{ route('LaporanSiswa_bk') }}" class="mobile-nav-item">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Laporan</span>
+    </a>    <a href="{{ route('monitoring_bk') }}" class="mobile-nav-item">
+        <i class="fa-regular fa-eye"></i>
+        <span>Monitoring</span>
+    </a>    <a href="{{ route('notifikasi_bk') }}" class="mobile-nav-item">
+        <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>    <a href="{{ route('profil_bk') }}" class="mobile-nav-item active">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>    <form action="{{ route('logout') }}" method="POST" class="mobile-nav-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-nav-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+        </button>
+    </form>
+</nav>
+    <script>
+// ==========================================
+// ANTI-DOUBLE CLICK PROFIL GURU BK
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ==========================================
+    // 1. TOMBOL BATAL
+    // ==========================================
+
+    const btnBatal = document.getElementById('btnBatalProfilBK');
+
+    if (btnBatal) {
+        btnBatal.addEventListener('click', function (event) {
+
+            if (btnBatal.dataset.clicked === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            btnBatal.dataset.clicked = 'true';
+            btnBatal.style.opacity = '0.7';
+            btnBatal.style.pointerEvents = 'none';
+
+            btnBatal.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Kembali...
+            `;
+        });
+    }
+
+
+    // ==========================================
+    // 2. TOMBOL SIMPAN PERUBAHAN
+    // ==========================================
+
+    const formProfil = document.getElementById('formProfilBK');
+    const btnSimpan = document.getElementById('btnSimpanProfilBK');
+
+    if (formProfil && btnSimpan) {
+
+        formProfil.addEventListener('submit', function (event) {
+
+            if (btnSimpan.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            btnSimpan.dataset.submitted = 'true';
+            btnSimpan.disabled = true;
+            btnSimpan.style.opacity = '0.7';
+            btnSimpan.style.cursor = 'not-allowed';
+
+            btnSimpan.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Menyimpan...
+            `;
+        });
+    }
+
+
+    // ==========================================
+    // 3. TOMBOL UBAH PASSWORD
+    // ==========================================
+
+    const formPassword = document.getElementById('formPasswordBK');
+    const btnPassword = document.getElementById('btnUbahPasswordBK');
+
+    if (formPassword && btnPassword) {
+
+        formPassword.addEventListener('submit', function (event) {
+
+            if (btnPassword.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            btnPassword.dataset.submitted = 'true';
+            btnPassword.disabled = true;
+            btnPassword.style.opacity = '0.7';
+            btnPassword.style.cursor = 'not-allowed';
+
+            btnPassword.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memproses...
+            `;
+        });
+    }
+
+});
+</script>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

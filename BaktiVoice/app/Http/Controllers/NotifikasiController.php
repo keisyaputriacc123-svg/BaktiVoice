@@ -17,20 +17,20 @@ class NotifikasiController extends Controller
         $notifications = Notifikasi::where('id_user', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
-
-            dd([
-    'id_user_login' => Auth::id(),
-    'jumlah_notifikasi' => $notifications->count(),
-    'data_notifikasi' => $notifications->toArray(),
-]);
-
-        $totalCount = $notifications->count();
+$totalCount = $notifications->count();
 
         $unreadCount = $notifications
             ->where('is_read', false)
             ->count();
 
-        $viewName = $request->route()->parameter(
+        $newReportCount = $notifications
+    ->where('type', 'laporan')
+    ->count();
+
+$feedbackCount = $notifications
+    ->whereIn('type', ['masukan-bk', 'tindak-lanjut-wakasek'])
+    ->count();
+$viewName = $request->route()->parameter(
             'viewName',
             'notifikasi_admin'
         );
@@ -38,14 +38,16 @@ class NotifikasiController extends Controller
         return view($viewName, compact(
             'notifications',
             'totalCount',
-            'unreadCount'
+            'unreadCount',
+            'newReportCount',
+            'feedbackCount'
         ));
     }
 
     /**
      * Menandai satu notifikasi sebagai dibaca.
      */
-    public function markAsRead($id)
+    public function markAsRead(int $id)
     {
         $notif = Notifikasi::where('id_notifikasi', $id)
             ->where('id_user', Auth::id())
@@ -77,3 +79,5 @@ class NotifikasiController extends Controller
         );
     }
 }
+
+

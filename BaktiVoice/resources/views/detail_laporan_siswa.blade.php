@@ -400,7 +400,7 @@
             border: 1px solid var(--border);
             border-radius: 10px;
             background: #f8faff;
-            color: #334155;
+            color: #2c4a8e;
             font-size: 14px;
             line-height: 1.8;
             overflow-wrap: anywhere;
@@ -654,7 +654,402 @@
     background-color: rgba(255, 255, 255, 0.3);
 }
 
-    </style>
+    
+    /* RESPONSIVE RESTORE FROM STASH - SELECTIVE */
+    .topbar-mobile-brand,
+    .mobile-bottom-nav {
+        display: none;
+    }
+@media (max-width: 768px) {
+
+    /* Sidebar */
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
+        min-width: 0;
+    }
+
+    /* Topbar Mobile */
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        justify-content: space-between;
+        gap: 12px;
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .topbar-brand-name {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+    .topbar-right-group {
+        gap: 8px;
+    }
+
+    .topbar-icon {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+    }
+
+    .user-name {
+        display: none;
+    }
+
+    /* Main Content */
+    .content {
+        padding: 24px 18px 90px;
+    }
+
+    .page-header {
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .page-title {
+        font-size: 23px;
+    }
+
+    .report-code {
+        margin-left: 50px;
+    }
+
+    /* Informasi Laporan */
+    .report-info-card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 12px;
+        padding: 18px;
+    }
+
+    .info-item {
+        gap: 9px;
+    }
+
+    .info-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 15px;
+    }
+
+    .info-value {
+        font-size: 13px;
+    }
+
+    /* Isi dan Bukti Laporan */
+    .report-content-card,
+    .evidence-card {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+
+    .report-text {
+        padding: 14px;
+        font-size: 13px;
+    }
+
+    .evidence-preview {
+        width: 100%;
+        max-width: 100%;
+        height: 180px;
+    }
+
+    /* Tombol */
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-save {
+        width: 100%;
+        min-height: 50px;
+    }
+
+    /* Mobile Bottom Navigation */
+    .mobile-bottom-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-height: 66px;
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+        border-top: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 -4px 15px rgba(123, 159, 232, 0.12);
+        justify-content: space-around;
+        align-items: center;
+        padding: 6px 4px;
+        z-index: 1000;
+    }
+
+    .mobile-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        flex: 1;
+        color: #274472;
+        text-decoration: none;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .mobile-bottom-nav a i {
+        font-size: 18px;
+    }
+
+    .mobile-bottom-nav a.active {
+        color: #3b62ac;
+        font-weight: 800;
+    }
+
+    .mobile-bottom-nav a.active i {
+        transform: translateY(-2px);
+    }
+}
+
+/* FIX TOPBAR RIWAYAT DAN DETAIL LAPORAN */
+
+/* DESKTOP */
+@media (min-width: 769px) {
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 20px !important;
+        margin-left: auto !important;
+        height: 100%;
+    }
+
+    .topbar-right-group .topbar-icon,
+    .topbar-right-group .notification-button,
+    .topbar-right-group .user-profile {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        position: relative;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .topbar-mobile-brand {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        margin-right: auto !important;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        flex-shrink: 0 !important;
+        gap: 12px !important;
+        margin-left: auto !important;
+        height: 100%;
+    }
+
+    .topbar-right-group .topbar-icon,
+    .topbar-right-group .notification-button,
+    .topbar-right-group .user-profile {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        position: relative;
+    }
+
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -698,7 +1093,12 @@
                 <li class="nav-item">
                     <a href="{{ route('notifikasi_siswa') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
                     </a>
@@ -728,21 +1128,41 @@
     <div class="main-wrapper">
 
         <!-- TOPBAR -->
-        <header class="topbar">
+        <header class="topbar"><div class="topbar-mobile-brand">
+    <img src="{{ asset('images/logo BaktiVoice.png') }}"
+         alt="Logo" class="topbar-logo-img">
+    <span class="topbar-brand-name">BaktiVoice</span>
+</div>
+<div class="topbar-right-group">
 
+            <a href="{{ route('notifikasi_siswa') }}" class="notification-button" title="Notifikasi">
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            </a>
 
-            <div class="user-profile">
+            <a href="{{ route('profil_siswa') }}" class="user-profile" style="text-decoration: none; color: inherit;">
                 <div class="avatar">
                     <i class="fa-regular fa-user"></i>
                 </div>
                 <span class="user-name">
                     {{ Auth::user()->name ?? 'Nama Siswa' }}
                 </span>
-            </div>
-        </header>
+            </a>
+        </div></header>
 
         <!-- MAIN CONTENT -->
         <main class="content">
+
+    <div class="breadcrumb">
+        <a href="{{ route('dashboard_siswa') }}">Dashboard</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+        <span>Detail Laporan</span>
+    </div>
+
 
             <!-- JUDUL DAN KODE LAPORAN -->
             <section class="page-header">
@@ -783,7 +1203,15 @@
                     <div>
                         <span class="info-label">Pelapor</span>
                         <div class="info-value">
-                            {{ $laporan->anonim ? 'Anonim' : ($laporan->user->name ?? 'Siswa') }}
+                            @if($laporan->anonim)
+                                Anonim
+                            @else
+                                {{ $laporan->user->name ?? 'Siswa' }}
+                                <div style="font-size: 12px; font-weight: 500; color: #64748b; margin-top: 5px; line-height: 1.7;">
+                                    Kelas: {{ $laporan->user->kelas ?? '-' }}<br>
+                                    Jurusan: {{ $laporan->user->jurusan ?? '-' }}
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -834,7 +1262,10 @@
 
                 @php
                     $idLaporan = $laporan->id_laporan ?? $laporan->id;
-                    $buktiList = DB::table('bukti_laporan')->where('id_laporan', $idLaporan)->get();
+                    $buktiList = DB::table('bukti_laporan')
+                        ->where('id_laporan', $idLaporan)
+                        ->where('file_path', 'like', 'uploads/laporan/%')
+                        ->get();
                 @endphp
 
                 @if($buktiList->count() > 0)
@@ -860,16 +1291,16 @@
             <!-- TANGGAPAN ADMIN -->
             <section class="tanggapan-card">
                 <h2 class="section-title">
-                    <i class="fa-solid fa-comments"></i>
-                    Tanggapan / Tindak Lanjut Admin
+                    <i class="fa-solid fa-user-shield"></i>
+                    Tanggapan Admin
                 </h2>
 
-                @forelse($laporan->tanggapan ?? [] as $tanggapan)
+                @forelse($tanggapanAdmin as $tanggapan)
                     <div class="tanggapan-item">
                         <div class="tanggapan-header">
                             <span>{{ $tanggapan->user->name ?? 'Admin' }}</span>
                             <span style="font-weight: normal; color: var(--text-muted);">
-                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->format('d M Y H:i') }}
+                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB
                             </span>
                         </div>
                         <div class="tanggapan-text">
@@ -877,7 +1308,77 @@
                         </div>
                     </div>
                 @empty
-                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan atau catatan dari admin untuk laporan ini.</p>
+                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan dari Admin.</p>
+                @endforelse
+            </section>
+
+            <!-- TANGGAPAN GURU BK -->
+            <section class="tanggapan-card">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-user-doctor"></i>
+                    Tanggapan Guru BK
+                </h2>
+
+                @forelse($tanggapanGuruBk as $tanggapan)
+                    <div class="tanggapan-item">
+                        <div class="tanggapan-header">
+                            <span>{{ $tanggapan->user->name ?? 'Guru BK' }}</span>
+                            <span style="font-weight: normal; color: var(--text-muted);">
+                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB
+                            </span>
+                        </div>
+                        <div class="tanggapan-text">
+                            {{ $tanggapan->tanggapan }}
+                        </div>
+                    </div>
+                @empty
+                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan dari Guru BK.</p>
+                @endforelse
+            </section>
+
+            <!-- TINDAK LANJUT WAKASEK -->
+            <section class="tanggapan-card">
+                <h2 class="section-title">
+                    <i class="fa-solid fa-building-columns"></i>
+                    Tindak Lanjut Wakasek
+                </h2>
+
+                @forelse($tindakLanjutWakasek as $tanggapan)
+                    <div class="tanggapan-item">
+                        <div class="tanggapan-header">
+                            <span>{{ $tanggapan->user->name ?? 'Wakasek' }}</span>
+                            <span style="font-weight: normal; color: var(--text-muted);">
+                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB
+                            </span>
+                        </div>
+                        <div class="tanggapan-text">
+                            {{ $tanggapan->tanggapan }}
+                        </div>
+
+                        @php
+                            $buktiWakasek = DB::table('bukti_laporan')
+                                ->where('id_laporan', $laporan->id_laporan ?? $laporan->id)
+                                ->where('file_path', 'like', 'tanggapan/%')
+                                ->get();
+                        @endphp
+
+                        @if($buktiWakasek->count() > 0)
+                            <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px;">
+                                @foreach($buktiWakasek as $bukti)
+                                    <div>
+                                        <div class="evidence-preview">
+                                            <a href="{{ asset('storage/' . $bukti->file_path) }}" target="_blank">
+                                                <img src="{{ asset('storage/' . $bukti->file_path) }}" alt="Bukti Tindak Lanjut Wakasek">
+                                            </a>
+                                        </div>
+                                        <a href="{{ asset('storage/' . $bukti->file_path) }}" target="_blank" class="evidence-link">Lihat Full Size</a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+                    </div>
+                @empty
+                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tindak lanjut dari Wakasek.</p>
                 @endforelse
             </section>
 
@@ -908,5 +1409,68 @@
         }
     </script>
 
+<div class="mobile-bottom-nav">
+
+    <a href="{{ route('dashboard_siswa') }}"
+       class="{{ request()->routeIs('dashboard_siswa') ? 'active' : '' }}">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route('buat_laporan') }}"
+       class="{{ request()->routeIs('buat_laporan') ? 'active' : '' }}">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Laporan</span>
+    </a>
+
+    <a href="{{ route('riwayat_laporan') }}"
+       class="{{ request()->routeIs('riwayat_laporan', 'detail_laporan_siswa') ? 'active' : '' }}">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Riwayat</span>
+    </a>
+
+    <a href="{{ route('notifikasi_siswa') }}"
+       class="{{ request()->routeIs('notifikasi_siswa') ? 'active' : '' }}">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_siswa') }}"
+       class="{{ request()->routeIs('profil_siswa') ? 'active' : '' }}">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <!-- Form & Tombol Logout Mobile -->
+    <form method="POST" action="{{ route('logout') }}"
+          id="mobile-bottom-logout-form" style="display: none;">
+        @csrf
+    </form>
+
+    <a href="#"
+       onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();"
+       class="mobile-logout-link" title="Logout">
+        <i class="fa-solid fa-right-from-bracket" style="color: #e11d48;"></i>
+        <span style="color: #e11d48;">Logout</span>
+    </a>
+
+</div>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

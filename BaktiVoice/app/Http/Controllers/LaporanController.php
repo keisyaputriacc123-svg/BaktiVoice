@@ -119,8 +119,11 @@ class LaporanController extends Controller
      */
     public function show($id)
     {
-        $laporan = Laporan::with(['kategori', 'user'])
-            ->findOrFail($id);
+        $laporan = Laporan::with([
+            'kategori',
+            'user',
+            'tanggapan.user'
+        ])->findOrFail($id);
 
         if (method_exists($this, 'authorize')) {
             try {
@@ -135,7 +138,24 @@ class LaporanController extends Controller
             }
         }
 
-        return view('detail_laporan_siswa', compact('laporan'));
+        $tanggapanAdmin = $laporan->tanggapan->filter(
+            fn($item) => $item->user?->role === 'admin'
+        );
+
+        $tanggapanGuruBk = $laporan->tanggapan->filter(
+            fn($item) => $item->user?->role === 'guru_bk'
+        );
+
+        $tindakLanjutWakasek = $laporan->tanggapan->filter(
+            fn($item) => str_starts_with($item->user?->role ?? '', 'wakasek')
+        );
+
+        return view('detail_laporan_siswa', compact(
+            'laporan',
+            'tanggapanAdmin',
+            'tanggapanGuruBk',
+            'tindakLanjutWakasek'
+        ));
     }
 
 
@@ -363,3 +383,4 @@ class LaporanController extends Controller
 
 
 }
+

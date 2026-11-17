@@ -183,6 +183,14 @@ SIDEBAR
             transition: all 0.2s ease;
 
             margin-top: 16px;
+        
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            font-family: inherit;
+            box-sizing: border-box;
         }
 
         .logout-btn:hover {
@@ -313,7 +321,7 @@ SIDEBAR
             font-size: 28px;
             font-weight: 800;
 
-            color: #0f172a;
+            color: #1e3a70;
 
             margin-bottom: 24px;
         }
@@ -475,7 +483,7 @@ SIDEBAR
             font-size: 15px;
             font-weight: 700;
 
-            color: #0f172a;
+            color: #1e3a70;
 
             margin-bottom: 5px;
         }
@@ -652,7 +660,439 @@ SIDEBAR
                 width: 24px;
             }
         }
-    </style>
+    
+    /* RESPONSIVE RESTORE FROM STASH - SELECTIVE */
+    .topbar-mobile-brand,
+    .mobile-bottom-nav {
+        display: none;
+    }
+@media (max-width: 768px) {
+
+    /* SIDEBAR */
+    .sidebar {
+        display: none !important;
+    }
+
+    /* MAIN WRAPPER */
+    .main-wrapper {
+        margin-left: 0;
+        width: 100%;
+        min-height: 100vh;
+    }
+
+    /* TOPBAR */
+    .topbar {
+        height: 60px;
+        padding: 0 16px;
+        justify-content: space-between;
+        gap: 10px;
+
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+    }
+
+    /* Penyesuaian kelompok kanan saat di HP */
+    .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-left: auto;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+    }
+
+    .topbar-mobile-brand img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .topbar-mobile-brand span {
+        font-size: 15px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+.topbar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #274472;
+    font-size: 18px;
+    padding: 8px;
+    flex-shrink: 0;
+}
+
+    .user-name {
+        display: none;
+    }
+
+    /* CONTENT */
+    .content {
+        padding: 20px 16px 90px;
+    }
+
+    .page-title {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .search-wrapper {
+        margin-bottom: 20px;
+    }
+
+    /* REPORT CARD */
+    .report-card {
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr) auto;
+        grid-template-areas:
+            "image info arrow"
+            "image status arrow";
+
+        align-items: center;
+        gap: 8px 10px;
+        padding: 14px;
+    }
+
+    .report-image {
+        grid-area: image;
+        width: 42px;
+        height: 42px;
+    }
+
+    .report-info {
+        grid-area: info;
+        min-width: 0;
+    }
+
+    .report-title {
+        font-size: 13px;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+
+    .report-date {
+        font-size: 11px;
+    }
+
+    .report-status {
+        grid-area: status;
+        justify-self: start;
+        min-width: auto;
+        padding: 5px 9px;
+        font-size: 10px;
+    }
+
+    .report-arrow {
+        grid-area: arrow;
+        width: 24px;
+    }
+
+    /* MOBILE BOTTOM NAVIGATION */
+    .mobile-bottom-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        position: fixed;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        min-height: 66px;
+
+        background: linear-gradient(
+            135deg,
+            #dbeafe 0%,
+            #bfdbfe 50%,
+            #93c5fd 100%
+        );
+
+        border-top: 1px solid #93c5fd;
+        box-shadow: 0 -3px 12px rgba(123, 159, 232, 0.12);
+
+        z-index: 1000;
+        padding: 7px 3px;
+    }
+
+    .mobile-bottom-nav a {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+
+        color: #274472;
+        text-decoration: none;
+        font-size: 9.5px;
+        font-weight: 600;
+
+        min-width: 0;
+    }
+
+    .mobile-bottom-nav a i {
+        font-size: 18px;
+    }
+
+    .mobile-bottom-nav a.active {
+        color: #315ca8;
+        font-weight: 800;
+    }
+
+    .mobile-bottom-nav a.active i {
+        color: #315ca8;
+    }
+}
+
+@media (max-width: 550px) {
+
+    .page-title {
+        font-size: 24px;
+    }
+
+    .content {
+        padding: 18px 14px 90px;
+    }
+
+    .report-card {
+        padding: 12px;
+        gap: 7px 9px;
+    }
+
+    .report-title {
+        font-size: 12px;
+    }
+
+    .report-date {
+        font-size: 10px;
+    }
+
+    .report-status {
+        font-size: 9px;
+        padding: 5px 8px;
+    }
+
+    .report-arrow {
+        width: 20px;
+    }
+}
+
+/* FIX TOPBAR RIWAYAT DAN DETAIL LAPORAN */
+
+/* DESKTOP */
+@media (min-width: 769px) {
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 20px !important;
+        margin-left: auto !important;
+        height: 100%;
+    }
+
+    .topbar-right-group .topbar-icon,
+    .topbar-right-group .notification-button,
+    .topbar-right-group .user-profile {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        position: relative;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+    .topbar {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .topbar-mobile-brand {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        margin-right: auto !important;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        flex-shrink: 0 !important;
+        gap: 12px !important;
+        margin-left: auto !important;
+        height: 100%;
+    }
+
+    .topbar-right-group .topbar-icon,
+    .topbar-right-group .notification-button,
+    .topbar-right-group .user-profile {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin: 0 !important;
+        position: relative;
+    }
+
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+}
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -729,7 +1169,12 @@ SIDEBAR
 
                         <div class="nav-content">
 
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
 
@@ -759,10 +1204,10 @@ SIDEBAR
 
 
         <!-- LOGOUT -->
-        <a href="{{ route('login') }}" class="logout-btn">
+        <button type="submit" form="mobile-bottom-logout-form" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Logout</span>
-        </a>
+        </button>
 
     </aside>
 
@@ -771,18 +1216,29 @@ SIDEBAR
 
 
         <!-- TOPBAR -->
-        <header class="topbar">
+        <header class="topbar"><div class="topbar-mobile-brand">
+    <img src="{{ asset('images/logo BaktiVoice.png') }}"
+         alt="Logo" class="topbar-logo-img">
+    <span class="topbar-brand-name">BaktiVoice</span>
+</div>
+<div class="topbar-right-group">
+
 
 
             <div class="topbar-icon" title="Notifikasi">
 
-                <i class="fa-regular fa-bell"></i>
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
 
             </div>
 
 
 
-            <div class="user-profile">
+            <a href="{{ route('profil_siswa') }}" class="user-profile" style="text-decoration: none; color: inherit;">
 
                 <div class="avatar">
 
@@ -794,12 +1250,19 @@ SIDEBAR
                     {{ Auth::user()->name ?? 'Nama Siswa' }}
                 </span>
 
-            </div>
+            </a>
 
-        </header>
+        </div></header>
 
         <!-- CONTENT -->
         <main class="content">
+
+    <div class="breadcrumb">
+        <a href="{{ route('dashboard_siswa') }}">Dashboard</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+        <span>Riwayat Laporan</span>
+    </div>
+
             <h1 class="page-title">Riwayat Laporan</h1>
 
             <!-- SEARCH -->
@@ -832,10 +1295,10 @@ SIDEBAR
                         };
                     @endphp
 
-                    <a href="{{ route('konfirmasi_laporan', ['id' => $laporan->id_laporan]) }}"
+                    <a href="{{ route('detail_laporan_siswa', ['id' => $laporan->id_laporan]) }}"
                        class="report-card"
-                       data-title="{{ $laporan->judul_laporan }}"
-                       data-date="{{ $laporan->created_at->format('d M Y') }}">
+                       data-title="{{ $laporan->judul }}"
+                       data-date="{{ $laporan->created_at->timezone('Asia/Jakarta')->format('d M Y') }}">
 
                        <div class="report-image">
                             @if($laporan->buktiLaporan && $laporan->buktiLaporan->isNotEmpty())
@@ -847,10 +1310,10 @@ SIDEBAR
 
                         <div class="report-info">
                             <div class="report-title">
-                                {{ $laporan->judul_laporan }}
+                                {{ $laporan->judul }}
                             </div>
                             <div class="report-date">
-                                {{ $laporan->created_at->format('d M Y') }}
+                                {{ $laporan->created_at->timezone('Asia/Jakarta')->format('d M Y') }}
                             </div>
                         </div>
 
@@ -905,5 +1368,59 @@ SIDEBAR
 
     </script>
 
+<div class="mobile-bottom-nav">
+        <a href="{{ route('dashboard_siswa') }}" class="{{ request()->routeIs('dashboard_siswa') ? 'active' : '' }}">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+
+        <a href="{{ route('buat_laporan') }}" class="{{ request()->routeIs('buat_laporan') ? 'active' : '' }}">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Laporan</span>
+        </a>
+
+        <a href="{{ route('riwayat_laporan') }}" class="{{ request()->routeIs('riwayat_laporan') ? 'active' : '' }}">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Riwayat</span>
+        </a>
+
+        <a href="{{ route('notifikasi_siswa') }}" class="{{ request()->routeIs('notifikasi_siswa') ? 'active' : '' }}">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            <span>Notif</span>
+        </a>
+
+        <a href="{{ route('profil_siswa') }}" class="{{ request()->routeIs('profil_siswa') ? 'active' : '' }}">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
+
+        <!-- Form & Tombol Logout Mobile (Menyesuaikan route('logout') POST kamu) -->
+    <form method="POST" action="{{ route('logout') }}" id="mobile-bottom-logout-form" style="display: none;">
+        @csrf
+    </form>
+    <a href="#" onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();" class="mobile-logout-link" title="Logout">
+        <i class="fa-solid fa-right-from-bracket" style="color: #e11d48;"></i>
+        <span style="color: #e11d48;">Logout</span>
+    </a>
+    </div>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

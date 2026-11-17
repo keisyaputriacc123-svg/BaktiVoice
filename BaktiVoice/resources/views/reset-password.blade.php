@@ -256,5 +256,6 @@
 
     </div>
 
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>

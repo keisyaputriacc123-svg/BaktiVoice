@@ -349,6 +349,319 @@
             display: none;
         }
     }
+
+/* ==========================================================
+   RESPONSIVE MOBILE - BAKTIVOICE ADMIN
+   ========================================================== */
+
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-height: 100vh;
+        min-width: 0 !important;
+    }
+
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        position: sticky;
+        top: 0;
+        z-index: 900;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .topbar-brand-name {
+        color: #274472;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .user-name {
+        display: none !important;
+    }
+
+    main,
+    .main-content,
+    .content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 24px 18px 105px !important;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 66px;
+        padding: 7px 3px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 14px rgba(55, 90, 150, 0.12);
+        z-index: 1100;
+    }
+
+    .mobile-bottom-nav > a,
+    .mobile-nav-dropdown > button {
+        flex: 1;
+        min-width: 0;
+        min-height: 50px;
+        padding: 5px 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: #42618f;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .mobile-bottom-nav > a i,
+    .mobile-nav-dropdown > button i {
+        font-size: 17px;
+    }
+
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 9px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mobile-bottom-nav > a.active,
+    .mobile-nav-dropdown > button.active {
+        color: #244a91;
+        background: rgba(255, 255, 255, 0.55);
+    }
+
+    .mobile-nav-dropdown {
+        position: relative;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-data-master-menu {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 185px;
+        padding: 7px;
+        flex-direction: column;
+        gap: 4px;
+        background: #ffffff;
+        border: 1px solid #dbeafe;
+        border-radius: 13px;
+        box-shadow: 0 5px 20px rgba(40, 70, 120, 0.18);
+    }
+
+    .mobile-data-master-menu.show {
+        display: flex;
+    }
+
+    .mobile-data-master-menu a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 10px;
+        border-radius: 8px;
+        color: #365783;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .mobile-data-master-menu a:active {
+        background: #eaf1fb;
+    }
+
+    .mobile-logout-link i,
+    .mobile-logout-link span {
+        color: #e11d48 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 8px;
+    }
+
+    .mobile-bottom-nav > a i,
+    .mobile-nav-dropdown > button i {
+        font-size: 16px;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+/* STANDAR BADGE STATUS LAPORAN BAKTIVOICE */
+#tab-status .status-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase !important;
+}
+
+#tab-status .status-pending {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+#tab-status .status-diproses {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+#tab-status .status-selesai {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+#tab-status .status-ditolak {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+/* AKHIR STANDAR BADGE STATUS */        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
 </style>
 </head>
 
@@ -412,7 +725,12 @@
             <li class="nav-item">
                 <a href="{{ route('notifikasi_admin') }}">
                     <div class="nav-content">
-                        <i class="fa-regular fa-bell"></i>
+                        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                         <span>Notifikasi</span>
                     </div>
                 </a>
@@ -443,22 +761,43 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <button class="topbar-icon" type="button" title="Notifikasi">
-            <i class="fa-regular fa-bell"></i>
-        </button>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
 
-        <div class="user-profile">
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_admin') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_admin') }}" class="user-profile" style="text-decoration: none; color: inherit;">
             <div class="avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-            <span class="user-name">
-                {{ Auth::user()->name ?? 'Admin Sekolah' }}
-            </span>
-        </div>
-    </header>
+            <span class="user-name">{{ Auth::user()->name ?? 'Admin Sekolah' }}</span>
+        </a>
+    </div>
+</header>
 
     <!-- CONTENT BODY DATA MASTER -->
     <main class="content-area">
+    <div class="breadcrumb">
+        <a href="{{ route('dashboard_admin') }}">Dashboard</a>
+        <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+        <span>Data Master</span>
+    </div>
+
         <div class="p-8 max-w-7xl w-full mx-auto space-y-6">
 
             <!-- Header Judul -->
@@ -467,7 +806,7 @@
                     <h1 class="text-2xl font-extrabold text-blue-900 tracking-tight" id="pageTitle">
                         Data Master
                     </h1>
-                    <p class="text-sm text-gray-500 mt-1" id="pageDesc">
+                    <p class="text-sm text-[#64748b] mt-1" id="pageDesc">
                         Kelola data pengguna serta pembagian hak akses role di lingkungan sekolah.
                     </p>
                 </div>
@@ -482,7 +821,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
                     <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">TOTAL USERS</span>
-                    <div class="text-3xl font-extrabold text-gray-800 mt-1">{{ $totalUsers ?? 0 }}</div>
+                    <div class="text-3xl font-extrabold text-[#2c4a8e] mt-1">{{ $totalUsers ?? 0 }}</div>
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
@@ -515,7 +854,7 @@
 
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                            <thead class="bg-gray-50 text-[#64748b] border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
                                 <tr>
                                     <th class="py-3.5 px-6">Nama Pengguna</th>
                                     <th class="py-3.5 px-6">Email / Username</th>
@@ -523,7 +862,7 @@
                                     <th class="py-3.5 px-6 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                            <tbody class="divide-y divide-gray-100 font-medium text-[#2c4a8e]">
                                 @forelse($users ?? [] as $user)
                                     <tr class="hover:bg-gray-50/60 transition">
                                         <td class="py-4 px-6">
@@ -531,14 +870,14 @@
                                                 <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs uppercase">
                                                     {{ substr($user->name, 0, 1) }}
                                                 </div>
-                                                <span class="font-semibold text-gray-800">{{ $user->name }}</span>
+                                                <span class="font-semibold text-[#2c4a8e]">{{ $user->name }}</span>
                                             </div>
                                         </td>
-                                        <td class="py-4 px-6 text-gray-500">{{ $user->email }}</td>
+                                        <td class="py-4 px-6 text-[#64748b]">{{ $user->email }}</td>
                                         <td class="py-4 px-6">
                                             @php
                                                 $roleLower = strtolower($user->role);
-                                                $badgeClass = 'bg-gray-100 text-gray-700';
+                                                $badgeClass = 'bg-gray-100 text-[#2c4a8e]';
                                                 if ($roleLower === 'admin') {
                                                     $badgeClass = 'bg-purple-50 text-purple-600';
                                                 } elseif ($roleLower === 'siswa') {
@@ -581,7 +920,7 @@
                 <div id="tab-kategori" class="tab-content hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                            <thead class="bg-gray-50 text-[#64748b] border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
                                 <tr>
                                     <th class="py-3.5 px-6">#</th>
                                     <th class="py-3.5 px-6">Nama Kategori</th>
@@ -589,12 +928,12 @@
                                     <th class="py-3.5 px-6 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                            <tbody class="divide-y divide-gray-100 font-medium text-[#2c4a8e]">
                                 @forelse($kategoris ?? [] as $index => $kategori)
                                     <tr class="hover:bg-gray-50/60 transition">
                                         <td class="py-4 px-6">{{ $index + 1 }}</td>
-                                        <td class="py-4 px-6 font-semibold text-gray-800">{{ $kategori->nama_kategori }}</td>
-                                        <td class="py-4 px-6 text-gray-600">
+                                        <td class="py-4 px-6 font-semibold text-[#2c4a8e]">{{ $kategori->nama_kategori }}</td>
+                                        <td class="py-4 px-6 text-[#2c4a8e]">
                                             <span class="px-3 py-1 bg-blue-50 text-blue-700 font-semibold text-xs rounded-full">
                                                 {{ $kategori->penanggung_jawab ?? '-' }}
                                             </span>
@@ -629,7 +968,7 @@
                 <div id="tab-status" class="tab-content hidden">
                     <div class="overflow-x-auto">
                         <table class="w-full text-left text-sm">
-                            <thead class="bg-gray-50 text-gray-500 border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
+                            <thead class="bg-gray-50 text-[#64748b] border-b border-gray-100 uppercase text-[11px] font-bold tracking-wider">
                                 <tr>
                                     <th class="py-3.5 px-6">Nama Status</th>
                                     <th class="py-3.5 px-6">Tampilan Badge</th>
@@ -637,16 +976,26 @@
                                     <th class="py-3.5 px-6 text-center">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                            <tbody class="divide-y divide-gray-100 font-medium text-[#2c4a8e]">
                                 @forelse($statusLaporan ?? [] as $item)
                                     <tr class="hover:bg-gray-50/60 transition">
-                                        <td class="py-4 px-6 font-semibold text-gray-800">{{ $item->nama_status }}</td>
+                                        <td class="py-4 px-6 font-semibold text-[#2c4a8e]">{{ $item->nama_status }}</td>
                                         <td class="py-4 px-6">
-                                            <span class="px-3 py-1 font-semibold text-xs rounded-full bg-emerald-100 text-emerald-700">
+                                            @php
+                                                $statusKey = strtolower(trim($item->nama_status));
+                                                $statusBadgeClass = match (true) {
+                                                    str_contains($statusKey, 'tolak') => 'status-ditolak',
+                                                    str_contains($statusKey, 'proses') => 'status-diproses',
+                                                    str_contains($statusKey, 'selesai') => 'status-selesai',
+                                                    str_contains($statusKey, 'pending') => 'status-pending',
+                                                    default => 'status-pending',
+                                                };
+                                            @endphp
+                                            <span class="status-badge {{ $statusBadgeClass }}">
                                                 {{ $item->nama_status }}
                                             </span>
                                         </td>
-                                        <td class="py-4 px-6 text-gray-500">{{ $item->deskripsi_keterangan ?? $item->deskripsi ?? '-' }}</td>
+                                        <td class="py-4 px-6 text-[#64748b]">{{ $item->deskripsi_keterangan ?? $item->deskripsi ?? '-' }}</td>
                                         <td class="py-4 px-6 text-center space-x-2">
                                             <button type="button" onclick="openEditModal('status', { id: '{{ $item->id_status ?? $item->id }}', nama_status: '{{ addslashes($item->nama_status) }}', deskripsi: '{{ addslashes($item->deskripsi_keterangan ?? $item->deskripsi ?? '') }}' })" class="text-blue-600 hover:text-blue-800 bg-transparent border-none cursor-pointer" title="Edit">
                                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -678,12 +1027,82 @@
     </main>
 </div>
 
+<!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
+    <a href="{{ route('dashboard_admin') }}"
+       class="{{ request()->routeIs('dashboard_admin') ? 'active' : '' }}">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <div class="mobile-nav-dropdown">
+        <button type="button"
+                class="mobile-nav-dropdown-btn {{ request()->routeIs('data_master') ? 'active' : '' }}"
+                onclick="toggleMobileDataMasterMenu()"
+                aria-expanded="false"
+                id="mobileDataMasterButton">
+            <i class="fa-solid fa-database"></i>
+            <span>Data Master</span>
+        </button>
+
+        <div class="mobile-data-master-menu" id="mobileDataMasterMenu">
+            <a href="{{ route('data_master', ['tab' => 'users']) }}">
+                <i class="fa-solid fa-users"></i>
+                <span>User & Role</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Kategori Laporan</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'status']) }}">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Status Laporan</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="{{ route('rekap_laporan') }}"
+       class="{{ request()->routeIs('rekap_laporan') ? 'active' : '' }}">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route('notifikasi_admin') }}"
+       class="{{ request()->routeIs('notifikasi_admin') ? 'active' : '' }}">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_admin') }}"
+       class="{{ request()->routeIs('profil_admin') ? 'active' : '' }}">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form method="POST" action="{{ route('logout') }}"
+          id="mobile-bottom-logout-form" style="display:none;">
+        @csrf
+    </form>
+
+    <a href="#"
+       class="mobile-logout-link"
+       onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</div>
+
 <!-- MODAL DINAMIS -->
 <div id="modalData" class="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 items-center justify-center hidden p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-5">
         <div class="flex items-center justify-between border-b border-gray-100 pb-3">
-            <h3 id="modalTitle" class="text-lg font-bold text-gray-800">Tambah Data</h3>
-            <button onclick="closeModal()" type="button" class="text-gray-400 hover:text-gray-600">
+            <h3 id="modalTitle" class="text-lg font-bold text-[#2c4a8e]">Tambah Data</h3>
+            <button onclick="closeModal()" type="button" class="text-gray-400 hover:text-[#2c4a8e]">
                 <i class="fa-solid fa-xmark text-xl"></i>
             </button>
         </div>
@@ -695,7 +1114,7 @@
 
             <!-- Input Utama (Nama / Nama Kategori / Nama Status) -->
             <div>
-                <label id="inputLabel" class="block text-xs font-bold text-gray-500 uppercase mb-1">
+                <label id="inputLabel" class="block text-xs font-bold text-[#64748b] uppercase mb-1">
                     Nama Lengkap
                 </label>
                 <input type="text" id="inputNama" name="name" required placeholder="Masukkan nama..." class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
@@ -703,7 +1122,7 @@
 
             <!-- Field Deskripsi Keterangan (Status Laporan) -->
             <div id="statusFields" class="hidden">
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
+                <label class="block text-xs font-bold text-[#64748b] uppercase mb-1">
                     Deskripsi Keterangan
                 </label>
                 <textarea name="deskripsi" id="inputDeskripsi" rows="3" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500" placeholder="Masukkan keterangan singkat..."></textarea>
@@ -711,7 +1130,7 @@
 
             <!-- Field Penanggung Jawab (Kategori Laporan) -->
            <div id="penanggungJawabField" class="hidden">
-    <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
+    <label class="block text-xs font-bold text-[#64748b] uppercase mb-1">
         Penanggung Jawab (Role)
     </label>
 
@@ -739,7 +1158,7 @@
 
             <!-- Field Role Akses (User & Role) -->
             <div id="roleSelectField">
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">
+                <label class="block text-xs font-bold text-[#64748b] uppercase mb-1">
                     Pilih Role Akses
                 </label>
                 <select name="role" id="inputRole" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
@@ -755,13 +1174,13 @@
 
             <!-- Field Email -->
             <div id="emailField">
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Email</label>
+                <label class="block text-xs font-bold text-[#64748b] uppercase mb-1">Email</label>
                 <input type="email" id="inputEmail" name="email" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
             </div>
 
             <!-- Field Password -->
             <div id="passwordField" class="space-y-1">
-                <label class="block text-xs font-bold text-gray-500 uppercase mb-1">Password</label>
+                <label class="block text-xs font-bold text-[#64748b] uppercase mb-1">Password</label>
                 <div class="relative">
                     <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
                         <i class="fa-solid fa-lock text-sm"></i>
@@ -773,12 +1192,30 @@
 
             <!-- Tombol Simpan/Batal -->
             <div class="flex justify-end gap-3 border-t border-gray-100 pt-4">
-                <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm font-semibold text-gray-500 rounded-xl hover:bg-gray-100">
-                    Batal
-                </button>
-                <button type="submit" class="px-5 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700">
-                    Simpan
-                </button>
+                <button
+    type="button"
+    id="btnBatalModal"
+    class="px-4 py-2 text-sm font-semibold text-[#64748b] rounded-xl hover:bg-gray-100"
+>
+    <span id="batalModalText">Batal</span>
+
+    <span id="batalModalSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Menutup...
+    </span>
+</button>
+                <button
+    type="submit"
+    id="btnSimpanModal"
+    class="px-5 py-2 text-sm font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700"
+>
+    <span id="simpanModalText">Simpan</span>
+
+    <span id="simpanModalSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Menyimpan...
+    </span>
+</button>
             </div>
         </form>
     </div>
@@ -1287,7 +1724,105 @@
         } else {
             switchTab('users');
         }
+        // ==========================================
+        // 8. ANTI-DOUBLE CLICK TOMBOL SIMPAN MODAL
+        // ==========================================
 
+        const formModal = document.getElementById('formModalData');
+        const btnSimpanModal = document.getElementById('btnSimpanModal');
+        const simpanModalText = document.getElementById('simpanModalText');
+        const simpanModalSpinner = document.getElementById('simpanModalSpinner');
+
+        if (
+            formModal &&
+            btnSimpanModal &&
+            simpanModalText &&
+            simpanModalSpinner
+        ) {
+            formModal.addEventListener('submit', function (event) {
+
+                if (formModal.dataset.submitting === 'true') {
+                    event.preventDefault();
+                    return;
+                }
+
+                formModal.dataset.submitting = 'true';
+
+                btnSimpanModal.disabled = true;
+                btnSimpanModal.style.opacity = '0.7';
+                btnSimpanModal.style.cursor = 'not-allowed';
+
+                simpanModalText.style.display = 'none';
+                simpanModalSpinner.style.display = 'inline-block';
+
+            });
+        }
+                // ==========================================
+        // 9. LOADING TOMBOL BATAL MODAL
+        // ==========================================
+
+        const btnBatalModal = document.getElementById('btnBatalModal');
+        const batalModalText = document.getElementById('batalModalText');
+        const batalModalSpinner = document.getElementById('batalModalSpinner');
+
+        if (btnBatalModal && batalModalText && batalModalSpinner) {
+
+            btnBatalModal.addEventListener('click', function () {
+
+                if (btnBatalModal.dataset.loading === 'true') {
+                    return;
+                }
+
+                btnBatalModal.dataset.loading = 'true';
+
+                btnBatalModal.disabled = true;
+                btnBatalModal.style.opacity = '0.7';
+                btnBatalModal.style.cursor = 'not-allowed';
+
+                batalModalText.style.display = 'none';
+                batalModalSpinner.style.display = 'inline-block';
+
+                setTimeout(function () {
+                    closeModal();
+                }, 150);
+
+            });
+        }
     });
 
 </script>
+
+<script>
+function toggleMobileDataMasterMenu() {
+    const menu = document.getElementById('mobileDataMasterMenu');
+    const button = document.getElementById('mobileDataMasterButton');
+
+    if (!menu || !button) return;
+
+    menu.classList.toggle('show');
+    button.setAttribute(
+        'aria-expanded',
+        menu.classList.contains('show') ? 'true' : 'false'
+    );
+}
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.querySelector('.mobile-nav-dropdown');
+
+    if (dropdown && !dropdown.contains(event.target)) {
+        const menu = document.getElementById('mobileDataMasterMenu');
+        const button = document.getElementById('mobileDataMasterButton');
+
+        if (menu) menu.classList.remove('show');
+        if (button) button.setAttribute('aria-expanded', 'false');
+    }
+});
+</script>
+
+<script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
+
+
+
+
+

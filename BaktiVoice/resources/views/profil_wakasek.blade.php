@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -567,7 +567,246 @@
                 text-align: center;
             }
         }
-    </style>
+
+        /* ===== RESPONSIVE MOBILE WAKASEK ===== */
+
+        .topbar-mobile-brand {
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .topbar-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+        }
+
+        .topbar-brand-name {
+            font-size: 17px;
+            font-weight: 800;
+            color: #2c4a8e;
+        }
+
+        .topbar-right-group {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .mobile-bottom-nav {
+            display: none;
+        }
+
+        .mobile-logout-form {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            min-width: 0;
+            gap: 4px;
+            border: none;
+            background: transparent;
+            color: #496cbd;
+            font-family: inherit;
+            font-size: 9px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            padding: 7px 2px;
+            border-radius: 12px;
+        }
+
+        .mobile-nav-item i {
+            font-size: 17px;
+        }
+
+        .mobile-nav-item.active {
+            color: #2c4a8e;
+            background: rgba(255, 255, 255, 0.55);
+        }
+
+        .mobile-logout,
+        .mobile-logout i {
+            color: #e11d48;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none !important;
+            }
+
+            .main,
+            .main-wrapper {
+                margin-left: 0 !important;
+                width: 100% !important;
+                min-width: 0;
+            }
+
+            .topbar {
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+                width: 100%;
+                height: 60px;
+                min-height: 60px;
+                box-sizing: border-box;
+                padding: 0 14px !important;
+                display: flex;
+                align-items: center;
+                justify-content: space-between !important;
+                gap: 8px;
+                background: linear-gradient(
+                    120deg,
+                    #dbeafe,
+                    #bfdbfe,
+                    #93c5fd
+                ) !important;
+                border-bottom: 1px solid rgba(255,255,255,0.5);
+                box-shadow: 0 2px 10px rgba(44,74,142,0.08);
+            }
+
+            .topbar-mobile-brand {
+                display: flex;
+                flex-shrink: 0;
+            }
+
+            .topbar-right-group {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .content {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                padding: 20px 14px 115px !important;
+            }
+
+            .mobile-bottom-nav {
+                position: fixed;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 1100;
+                min-height: 66px;
+                box-sizing: border-box;
+                padding: 6px 5px calc(6px + env(safe-area-inset-bottom));
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                gap: 2px;
+                background: linear-gradient(
+                    120deg,
+                    #dbeafe,
+                    #bfdbfe,
+                    #93c5fd
+                );
+                border-top: 1px solid rgba(255,255,255,0.7);
+                box-shadow: 0 -3px 14px rgba(44,74,142,0.10);
+            }
+
+            .mobile-logout-form {
+                display: flex;
+                flex: 1;
+                min-width: 0;
+            }
+
+            .mobile-logout {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .topbar {
+                padding: 0 9px !important;
+            }
+
+            .topbar-brand-name {
+                font-size: 15px;
+            }
+
+            .topbar-right-group {
+                gap: 8px;
+            }
+
+            .mobile-nav-item {
+                font-size: 8px;
+            }
+
+            .mobile-nav-item i {
+                font-size: 15px;
+            }
+        }
+
+
+/* ===== MOBILE TOPBAR USER POSITION FIX ===== */
+@media (max-width: 768px) {
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+
+    .topbar-right-group .user-profile {
+        order: -1 !important;
+    }
+}
+/* ===== END MOBILE TOPBAR USER POSITION FIX ===== */
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}</style>
 </head>
 
 <body>
@@ -658,9 +897,14 @@
 
             <li class="nav-item">
                 <a href="{{ route($routeNotifikasi) }}" class="nav-notification">
-                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                     <span>Notifikasi</span>
-                    <span class="notification-dot"></span>
+                    
                 </a>
             </li>
         </ul>
@@ -680,15 +924,29 @@
 
     <!-- TOPBAR -->
     <header class="topbar">
-        <a href="{{ route($routeNotifikasi) }}" class="topbar-icon" title="Notifikasi">
-            <i class="fa-regular fa-bell"></i>
-        </a>
+        <div class="topbar-mobile-brand">
+            <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                 alt="Logo BaktiVoice"
+                 class="topbar-logo-img">
+            <span class="topbar-brand-name">BaktiVoice</span>
+        </div>
 
-        <div class="user-profile">
-            <div class="avatar">
-                <i class="fa-regular fa-user"></i>
-            </div>
-            <span class="user-name">{{ $jabatan['nama'] }}</span>
+        <div class="topbar-right-group">
+            <a href="{{ route($routeNotifikasi) }}" class="topbar-icon" title="Notifikasi">
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            </a>
+
+            <a href="{{ route('profil_wakasek') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <span class="user-name">{{ $jabatan['nama'] }}</span>
+            </a>
         </div>
     </header>
 
@@ -760,7 +1018,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="{{ route('profil_wakasek.update') }}" method="POST">
+                    <form id="formProfilWakasek" action="{{ route('profil_wakasek.update') }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -801,9 +1059,9 @@
                             @enderror
                         </div>
 
-                        <button type="submit" class="btn-primary">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
-                        </button>
+<button type="submit" class="btn-primary" id="btnSimpanProfilWakasek">
+    <i class="fa-solid fa-floppy-disk"></i> Simpan Perubahan
+</button>
                     </form>
                 </div>
             </section>
@@ -829,7 +1087,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ route('profil_wakasek.password.update') }}" method="POST">
+                    <form id="formPasswordWakasek" action="{{ route('profil_wakasek.password.update') }}" method="POST">
                         @csrf
                         @method('PUT')
 
@@ -873,9 +1131,9 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn-primary">
-                            <i class="fa-solid fa-key"></i> Ubah Password
-                        </button>
+<button type="submit" class="btn-primary" id="btnUbahPasswordWakasek">
+    <i class="fa-solid fa-key"></i> Ubah Password
+</button>
                     </form>
                 </div>
             </section>
@@ -885,6 +1143,45 @@
     </main>
 </div>
 
+<nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+    <a href="{{ route($routeDashboard) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route($routeRekap) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route($routeMonitoring) }}" class="mobile-nav-item">
+        <i class="fa-solid fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route($routeNotifikasi) }}" class="mobile-nav-item">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_wakasek') }}" class="mobile-nav-item active">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </button>
+    </form>
+</nav>
 <script>
     function toggleVisibility(inputId, btn) {
         const input = document.getElementById(inputId);
@@ -900,6 +1197,89 @@
         }
     }
 </script>
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK PROFIL WAKASEK
+// ==========================================
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ==========================================
+    // 1. SIMPAN PERUBAHAN PROFIL
+    // ==========================================
+
+    const formProfil = document.getElementById('formProfilWakasek');
+    const btnSimpan = document.getElementById('btnSimpanProfilWakasek');
+
+    if (formProfil && btnSimpan) {
+
+        formProfil.addEventListener('submit', function (event) {
+
+            if (btnSimpan.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            btnSimpan.dataset.submitted = 'true';
+            btnSimpan.disabled = true;
+
+            btnSimpan.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Menyimpan Perubahan...
+            `;
+
+            btnSimpan.style.opacity = '0.75';
+            btnSimpan.style.cursor = 'not-allowed';
+            btnSimpan.style.transform = 'none';
+
+        });
+
+    }
+
+
+    // ==========================================
+    // 2. UBAH PASSWORD
+    // ==========================================
+
+    const formPassword = document.getElementById('formPasswordWakasek');
+    const btnPassword = document.getElementById('btnUbahPasswordWakasek');
+
+    if (formPassword && btnPassword) {
+
+        formPassword.addEventListener('submit', function (event) {
+
+            if (btnPassword.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            btnPassword.dataset.submitted = 'true';
+            btnPassword.disabled = true;
+
+            btnPassword.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Memperbarui Password...
+            `;
+
+            btnPassword.style.opacity = '0.75';
+            btnPassword.style.cursor = 'not-allowed';
+            btnPassword.style.transform = 'none';
+
+        });
+
+    }
+
+});
+</script>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

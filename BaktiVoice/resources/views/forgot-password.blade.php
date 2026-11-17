@@ -327,11 +327,12 @@
         @endif
 
         <!-- FORM LUPA PASSWORD -->
-        <form
-            class="forgot-form"
-            action="{{ route('password.email') }}"
-            method="POST"
-        >
+<form
+    id="formForgotPassword"
+    class="forgot-form"
+    action="{{ route('password.email') }}"
+    method="POST"
+>
             @csrf
 
             <div class="form-group">
@@ -356,10 +357,14 @@
             </div>
 
             <!-- TOMBOL KIRIM -->
-            <button type="submit" class="btn-submit">
-                <span>Kirim Link Reset Password</span>
-                <i class="fa-solid fa-paper-plane"></i>
-            </button>
+<button
+    type="submit"
+    class="btn-submit"
+    id="btnKirimReset"
+>
+    <span>Kirim Link Reset Password</span>
+    <i class="fa-solid fa-paper-plane"></i>
+</button>
 
         </form>
 
@@ -372,6 +377,49 @@
         </div>
 
     </main>
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL KIRIM RESET PASSWORD
+// ==========================================
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    const formForgotPassword = document.getElementById('formForgotPassword');
+    const btnKirimReset = document.getElementById('btnKirimReset');
+
+    if (formForgotPassword && btnKirimReset) {
+
+        formForgotPassword.addEventListener('submit', function (event) {
+
+            // Mencegah pengiriman berulang
+            if (btnKirimReset.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai form sudah dikirim
+            btnKirimReset.dataset.submitted = 'true';
+
+            // Nonaktifkan tombol
+            btnKirimReset.disabled = true;
+
+            // Tampilkan animasi loading
+            btnKirimReset.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Mengirim Link Reset...
+            `;
+
+            // Ubah tampilan tombol
+            btnKirimReset.style.opacity = '0.75';
+            btnKirimReset.style.cursor = 'not-allowed';
+            btnKirimReset.style.transform = 'none';
+
+        });
+
+    }
+
+});
+</script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>

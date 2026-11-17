@@ -737,7 +737,327 @@
             grid-template-columns: 1fr;
         }
     }
-    </style>
+
+/* ===== RESPONSIVE MOBILE WAKASEK ===== */
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.topbar-brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #2c4a8e;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+.mobile-logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-item {
+    text-decoration: none;
+    color: #496cbd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 7px 2px;
+}
+
+.mobile-nav-item i {
+    font-size: 18px;
+}
+
+.mobile-nav-item.active {
+    color: #244b9b;
+    background: rgba(255,255,255,.55);
+    border-radius: 12px;
+}
+
+.mobile-logout {
+    width: 100%;
+    color: #e11d48;
+}
+
+.mobile-logout i {
+    color: #e11d48;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        min-height: 60px;
+        height: 60px;
+        padding: 0 14px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: var(--gradient-pastel) !important;
+        border-bottom: 1px solid rgba(255,255,255,.5);
+        box-shadow: 0 3px 12px rgba(123,159,232,.12);
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px 115px !important;
+        box-sizing: border-box;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        min-height: 66px;
+        padding: 6px 5px calc(6px + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(120deg, #dbeafe, #bfdbfe, #93c5fd);
+        border-top: 1px solid rgba(255,255,255,.7);
+        box-shadow: 0 -4px 15px rgba(65,105,180,.12);
+    }
+
+    .mobile-logout-form {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-nav-item {
+        font-size: 9px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .topbar {
+        padding: 0 9px !important;
+    }
+
+    .topbar-brand-name {
+        font-size: 15px;
+    }
+
+    .mobile-nav-item {
+        font-size: 8px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 15px;
+    }
+}
+
+/* ===== MOBILE TOPBAR USER POSITION FIX ===== */
+@media (max-width: 768px) {
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+
+    .topbar-right-group .user-profile {
+        order: -1 !important;
+    }
+}
+/* ===== END MOBILE TOPBAR USER POSITION FIX ===== */
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 <body>
@@ -800,35 +1120,44 @@
             <span class="brand-name">BaktiVoice</span>
         </div>
 
-        <ul class="nav-menu">
+<ul class="nav-menu">
     <li class="nav-item">
         <a href="{{ route($targetDashboard) }}">
-            <i class="fa-solid fa-house"><span>Dashboard</span></i>
+            <i class="fa-solid fa-house"></i>
+            <span>Dashboard</span>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="{{ route($targetRekap) }}">
-            <i class="fa-solid fa-chart-column"><span>Rekap</span></i>
+            <i class="fa-solid fa-chart-column"></i>
+            <span>Rekap</span>
         </a>
     </li>
 
     <li class="nav-item active">
         <a href="#">
-            <i class="fa-solid fa-eye"><span>Monitoring</span></i>
+            <i class="fa-solid fa-eye"></i>
+            <span>Monitoring</span>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="{{ route('profil_wakasek') }}">
-            <i class="fa-solid fa-user-gear"><span>Profil</span></i>
+            <i class="fa-solid fa-user-gear"></i>
+            <span>Profil</span>
         </a>
     </li>
 
     <li class="nav-item">
         <a href="{{ route('wakasek.notifikasi') }}" class="nav-notification">
-            <i class="fa-solid fa-bell"><span>Notifikasi</span></i>
-            <span class="notification-dot"></span>
+            <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            <span>Notifikasi</span>
         </a>
     </li>
 </ul>
@@ -846,20 +1175,45 @@
 <!-- MAIN WRAPPER & TOPBAR -->
 <div class="main-wrapper">
     <header class="topbar">
-        <a href="{{ route('wakasek.notifikasi') }}" class="topbar-icon" title="Notifikasi">
-            <i class="fa-regular fa-bell"></i>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
+
+    <div class="topbar-right-group">
+        <a href="{{ route('wakasek.notifikasi') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
         </a>
 
-        <div class="user-profile">
+        <a href="{{ route('profil_wakasek') }}" class="user-profile" style="text-decoration: none; color: inherit;">
             <div class="avatar">
                 <i class="fa-regular fa-user"></i>
             </div>
-            <span class="user-name">{{ $user->name ?? $jabatan['nama'] }}</span>
-        </div>
-    </header>
+            <span class="user-name">
+                {{ $user->name ?? $jabatan['nama'] }}
+            </span>
+        </a>
+    </div>
+</header>
 
     <!-- KONTEN -->
     <main class="content">
+            <div class="breadcrumb">
+                <a href="{{ route('dashboard_wakasek') }}">Dashboard</a>
+                <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+                <span>Detail Laporan</span>
+            </div>
+
         <div class="page-heading">
             <button type="button" class="back-button" onclick="history.back()" aria-label="Kembali" title="Kembali ke halaman sebelumnya">
                 <i class="fa-solid fa-arrow-left"></i>
@@ -900,7 +1254,7 @@
 
                     <div class="report-code">
                         <i class="fa-solid fa-hashtag"></i>
-                        LAP-{{ $laporan->id_laporan ?? $laporan->id }}
+                        {{ 'BV' . str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
                     </div>
 
                     <div class="info-list">
@@ -920,7 +1274,18 @@
                             </div>
                             <div class="info-content">
                                 <span class="info-label">Pelapor</span>
-                                <span class="info-value">{{ $laporan->pelapor->name ?? 'Siswa (Anonim)' }}</span>
+
+                                @if ((string) $laporan->anonim === '0' && $laporan->user)
+                                    <span class="info-value">
+                                        <strong>{{ $laporan->user->name ?? '-' }}</strong><br>
+                                        Kelas: {{ $laporan->user->kelas ?? '-' }}<br>
+                                        Jurusan: {{ $laporan->user->jurusan ?? '-' }}
+                                    </span>
+                                @elseif ((string) $laporan->anonim === '1')
+                                    <span class="info-value">Identitas Dirahasiakan</span>
+                                @else
+                                    <span class="info-value">Data Pelapor Tidak Tersedia</span>
+                                @endif
                             </div>
                         </div>
 
@@ -930,7 +1295,7 @@
                             </div>
                             <div class="info-content">
                                 <span class="info-label">Kategori Laporan</span>
-                                <span class="info-value">{{ ucfirst($laporan->id_kategori ?? $jabatan['kategori']) }}</span>
+                                <span class="info-value">{{ $laporan->kategori->nama_kategori ?? [1 => 'Kesiswaan', 2 => 'Kurikulum', 3 => 'Sarana', 4 => 'DUDI'][$laporan->id_kategori] ?? 'Kategori Tidak Diketahui' }}</span>
                             </div>
                         </div>
 
@@ -1012,7 +1377,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('wakasek.laporan.tanggapan', $laporan->id_laporan ?? $laporan->id) }}" method="POST" enctype="multipart/form-data">
+                    <form id="formTindakLanjut" action="{{ route('wakasek.laporan.tanggapan', $laporan->id_laporan ?? $laporan->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label class="form-label" for="followUpText">
                             Isi Tindak Lanjut
@@ -1062,10 +1427,10 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="save-button">
-                            <i class="fa-solid fa-floppy-disk"></i>
-                            Simpan Tindak Lanjut
-                        </button>
+<button type="submit" class="save-button" id="btnSimpanTindakLanjut">
+    <i class="fa-solid fa-floppy-disk"></i>
+    Simpan Tindak Lanjut
+</button>
 
 
                     </form>
@@ -1077,7 +1442,54 @@
     </main>
 </div>
 
-<script>
+
+
+<nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+    <a href="{{ route($targetDashboard) }}"
+       class="mobile-nav-item">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route($targetRekap) }}"
+       class="mobile-nav-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ url()->previous() }}"
+       class="mobile-nav-item active">
+        <i class="fa-solid fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route('wakasek.notifikasi') }}"
+       class="mobile-nav-item">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_wakasek') }}"
+       class="mobile-nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </button>
+    </form>
+</nav>
+
+    <script>
 
     const followUpText = document.getElementById('followUpText');
     const characterCount = document.getElementById('characterCount');
@@ -1100,6 +1512,58 @@
         }
     }
 </script>
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK SIMPAN TINDAK LANJUT WAKASEK
+// ==========================================
 
+document.addEventListener('DOMContentLoaded', function () {
+
+    const formTindakLanjut = document.getElementById('formTindakLanjut');
+    const btnSimpan = document.getElementById('btnSimpanTindakLanjut');
+
+    if (formTindakLanjut && btnSimpan) {
+
+        formTindakLanjut.addEventListener('submit', function (event) {
+
+            // Mencegah pengiriman berulang
+            if (btnSimpan.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai form sudah dikirim
+            btnSimpan.dataset.submitted = 'true';
+
+            // Nonaktifkan tombol
+            btnSimpan.disabled = true;
+
+            // Tampilkan loading spinner
+            btnSimpan.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Menyimpan Tindak Lanjut...
+            `;
+
+            // Ubah tampilan tombol
+            btnSimpan.style.opacity = '0.75';
+            btnSimpan.style.cursor = 'not-allowed';
+            btnSimpan.style.transform = 'none';
+
+        });
+
+    }
+
+});
+</script>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

@@ -368,14 +368,26 @@
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <span>Ingat Saya</span>
                 </label>
-                <a href="#" class="forgot-password">Lupa Password?</a>
+                <a href="{{ route('password.request') }}" class="forgot-password">
+    Lupa Password?
+</a>
             </div>
 
             <!-- Tombol Submit -->
-            <button type="submit" class="btn-submit">
-                <span>Masuk Sekarang</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
+<button
+    type="submit"
+    class="btn-submit"
+    id="btnLogin"
+>
+    <span id="loginText">Masuk Sekarang</span>
+
+    <i class="fa-solid fa-arrow-right" id="loginIcon"></i>
+
+    <span id="loginSpinner" style="display: none;">
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Memproses Login...
+    </span>
+</button>
         </form>
 
         <!-- FOOTER / LINK REGISTRASI -->
@@ -408,7 +420,34 @@
                     }
                 });
             }
+            const loginForm = document.getElementById('loginForm');
+const btnLogin = document.getElementById('btnLogin');
+const loginText = document.getElementById('loginText');
+const loginIcon = document.getElementById('loginIcon');
+const loginSpinner = document.getElementById('loginSpinner');
+
+if (loginForm && btnLogin && loginText && loginIcon && loginSpinner) {
+    loginForm.addEventListener('submit', function (event) {
+
+        if (loginForm.dataset.submitting === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        loginForm.dataset.submitting = 'true';
+
+        btnLogin.disabled = true;
+        btnLogin.style.opacity = '0.7';
+        btnLogin.style.cursor = 'not-allowed';
+
+        loginText.style.display = 'none';
+        loginIcon.style.display = 'none';
+        loginSpinner.style.display = 'inline-block';
+
+    });
+}
         });
     </script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>

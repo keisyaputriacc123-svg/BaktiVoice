@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -464,28 +464,294 @@ body {
     color: var(--text-main);
 }
 
-/* RESPONSIVE */
+
+/* FIX DESKTOP: SEMBUNYIKAN LOGO MOBILE */
+.topbar-mobile-brand {
+    display: none;
+}
+
+/* Default Desktop: Bottom Nav disembunyikan */
+.mobile-bottom-nav {
+    display: none;
+}
+
+
+/* ==========================================================
+   RESPONSIF: TABLET & HP (Maksimal Lebar 768px)
+   ========================================================== */
 @media (max-width: 1000px) {
     .stats-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
-    .sidebar { width: 70px; padding: 16px 8px; }
-    .brand-name, .nav-item span, .logout-btn span { display: none !important; }
-    .main-wrapper { margin-left: 70px; }
-    .content { padding: 20px; }
-    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    /* 1. Sembunyikan sidebar & tombol logout di sidebar */
+    .sidebar {
+        display: none !important;
+    }
+
+    .logout-btn {
+        display: none !important;
+    }
+
+    /* 2. Lebarkan main-wrapper ke seluruh layar */
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .content {
+        padding: 16px;
+        padding-bottom: 90px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* 3. Topbar Khusus HP */
+    .topbar {
+        height: 60px;
+        padding: 0 16px;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%) !important;
+    }
+
+    .topbar-mobile-brand {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        margin-right: auto;
+}
+
+    .topbar-logo-img {
+        width: 30px !important;
+        height: 30px !important;
+        object-fit: contain;
+    }
+
+    .topbar-brand-name {
+        font-weight: 700;
+        font-size: 15px;
+        color: #0f172a;
+    }
+
+    /* Sembunyikan nama panjang di topbar HP */
+    .user-name {
+        display: none !important;
+    }
+
+    /* 4. Tampilkan Bottom Navbar di HP dengan Background Biru Gradasi */
+    .mobile-bottom-nav {
+        display: flex !important;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%) !important;
+        border-top: 1px solid #93c5fd;
+        justify-content: space-around;
+        align-items: center;
+        padding: 8px 4px;
+        z-index: 1000;
+        box-shadow: 0 -4px 15px rgba(147, 197, 253, 0.4);
+    }
+
+    .mobile-bottom-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #1e3a8a;
+        font-size: 9.5px;
+        font-weight: 600;
+        gap: 4px;
+        opacity: 0.75;
+        transition: opacity 0.2s ease;
+    }
+
+    .mobile-bottom-nav a i {
+        font-size: 18px;
+    }
+
+    .mobile-bottom-nav a.active,
+    .mobile-bottom-nav a:hover {
+        opacity: 1;
+        color: #0f172a;
+    }
 }
 
 @media (max-width: 550px) {
-    .topbar { padding: 0 16px; }
-    .user-name { display: none; }
-    .stats-grid { grid-template-columns: 1fr; }
-    .welcome-title { font-size: 24px; }
+    /* 1. Ubah Statistik jadi 2 Kolom + Kartu ke-5 melebar penuh */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+    .stats-grid .stat-card:last-child {
+        grid-column: span 2;
+    }
+
+    .welcome-title {
+        font-size: 24px;
+    }
+
+    /* 2. Atur Report Card agar tidak berhimpitan di HP kecil */
+    .report-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+    }
+
+    .report-info-group {
+        width: 100%;
+    }
+
+    /* Posisi badge status biar rapi di bawah judul saat layar sempit */
+    .report-card .status-badge {
+        align-self: flex-start;
+    }
 }
 
 
-    </style>
+
+    /* FIX UKURAN THUMBNAIL DASHBOARD */
+    .report-thumbnail {
+        flex: 0 0 52px !important;
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 52px !important;
+        min-height: 52px !important;
+        max-width: 52px !important;
+        max-height: 52px !important;
+        overflow: hidden !important;
+    }
+
+    .report-thumbnail img {
+        display: block !important;
+        width: 52px !important;
+        height: 52px !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        max-width: 52px !important;
+        max-height: 52px !important;
+        object-fit: cover !important;
+    }
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+</style>
 </head>
 
 
@@ -535,7 +801,12 @@ body {
                     <a href="{{ route('notifikasi_siswa') }}">
                         <div class="nav-content">
 
-                            <i class="fa-regular fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
 
@@ -554,10 +825,10 @@ body {
             </ul>
         </div>
 
-        <a href="{{ route('login') }}" class="logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Logout</span>
-        </a>
+<a href="#" class="logout-btn" id="desktopLogoutLink">
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span>Logout</span>
+</a>
     </aside>
 
     <!-- MAIN WRAPPER -->
@@ -566,14 +837,24 @@ body {
 
         <!-- TOPBAR -->
         <header class="topbar">
+            <!-- Logo Khusus HP -->
+            <div class="topbar-mobile-brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo" class="topbar-logo-img">
+                <span class="topbar-brand-name">BaktiVoice</span>
+            </div>
             <a href="{{ route('notifikasi_siswa') }}" class="topbar-icon" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
+                <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
             </a>
 
-            <div class="user-profile">
+            <a href="{{ route('profil_siswa') }}" class="user-profile" style="text-decoration: none; color: inherit;">
                 <div class="avatar"><i class="fa-regular fa-user"></i></div>
                 <span class="user-name">{{ Auth::user()->name ?? 'Nama Siswa' }}</span>
-            </div>
+            </a>
         </header>
 
         <!-- MAIN CONTENT -->
@@ -589,10 +870,25 @@ body {
                         Sampaikan Keluhan atau Saranmu di Sini
                     </p>
                 </div>
-                <a href="{{ route('buat_laporan') }}" class="btn-create-report">
-                    <i class="fa-solid fa-plus"></i>
-                    Buat Laporan
-                </a>
+<a
+    href="{{ route('buat_laporan') }}"
+    class="btn-create-report"
+    id="btnBuatLaporan"
+>
+    <i class="fa-solid fa-plus" id="buatLaporanIcon"></i>
+
+    <span id="buatLaporanText">
+        Buat Laporan
+    </span>
+
+    <span
+        id="buatLaporanSpinner"
+        style="display: none;"
+    >
+        <i class="fa-solid fa-spinner fa-spin"></i>
+        Membuka Formulir...
+    </span>
+</a>
             </section>
 
             <!-- STATISTIK DINAMIS -->
@@ -669,6 +965,47 @@ body {
 
     </div>
 
+    <div class="mobile-bottom-nav">
+        <a href="{{ route('dashboard_siswa') }}" class="{{ request()->routeIs('dashboard_siswa') ? 'active' : '' }}">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+
+        <a href="{{ route('buat_laporan') }}" class="{{ request()->routeIs('buat_laporan') ? 'active' : '' }}">
+            <i class="fa-regular fa-file-lines"></i>
+            <span>Laporan</span>
+        </a>
+
+        <a href="{{ route('riwayat_laporan') }}" class="{{ request()->routeIs('riwayat_laporan') ? 'active' : '' }}">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span>Riwayat</span>
+        </a>
+
+        <a href="{{ route('notifikasi_siswa') }}" class="{{ request()->routeIs('notifikasi_siswa') ? 'active' : '' }}">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+            <span>Notif</span>
+        </a>
+
+        <a href="{{ route('profil_siswa') }}" class="{{ request()->routeIs('profil_siswa') ? 'active' : '' }}">
+            <i class="fa-regular fa-user"></i>
+            <span>Profil</span>
+        </a>
+
+        <!-- Form & Tombol Logout Mobile (Menyesuaikan route('logout') POST kamu) -->
+    <form method="POST" action="{{ route('logout') }}" id="mobile-bottom-logout-form" style="display: none;">
+        @csrf
+    </form>
+<a href="#" class="mobile-logout-link" id="mobileLogoutLink" title="Logout">
+    <i class="fa-solid fa-right-from-bracket" style="color: #e11d48;"></i>
+    <span style="color: #e11d48;">Logout</span>
+</a>
+    </div>
+
     <!-- SCRIPT DROPDOWN TOGGLE -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -684,7 +1021,100 @@ body {
                     }
                 });
             });
+            const btnBuatLaporan = document.getElementById('btnBuatLaporan');
+const buatLaporanText = document.getElementById('buatLaporanText');
+const buatLaporanIcon = document.getElementById('buatLaporanIcon');
+const buatLaporanSpinner = document.getElementById('buatLaporanSpinner');
+
+if (
+    btnBuatLaporan &&
+    buatLaporanText &&
+    buatLaporanIcon &&
+    buatLaporanSpinner
+) {
+    btnBuatLaporan.addEventListener('click', function(event) {
+
+        if (btnBuatLaporan.dataset.loading === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        btnBuatLaporan.dataset.loading = 'true';
+
+        btnBuatLaporan.style.pointerEvents = 'none';
+        btnBuatLaporan.style.opacity = '0.7';
+        btnBuatLaporan.style.cursor = 'not-allowed';
+
+        buatLaporanText.style.display = 'none';
+        buatLaporanIcon.style.display = 'none';
+        buatLaporanSpinner.style.display = 'inline-block';
+
+    });
+}
+// ==========================================
+// ANTI-DOUBLE CLICK LOGOUT SISWA
+// DESKTOP DAN MOBILE
+// ==========================================
+
+const logoutForm = document.getElementById('mobile-bottom-logout-form');
+const desktopLogoutLink = document.getElementById('desktopLogoutLink');
+const mobileLogoutLink = document.getElementById('mobileLogoutLink');
+
+if (logoutForm) {
+
+    function handleLogout(event) {
+        event.preventDefault();
+
+        const clickedLink = event.currentTarget;
+
+        // Mencegah logout dikirim berulang kali
+        if (logoutForm.dataset.submitted === 'true') {
+            return;
+        }
+
+        // Tandai logout sedang diproses
+        logoutForm.dataset.submitted = 'true';
+
+        // Nonaktifkan kedua tombol logout
+        [desktopLogoutLink, mobileLogoutLink].forEach(function(link) {
+            if (link) {
+                link.style.pointerEvents = 'none';
+                link.style.opacity = '0.65';
+                link.style.cursor = 'not-allowed';
+            }
+        });
+
+        // Tampilkan loading pada tombol yang diklik
+        clickedLink.innerHTML = `
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            <span>Logging Out...</span>
+        `;
+
+        // Kirim form logout Laravel
+        logoutForm.requestSubmit();
+    }
+
+    if (desktopLogoutLink) {
+        desktopLogoutLink.addEventListener('click', handleLogout);
+    }
+
+    if (mobileLogoutLink) {
+        mobileLogoutLink.addEventListener('click', handleLogout);
+    }
+
+}
         });
     </script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+

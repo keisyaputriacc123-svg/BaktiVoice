@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -203,6 +203,12 @@
             transition: all 0.2s ease;
 
             margin-top: 16px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            font-family: inherit;
         }
 
         .logout-btn:hover {
@@ -341,26 +347,58 @@
         ===================================================== */
 
         .welcome-section {
-            margin-bottom: 28px;
-        }
+    background: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+    margin-bottom: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
 
-        .welcome-title {
-            font-size: 30px;
+.welcome-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1e3a70 !important;
+    margin-bottom: 6px;
+}
 
-            font-weight: 800;
+.welcome-text {
+    font-size: 15px;
+    color: #2c4a8e;
+    font-weight: 500;
+    margin-bottom: 0;
+}
 
-            color: #1e3a70 !important;
+.btn-banner {
+    background: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(71, 114, 199, 0.3);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-            margin-bottom: 4px;
-        }
+.btn-banner:hover {
+    transform: translateY(-2px);
+}
 
-        .welcome-text {
-            font-size: 16px;
-
-            color: var(--text-muted);
-
-            margin-bottom: 18px;
-        }
+.btn-banner.loading {
+    pointer-events: none;
+    opacity: 0.8;
+    cursor: wait;
+}
 
 
         /* =====================================================
@@ -710,7 +748,358 @@
 
         }
 
-    </style>
+
+/* ==========================================================
+   RESPONSIVE MOBILE - DASHBOARD GURU BK
+   ========================================================== */
+
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-height: 100vh;
+        min-width: 0 !important;
+    }
+
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        position: sticky;
+        top: 0;
+        z-index: 900;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .topbar-brand-name {
+        color: #274472;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .user-name {
+        display: none !important;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 24px 18px 105px !important;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 12px;
+    }
+
+    .report-card {
+        min-width: 0;
+        flex-wrap: wrap;
+    }
+
+    .report-info-group {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .report-details {
+        min-width: 0;
+    }
+
+    .report-title {
+        overflow-wrap: anywhere;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 66px;
+        padding: 7px 3px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 14px rgba(55, 90, 150, 0.12);
+        z-index: 1100;
+    }
+
+    .mobile-bottom-nav > a {
+        flex: 1;
+        min-width: 0;
+        min-height: 50px;
+        padding: 5px 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border-radius: 10px;
+        color: #42618f;
+        text-decoration: none;
+    }
+
+    .mobile-bottom-nav > a i {
+        font-size: 17px;
+    }
+
+    .mobile-bottom-nav > a span {
+        font-size: 9px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mobile-bottom-nav > a.active {
+        color: #244a91;
+        background: rgba(255, 255, 255, 0.55);
+    }
+
+    .mobile-logout-link i,
+    .mobile-logout-link span {
+        color: #e11d48 !important;
+    }
+}
+
+@media (max-width: 550px) {
+    .welcome-title {
+        font-size: 24px;
+    }
+
+    .report-thumbnail {
+        width: 44px;
+        height: 44px;
+    }
+
+    .report-title {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-bottom-nav > a span {
+        font-size: 8px;
+    }
+
+    .mobile-bottom-nav > a i {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .welcome-section {
+        padding: 22px 20px;
+        gap: 16px;
+    }
+
+    .welcome-title {
+        font-size: 24px;
+    }
+
+    .welcome-text {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .btn-banner {
+        padding: 11px 15px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 550px) {
+    .welcome-section {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 22px 18px;
+    }
+
+    .welcome-title {
+        font-size: 22px;
+    }
+
+    .welcome-action,
+    .btn-banner {
+        width: 100%;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+</style>
 </head>
 
 
@@ -768,7 +1157,12 @@
 
                 <li class="nav-item">
                     <a href="{{ route('notifikasi_bk') }}">
-                        <div class="nav-content"><i class="fa-solid fa-bell"></i><span>Notifikasi</span></div>
+                        <div class="nav-content"><span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span><span>Notifikasi</span></div>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -785,9 +1179,9 @@
 
 
 
-        <a href="{{ route('login') }}" class="logout-btn">
+        <button type="submit" form="logoutFormBK" class="logout-btn">
             <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
-        </a>
+        </button>
 
     </aside>
 
@@ -798,12 +1192,34 @@
 
 
         <header class="topbar">
-            <a href="{{ route('notifikasi_bk') }}" class="topbar-icon" title="Notifikasi"><i class="fa-regular fa-bell"></i></a>
-            <div class="user-profile">
-                <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                <span class="user-name">{{ Auth::user()->name ?? 'Guru BK' }}</span>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
+
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_bk') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_bk') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
             </div>
-        </header>
+            <span class="user-name">{{ Auth::user()->name ?? 'Guru BK' }}</span>
+        </a>
+    </div>
+</header>
 
 
 
@@ -814,9 +1230,29 @@
 
 
             <section class="welcome-section">
-                <h1 class="welcome-title">Selamat Datang,{{ Auth::user()->name ?? 'Guru BK' }}!</h1>
-                <p class="welcome-text">Pantau laporan yang berkaitan dengan siswa.</p>
-            </section>
+
+    <div class="welcome-content">
+        <h1 class="welcome-title">
+            Hello, {{ Auth::user()->name ?? 'Guru BK' }}!
+        </h1>
+
+        <p class="welcome-text">
+            Pantau dan tindak lanjuti laporan siswa dengan mudah di sini.
+        </p>
+    </div>
+
+    <div class="welcome-action">
+        <a href="{{ route('LaporanSiswa_bk') }}"
+           class="btn-banner"
+           id="btnKelolaLaporanBK">
+
+            <i class="fa-solid fa-chart-line"></i>
+            <span id="kelolaLaporanBKText">Kelola Laporan</span>
+
+        </a>
+    </div>
+
+</section>
 
             <!-- STATISTIK LAPORAN (DINAMIS) -->
             <section class="stats-grid">
@@ -890,7 +1326,47 @@
 
     </div>
 
+<!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
 
+    <a href="{{ route('dashboard_bk') }}" class="active">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route('LaporanSiswa_bk') }}">
+        <i class="fa-regular fa-file-lines"></i>
+        <span>Laporan</span>
+    </a>
+
+    <a href="{{ route('monitoring_bk') }}">
+        <i class="fa-regular fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route('notifikasi_bk') }}">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_bk') }}">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <button type="submit" form="logoutFormBK" class="mobile-logout-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </button>
+
+</div>
+
+<!-- SCRIPT DROPDOWN TOGGLE -->
 <!-- JAVASCRIPT TAMBAHAN UNTUK INTERAKSI -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -903,5 +1379,99 @@
             });
         });
     </script>
+
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL DETAIL LAPORAN BK
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tombolDetail = document.querySelectorAll('.btn-detail');
+
+    tombolDetail.forEach(function (button) {
+
+        button.addEventListener('click', function (event) {
+
+            // Mencegah klik berulang
+            if (button.dataset.clicked === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai tombol sudah diklik
+            button.dataset.clicked = 'true';
+
+            // Nonaktifkan klik sementara
+            button.style.opacity = '0.7';
+            button.style.pointerEvents = 'none';
+
+            // Ubah ikon panah menjadi spinner
+            const icon = button.querySelector('i');
+
+            if (icon) {
+                icon.className = 'fa-solid fa-spinner fa-spin';
+            }
+
+        });
+
+    });
+
+});
+</script>
+
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL KELOLA LAPORAN BK
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const btnKelolaLaporan = document.getElementById('btnKelolaLaporanBK');
+    const tombolText = document.getElementById('kelolaLaporanBKText');
+
+    let loadingKelolaLaporan = false;
+
+    if (btnKelolaLaporan && tombolText) {
+
+        btnKelolaLaporan.addEventListener('click', function (event) {
+
+            if (loadingKelolaLaporan) {
+                event.preventDefault();
+                return;
+            }
+
+            loadingKelolaLaporan = true;
+
+            btnKelolaLaporan.classList.add('loading');
+            tombolText.textContent = 'Membuka...';
+
+            const icon = btnKelolaLaporan.querySelector('i');
+
+            if (icon) {
+                icon.className = 'fa-solid fa-spinner fa-spin';
+            }
+
+        });
+
+    }
+
+});
+</script>
+<form id="logoutFormBK" method="POST" action="{{ route('logout') }}" style="display:none;">
+    @csrf
+</form>
+
+<script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+

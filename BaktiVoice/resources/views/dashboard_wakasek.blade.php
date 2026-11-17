@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -696,7 +696,54 @@
             font-size: 12px;
         }
     }
-</style>
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}</style>
 
 </head>
 
@@ -1183,6 +1230,520 @@
         .page-title { font-size: 24px; }
         .category-grid { grid-template-columns: 1fr; padding: 18px; }
     }
+
+/* ===== RESPONSIVE MOBILE WAKASEK ===== */
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.topbar-brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #2c4a8e;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+.mobile-logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-item {
+    text-decoration: none;
+    color: #496cbd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 7px 2px;
+}
+
+.mobile-nav-item i {
+    font-size: 18px;
+}
+
+.mobile-nav-item.active {
+    color: #244b9b;
+    background: rgba(255,255,255,.55);
+    border-radius: 12px;
+}
+
+.mobile-logout {
+    width: 100%;
+    color: #e11d48;
+}
+
+.mobile-logout i {
+    color: #e11d48;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        min-height: 60px;
+        height: 60px;
+        padding: 0 14px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: var(--gradient-pastel) !important;
+        border-bottom: 1px solid rgba(255,255,255,.5);
+        box-shadow: 0 3px 12px rgba(123,159,232,.12);
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px 115px !important;
+        box-sizing: border-box;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        min-height: 66px;
+        padding: 6px 5px calc(6px + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(120deg, #dbeafe, #bfdbfe, #93c5fd);
+        border-top: 1px solid rgba(255,255,255,.7);
+        box-shadow: 0 -4px 15px rgba(65,105,180,.12);
+    }
+
+    .mobile-logout-form {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-nav-item {
+        font-size: 9px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .topbar {
+        padding: 0 9px !important;
+    }
+
+    .topbar-brand-name {
+        font-size: 15px;
+    }
+
+    .mobile-nav-item {
+        font-size: 8px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 15px;
+    }
+}
+
+/* ===== MOBILE TOPBAR USER POSITION FIX ===== */
+@media (max-width: 768px) {
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+
+    .topbar-right-group .user-profile {
+        order: -1 !important;
+    }
+}
+/* ===== END MOBILE TOPBAR USER POSITION FIX ===== */
+
+    /* ==========================================
+       BANNER SAMBUTAN DASHBOARD WAKASEK
+    ========================================== */
+
+    .welcome-banner-wakasek {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 30px 34px;
+        margin-bottom: 28px;
+        border-radius: 20px;
+        background: linear-gradient(115deg, #7b9fe8 0%, #9bc3f8 55%, #b8d7ff 100%);
+        box-shadow: 0 8px 22px rgba(91, 132, 205, 0.16);
+    }
+
+    .welcome-content-wakasek {
+        min-width: 0;
+    }
+
+    .welcome-title-wakasek {
+        margin: 0 0 9px;
+        color: #1e3a70;
+        font-size: 27px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    .welcome-description-wakasek {
+        margin: 0;
+        color: #1e3a70;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .welcome-action-wakasek {
+        flex-shrink: 0;
+    }
+
+    .btn-banner-wakasek {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 21px;
+        border: none;
+        border-radius: 11px;
+        background: #347fce;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(43, 76, 137, 0.22);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .btn-banner-wakasek:hover {
+        transform: translateY(-2px);
+        background: #286bb5;
+        box-shadow: 0 7px 16px rgba(43, 76, 137, 0.28);
+        color: #ffffff;
+    }
+
+    .btn-banner-wakasek.loading {
+        opacity: 0.8;
+        pointer-events: none;
+        cursor: wait;
+    }
+
+    @media (max-width: 768px) {
+        .welcome-banner-wakasek {
+            padding: 24px;
+            gap: 18px;
+        }
+
+        .welcome-title-wakasek {
+            font-size: 23px;
+        }
+
+        .welcome-description-wakasek {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .welcome-banner-wakasek {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 22px;
+            gap: 18px;
+        }
+
+        .welcome-title-wakasek {
+            font-size: 21px;
+        }
+
+        .welcome-action-wakasek {
+            width: 100%;
+        }
+
+        .btn-banner-wakasek {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 21px;
+        border: none;
+        border-radius: 11px;
+        background: #347fce;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(43, 76, 137, 0.22);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    }
+
+/* =========================================
+   MODERN CLEAN TYPOGRAPHY - BAKTIVOICE
+========================================= */
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Judul laporan */
+.report-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 650;
+    line-height: 1.5;
+    letter-spacing: -0.25px;
+    color: #244477;
+    margin-bottom: 5px;
+}
+
+/* ID laporan */
+.report-id {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    color: #4772c7;
+    margin-bottom: 1px;
+}
+
+/* Tanggal laporan */
+.report-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+    color: #7b8da8;
+}
+
+/* Status laporan */
+.status-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+}
+
+/* Menu sidebar */
+.nav-item a {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+}
+
+/* Nama aplikasi */
+.brand-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 550px) {
+    .report-title {
+        font-size: 13px;
+    }
+
+    .report-id {
+        font-size: 12px;
+    }
+
+    .report-date {
+        font-size: 11px;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
 </style>
 </head>
 
@@ -1203,38 +1764,47 @@
             ['nama' => 'DUDI', 'jumlah' => 0],
         ];
 
-
         $roleMapping = [
-            'wakasek kesiswaan' => ['nama' => 'Wakasek Kesiswaan', 'kategori' => 'Kesiswaan', 'monitoring' => 'wakasek.kesiswaan.monitoring'],
-            'wakasek kurikulum' => ['nama' => 'Wakasek Kurikulum', 'kategori' => 'Kurikulum', 'monitoring' => 'wakasek.kurikulum.monitoring'],
-            'wakasek sarana' => ['nama' => 'Wakasek Sarana', 'kategori' => 'Sarana dan Prasarana', 'monitoring' => 'wakasek.sarana.monitoring'],
-            'wakasek dudi' => ['nama' => 'Wakasek DUDI', 'kategori' => 'DUDI', 'monitoring' => 'wakasek.dudi.monitoring'],
+            'wakasek kesiswaan' => [
+                'nama' => 'Wakasek Kesiswaan',
+                'kategori' => 'Kesiswaan',
+                'dashboard' => 'wakasek.kesiswaan.dashboard',
+                'rekap' => 'wakasek.kesiswaan.rekap',
+                'monitoring' => 'wakasek.kesiswaan.monitoring',
+                'notifikasi' => 'wakasek.kesiswaan.notifikasi',
+            ],
+            'wakasek kurikulum' => [
+                'nama' => 'Wakasek Kurikulum',
+                'kategori' => 'Kurikulum',
+                'dashboard' => 'wakasek.kurikulum.dashboard',
+                'rekap' => 'wakasek.kurikulum.rekap',
+                'monitoring' => 'wakasek.kurikulum.monitoring',
+                'notifikasi' => 'wakasek.kurikulum.notifikasi',
+            ],
+            'wakasek sarana' => [
+                'nama' => 'Wakasek Sarana',
+                'kategori' => 'Sarana dan Prasarana',
+                'dashboard' => 'wakasek.sarana.dashboard',
+                'rekap' => 'wakasek.sarana.rekap',
+                'monitoring' => 'wakasek.sarana.monitoring',
+                'notifikasi' => 'wakasek.sarana.notifikasi',
+            ],
+            'wakasek dudi' => [
+                'nama' => 'Wakasek DUDI',
+                'kategori' => 'DUDI',
+                'dashboard' => 'wakasek.dudi.dashboard',
+                'rekap' => 'wakasek.dudi.rekap',
+                'monitoring' => 'wakasek.dudi.monitoring',
+                'notifikasi' => 'wakasek.dudi.notifikasi',
+            ],
         ];
 
         $currentRole = $role ?? auth()->user()->role ?? 'wakasek kesiswaan';
-        $jabatan = $roleMapping[$currentRole] ?? ['nama' => 'Wakasek', 'kategori' => 'Kesiswaan', 'monitoring' => 'wakasek.kesiswaan.monitoring'];
+        $jabatan = $roleMapping[$currentRole] ?? $roleMapping['wakasek kesiswaan'];
 
-        // Rute Dinamis berdasarkan role
-        $dashboardRoute = match($currentRole) {
-            'wakasek kurikulum' => route('wakasek.kurikulum.dashboard'),
-            'wakasek sarana' => route('wakasek.sarana.dashboard'),
-            'wakasek dudi' => route('wakasek.dudi.dashboard'),
-            default => route('wakasek.kesiswaan.dashboard'),
-        };
-
-        $rekapRoute = match($currentRole) {
-            'wakasek kurikulum' => route('wakasek.kurikulum.rekap'),
-            'wakasek sarana' => route('wakasek.sarana.rekap'),
-            'wakasek dudi' => route('wakasek.dudi.rekap'),
-            default => route('wakasek.kesiswaan.rekap'),
-        };
-
-        $notifRoute = match($currentRole) {
-            'wakasek kurikulum' => route('wakasek.kurikulum.notifikasi'),
-            'wakasek sarana' => route('wakasek.sarana.notifikasi'),
-            'wakasek dudi' => route('wakasek.dudi.notifikasi'),
-            default => route('wakasek.kesiswaan.notifikasi'),
-        };
+        $dashboardRoute = route($jabatan['dashboard']);
+        $rekapRoute = route($jabatan['rekap']);
+        $notifRoute = route($jabatan['notifikasi']);
     @endphp
 
     <aside class="sidebar">
@@ -1284,10 +1854,14 @@
                 <li class="nav-item">
                     <a href="{{ $notifRoute }}" class="nav-notification">
                         <div class="nav-content">
-                            <i class="fa-solid fa-bell"></i>
+                            <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
                             <span>Notifikasi</span>
                         </div>
-                        <span class="notification-dot"></span>
                     </a>
                 </li>
             </ul>
@@ -1305,29 +1879,62 @@
     <div class="main-wrapper">
 
         <header class="topbar">
-            <a href="{{ $notifRoute }}" class="topbar-icon" title="Notifikasi">
-                <i class="fa-regular fa-bell"></i>
-            </a>
-
-            <div class="user-profile">
-                <div class="avatar">
-                    <i class="fa-regular fa-user"></i>
-                </div>
-
-                <span class="user-name">
-                    {{ $user->name ?? $jabatan['nama'] }}
-                </span>
+            <div class="topbar-mobile-brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                     alt="Logo BaktiVoice"
+                     class="topbar-logo-img">
+                <span class="topbar-brand-name">BaktiVoice</span>
             </div>
-        </header>
+
+            <div class="topbar-right-group">
+                <a href="{{ $notifRoute }}"
+                   class="topbar-icon"
+                   title="Notifikasi"
+                   aria-label="Notifikasi">
+                    <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+                </a>
+        <a href="{{ route('profil_wakasek') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="user-name">
+                {{ $user->name ?? $jabatan['nama'] }}
+            </span>
+        </a>
+    </div>
+</header>
 
         <main class="content">
 
-            <h1 class="page-title">Dashboard</h1>
+            
 
-            <p class="welcome-text">
-                Selamat datang, {{ $user->name ?? $jabatan['nama'] }}!<br>
-                Pantau rekap laporan pengaduan siswa bidang {{ $jabatan['kategori'] }}.
-            </p>
+            <section class="welcome-banner-wakasek">
+    <div class="welcome-content-wakasek">
+        <h1 class="welcome-title-wakasek">
+            Hello, {{ $user->name ?? $jabatan['nama'] }}!
+        </h1>
+
+        <p class="welcome-description-wakasek">
+            Pantau dan tindak lanjuti laporan pengaduan siswa bidang
+            {{ $jabatan['kategori'] }} dengan mudah di sini.
+        </p>
+    </div>
+
+    <div class="welcome-action-wakasek">
+        <a href="{{ route($jabatan['monitoring']) }}"
+           class="btn-banner-wakasek"
+           id="btnKelolaLaporanWakasek">
+
+            <i class="fa-solid fa-chart-line"></i>
+            <span id="kelolaLaporanWakasekText">Kelola Laporan</span>
+        </a>
+    </div>
+</section>
 
             <!-- Statistik Dinamis dari Database -->
             <section class="stats-grid">
@@ -1396,6 +2003,7 @@
 
                                 <div>
                                     <div class="report-title">{{ $lap->judul ?? $lap->deskripsi ?? 'Laporan Pengaduan' }}</div>
+                                    <div class="report-id">{{ 'BV' . str_pad($lap->id_laporan ?? $lap->id, 3, '0', STR_PAD_LEFT) }}</div>
                                     <div class="report-date">{{ $lap->created_at ? $lap->created_at->format('d M Y') : '-' }}</div>
                                 </div>
                             </div>
@@ -1431,7 +2039,52 @@
         </main>
     </div>
 
+    <nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+    <a href="{{ route($jabatan['dashboard']) }}"
+       class="mobile-nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
 
+    <a href="{{ route($jabatan['rekap']) }}"
+       class="mobile-nav-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route($jabatan['monitoring']) }}"
+       class="mobile-nav-item ">
+        <i class="fa-solid fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route($jabatan['notifikasi']) }}"
+       class="mobile-nav-item">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_wakasek') }}"
+       class="mobile-nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </button>
+    </form>
+</nav>
+
+    <!-- JAVASCRIPT UNTUK DASHBOARD WAKASEK -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
 
@@ -1461,6 +2114,89 @@
             });
         });
     </script>
+    <script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL DETAIL WAKASEK
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tombolDetail = document.querySelectorAll('.btn-detail');
+
+    tombolDetail.forEach(button => {
+
+        button.addEventListener('click', function (event) {
+
+            // Mencegah klik berulang
+            if (button.dataset.clicked === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai tombol sudah diklik
+            button.dataset.clicked = 'true';
+
+            // Tampilkan loading
+            button.style.opacity = '0.7';
+            button.style.pointerEvents = 'none';
+            button.style.cursor = 'not-allowed';
+
+            // Ubah ikon panah menjadi spinner
+            button.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            `;
+
+        });
+
+    });
+
+});
+</script>
+        <script>
+    // ==========================================
+    // ANTI-DOUBLE CLICK KELola LAPORAN WAKASEK
+    // ==========================================
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnKelolaLaporan = document.getElementById('btnKelolaLaporanWakasek');
+        const tombolText = document.getElementById('kelolaLaporanWakasekText');
+
+        let loadingKelolaLaporan = false;
+
+        if (btnKelolaLaporan && tombolText) {
+            btnKelolaLaporan.addEventListener('click', function (event) {
+
+                if (loadingKelolaLaporan) {
+                    event.preventDefault();
+                    return;
+                }
+
+                loadingKelolaLaporan = true;
+
+                btnKelolaLaporan.classList.add('loading');
+                tombolText.textContent = 'Membuka...';
+
+                const icon = btnKelolaLaporan.querySelector('i');
+
+                if (icon) {
+                    icon.className = 'fa-solid fa-spinner fa-spin';
+                }
+            });
+        }
+    });
+    </script>
+<script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
 

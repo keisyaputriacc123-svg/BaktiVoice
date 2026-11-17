@@ -361,7 +361,7 @@
             border: 1px solid var(--border);
             border-radius: 8px;
             background-color: #ffffff;
-            color: #334155;
+            color: #2c4a8e;
             font-size: 14px;
             outline: none;
             cursor: pointer;
@@ -494,7 +494,7 @@
         .report-table td {
             padding: 16px;
             font-size: 14px;
-            color: #334155;
+            color: #2c4a8e;
             border-bottom: 1px solid rgba(186, 210, 240, 0.4);
             vertical-align: middle;
         }
@@ -639,7 +639,350 @@
                 grid-template-columns: 1fr;
             }
         }
-    </style>
+
+/* ==========================================================
+   RESPONSIVE MOBILE - BAKTIVOICE ADMIN
+   ========================================================== */
+
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+        min-height: 100vh;
+        min-width: 0 !important;
+    }
+
+    .topbar {
+        height: 60px;
+        min-height: 60px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        position: sticky;
+        top: 0;
+        z-index: 900;
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+    }
+
+    .topbar-logo-img {
+        width: 30px;
+        height: 30px;
+        object-fit: contain;
+    }
+
+    .topbar-brand-name {
+        color: #274472;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .topbar-right-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-icon {
+        width: 38px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .user-name {
+        display: none !important;
+    }
+
+    main,
+    .main-content,
+    .content {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        padding: 24px 18px 105px !important;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        min-height: 66px;
+        padding: 7px 3px;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(110deg, #dbeafe, #bfdbfe, #93c5fd);
+        box-shadow: 0 -3px 14px rgba(55, 90, 150, 0.12);
+        z-index: 1100;
+    }
+
+    .mobile-bottom-nav > a,
+    .mobile-nav-dropdown > button {
+        flex: 1;
+        min-width: 0;
+        min-height: 50px;
+        padding: 5px 2px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: #42618f;
+        text-decoration: none;
+        font-family: inherit;
+        cursor: pointer;
+    }
+
+    .mobile-bottom-nav > a i,
+    .mobile-nav-dropdown > button i {
+        font-size: 17px;
+    }
+
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 9px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .mobile-bottom-nav > a.active,
+    .mobile-nav-dropdown > button.active {
+        color: #244a91;
+        background: rgba(255, 255, 255, 0.55);
+    }
+
+    .mobile-nav-dropdown {
+        position: relative;
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-data-master-menu {
+        display: none;
+        position: absolute;
+        bottom: calc(100% + 10px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 185px;
+        padding: 7px;
+        flex-direction: column;
+        gap: 4px;
+        background: #ffffff;
+        border: 1px solid #dbeafe;
+        border-radius: 13px;
+        box-shadow: 0 5px 20px rgba(40, 70, 120, 0.18);
+    }
+
+    .mobile-data-master-menu.show {
+        display: flex;
+    }
+
+    .mobile-data-master-menu a {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 10px;
+        border-radius: 8px;
+        color: #365783;
+        font-size: 12px;
+        text-decoration: none;
+    }
+
+    .mobile-data-master-menu a:active {
+        background: #eaf1fb;
+    }
+
+    .mobile-logout-link i,
+    .mobile-logout-link span {
+        color: #e11d48 !important;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-bottom-nav > a span,
+    .mobile-nav-dropdown > button span {
+        font-size: 8px;
+    }
+
+    .mobile-bottom-nav > a i,
+    .mobile-nav-dropdown > button i {
+        font-size: 16px;
+    }
+}
+
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+        .breadcrumb {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .breadcrumb a {
+            color: #3b62ac;
+            text-decoration: none;
+            font-weight: 600;
+        }
+</style>
 </head>
 
 
@@ -701,7 +1044,12 @@
                 <li class="nav-item">
 
                     <a href="{{ route('notifikasi_admin') }}">
-                        <div class="nav-content"><i class="fa-regular fa-bell"></i><span>Notifikasi</span></div>
+                        <div class="nav-content"><span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span><span>Notifikasi</span></div>
                     </a>
 
                 </li>
@@ -735,18 +1083,46 @@
 
 
         <header class="topbar">
-            <div class="topbar-icon" title="Notifikasi"><i class="fa-regular fa-bell"></i></div>
-            <div class="user-profile">
-                <div class="avatar"><i class="fa-regular fa-user"></i></div>
-                <span class="user-name">{{ auth()->user()->name ?? 'Admin Sekolah' }}</span>
+    <div class="topbar-mobile-brand">
+        <img src="{{ asset('images/logo BaktiVoice.png') }}"
+             alt="Logo BaktiVoice"
+             class="topbar-logo-img">
+        <span class="topbar-brand-name">BaktiVoice</span>
+    </div>
+
+    <div class="topbar-right-group">
+        <a href="{{ route('notifikasi_admin') }}"
+           class="topbar-icon"
+           title="Notifikasi"
+           aria-label="Notifikasi">
+            <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        </a>
+
+        <a href="{{ route('profil_admin') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
             </div>
-        </header>
+            <span class="user-name">{{ Auth::user()->name ?? 'Admin Sekolah' }}</span>
+        </a>
+    </div>
+</header>
 
 
 
 
 
         <main class="content">
+            <div class="breadcrumb">
+                <a href="{{ route('dashboard_admin') }}">Dashboard</a>
+                <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
+                <span>Rekap Laporan</span>
+            </div>
+
             <h1 class="page-title">Rekap Laporan</h1>
 
             <!-- FORM FILTER (GET) -->
@@ -799,9 +1175,10 @@
 
 
                     <div class="filter-group">
-                        <button type="submit" class="filter-button">
-                            <i class="fa-solid fa-filter"></i> Tampilkan
-                        </button>
+                        <button type="submit" class="filter-button" id="btnTampilkanRekap">
+    <i class="fa-solid fa-filter" id="iconTampilkanRekap"></i>
+    <span id="textTampilkanRekap">Tampilkan</span>
+</button>
 
                     </div>
 
@@ -909,6 +1286,76 @@
 
     </div>
 
+<!-- MOBILE BOTTOM NAVIGATION -->
+<div class="mobile-bottom-nav">
+    <a href="{{ route('dashboard_admin') }}"
+       class="{{ request()->routeIs('dashboard_admin') ? 'active' : '' }}">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <div class="mobile-nav-dropdown">
+        <button type="button"
+                class="mobile-nav-dropdown-btn {{ request()->routeIs('data_master') ? 'active' : '' }}"
+                onclick="toggleMobileDataMasterMenu()"
+                aria-expanded="false"
+                id="mobileDataMasterButton">
+            <i class="fa-solid fa-database"></i>
+            <span>Data Master</span>
+        </button>
+
+        <div class="mobile-data-master-menu" id="mobileDataMasterMenu">
+            <a href="{{ route('data_master', ['tab' => 'users']) }}">
+                <i class="fa-solid fa-users"></i>
+                <span>User & Role</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Kategori Laporan</span>
+            </a>
+            <a href="{{ route('data_master', ['tab' => 'status']) }}">
+                <i class="fa-solid fa-list-check"></i>
+                <span>Status Laporan</span>
+            </a>
+        </div>
+    </div>
+
+    <a href="{{ route('rekap_laporan') }}"
+       class="{{ request()->routeIs('rekap_laporan') ? 'active' : '' }}">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route('notifikasi_admin') }}"
+       class="{{ request()->routeIs('notifikasi_admin') ? 'active' : '' }}">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_admin') }}"
+       class="{{ request()->routeIs('profil_admin') ? 'active' : '' }}">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form method="POST" action="{{ route('logout') }}"
+          id="mobile-bottom-logout-form" style="display:none;">
+        @csrf
+    </form>
+
+    <a href="#"
+       class="mobile-logout-link"
+       onclick="event.preventDefault(); document.getElementById('mobile-bottom-logout-form').submit();">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</div>
+
 
 
 
@@ -927,6 +1374,100 @@
 
 
 
+<script>
+function toggleMobileDataMasterMenu() {
+    const menu = document.getElementById('mobileDataMasterMenu');
+    const button = document.getElementById('mobileDataMasterButton');
+
+    if (!menu || !button) return;
+
+    menu.classList.toggle('show');
+    button.setAttribute(
+        'aria-expanded',
+        menu.classList.contains('show') ? 'true' : 'false'
+    );
+}
+
+document.addEventListener('click', function(event) {
+    const dropdown = document.querySelector('.mobile-nav-dropdown');
+
+    if (dropdown && !dropdown.contains(event.target)) {
+        const menu = document.getElementById('mobileDataMasterMenu');
+        const button = document.getElementById('mobileDataMasterButton');
+
+        if (menu) menu.classList.remove('show');
+        if (button) button.setAttribute('aria-expanded', 'false');
+    }
+});
+</script>
+<script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL TAMPILKAN REKAP
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const formFilter = document.querySelector(
+        'form.filter-wrapper'
+    );
+
+    const btnTampilkan = document.getElementById(
+        'btnTampilkanRekap'
+    );
+
+    const iconTampilkan = document.getElementById(
+        'iconTampilkanRekap'
+    );
+
+    const textTampilkan = document.getElementById(
+        'textTampilkanRekap'
+    );
+
+    if (
+        !formFilter ||
+        !btnTampilkan ||
+        !iconTampilkan ||
+        !textTampilkan
+    ) {
+        return;
+    }
+
+    formFilter.addEventListener('submit', function (event) {
+
+        // Mencegah pengiriman form berulang
+        if (formFilter.dataset.submitting === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        // Tandai form sedang diproses
+        formFilter.dataset.submitting = 'true';
+
+        // Nonaktifkan tombol
+        btnTampilkan.disabled = true;
+        btnTampilkan.style.opacity = '0.7';
+        btnTampilkan.style.cursor = 'not-allowed';
+
+        // Tampilkan loading
+        iconTampilkan.className =
+            'fa-solid fa-spinner fa-spin';
+
+        textTampilkan.textContent = 'Memuat...';
+
+    });
+
+});
+</script>
+    <script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 
 </html>
+
+
+
+
+
+
+
+

@@ -256,7 +256,7 @@
 @endif
 
         <!-- Form Register -->
-        <form class="register-form" action="{{ route('register.post') }}" method="POST">
+        <form id="formRegister" class="register-form" action="{{ route('register.post') }}" method="POST">
             @csrf
 
             <!-- Field: Nama Lengkap -->
@@ -326,7 +326,9 @@
             </div>
 
             <!-- Tombol Submit -->
-            <button type="submit" class="btn-submit">Daftar</button>
+            <button type="submit" class="btn-submit" id="btnDaftar">
+    Daftar
+</button>
         </form>
 
         <!-- Footer Link ke Login -->
@@ -352,5 +354,48 @@
             }
         }
     </script>
+    <script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL DAFTAR
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const formRegister = document.getElementById('formRegister');
+    const btnDaftar = document.getElementById('btnDaftar');
+
+    if (formRegister && btnDaftar) {
+
+        formRegister.addEventListener('submit', function (event) {
+
+            // Mencegah pengiriman form berulang
+            if (btnDaftar.dataset.submitted === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai form sudah dikirim
+            btnDaftar.dataset.submitted = 'true';
+
+            // Nonaktifkan tombol
+            btnDaftar.disabled = true;
+
+            // Tampilkan loading
+            btnDaftar.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                Mendaftarkan Akun...
+            `;
+
+            btnDaftar.style.opacity = '0.75';
+            btnDaftar.style.cursor = 'not-allowed';
+            btnDaftar.style.transform = 'none';
+
+        });
+
+    }
+
+});
+</script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
