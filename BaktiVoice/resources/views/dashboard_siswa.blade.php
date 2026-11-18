@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -316,6 +316,84 @@ body {
     box-shadow: 0 6px 16px rgba(98, 140, 219, 0.45);
 }
 
+/* RINGKASAN KATEGORI */
+.kategori-info-section {
+    margin-bottom: 36px;
+}
+
+.kategori-info-header {
+    margin-bottom: 18px;
+}
+
+.kategori-info-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e3a70;
+    margin-bottom: 6px;
+}
+
+.kategori-info-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.kategori-info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.kategori-info-card {
+    background: #ffffff;
+    border: 1px solid rgba(186, 210, 240, 0.6);
+    border-radius: var(--radius);
+    padding: 20px;
+    box-shadow: var(--shadow);
+    transition: all 0.25s ease;
+}
+
+.kategori-info-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(123, 159, 232, 0.18);
+}
+
+.kategori-info-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: #eaf2ff;
+    color: #2563eb;
+    font-size: 18px;
+    margin-bottom: 14px;
+}
+
+.kategori-info-card h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e3a70;
+    margin-bottom: 8px;
+}
+
+.kategori-info-card p {
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+@media (max-width: 1000px) {
+    .kategori-info-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 400px) {
+    .kategori-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
 /* STATS */
 .stats-grid {
     display: grid;
@@ -891,6 +969,49 @@ body {
 </a>
             </section>
 
+            <!-- RINGKASAN KATEGORI -->
+            <section class="kategori-info-section">
+                <div class="kategori-info-header">
+                    <h2 class="kategori-info-title">Kategori Pengaduan</h2>
+                    <p class="kategori-info-subtitle">
+                        Kenali kategori pengaduan yang tersedia di BaktiVoice.
+                    </p>
+                </div>
+
+                <div class="kategori-info-grid">
+                    <div class="kategori-info-card">
+                        <div class="kategori-info-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h3>Kesiswaan</h3>
+                        <p>Perilaku, kedisiplinan, dan kegiatan siswa.</p>
+                    </div>
+
+                    <div class="kategori-info-card">
+                        <div class="kategori-info-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <h3>Kurikulum</h3>
+                        <p>Pembelajaran, jadwal, dan kegiatan akademik.</p>
+                    </div>
+
+                    <div class="kategori-info-card">
+                        <div class="kategori-info-icon">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3>Sarana dan Prasarana</h3>
+                        <p>Fasilitas sekolah yang rusak atau bermasalah.</p>
+                    </div>
+
+                    <div class="kategori-info-card">
+                        <div class="kategori-info-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </div>
+                        <h3>DUDI</h3>
+                        <p>PKL dan kegiatan kerja sama industri.</p>
+                    </div>
+                </div>
+            </section>
             <!-- STATISTIK DINAMIS -->
             <section class="stats-grid">
                 <div class="stat-card total">
