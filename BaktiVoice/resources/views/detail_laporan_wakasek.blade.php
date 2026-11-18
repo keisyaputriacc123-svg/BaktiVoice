@@ -379,6 +379,38 @@
         margin-bottom: 16px;
     }
 
+    .report-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 18px;
+    }
+
+    .btn-cetak {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: #96ace0;
+        color: #fff;
+        border: 1px solid #96ace0;
+        text-decoration: none;
+        font-size: 12px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: all .2s ease;
+    }
+
+    .btn-cetak:hover {
+        background: #7b94d1;
+        border-color: #7b94d1;
+        transform: translateY(-2px);
+    }
+
     .report-title {
         color: var(--text-main);
         font-size: 16px;
@@ -1209,7 +1241,7 @@
     <!-- KONTEN -->
     <main class="content">
             <div class="breadcrumb">
-                <a href="{{ route('dashboard_wakasek') }}">Dashboard</a>
+                <a href="{{ route(match (strtolower(auth()->user()->role)) { 'wakasek kesiswaan' => 'wakasek.kesiswaan.dashboard', 'wakasek kurikulum' => 'wakasek.kurikulum.dashboard', 'wakasek sarana' => 'wakasek.sarana.dashboard', 'wakasek dudi' => 'wakasek.dudi.dashboard' }) }}">Dashboard</a>
                 <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
                 <span>Detail Laporan</span>
             </div>
@@ -1252,9 +1284,16 @@
 
                     <h3 class="report-title">{{ $laporan->judul ?? $laporan->deskripsi ?? 'Laporan Pengaduan' }}</h3>
 
-                    <div class="report-code">
-                        <i class="fa-solid fa-hashtag"></i>
-                        {{ 'BV' . str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
+                    <div class="report-actions">
+                        <div class="report-code">
+                            <i class="fa-solid fa-hashtag"></i>
+                            {{ 'BV' . str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
+                        </div>
+
+                        <a href="{{ route('laporan.cetak', $laporan->id_laporan ?? $laporan->id) }}" class="btn-cetak">
+                            <i class="fa-solid fa-print"></i>
+                            Cetak Laporan
+                        </a>
                     </div>
 
                     <div class="info-list">
