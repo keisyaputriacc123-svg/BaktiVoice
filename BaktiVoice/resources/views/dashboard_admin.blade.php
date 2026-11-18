@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -1095,6 +1095,28 @@
 </a>
                 </div>
             </div>
+
+            <!-- FILTER KATEGORI DASHBOARD -->
+            <form method="GET" action="{{ route('dashboard_admin') }}"
+                  style="margin: 20px 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+
+                <label for="kategori" style="font-weight: 600;">Filter Kategori:</label>
+
+                <select name="kategori" id="kategori"
+                        onchange="this.form.submit()"
+                        style="padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; min-width: 200px;">
+
+                    <option value="">Semua Kategori</option>
+
+                    @foreach($kategoriList as $kategori)
+                        <option value="{{ $kategori->id_kategori }}"
+                            {{ request('kategori') == $kategori->id_kategori ? 'selected' : '' }}>
+                            {{ $kategori->nama_kategori }}
+                        </option>
+                    @endforeach
+
+                </select>
+            </form>
 
             <!-- 5 SUMMARY STATS CARDS (DINAMIS) -->
             <section class="stats-grid">
