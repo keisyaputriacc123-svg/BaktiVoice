@@ -829,6 +829,80 @@ body {
 }
 
 /* AKHIR STANDAR BADGE STATUS LAPORAN */
+
+/* FIX TATA LETAK KARTU LAPORAN */
+.report-card {
+    width: 100%;
+    min-width: 0;
+    gap: 16px;
+}
+
+.report-info-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.report-thumbnail {
+    flex: 0 0 52px;
+    width: 52px;
+    height: 52px;
+}
+
+.report-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.report-title {
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.5;
+}
+
+.report-actions {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.status-badge {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+.btn-detail {
+    display: inline-flex;
+    flex: 0 0 32px;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+@media (max-width: 550px) {
+    .report-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+    }
+
+    .report-info-group {
+        width: 100%;
+    }
+
+    .report-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+
+
+
 </style>
 </head>
 
@@ -1042,43 +1116,12 @@ body {
 
             <!-- DAFTAR LAPORAN DINAMIS -->
             <section>
+
+                
+
                 <h2 class="section-header">Daftar Laporan Terbaru</h2>
                 <div class="report-list">
-                    @forelse($laporans as $laporan)
-                        <div class="report-card">
-                            <div class="report-info-group">
-                                <div class="report-thumbnail">
-                                    @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
-                                        <img src="{{ asset($laporan->buktiLaporan->first()->file_path) }}" alt="Bukti">
-                                    @else
-                                        <i class="fa-regular fa-image"></i>
-                                    @endif
-                                </div>
-                                <div class="report-details">
-                                    <div class="report-title">{{ $laporan->judul }}</div>
-                                    <div class="report-date">{{ $laporan->created_at->format('d M Y') }}</div>
-                                </div>
-                            </div>
-
-                            <div class="report-actions">
-                                @php
-                                    $statusName = $laporan->status ?? 'Pending';
-                                    $badgeClass = match(strtolower($statusName)) {
-                                        'proses', 'diproses' => 'badge-diproses',
-                                        'selesai' => 'badge-selesai',
-                                        'ditolak' => 'badge-ditolak',
-                                        default => 'badge-pending'
-                                    };
-                                @endphp
-                                <span class="status-badge {{ $badgeClass }}">{{ $statusName }}</span>
-                                <a href="{{ route('konfirmasi_laporan', ['id' => $laporan->id_laporan]) }}" class="btn-detail" title="Detail">
-                                    <i class="fa-solid fa-chevron-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    @empty
-                        <p style="color: var(--text-muted); text-align: center; padding: 20px;">Belum ada laporan yang dikirim.</p>
-                    @endforelse
+                    @include('partials.laporan_siswa', ['laporans' => $laporans])
                 </div>
             </section>
 
@@ -1225,10 +1268,19 @@ if (logoutForm) {
 
 }
         });
+        
+
+
+
     </script>
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
+
+
+
+
 
 
 

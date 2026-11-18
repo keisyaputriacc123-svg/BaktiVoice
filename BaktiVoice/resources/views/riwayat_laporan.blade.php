@@ -1092,6 +1092,65 @@ SIDEBAR
             text-decoration: none;
             font-weight: 600;
         }
+
+        /* FILTER KATEGORI RIWAYAT */
+        .history-category-filter {
+            margin-top: -12px;
+            margin-bottom: 26px;
+        }
+
+        .history-filter-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+        }
+
+        .history-filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px;
+        }
+
+        .history-filter-chip {
+            padding: 9px 17px;
+            border: 1px solid #dce6f7;
+            border-radius: 20px;
+            background: #ffffff;
+            color: #526b98;
+            font-family: var(--font-family);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .history-filter-chip:hover {
+            border-color: #96ace0;
+            background: #f2f6ff;
+        }
+
+        .history-filter-chip.active {
+            border-color: #628cdb;
+            background: #628cdb;
+            color: #ffffff;
+            box-shadow: 0 3px 9px rgba(98, 140, 219, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .history-filter-options {
+                gap: 7px;
+            }
+
+            .history-filter-chip {
+                padding: 8px 13px;
+                font-size: 11px;
+            }
+        }
+        /* AKHIR FILTER KATEGORI RIWAYAT */
+
 </style>
 </head>
 
@@ -1282,6 +1341,26 @@ SIDEBAR
 
             </div>
 
+            <!-- FILTER KATEGORI RIWAYAT -->
+            <div class="history-category-filter">
+                <span class="history-filter-label">FILTER KATEGORI:</span>
+
+                <div class="history-filter-options">
+                    <button type="button" class="history-filter-chip active" data-category="all">
+                        Semua
+                    </button>
+
+                    @foreach($kategoriList as $kategori)
+                        <button type="button"
+                                class="history-filter-chip"
+                                data-category="{{ $kategori->id_kategori }}">
+                            {{ $kategori->nama_kategori }}
+                        </button>
+                    @endforeach
+                </div>
+            </div>
+            <!-- AKHIR FILTER KATEGORI RIWAYAT -->
+
             <!-- DAFTAR LAPORAN DINAMIS -->
             <div class="report-list" id="reportList">
                 @forelse($laporans as $laporan)
@@ -1298,7 +1377,8 @@ SIDEBAR
                     <a href="{{ route('detail_laporan_siswa', ['id' => $laporan->id_laporan]) }}"
                        class="report-card"
                        data-title="{{ $laporan->judul }}"
-                       data-date="{{ $laporan->created_at->timezone('Asia/Jakarta')->format('d M Y') }}">
+                       data-date="{{ $laporan->created_at->timezone('Asia/Jakarta')->format('d M Y') }}"
+                       data-category="{{ $laporan->id_kategori }}">
 
                        <div class="report-image">
                             @if($laporan->buktiLaporan && $laporan->buktiLaporan->isNotEmpty())
@@ -1336,36 +1416,43 @@ SIDEBAR
     </div>
 
 
-    <!-- SEARCH JAVASCRIPT -->
+    <!-- SEARCH DAN FILTER KATEGORI JAVASCRIPT -->
     <script>
-
         const searchInput = document.getElementById('searchInput');
-
         const reportCards = document.querySelectorAll('.report-card');
+        const categoryButtons = document.querySelectorAll('.history-filter-chip');
 
+        let selectedCategory = 'all';
 
-        searchInput.addEventListener('input', function () {
-
-            const keyword = this.value.toLowerCase().trim();
-
+        function filterReports() {
+            const keyword = searchInput.value.toLowerCase().trim();
 
             reportCards.forEach(function (card) {
                 const title = card.dataset.title ? card.dataset.title.toLowerCase() : '';
                 const date = card.dataset.date ? card.dataset.date.toLowerCase() : '';
+                const category = card.dataset.category || '';
 
-                if (title.includes(keyword) || date.includes(keyword)) {
-                    card.style.display = 'flex';
+                const matchesSearch = title.includes(keyword) || date.includes(keyword);
+                const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
 
-                } else {
-
-                    card.style.display = 'none';
-
-                }
-
+                card.style.display = matchesSearch && matchesCategory ? 'flex' : 'none';
             });
+        }
 
+        searchInput.addEventListener('input', filterReports);
+
+        categoryButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                selectedCategory = this.dataset.category;
+
+                categoryButtons.forEach(function (item) {
+                    item.classList.remove('active');
+                });
+
+                this.classList.add('active');
+                filterReports();
+            });
         });
-
     </script>
 
 <div class="mobile-bottom-nav">

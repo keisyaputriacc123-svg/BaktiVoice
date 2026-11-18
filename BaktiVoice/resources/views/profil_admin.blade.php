@@ -84,6 +84,72 @@
             gap: 6px;
             list-style: none;
         }
+        /* DROPDOWN DATA MASTER DESKTOP */
+.dropdown-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 16px;
+    color: #274472;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.dropdown-btn:hover {
+    background: rgba(255,255,255,.4);
+    color: #102a56;
+    transform: translateX(4px);
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.arrow-icon {
+    transition: transform .25s ease;
+}
+
+.arrow-icon.rotated {
+    transform: rotate(180deg);
+}
+
+.sub-menu {
+    display: none;
+    margin: 4px 0 0;
+    padding: 0 0 0 32px;
+    list-style: none;
+}
+
+.sub-menu.show {
+    display: block;
+}
+
+.sub-menu a {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    color: #274472;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: .2s ease;
+}
+
+.sub-menu a:hover {
+    background: rgba(255,255,255,.4);
+    color: #102a56;
+}
 
         .nav-item a,
         .logout-btn {
@@ -854,18 +920,39 @@
 
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a href="{{ route('dashboard_admin') }}" title="Laporan">
-                        <i class="fa-regular fa-file-lines"></i>
-                        <span>Laporan</span>
+                    <a href="{{ route('dashboard_admin') }}" title="Dashboard">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('data_master') }}" title="Data Master">
-                        <i class="fa-solid fa-database"></i>
-                        <span>Data Master</span>
-                    </a>
-                </li>
+    <button class="dropdown-btn" onclick="toggleDropdown('masterMenu', 'masterArrow')">
+        <div class="nav-content">
+            <i class="fa-solid fa-database"></i>
+            <span>Data Master</span>
+        </div>
+        <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
+    </button>
+
+    <ul class="sub-menu" id="masterMenu">
+        <li>
+            <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+                Kategori Laporan
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('data_master', ['tab' => 'status']) }}">
+                Status Laporan
+            </a>
+        </li>
+        <li>
+            <a href="{{ route('data_master', ['tab' => 'users']) }}">
+                User &amp; Role
+            </a>
+        </li>
+    </ul>
+</li>
 
                 <li class="nav-item">
                     <a href="{{ route('rekap_laporan') }}" title="Rekap Laporan">
@@ -1274,7 +1361,19 @@
                 }
             });
         });
+// Toggle dropdown Data Master pada desktop sidebar
+function toggleDropdown(menuId, arrowId) {
+    const menu = document.getElementById(menuId);
+    const arrow = document.getElementById(arrowId);
 
+    if (!menu) return;
+
+    menu.classList.toggle('show');
+
+    if (arrow) {
+        arrow.classList.toggle('rotated');
+    }
+}
 // Toggle dropdown Data Master pada mobile bottom navigation
 function toggleMobileDataMasterMenu() {
     const menu = document.getElementById('mobileDataMasterMenu');
@@ -1405,6 +1504,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
 
 
 

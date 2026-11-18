@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1189,8 +1189,8 @@
                <div class="content-section">
     <h3 class="section-title">Bukti Laporan</h3>
     <div class="evidence-box" style="padding: 15px;">
-        @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
-            @foreach($laporan->buktiLaporan as $bukti)
+        @if($buktiLaporanSiswa && $buktiLaporanSiswa->count() > 0)
+            @foreach($buktiLaporanSiswa as $bukti)
                 <div style="margin-bottom: 12px; text-align: center;">
                     <a href="{{ asset($bukti->file_path) }}" target="_blank" style="display: inline-block;">
                         <img src="{{ asset($bukti->file_path) }}" alt="Bukti Laporan" style="max-width: 250px; max-height: 180px; border-radius: 8px; object-fit: cover; display: block; margin-bottom: 8px; border: 1px solid #cbd6eb;">
@@ -1209,6 +1209,65 @@
         @endif
     </div>
 </div>
+
+                {{-- TANGGAPAN ADMIN --}}
+                <div class="content-section">
+                    <h3 class="section-title">Tanggapan Admin</h3>
+
+                    @forelse($tanggapanAdmin as $item)
+                        <div style="padding: 15px; margin-bottom: 12px; background: #f5f8ff; border-radius: 8px;">
+                            <p style="margin: 0 0 8px; white-space: pre-line;">{{ $item->tanggapan }}</p>
+                            <small style="color: #718096;">
+                                Admin
+                                @if($item->created_at)
+                                    • {{ $item->created_at->format('d M Y, H:i') }}
+                                @endif
+                            </small>
+                        </div>
+                    @empty
+                        <p style="color: #9aa8c1;">Belum ada tanggapan dari Admin.</p>
+                    @endforelse
+                </div>
+
+                {{-- TINDAK LANJUT WAKASEK --}}
+                <div class="content-section">
+                    <h3 class="section-title">Tindak Lanjut Wakasek</h3>
+
+                    @forelse($tindakLanjutWakasek as $item)
+                        <div style="padding: 15px; margin-bottom: 12px; background: #f5f8ff; border-radius: 8px;">
+                            <p style="margin: 0 0 8px; white-space: pre-line;">{{ $item->tanggapan }}</p>
+                            <small style="color: #718096;">
+                                Wakasek
+                                @if($item->created_at)
+                                    • {{ $item->created_at->format('d M Y, H:i') }}
+                                @endif
+                            </small>
+                        </div>
+                    @empty
+                        <p style="color: #9aa8c1;">Belum ada tindak lanjut dari Wakasek.</p>
+                    @endforelse
+
+                    <h4 style="margin: 18px 0 12px;">Foto Bukti Tindak Lanjut Wakasek</h4>
+
+                    @forelse($buktiWakasek as $bukti)
+                        <div style="margin-bottom: 15px; text-align: center;">
+                            <a href="{{ asset('storage/' . ltrim($bukti->file_path, '/')) }}" target="_blank">
+                                <img
+                                    src="{{ asset('storage/' . ltrim($bukti->file_path, '/')) }}"
+                                    alt="Bukti Tindak Lanjut Wakasek"
+                                    style="max-width: 280px; max-height: 220px; border-radius: 8px; object-fit: cover; border: 1px solid #cbd6eb;"
+                                >
+                            </a>
+                            <p style="margin-top: 8px;">
+                                <a href="{{ asset('storage/' . ltrim($bukti->file_path, '/')) }}" target="_blank">
+                                    Lihat Bukti Full Size
+                                </a>
+                            </p>
+                        </div>
+                    @empty
+                        <p style="color: #9aa8c1;">Belum ada foto bukti tindak lanjut dari Wakasek.</p>
+                    @endforelse
+                </div>
 
                 @if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
 <!-- FORM SIMPAN TINDAK LANJUT -->
@@ -1311,6 +1370,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+
 
 
 

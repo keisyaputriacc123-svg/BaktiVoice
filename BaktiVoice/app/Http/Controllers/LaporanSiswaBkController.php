@@ -54,13 +54,49 @@ class LaporanSiswaBkController extends Controller
     // Detail laporan hanya boleh dibuka jika kategorinya Kesiswaan
     public function show($id)
     {
-        $laporan = Laporan::with(['kategori', 'user'])
+        $laporan = Laporan::with([
+                'kategori',
+                'user',
+                'tanggapan.user',
+                'buktiLaporan.user'
+            ])
             ->whereHas('kategori', function ($q) {
                 $q->where('nama_kategori', 'Kesiswaan');
             })
             ->findOrFail($id);
 
-        return view('detail_laporan_bk', compact('laporan'));
+        $tanggapanAdmin = $laporan->tanggapan->filter(
+            fn($item) => strtolower(trim($item->user?->role ?? '')) === 'admin'
+        );
+
+        $tindakLanjutWakasek = $laporan->tanggapan->filter(
+            fn($item) => str_starts_with(
+                strtolower(trim($item->user?->role ?? '')),
+                'wakasek'
+            )
+        );
+
+        $buktiWakasek = $laporan->buktiLaporan->filter(
+            fn($item) => str_starts_with(
+                strtolower(trim($item->user?->role ?? '')),
+                'wakasek'
+            )
+        );
+
+        $buktiLaporanSiswa = $laporan->buktiLaporan->reject(
+            fn($item) => str_starts_with(
+                strtolower(trim($item->user?->role ?? '')),
+                'wakasek'
+            )
+        );
+
+        return view('detail_laporan_bk', compact(
+            'laporan',
+            'tanggapanAdmin',
+            'tindakLanjutWakasek',
+            'buktiWakasek',
+            'buktiLaporanSiswa'
+        ));
     }
 
    // Menyimpan tindak lanjut Guru BK ke tabel tanggapan
@@ -115,4 +151,5 @@ class LaporanSiswaBkController extends Controller
             ->with('success', 'Catatan tindak lanjut berhasil disimpan!');
     }
 }
+
 

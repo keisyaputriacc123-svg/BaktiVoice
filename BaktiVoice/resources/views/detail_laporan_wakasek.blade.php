@@ -1397,6 +1397,62 @@
                     </div>
                 </section>
 
+                <!-- TANGGAPAN ADMIN -->
+                <section class="card" style="margin-bottom: 20px;">
+                    <div class="card-title">
+                        <div class="card-title-icon">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <span>Tanggapan Admin</span>
+                    </div>
+
+                    @forelse($tanggapanAdmin as $item)
+                        <div class="report-content" style="margin-top: 12px;">
+                            {{ $item->tanggapan }}
+                        </div>
+
+                        @if($item->created_at)
+                            <small style="display:block; margin-top:8px; color:var(--text-muted);">
+                                <i class="fa-regular fa-clock"></i>
+                                {{ $item->created_at->format('d M Y, H:i') }}
+                            </small>
+                        @endif
+                    @empty
+                        <p class="report-content" style="color:var(--text-muted);">
+                            Belum ada tanggapan dari Admin.
+                        </p>
+                    @endforelse
+                </section>
+
+                <!-- TANGGAPAN GURU BK KHUSUS KESISWAAN -->
+                @if(strtolower(trim($laporan->kategori->nama_kategori ?? '')) === 'kesiswaan')
+                    <section class="card" style="margin-bottom: 20px;">
+                        <div class="card-title">
+                            <div class="card-title-icon">
+                                <i class="fa-solid fa-user-doctor"></i>
+                            </div>
+                            <span>Tanggapan Guru BK</span>
+                        </div>
+
+                        @forelse($tanggapanGuruBk as $item)
+                            <div class="report-content" style="margin-top: 12px;">
+                                {{ $item->tanggapan }}
+                            </div>
+
+                            @if($item->created_at)
+                                <small style="display:block; margin-top:8px; color:var(--text-muted);">
+                                    <i class="fa-regular fa-clock"></i>
+                                    {{ $item->created_at->format('d M Y, H:i') }}
+                                </small>
+                            @endif
+                        @empty
+                            <p class="report-content" style="color:var(--text-muted);">
+                                Belum ada tanggapan dari Guru BK.
+                            </p>
+                        @endforelse
+                    </section>
+                @endif
+
                 <section class="card follow-up-card">
                     <div class="card-title">
                         <div class="card-title-icon">

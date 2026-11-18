@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -1135,8 +1135,8 @@
                 <li class="nav-item active">
                     <a href="{{ route('dashboard_admin') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <span>Laporan</span>
+                            <i class="fa-solid fa-house"></i>
+                            <span>Dashboard</span>
                         </div>
                     </a>
                 </li>
@@ -1151,10 +1151,22 @@
                     </button>
 
                     <ul class="sub-menu" id="masterMenu">
-                        <li><a href="{{ route('data_master') }}">Kategori Laporan</a></li>
-                        <li><a href="{{ route('data_master') }}">Status Laporan</a></li>
-                        <li><a href="{{ route('data_master') }}">User &amp; Role</a></li>
-                    </ul>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+            Kategori Laporan
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'status']) }}">
+            Status Laporan
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'users']) }}">
+            User &amp; Role
+        </a>
+    </li>
+</ul>
                 </li>
 
                 <li class="nav-item">
@@ -1606,3 +1618,4 @@
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
+

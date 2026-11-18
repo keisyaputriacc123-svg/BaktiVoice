@@ -21,10 +21,11 @@ class LaporanController extends Controller
     /**
      * Menampilkan Dashboard Siswa
      */
-    public function dashboardSiswa()
+    public function dashboardSiswa(Request $request)
     {
         $userId = Auth::id();
 
+        // Statistik seluruh laporan milik siswa
         $totalLaporan = Laporan::where('id_user', $userId)->count();
 
         $laporanPending = Laporan::where('id_user', $userId)
@@ -43,11 +44,26 @@ class LaporanController extends Controller
             ->whereRaw('status::text ILIKE ?', ['ditolak'])
             ->count();
 
-        $laporans = Laporan::with(['kategori'])
-            ->where('id_user', $userId)
+        // Filter kategori hanya untuk daftar laporan
+        $laporanQuery = Laporan::with(['kategori'])
+            ->where('id_user', $userId);
+
+        if ($request->filled('kategori')) {
+            $laporanQuery->where('id_kategori', $request->kategori);
+        }
+
+        $laporans = $laporanQuery
             ->orderBy('created_at', 'desc')
             ->take(5)
             ->get();
+
+        $kategoriList = Kategori::all();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'html' => view('partials.laporan_siswa', compact('laporans'))->render()
+            ]);
+        }
 
         return view('dashboard_siswa', compact(
             'totalLaporan',
@@ -55,11 +71,10 @@ class LaporanController extends Controller
             'laporanDiproses',
             'laporanSelesai',
             'laporanDitolak',
-            'laporans'
+            'laporans',
+            'kategoriList'
         ));
     }
-
-
     /**
      * Menampilkan Riwayat Laporan Siswa
      */
@@ -80,9 +95,14 @@ class LaporanController extends Controller
             });
         }
 
-        $laporans = $query->get();
+        if ($request->filled('kategori')) {
+            $query->where('id_kategori', $request->kategori);
+        }
 
-        return view('riwayat_laporan', compact('laporans'));
+        $laporans = $query->get();
+        $kategoriList = Kategori::all();
+
+        return view('riwayat_laporan', compact('laporans', 'kategoriList'));
     }
 
 
@@ -397,4 +417,5 @@ class LaporanController extends Controller
 
 
 }
+
 

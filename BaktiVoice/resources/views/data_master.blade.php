@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="id">
 <head>
@@ -679,8 +679,8 @@
             <li class="nav-item">
                 <a href="{{ route('dashboard_admin') }}">
                     <div class="nav-content">
-                        <i class="fa-regular fa-file-lines"></i>
-                        <span>Laporan</span>
+                        <i class="fa-solid fa-house"></i>
+                        <span>Dashboard</span>
                     </div>
                 </a>
             </li>
@@ -695,22 +695,30 @@
                 </button>
 
                 <ul class="sub-menu show" id="masterMenu">
-                    <li>
-                        <a href="#" onclick="switchTab('kategori'); return false;" id="sub-kategori">
-                            Kategori Laporan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="switchTab('status'); return false;" id="sub-status">
-                            Status Laporan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="switchTab('users'); return false;" id="sub-users" class="sub-active">
-                            User & Role
-                        </a>
-                    </li>
-                </ul>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'kategori']) }}"
+           id="sub-kategori"
+           class="{{ request('tab') === 'kategori' ? 'sub-active' : '' }}">
+            Kategori Laporan
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'status']) }}"
+           id="sub-status"
+           class="{{ request('tab') === 'status' ? 'sub-active' : '' }}">
+            Status Laporan
+        </a>
+    </li>
+
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'users']) }}"
+           id="sub-users"
+           class="{{ request('tab', 'users') === 'users' ? 'sub-active' : '' }}">
+            User & Role
+        </a>
+    </li>
+</ul>
             </li>
 
             <li class="nav-item">
@@ -1829,6 +1837,7 @@ document.addEventListener('click', function(event) {
 
 <script src="{{ asset('js/logout-handler.js') }}"></script>
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
+
 
 
 

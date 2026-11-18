@@ -222,16 +222,27 @@ class DashboardWakasekController extends Controller
             'kategori',
             'user',
             'buktiLaporan',
+            'tanggapan.user',
         ])
             ->where('id_kategori', $idKategori)
             ->findOrFail($id);
+
+        $tanggapanAdmin = $laporan->tanggapan->filter(
+            fn($item) => strtolower(trim($item->user?->role ?? '')) === 'admin'
+        );
+
+        $tanggapanGuruBk = $laporan->tanggapan->filter(
+            fn($item) => strtolower(trim($item->user?->role ?? '')) === 'guru_bk'
+        );
 
         $role = $user->role;
 
         return view('detail_laporan_wakasek', compact(
             'laporan',
             'role',
-            'user'
+            'user',
+            'tanggapanAdmin',
+            'tanggapanGuruBk'
         ));
     }
 

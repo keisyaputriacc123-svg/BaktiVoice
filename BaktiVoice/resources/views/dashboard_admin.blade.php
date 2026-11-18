@@ -1121,10 +1121,22 @@
                         <i class="fa-solid fa-chevron-down arrow-icon" id="masterArrow"></i>
                     </button>
                     <ul class="sub-menu" id="masterMenu">
-                        <li><a href="{{ route('data_master') }}">Kategori Laporan</a></li>
-                        <li><a href="{{ route('data_master') }}">Status Laporan</a></li>
-                        <li><a href="{{ route('data_master') }}">User & Role</a></li>
-                    </ul>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'kategori']) }}">
+            Kategori Laporan
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'status']) }}">
+            Status Laporan
+        </a>
+    </li>
+    <li>
+        <a href="{{ route('data_master', ['tab' => 'users']) }}">
+            User & Role
+        </a>
+    </li>
+</ul>
                 </li>
 
                 <li class="nav-item">
