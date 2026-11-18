@@ -1350,7 +1350,8 @@
                 @endforelse
             </section>
 
-            <!-- TANGGAPAN GURU BK -->
+            @if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
+<!-- TANGGAPAN GURU BK -->
             <section class="tanggapan-card">
                 <h2 class="section-title">
                     <i class="fa-solid fa-user-doctor"></i>
@@ -1373,6 +1374,7 @@
                     <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan dari Guru BK.</p>
                 @endforelse
             </section>
+@endif
 
             <!-- TINDAK LANJUT WAKASEK -->
             <section class="tanggapan-card">

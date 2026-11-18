@@ -1210,7 +1210,8 @@
     </div>
 </div>
 
-                <!-- FORM SIMPAN TINDAK LANJUT -->
+                @if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
+<!-- FORM SIMPAN TINDAK LANJUT -->
                 <div class="content-section">
                     <h3 class="section-title">Masukan / Tindak Lanjut</h3>
 
@@ -1239,6 +1240,7 @@
                         </div>
                     </form>
                 </div>
+@endif
 
             </section>
         </main>

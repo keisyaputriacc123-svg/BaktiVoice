@@ -15,6 +15,7 @@ class BuktiLaporan extends Model
     const UPDATED_AT = null;
     protected $fillable = [
         'id_laporan',
+        'id_user',
         'file_path',
     ];
 
@@ -22,5 +23,11 @@ class BuktiLaporan extends Model
     public function laporan()
     {
         return $this->belongsTo(Laporan::class, 'id_laporan', 'id_laporan');
+    }
+
+    // Relasi ke User pengunggah bukti
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id_user');
     }
 }

@@ -97,10 +97,33 @@ class AdminController extends Controller
     // 5. Menampilkan halaman detail laporan
     public function show($id)
     {
-        $laporan = Laporan::with(['kategori', 'user', 'tanggapan'])->findOrFail($id);
+        $laporan = Laporan::with(['kategori', 'user', 'tanggapan.user', 'buktiLaporan.user'])->findOrFail($id);
         $statusList = StatusLaporan::all();
 
-        return view('detail_laporan_admin', compact('laporan', 'statusList'));
+        $tanggapanAdmin = $laporan->tanggapan->filter(
+            fn($item) => $item->user?->role === 'admin'
+        );
+
+        $masukanGuruBk = $laporan->tanggapan->filter(
+            fn($item) => $item->user?->role === 'guru_bk'
+        );
+
+        $tindakLanjutWakasek = $laporan->tanggapan->filter(
+            fn($item) => str_starts_with($item->user?->role ?? '', 'wakasek')
+        );
+
+        $buktiWakasek = $laporan->buktiLaporan->filter(
+            fn($item) => str_starts_with($item->user?->role ?? '', 'wakasek')
+        );
+
+        return view('detail_laporan_admin', compact(
+            'laporan',
+            'statusList',
+            'tanggapanAdmin',
+            'masukanGuruBk',
+            'tindakLanjutWakasek',
+            'buktiWakasek'
+        ));
     }
 
 
@@ -218,6 +241,9 @@ public function updateStatus(Request $request, $id)
 
     // Ambil tanggapan terakhir
     $tanggapanTerakhir = $laporan->tanggapan()
+        ->whereHas('user', function ($query) {
+            $query->where('role', 'admin');
+        })
         ->orderByDesc('id_tanggapan')
         ->first();
 
@@ -266,7 +292,3 @@ public function updateStatus(Request $request, $id)
         ->with('success', 'Status dan tanggapan laporan berhasil disimpan!');
 }
 }
-
-
-
-

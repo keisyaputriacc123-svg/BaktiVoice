@@ -30,24 +30,31 @@
             max-width: 850px;
             margin: 0 auto 15px;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
+            align-items: center;
             gap: 10px;
         }
 
         .toolbar button {
             padding: 11px 20px;
             border: none;
-            border-radius: 6px;
-            background: #111844;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #7b9fe8, #628cdb);
             color: white;
             cursor: pointer;
             font-weight: bold;
+            box-shadow: 0 3px 8px rgba(98, 140, 219, 0.25);
+            transition: all 0.2s ease;
+        }
+
+        .toolbar button:hover {
+            background: linear-gradient(135deg, #628cdb, #4772c7);
+            transform: translateY(-1px);
         }
 
         .toolbar .back {
-            background: #64748b;
+            background: linear-gradient(135deg, #9bc3f8, #7b9fe8);
         }
-
         .header {
             text-align: center;
             border-bottom: 3px solid #111844;
@@ -189,12 +196,65 @@
                 padding: 10px;
             }
 
+            .toolbar {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .toolbar button {
+                flex: 1;
+                width: auto;
+                padding: 12px 8px;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+
             .container {
-                padding: 20px;
+                padding: 16px;
+                border-radius: 8px;
+            }
+
+            .header {
+                padding-bottom: 15px;
+            }
+
+            .header h1 {
+                font-size: 21px;
+            }
+
+            .document-title {
+                margin: 20px 0;
+            }
+
+            .document-title h2 {
+                font-size: 16px;
+                overflow-wrap: anywhere;
+            }
+
+            .info-table {
+                table-layout: fixed;
+            }
+
+            .info-table td {
+                padding: 8px 4px;
+                font-size: 13px;
+                overflow-wrap: anywhere;
             }
 
             .info-table td:first-child {
-                width: 125px;
+                width: 115px;
+            }
+
+            .content-box,
+            .response {
+                font-size: 13px;
+                overflow-wrap: anywhere;
+            }
+
+            .evidence img {
+                max-height: 300px;
             }
         }
     </style>
@@ -229,12 +289,25 @@
                 <td>Tanggal Laporan</td>
                 <td>: {{ $laporan->created_at ? $laporan->created_at->format('d-m-Y H:i') : '-' }}</td>
             </tr>
-            <tr>
-                <td>Pelapor</td>
-                <td>:
-                    {{ $laporan->anonim ? 'Identitas dirahasiakan' : ($laporan->user->name ?? 'Tidak diketahui') }}
-                </td>
-            </tr>
+            @if($laporan->anonim)
+                <tr>
+                    <td>Pelapor</td>
+                    <td>: Anonim</td>
+                </tr>
+            @else
+                <tr>
+                    <td>Nama Pelapor</td>
+                    <td>: {{ $laporan->user->name ?? 'Tidak diketahui' }}</td>
+                </tr>
+                <tr>
+                    <td>Kelas</td>
+                    <td>: {{ $laporan->user->kelas ?? '-' }}</td>
+                </tr>
+                <tr>
+                    <td>Jurusan</td>
+                    <td>: {{ $laporan->user->jurusan ?? '-' }}</td>
+                </tr>
+            @endif
             <tr>
                 <td>Kategori</td>
                 <td>: {{ $laporan->kategori->nama_kategori ?? '-' }}</td>
@@ -259,15 +332,17 @@
             <div class="evidence">
                 @foreach($buktiList as $bukti)
                     <div>
-                        <p><strong>{{ basename($bukti->file_path) }}</strong></p>
-                        <img
-                            src="{{ asset($bukti->file_path) }}"
-                            alt="Bukti laporan"
-                            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
-                        >
-                        <p style="display:none;">
-                            File bukti: {{ basename($bukti->file_path) }}
-                        </p>
+                        @if(file_exists(public_path($bukti->file_path)))
+                            <p><strong>{{ basename($bukti->file_path) }}</strong></p>
+                            <img
+                                src="{{ asset($bukti->file_path) }}"
+                                alt="Bukti laporan"
+                            >
+                        @else
+                            <p style="font-size: 14px; color: #b45309;">
+                                File bukti tidak tersedia.
+                            </p>
+                        @endif
                     </div>
                 @endforeach
             </div>

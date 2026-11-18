@@ -1013,6 +1013,80 @@
 }
 
 /* AKHIR STANDAR BADGE STATUS LAPORAN */
+
+/* FILTER KATEGORI CHIP */
+.category-filter {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.category-filter-label {
+    font-weight: 700;
+    color: #2c4a8e;
+    font-size: 14px;
+}
+
+.category-filter-options {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.category-filter-chip {
+    border: 1px solid #dce7f7;
+    background: #eef4fc;
+    color: #45618e;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.category-filter-chip:hover {
+    background: #dce9fb;
+    border-color: #96ace0;
+    color: #2c4a8e;
+}
+
+.category-filter-chip.active {
+    background: linear-gradient(135deg, #7b9fe8, #4772c7);
+    border-color: #628cdb;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(98, 140, 219, 0.2);
+}
+
+@media (max-width: 600px) {
+    .category-filter {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .category-filter-options {
+        width: 100%;
+    }
+
+    .category-filter-chip {
+        padding: 8px 13px;
+    }
+}
+
+/* ANTI-DOUBLE CLICK FILTER KATEGORI */
+.category-filter-chip:disabled {
+    opacity: 0.65;
+    cursor: wait;
+    pointer-events: none;
+}
+
+.category-filter-spinner {
+    margin-left: 8px;
+    font-size: 12px;
+}
 </style>
     </head>
 <body>
@@ -1031,8 +1105,8 @@
                 <li class="nav-item active">
                     <a href="{{ route('dashboard_admin') }}">
                         <div class="nav-content">
-                            <i class="fa-regular fa-file-lines"></i>
-                            <span>Laporan</span>
+                            <i class="fa-solid fa-house"></i>
+                            <span>Dashboard</span>
                         </div>
                     </a>
                 </li>
@@ -1157,26 +1231,30 @@
             </div>
 
             <!-- FILTER KATEGORI DASHBOARD -->
-            <form method="GET" action="{{ route('dashboard_admin') }}"
-                  style="margin: 20px 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;">
+<form method="GET" action="{{ route('dashboard_admin') }}" class="category-filter">
 
-                <label for="kategori" style="font-weight: 600;">Filter Kategori:</label>
+    <span class="category-filter-label">FILTER KATEGORI:</span>
 
-                <select name="kategori" id="kategori"
-                        onchange="this.form.submit()"
-                        style="padding: 10px 14px; border: 1px solid #d1d5db; border-radius: 8px; min-width: 200px;">
+    <div class="category-filter-options">
 
-                    <option value="">Semua Kategori</option>
+        <button type="submit"
+                name="kategori"
+                value=""
+                class="category-filter-chip {{ request('kategori') ? '' : 'active' }}">
+            Semua
+        </button>
 
-                    @foreach($kategoriList as $kategori)
-                        <option value="{{ $kategori->id_kategori }}"
-                            {{ request('kategori') == $kategori->id_kategori ? 'selected' : '' }}>
-                            {{ $kategori->nama_kategori }}
-                        </option>
-                    @endforeach
+        @foreach($kategoriList as $kategori)
+            <button type="submit"
+                    name="kategori"
+                    value="{{ $kategori->id_kategori }}"
+                    class="category-filter-chip {{ request('kategori') == $kategori->id_kategori ? 'active' : '' }}">
+                {{ $kategori->nama_kategori }}
+            </button>
+        @endforeach
 
-                </select>
-            </form>
+    </div>
+</form>
 
             <!-- INFORMASI KATEGORI LAPORAN -->
             <section class="category-info-section">
@@ -1487,14 +1565,73 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 </script>
-    <script src="{{ asset('js/logout-handler.js') }}"></script>
+    <script>
+// ==========================================
+// ANTI-DOUBLE CLICK FILTER KATEGORI
+// DASHBOARD ADMIN
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+    const formFilter = document.querySelector('.category-filter');
+
+    if (!formFilter) return;
+
+    let isSubmitting = false;
+
+    formFilter.addEventListener('submit', function (event) {
+        if (isSubmitting) {
+            event.preventDefault();
+            return;
+        }
+
+        const tombolDipilih = event.submitter;
+
+        // Pertahankan nilai kategori sebelum tombol dinonaktifkan
+        if (tombolDipilih && tombolDipilih.name === 'kategori') {
+            let inputKategori = formFilter.querySelector(
+                'input[data-category-filter-value]'
+            );
+
+            if (!inputKategori) {
+                inputKategori = document.createElement('input');
+                inputKategori.type = 'hidden';
+                inputKategori.name = 'kategori';
+                inputKategori.setAttribute(
+                    'data-category-filter-value',
+                    'true'
+                );
+                formFilter.appendChild(inputKategori);
+            }
+
+            inputKategori.value = tombolDipilih.value;
+            tombolDipilih.removeAttribute('name');
+        }
+
+        isSubmitting = true;
+
+        // Nonaktifkan semua chip
+        formFilter.querySelectorAll('.category-filter-chip').forEach(function (button) {
+            button.disabled = true;
+        });
+
+        // Tampilkan spinner pada chip yang dipilih
+        if (tombolDipilih) {
+            const spinner = document.createElement('i');
+            spinner.className =
+                'fa-solid fa-spinner fa-spin category-filter-spinner';
+            spinner.setAttribute('aria-hidden', 'true');
+
+            tombolDipilih.appendChild(spinner);
+            tombolDipilih.setAttribute(
+                'aria-label',
+                tombolDipilih.textContent.trim() + ' sedang dimuat'
+            );
+        }
+    });
+});
+</script>
+
+<script src="{{ asset('js/logout-handler.js') }}"></script>
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
-
-
-
-
-
-
-

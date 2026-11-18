@@ -539,6 +539,54 @@
             color: #94a3b8;
         }
 
+        .response-history {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .response-card {
+            padding: 14px 16px;
+            border: 1px solid #dce7f7;
+            border-radius: 12px;
+            background: #f8faff;
+            color: #334e7d;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-line;
+            overflow-wrap: anywhere;
+        }
+
+        .response-empty {
+            padding: 13px 16px;
+            border: 1px dashed #cbd8ed;
+            border-radius: 10px;
+            background: #f8faff;
+            color: #8293ad;
+            font-size: 13px;
+        }
+
+        .response-form-label {
+            display: block;
+            margin-bottom: 9px;
+            color: #334e7d;
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .wakasek-evidence {
+            margin-top: 18px;
+        }
+
+        .wakasek-evidence-image {
+            display: block;
+            width: 100%;
+            max-width: 420px;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 10px;
+            background: #eef3fb;
+        }
         .form-footer {
             display: flex;
             align-items: center;
@@ -763,7 +811,9 @@
                 gap: 16px;
             }
 
-            .form-footer {
+
+
+        .form-footer {
                 align-items: stretch;
                 flex-direction: column;
             }
@@ -1049,7 +1099,26 @@
             text-decoration: none;
             font-weight: 600;
         }
-</style>
+        .btn-cetak {
+            background: linear-gradient(135deg, #7b9fe8, #628cdb);
+            border: 1px solid #628cdb;
+            color: #ffffff;
+            box-shadow: 0 3px 8px rgba(98, 140, 219, 0.25);
+        }
+
+        .btn-cetak:hover {
+            background: linear-gradient(135deg, #628cdb, #4772c7);
+            border-color: #4772c7;
+            transform: translateY(-1px);
+        }
+
+        .btn-cetak.is-loading {
+            opacity: 0.75;
+            cursor: wait;
+            pointer-events: none;
+            transform: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -1189,7 +1258,7 @@
                         <span>{{ 'BV' . str_pad($laporan->id_laporan ?? 1, 3, '0', STR_PAD_LEFT) }}</span>
                     </div>
 
-                    <a href="{{ route('laporan.cetak', $laporan->id_laporan) }}" class="btn-cetak">
+                    <a href="{{ route('laporan.cetak', $laporan->id_laporan) }}" class="btn-cetak" onclick="if (this.dataset.clicked === 'true') return false; this.dataset.clicked = 'true'; this.classList.add('is-loading'); this.setAttribute('aria-disabled', 'true'); this.textContent = 'Membuka halaman cetak...';">
                         <i class="fa-solid fa-print"></i>
                         Cetak Laporan
                     </a>
@@ -1214,6 +1283,14 @@
                     @method('PUT')
 
                     <section class="metadata-grid">
+
+    <div class="metadata-item">
+        <label>Judul Laporan</label>
+        <div class="metadata-value">
+            <i class="fa-regular fa-file-lines"></i>
+            {{ $laporan->judul ?? '-' }}
+        </div>
+    </div>
 
                         <div class="metadata-item">
                             <label>Kategori</label>
@@ -1296,11 +1373,85 @@
 
 
                     <section class="form-section">
-                        <h2 class="section-title">
-                            <i class="fa-regular fa-comment-dots"></i> Isi Tanggapan
-                        </h2>
-                        <textarea class="response-textarea" name="tanggapan" placeholder="Tuliskan tanggapan atau tindak lanjut terhadap laporan ini...">{{ optional($laporan->tanggapan->last())->tanggapan ?? '' }}</textarea>
-                    </section>
+    <h2 class="section-title">
+        <i class="fa-solid fa-user-shield"></i> Tanggapan Admin
+    </h2>
+
+    <div class="response-history">
+        @forelse($tanggapanAdmin as $item)
+            <div class="response-card">{{ $item->tanggapan }}</div>
+        @empty
+            <div class="response-empty">
+                <i class="fa-regular fa-message"></i>
+                Belum ada tanggapan dari Admin.
+            </div>
+        @endforelse
+    </div>
+
+    <label class="response-form-label" for="tanggapanAdmin">
+        Tulis Tanggapan Baru
+    </label>
+    <textarea class="response-textarea"
+        id="tanggapanAdmin"
+        name="tanggapan"
+        placeholder="Tuliskan tanggapan Admin..."></textarea>
+</section>
+
+@if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
+<section class="form-section">
+    <h2 class="section-title">
+        <i class="fa-solid fa-user-doctor"></i> Masukan Guru BK
+    </h2>
+
+    <div class="response-history">
+        @forelse($masukanGuruBk as $item)
+            <div class="response-card">{{ $item->tanggapan }}</div>
+        @empty
+            <div class="response-empty">
+                <i class="fa-regular fa-message"></i>
+                Belum ada masukan dari Guru BK.
+            </div>
+        @endforelse
+    </div>
+</section>
+@endif
+
+<section class="form-section">
+    <h2 class="section-title">
+        <i class="fa-solid fa-clipboard-check"></i> Tindak Lanjut Wakasek
+    </h2>
+
+    <div class="response-history">
+        @forelse($tindakLanjutWakasek as $item)
+            <div class="response-card">{{ $item->tanggapan }}</div>
+        @empty
+            <div class="response-empty">
+                <i class="fa-regular fa-message"></i>
+                Belum ada tindak lanjut dari Wakasek.
+            </div>
+        @endforelse
+    </div>
+
+    <div class="wakasek-evidence">
+        <h3 class="response-form-label">Bukti Dokumentasi Wakasek</h3>
+
+        @forelse($buktiWakasek as $bukti)
+            <div class="response-card">
+                <img
+                    src="{{ asset('storage/' . $bukti->file_path) }}"
+                    alt="Bukti tindak lanjut Wakasek"
+                    class="wakasek-evidence-image"
+                    loading="lazy"
+                >
+            </div>
+        @empty
+            <div class="response-empty">
+                <i class="fa-regular fa-image"></i>
+                Belum ada bukti gambar dari Wakasek.
+            </div>
+        @endforelse
+    </div>
+</section>
 
 
                     <div class="form-footer">
@@ -1455,9 +1606,3 @@
 <script src="{{ asset('js/anti-double-click.js') }}"></script>
 </body>
 </html>
-
-
-
-
-
-

@@ -265,6 +265,7 @@ class DashboardWakasekController extends Controller
                 ->store('tanggapan', 'public');
 
             $laporan->buktiLaporan()->create([
+                'id_user' => Auth::id(),
                 'file_path' => $path,
             ]);
         }
