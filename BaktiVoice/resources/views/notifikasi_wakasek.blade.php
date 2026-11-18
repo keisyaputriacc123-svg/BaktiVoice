@@ -975,7 +975,7 @@
 
     <main class="content">
             <div class="breadcrumb">
-                <a href="{{ route('dashboard_wakasek') }}">Dashboard</a>
+                <a href="{{ route(match (strtolower(auth()->user()->role)) { 'wakasek kesiswaan' => 'wakasek.kesiswaan.dashboard', 'wakasek kurikulum' => 'wakasek.kurikulum.dashboard', 'wakasek sarana' => 'wakasek.sarana.dashboard', 'wakasek dudi' => 'wakasek.dudi.dashboard' }) }}">Dashboard</a>
                 <i class="fa-solid fa-chevron-right" style="font-size:10px"></i>
                 <span>Notifikasi</span>
             </div>
