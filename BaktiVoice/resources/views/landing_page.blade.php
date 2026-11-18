@@ -412,6 +412,76 @@
             }
         }
 
+        
+        /* --- KATEGORI PENGADUAN --- */
+        .kategori-section {
+            padding-top: 65px;
+            padding-bottom: 65px;
+        }
+
+        .kategori-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .kategori-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .kategori-card {
+            background: #ffffff;
+            padding: 28px 22px;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .kategori-card:hover {
+            transform: translateY(-6px);
+            border-color: #93c5fd;
+            box-shadow: 0 14px 28px rgba(37, 99, 235, 0.08);
+        }
+
+        .kategori-icon {
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            color: #2563eb;
+            font-size: 22px;
+        }
+
+        .kategori-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-main, #2c4a8e);
+            margin-bottom: 10px;
+        }
+
+        .kategori-card p {
+            font-size: 13px;
+            color: var(--text-muted, #64748b);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 992px) {
+            .kategori-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .kategori-grid {
+                grid-template-columns: 1fr;
+            }
+        }
         /* --- ABOUT SECTION --- */
         .about {
             padding: 60px 0;
@@ -885,6 +955,48 @@
         </div>
     </section>
 
+    <!-- KATEGORI PENGADUAN -->
+    <section class="container kategori-section" id="kategori">
+        <div class="kategori-header">
+            <span class="badge-pill">Kategori Pengaduan</span>
+            <h2 class="section-title">Sampaikan Pengaduan Sesuai Kategorinya</h2>
+            <p class="section-subtitle">Pilih kategori yang sesuai dengan permasalahan di lingkungan sekolah.</p>
+        </div>
+
+        <div class="kategori-grid">
+            <div class="kategori-card">
+                <div class="kategori-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+                <h3>Kesiswaan</h3>
+                <p>Pengaduan seputar perilaku, kedisiplinan, dan kegiatan siswa.</p>
+            </div>
+
+            <div class="kategori-card">
+                <div class="kategori-icon">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+                <h3>Kurikulum</h3>
+                <p>Pengaduan seputar pembelajaran, jadwal, dan kegiatan akademik.</p>
+            </div>
+
+            <div class="kategori-card">
+                <div class="kategori-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h3>Sarana dan Prasarana</h3>
+                <p>Pengaduan mengenai fasilitas sekolah yang rusak atau bermasalah.</p>
+            </div>
+
+            <div class="kategori-card">
+                <div class="kategori-icon">
+                    <i class="fa-solid fa-briefcase"></i>
+                </div>
+                <h3>DUDI</h3>
+                <p>Pengaduan seputar PKL dan kegiatan kerja sama industri.</p>
+            </div>
+        </div>
+    </section>
     <!-- HOW IT WORKS SECTION -->
     <section class="container how-it-works" id="cara-kerja">
         <div class="section-header">
