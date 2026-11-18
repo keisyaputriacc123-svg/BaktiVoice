@@ -296,6 +296,37 @@
             box-shadow: var(--shadow);
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cetak {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #96ace0;
+            color: #ffffff;
+            border: 1px solid #96ace0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-cetak:hover {
+            background: #7b94d1;
+            border-color: #7b94d1;
+            transform: translateY(-2px);
+        }
+
         .page-divider {
             border: 0;
             border-top: 1px solid rgba(123, 159, 232, 0.35);
@@ -1174,8 +1205,15 @@
                     <h1 class="page-title">Detail Laporan</h1>
                 </div>
 
-                <div class="report-code">
-                    BV{{ str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
+                <div class="header-actions">
+                    <div class="report-code">
+                        BV{{ str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}
+                    </div>
+
+                    <a href="{{ route('laporan.cetak', $laporan->id_laporan) }}" class="btn-cetak">
+                        <i class="fa-solid fa-print"></i>
+                        Cetak Laporan
+                    </a>
                 </div>
             </section>
 
