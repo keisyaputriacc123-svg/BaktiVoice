@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -287,6 +287,61 @@
 
     /* STATISTICS */
 
+    /* INFORMASI KATEGORI WAKASEK */
+    .category-info-section {
+        margin: 0 0 28px;
+    }
+
+    .category-info-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .category-info-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 13px;
+        padding: 18px;
+        background: var(--card-bg);
+        border: 1px solid rgba(186, 210, 240, 0.6);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .category-info-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(71, 114, 199, 0.16);
+        border-color: #93b4eb;
+    }
+
+    .category-info-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background: #eff6ff;
+        color: #1e40af;
+        font-size: 18px;
+    }
+
+    .category-info-card h3 {
+        margin: 0 0 6px;
+        color: #1e3a70;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .category-info-card p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 13px;
+        line-height: 1.6;
+    }
     .stats-grid {
         display: grid;
         grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1936,7 +1991,35 @@ select {
     </div>
 </section>
 
-            <!-- Statistik Dinamis dari Database -->
+            <!-- INFORMASI KATEGORI LAPORAN WAKASEK -->
+@php
+    $deskripsiKategori = [
+        'Kesiswaan' => 'Pengaduan seputar perilaku, kedisiplinan, dan kegiatan siswa.',
+        'Kurikulum' => 'Pengaduan seputar pembelajaran, jadwal, dan kegiatan akademik.',
+        'Sarana dan Prasarana' => 'Pengaduan mengenai fasilitas sekolah yang rusak atau bermasalah.',
+        'DUDI' => 'Pengaduan seputar PKL dan kegiatan kerja sama industri.',
+    ];
+
+    $deskripsiAktif = $deskripsiKategori[$jabatan['kategori']]
+        ?? 'Informasi kategori laporan pengaduan sekolah.';
+@endphp
+
+<section class="category-info-section">
+    <h2 class="section-header">Informasi Kategori Laporan</h2>
+
+    <div class="category-info-grid">
+        <div class="category-info-card">
+            <div class="category-info-icon">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <div>
+                <h3>{{ $jabatan['kategori'] }}</h3>
+                <p>{{ $deskripsiAktif }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Statistik Dinamis dari Database -->
             <section class="stats-grid">
                 <div class="stat-card total">
                     <div class="stat-title">Total</div>
