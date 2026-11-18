@@ -334,6 +334,66 @@
         .btn-banner:hover {
             transform: translateY(-2px);
         }
+        /* --- INFORMASI KATEGORI LAPORAN --- */
+        .category-info-section {
+            margin: 28px 0 30px;
+        }
+
+        .category-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+
+        .category-info-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 18px;
+            background: var(--card-bg);
+            border: 1px solid rgba(186, 210, 240, 0.6);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            cursor: pointer;
+        }
+
+        .category-info-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(71, 114, 199, 0.16);
+            border-color: #93b4eb;
+        }
+
+        .category-info-card:active {
+            transform: translateY(-1px) scale(0.99);
+        }
+
+        .category-info-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 18px;
+        }
+
+        .category-info-card h3 {
+            margin: 0 0 6px;
+            color: #1e3a70;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .category-info-card p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.6;
+        }
         /* --- STATS GRID --- */
         .stats-grid {
             display: grid;
@@ -1118,6 +1178,54 @@
                 </select>
             </form>
 
+            <!-- INFORMASI KATEGORI LAPORAN -->
+            <section class="category-info-section">
+                <h2 class="section-header">Informasi Kategori Laporan</h2>
+
+                <div class="category-info-grid">
+
+                    <div class="category-info-card">
+                        <div class="category-info-icon">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div>
+                            <h3>Kesiswaan</h3>
+                            <p>Pengaduan seputar perilaku, kedisiplinan, dan kegiatan siswa.</p>
+                        </div>
+                    </div>
+
+                    <div class="category-info-card">
+                        <div class="category-info-icon">
+                            <i class="fa-solid fa-book-open"></i>
+                        </div>
+                        <div>
+                            <h3>Kurikulum</h3>
+                            <p>Pengaduan seputar pembelajaran, jadwal, dan kegiatan akademik.</p>
+                        </div>
+                    </div>
+
+                    <div class="category-info-card">
+                        <div class="category-info-icon">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <div>
+                            <h3>Sarana dan Prasarana</h3>
+                            <p>Pengaduan mengenai fasilitas sekolah yang rusak atau bermasalah.</p>
+                        </div>
+                    </div>
+
+                    <div class="category-info-card">
+                        <div class="category-info-icon">
+                            <i class="fa-solid fa-handshake"></i>
+                        </div>
+                        <div>
+                            <h3>DUDI</h3>
+                            <p>Pengaduan seputar PKL dan kegiatan kerja sama industri.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
             <!-- 5 SUMMARY STATS CARDS (DINAMIS) -->
             <section class="stats-grid">
                 <div class="stat-card total">
