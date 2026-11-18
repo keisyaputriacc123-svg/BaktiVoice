@@ -180,7 +180,7 @@ class LaporanController extends Controller
             'privasi' => 'required|string',
 
             'bukti_pendukung' => [
-                'nullable',
+                'required',
                 'file',
                 'mimes:jpeg,png,jpg,webp,mp4,doc,docx',
                 'max:15210'
@@ -192,6 +192,7 @@ class LaporanController extends Controller
             'id_kategori.exists' => 'Kategori laporan tidak ditemukan.',
             'isi_laporan.required' => 'Isi laporan wajib diisi.',
             'privasi.required' => 'Pilihan privasi wajib dipilih.',
+            'bukti_pendukung.required' => 'Bukti laporan wajib diunggah.',
             'bukti_pendukung.mimes' =>
                 'Format berkas bukti harus JPG, PNG, WEBP, MP4, DOC, atau DOCX.',
             'bukti_pendukung.max' =>
