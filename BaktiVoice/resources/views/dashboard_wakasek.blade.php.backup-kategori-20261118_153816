@@ -1,0 +1,2202 @@
+﻿
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaktiVoice - Dashboard Wakasek</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+<style>
+    :root {
+        --primary: #96ace0;
+        --primary-hover: #7b94d1;
+        --background: #eaf1fb;
+        --card-bg: #ffffff;
+        --border: rgba(186, 210, 240, 0.6);
+        --text-main: #2c4a8e;
+        --text-muted: #64748b;
+
+        --font-family: 'Inter', sans-serif;
+        --sidebar-width: 250px;
+        --topbar-height: 70px;
+        --radius: 12px;
+
+        --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+        --gradient-pastel: linear-gradient(
+            135deg,
+            #7b9fe8 0%,
+            #9bc3f8 50%,
+            #b8d7ff 100%
+        );
+        --gradient-button: linear-gradient(
+            135deg,
+            #628cdb 0%,
+            #4772c7 100%
+        );
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-family);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--text-main);
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--gradient-pastel);
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+
+        padding: 24px 16px;
+        overflow-y: auto;
+
+        box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px 24px;
+    }
+
+    .brand-logo-img {
+        width: 60px;
+        height: 60px;
+        max-width: 60px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #ffffff;
+        padding: 3px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand-name {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .nav-item a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+
+        color: #274472;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .nav-item a:hover {
+        background: rgba(255, 255, 255, 0.4);
+        color: #102a56;
+        transform: translateX(4px);
+    }
+
+    .nav-item.active a {
+        background: #ffffff;
+        color: #3b62ac;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
+    }
+
+    .nav-item i {
+        width: 20px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .nav-notification {
+    position: relative;
+}
+
+.nav-notification .notification-dot {
+    position: absolute;
+    top: 9px;
+    left: 29px;
+    width: 8px;
+    height: 8px;
+    background: #ef7777;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+}
+
+    /* LOGOUT */
+
+    .logout-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+
+        color: #e11d48;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.5);
+        color: #be123c;
+    }
+
+    /* MAIN WRAPPER */
+
+    .main-wrapper {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        background: var(--background);
+    }
+
+    /* TOPBAR */
+
+    .topbar {
+        height: var(--topbar-height);
+        background: var(--gradient-pastel);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+        padding: 0 36px;
+
+        position: sticky;
+        top: 0;
+        z-index: 90;
+
+        box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
+    }
+
+    .topbar-icon {
+        color: #274472;
+        font-size: 18px;
+        padding: 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    .topbar-icon:hover {
+        background: rgba(255, 255, 255, 0.4);
+        color: #102a56;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        border-radius: 30px;
+        transition: background 0.2s;
+    }
+
+    .user-profile:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    .avatar {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        border-radius: 50%;
+
+        background: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #3b62ac;
+        font-size: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e3a70;
+    }
+
+    /* MAIN CONTENT */
+
+    .content {
+        padding: 36px;
+        min-height: calc(100vh - var(--topbar-height));
+        background: var(--background);
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #1e3a70;
+        margin-bottom: 10px;
+    }
+
+    .welcome-text {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 28px;
+        line-height: 1.7;
+    }
+
+    /* STATISTICS */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(123, 159, 232, 0.12);
+    }
+
+    .stat-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .total .stat-value {
+        color: #1e3a70;
+    }
+
+    .pending .stat-value {
+        color: #64748b;
+    }
+
+    .diproses .stat-value {
+        color: #d97706;
+    }
+
+    .selesai .stat-value {
+        color: #16a34a;
+    }
+
+    .ditolak .stat-value {
+        color: #dc2626;
+    }
+
+    /* SECTION */
+
+    .section {
+        margin-bottom: 36px;
+    }
+
+    .section-header {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1e3a70;
+        margin-bottom: 16px;
+    }
+
+    /* CATEGORY RECAP */
+
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 28px;
+
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+    }
+
+    .category-item {
+        display: grid;
+        grid-template-columns: 100px minmax(50px, 1fr) 24px;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+    }
+
+    .category-name {
+        color: var(--text-muted);
+    }
+
+    .bar-track {
+        height: 9px;
+        background: #edf1f8;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        height: 100%;
+        background: var(--gradient-pastel);
+        border-radius: 20px;
+        transition: width 0.3s ease;
+    }
+
+    .category-count {
+        font-weight: 700;
+        color: #2c4a8e;
+        text-align: right;
+    }
+
+    /* LATEST REPORTS */
+
+    .report-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .report-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .report-card:hover {
+        border-color: #7b9fe8;
+        transform: translateY(-1px);
+    }
+
+    .report-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    .report-thumbnail {
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+
+        background: #eaf0ff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: #3b62ac;
+        font-size: 20px;
+    }
+
+    .report-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e3a70;
+        margin-bottom: 6px;
+        overflow-wrap: anywhere;
+    }
+
+    .report-date {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .report-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 0;
+    }
+
+    /* STATUS BADGES */
+
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .badge-pending {
+        background: #eaf0ff;
+        color: #496cbd;
+    }
+
+    .badge-diproses {
+        background: #fef3c7;
+        color: #b45309;
+    }
+
+    .badge-selesai {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .badge-ditolak {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    /* DETAIL BUTTON */
+
+    .btn-detail {
+        width: 34px;
+        height: 34px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: none;
+        border-radius: 8px;
+        background: #eaf0ff;
+        color: #3b62ac;
+
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-detail:hover {
+        background: #3b62ac;
+        color: #ffffff;
+    }
+
+    /* EMPTY STATE */
+
+    .empty-state {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+        color: var(--text-muted);
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1050px) {
+        .content {
+            padding: 26px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 70px;
+            padding: 16px 8px;
+        }
+
+        .brand {
+            padding: 0 0 24px;
+            justify-content: center;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+        }
+
+        .brand-name,
+        .nav-item span,
+        .logout-btn span {
+            display: none;
+        }
+
+        .nav-item a,
+        .logout-btn {
+            justify-content: center;
+            padding: 13px 8px;
+        }
+
+        .main-wrapper {
+            margin-left: 70px;
+        }
+
+        .topbar {
+            padding: 0 18px;
+        }
+
+        .content {
+            padding: 22px 16px;
+        }
+
+        .page-title {
+            font-size: 24px;
+        }
+
+        .category-grid {
+            grid-template-columns: 1fr;
+            padding: 18px;
+        }
+
+        .category-item {
+            grid-template-columns: 95px minmax(30px, 1fr) 20px;
+        }
+
+        .report-card {
+            padding: 14px;
+        }
+
+        .report-info {
+            gap: 10px;
+        }
+
+        .report-thumbnail {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+        }
+
+        .report-actions {
+            gap: 6px;
+        }
+
+        .status-badge {
+            padding: 5px 8px;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .topbar {
+            padding: 0 12px;
+            gap: 8px;
+        }
+
+        .user-name {
+            font-size: 12px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .stat-card {
+            padding: 18px 10px;
+        }
+
+        .stat-value {
+            font-size: 26px;
+        }
+
+        .stat-title {
+            font-size: 10px;
+        }
+
+        .section-header {
+            font-size: 19px;
+        }
+
+        .report-card {
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .report-actions {
+            width: 100%;
+            justify-content: flex-end;
+        }
+
+        .report-title {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 380px) {
+        .user-name {
+            max-width: 115px;
+            overflow-wrap: anywhere;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .category-item {
+            grid-template-columns: 85px minmax(25px, 1fr) 18px;
+            gap: 8px;
+            font-size: 12px;
+        }
+    }
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}</style>
+
+</head>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BaktiVoice - Dashboard Wakasek</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+    :root {
+        --primary: #96ace0;
+        --primary-hover: #7b94d1;
+        --background: #eaf1fb;
+        --card-bg: #ffffff;
+        --border: rgba(186, 210, 240, 0.6);
+        --text-main: #2c4a8e;
+        --text-muted: #64748b;
+
+        --font-family: 'Inter', sans-serif;
+        --sidebar-width: 250px;
+        --topbar-height: 70px;
+        --radius: 12px;
+
+        --shadow: 0 4px 15px rgba(123, 159, 232, 0.08);
+        --gradient-pastel: linear-gradient(135deg, #7b9fe8 0%, #9bc3f8 50%, #b8d7ff 100%);
+        --gradient-button: linear-gradient(135deg, #628cdb 0%, #4772c7 100%);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: var(--font-family);
+    }
+
+    body {
+        background-color: var(--background);
+        color: var(--text-main);
+        min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+        width: var(--sidebar-width);
+        background: var(--gradient-pastel);
+        border-right: 1px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 100;
+        padding: 24px 16px;
+        overflow-y: auto;
+        box-shadow: 4px 0 20px rgba(123, 159, 232, 0.15);
+    }
+
+    .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 0 12px 24px;
+    }
+
+    .brand-logo-img {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        border-radius: 12px;
+        background: #ffffff;
+        padding: 3px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .brand-name {
+        font-size: 20px;
+        font-weight: 800;
+        color: #1e3a70;
+    }
+
+    .nav-menu {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .nav-item a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        color: #274472;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        border-radius: 10px;
+        transition: all 0.25s ease;
+    }
+
+    .nav-item a:hover {
+        background: rgba(255, 255, 255, 0.4);
+        color: #102a56;
+        transform: translateX(4px);
+    }
+
+    .nav-item.active a {
+        background: #ffffff;
+        color: #3b62ac;
+        font-weight: 700;
+        box-shadow: 0 4px 14px rgba(60, 98, 172, 0.18);
+    }
+
+    .nav-item i {
+        width: 20px;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .nav-notification {
+        position: relative;
+    }
+
+    .nav-notification .notification-dot {
+        position: absolute;
+        top: 9px;
+        left: 29px;
+        width: 8px;
+        height: 8px;
+        background: #ef7777;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+    }
+
+    /* LOGOUT */
+    .logout-btn {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        border: none;
+        border-radius: 10px;
+        background: transparent;
+        color: #e11d48;
+        font-size: 14px;
+        font-weight: 700;
+        text-align: left;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.5);
+        color: #be123c;
+    }
+
+    /* MAIN WRAPPER */
+    .main-wrapper {
+        margin-left: var(--sidebar-width);
+        min-height: 100vh;
+        background: var(--background);
+    }
+
+    /* TOPBAR */
+    .topbar {
+        height: var(--topbar-height);
+        background: var(--gradient-pastel);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+        padding: 0 36px;
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        box-shadow: 0 4px 15px rgba(123, 159, 232, 0.12);
+    }
+
+    .topbar-icon {
+        color: #274472;
+        font-size: 18px;
+        padding: 8px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-decoration: none;
+    }
+
+    .topbar-icon:hover {
+        background: rgba(255, 255, 255, 0.4);
+        color: #102a56;
+    }
+
+    .user-profile {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 6px 12px;
+        border-radius: 30px;
+    }
+
+    .avatar {
+        width: 38px;
+        height: 38px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #ffffff;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b62ac;
+        font-size: 16px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .user-name {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e3a70;
+    }
+
+    /* MAIN CONTENT */
+    .content {
+        padding: 36px;
+        min-height: calc(100vh - var(--topbar-height));
+        background: var(--background);
+    }
+
+    .page-title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #1e3a70;
+        margin-bottom: 10px;
+    }
+
+    .welcome-text {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 28px;
+        line-height: 1.7;
+    }
+
+    /* STATISTICS */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(123, 159, 232, 0.12);
+    }
+
+    .stat-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+
+    .stat-value {
+        font-size: 32px;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .total .stat-value { color: #1e3a70; }
+    .pending .stat-value { color: #64748b; }
+    .diproses .stat-value { color: #d97706; }
+    .selesai .stat-value { color: #16a34a; }
+    .ditolak .stat-value { color: #dc2626; }
+
+    /* SECTION */
+    .section {
+        margin-bottom: 36px;
+    }
+
+    .section-header {
+        font-size: 22px;
+        font-weight: 700;
+        color: #1e3a70;
+        margin-bottom: 16px;
+    }
+
+    /* CATEGORY RECAP */
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 28px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        box-shadow: var(--shadow);
+    }
+
+    .category-item {
+        display: grid;
+        grid-template-columns: 140px minmax(50px, 1fr) 30px;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+    }
+
+    .category-name {
+        color: var(--text-muted);
+    }
+
+    .bar-track {
+        height: 9px;
+        background: #edf1f8;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .bar-fill {
+        height: 100%;
+        background: var(--gradient-pastel);
+        border-radius: 20px;
+        transition: width 0.3s ease;
+    }
+
+    .category-count {
+        font-weight: 700;
+        color: #2c4a8e;
+        text-align: right;
+    }
+
+    /* LATEST REPORTS */
+    .report-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .report-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 16px 20px;
+        box-shadow: var(--shadow);
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .report-card:hover {
+        border-color: #7b9fe8;
+        transform: translateY(-1px);
+    }
+
+    .report-info {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-width: 0;
+    }
+
+    .report-thumbnail {
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+        background: #eaf0ff;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #3b62ac;
+        font-size: 20px;
+    }
+
+    .report-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e3a70;
+        margin-bottom: 6px;
+        overflow-wrap: anywhere;
+    }
+
+    .report-date {
+        font-size: 12px;
+        color: var(--text-muted);
+    }
+
+    .report-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-shrink: 0;
+    }
+
+    /* STATUS BADGES */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .badge-pending { background: #eaf0ff; color: #496cbd; }
+    .badge-diproses { background: #fef3c7; color: #b45309; }
+    .badge-selesai { background: #dcfce7; color: #15803d; }
+    .badge-ditolak { background: #fee2e2; color: #b91c1c; }
+
+    /* DETAIL BUTTON */
+    .btn-detail {
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 8px;
+        background: #eaf0ff;
+        color: #3b62ac;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+    .btn-detail:hover {
+        background: #3b62ac;
+        color: #ffffff;
+    }
+
+    .empty-state {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 28px;
+        color: var(--text-muted);
+        text-align: center;
+        box-shadow: var(--shadow);
+    }
+
+    @media (max-width: 1050px) {
+        .content { padding: 26px; }
+        .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+        .sidebar { width: 70px; padding: 16px 8px; }
+        .brand { padding: 0 0 24px; justify-content: center; }
+        .brand-logo-img { width: 42px; height: 42px; }
+        .brand-name, .nav-item span, .logout-btn span { display: none; }
+        .nav-item a, .logout-btn { justify-content: center; padding: 13px 8px; }
+        .main-wrapper { margin-left: 70px; }
+        .topbar { padding: 0 18px; }
+        .content { padding: 22px 16px; }
+        .page-title { font-size: 24px; }
+        .category-grid { grid-template-columns: 1fr; padding: 18px; }
+    }
+
+/* ===== RESPONSIVE MOBILE WAKASEK ===== */
+.topbar-mobile-brand {
+    display: none;
+}
+
+.topbar-right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.topbar-brand-name {
+    font-size: 17px;
+    font-weight: 800;
+    color: #2c4a8e;
+}
+
+.mobile-bottom-nav {
+    display: none;
+}
+
+.mobile-logout-form {
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-nav-item {
+    text-decoration: none;
+    color: #496cbd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    padding: 7px 2px;
+}
+
+.mobile-nav-item i {
+    font-size: 18px;
+}
+
+.mobile-nav-item.active {
+    color: #244b9b;
+    background: rgba(255,255,255,.55);
+    border-radius: 12px;
+}
+
+.mobile-logout {
+    width: 100%;
+    color: #e11d48;
+}
+
+.mobile-logout i {
+    color: #e11d48;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none !important;
+    }
+
+    .main-wrapper {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        width: 100%;
+        min-height: 60px;
+        height: 60px;
+        padding: 0 14px !important;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        background: var(--gradient-pastel) !important;
+        border-bottom: 1px solid rgba(255,255,255,.5);
+        box-shadow: 0 3px 12px rgba(123,159,232,.12);
+    }
+
+    .topbar-mobile-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .topbar-right-group {
+        display: flex !important;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .topbar-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-name {
+        font-size: 12px;
+    }
+
+    .avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 100%;
+        padding: 20px 14px 115px !important;
+        box-sizing: border-box;
+    }
+
+    .mobile-bottom-nav {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        min-height: 66px;
+        padding: 6px 5px calc(6px + env(safe-area-inset-bottom));
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 2px;
+        background: linear-gradient(120deg, #dbeafe, #bfdbfe, #93c5fd);
+        border-top: 1px solid rgba(255,255,255,.7);
+        box-shadow: 0 -4px 15px rgba(65,105,180,.12);
+    }
+
+    .mobile-logout-form {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .mobile-nav-item {
+        font-size: 9px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 17px;
+    }
+}
+
+@media (max-width: 380px) {
+    .topbar {
+        padding: 0 9px !important;
+    }
+
+    .topbar-brand-name {
+        font-size: 15px;
+    }
+
+    .mobile-nav-item {
+        font-size: 8px;
+    }
+
+    .mobile-nav-item i {
+        font-size: 15px;
+    }
+}
+
+/* ===== MOBILE TOPBAR USER POSITION FIX ===== */
+@media (max-width: 768px) {
+    .topbar-right-group .user-name {
+        display: none !important;
+    }
+
+    .topbar-right-group .user-profile {
+        order: -1 !important;
+    }
+}
+/* ===== END MOBILE TOPBAR USER POSITION FIX ===== */
+
+    /* ==========================================
+       BANNER SAMBUTAN DASHBOARD WAKASEK
+    ========================================== */
+
+    .welcome-banner-wakasek {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 30px 34px;
+        margin-bottom: 28px;
+        border-radius: 20px;
+        background: linear-gradient(115deg, #7b9fe8 0%, #9bc3f8 55%, #b8d7ff 100%);
+        box-shadow: 0 8px 22px rgba(91, 132, 205, 0.16);
+    }
+
+    .welcome-content-wakasek {
+        min-width: 0;
+    }
+
+    .welcome-title-wakasek {
+        margin: 0 0 9px;
+        color: #1e3a70;
+        font-size: 27px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
+
+    .welcome-description-wakasek {
+        margin: 0;
+        color: #1e3a70;
+        font-size: 14px;
+        line-height: 1.7;
+    }
+
+    .welcome-action-wakasek {
+        flex-shrink: 0;
+    }
+
+    .btn-banner-wakasek {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 21px;
+        border: none;
+        border-radius: 11px;
+        background: #347fce;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(43, 76, 137, 0.22);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .btn-banner-wakasek:hover {
+        transform: translateY(-2px);
+        background: #286bb5;
+        box-shadow: 0 7px 16px rgba(43, 76, 137, 0.28);
+        color: #ffffff;
+    }
+
+    .btn-banner-wakasek.loading {
+        opacity: 0.8;
+        pointer-events: none;
+        cursor: wait;
+    }
+
+    @media (max-width: 768px) {
+        .welcome-banner-wakasek {
+            padding: 24px;
+            gap: 18px;
+        }
+
+        .welcome-title-wakasek {
+            font-size: 23px;
+        }
+
+        .welcome-description-wakasek {
+            font-size: 13px;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .welcome-banner-wakasek {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 22px;
+            gap: 18px;
+        }
+
+        .welcome-title-wakasek {
+            font-size: 21px;
+        }
+
+        .welcome-action-wakasek {
+            width: 100%;
+        }
+
+        .btn-banner-wakasek {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 13px 21px;
+        border: none;
+        border-radius: 11px;
+        background: #347fce;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        text-decoration: none;
+        white-space: nowrap;
+        box-shadow: 0 4px 12px rgba(43, 76, 137, 0.22);
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+    }
+
+/* =========================================
+   MODERN CLEAN TYPOGRAPHY - BAKTIVOICE
+========================================= */
+
+html,
+body,
+button,
+input,
+textarea,
+select {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Judul laporan */
+.report-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 14.5px;
+    font-weight: 650;
+    line-height: 1.5;
+    letter-spacing: -0.25px;
+    color: #244477;
+    margin-bottom: 5px;
+}
+
+/* ID laporan */
+.report-id {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    color: #4772c7;
+    margin-bottom: 1px;
+}
+
+/* Tanggal laporan */
+.report-date {
+    font-family: 'Inter', sans-serif;
+    font-size: 11.5px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.1px;
+    color: #7b8da8;
+}
+
+/* Status laporan */
+.status-badge {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+}
+
+/* Menu sidebar */
+.nav-item a {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+}
+
+/* Nama aplikasi */
+.brand-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 750;
+    letter-spacing: -0.5px;
+}
+
+/* Tampilan layar kecil */
+@media (max-width: 550px) {
+    .report-title {
+        font-size: 13px;
+    }
+
+    .report-id {
+        font-size: 12px;
+    }
+
+    .report-date {
+        font-size: 11px;
+    }
+}
+/* INDIKATOR NOTIFIKASI BELUM DIBACA */
+.notification-icon-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.unread-notification-dot {
+    position: absolute;
+    top: -3px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    background: #22c55e;
+    box-sizing: content-box;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.logout-btn:hover, .logout-btn:focus, .mobile-nav-logout:hover, .mobile-logout:hover, .mobile-logout-link:hover { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }
+
+.logout-btn,
+.logout-btn:hover,
+.logout-btn:focus,
+.logout-btn:active,
+.mobile-nav-logout,
+.mobile-nav-logout:hover,
+.mobile-nav-logout:focus,
+.mobile-nav-logout:active,
+.mobile-logout,
+.mobile-logout:hover,
+.mobile-logout:focus,
+.mobile-logout:active,
+.mobile-logout-link,
+.mobile-logout-link:hover,
+.mobile-logout-link:focus,
+.mobile-logout-link:active {
+    background: transparent !important;
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link { background: transparent !important; background-color: transparent !important; box-shadow: none !important; }:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link),:is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link):is(:hover,:focus,:active) {color:#ef4444!important;background:transparent!important;border:0!important;box-shadow:none!important;} :is(.logout-btn,.mobile-nav-logout,.mobile-logout,.mobile-logout-link) i {color:#ef4444!important;}
+
+/* BAKTIVOICE - STANDAR BADGE STATUS LAPORAN */
+.status-badge,
+.report-status,
+.status.status-pending,
+.status.status-diproses,
+.status.status-proses,
+.status.status-selesai,
+.status.status-ditolak {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    min-height: 30px !important;
+    padding: 6px 20px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+    text-transform: lowercase;
+}
+
+:is(
+    .badge-pending,
+    .status-pending,
+    .status-badge.pending,
+    .status-badge.badge-pending
+) {
+    background: #f1f2f4 !important;
+    color: #64748b !important;
+}
+
+:is(
+    .badge-diproses,
+    .badge-proses,
+    .status-diproses,
+    .status-proses,
+    .status-badge.diproses,
+    .status-badge.proses
+) {
+    background: #fff1c7 !important;
+    color: #d97706 !important;
+}
+
+:is(
+    .badge-selesai,
+    .status-selesai,
+    .status-badge.selesai
+) {
+    background: #c9f7e8 !important;
+    color: #059669 !important;
+}
+
+:is(
+    .badge-ditolak,
+    .status-ditolak,
+    .status-badge.ditolak
+) {
+    background: #ffe0e0 !important;
+    color: #e05252 !important;
+}
+
+/* AKHIR STANDAR BADGE STATUS LAPORAN */
+</style>
+</head>
+
+<body>
+
+    @php
+
+        $total = $total ?? 0;
+        $pending = $pending ?? 0;
+        $diproses = $diproses ?? 0;
+        $selesai = $selesai ?? 0;
+        $ditolak = $ditolak ?? 0;
+        $laporanTerbaru = $laporanTerbaru ?? collect();
+        $rekapKategori = $rekapKategori ?? [
+            ['nama' => 'Kesiswaan', 'jumlah' => 0],
+            ['nama' => 'Kurikulum', 'jumlah' => 0],
+            ['nama' => 'Sarana dan Prasarana', 'jumlah' => 0],
+            ['nama' => 'DUDI', 'jumlah' => 0],
+        ];
+
+        $roleMapping = [
+            'wakasek kesiswaan' => [
+                'nama' => 'Wakasek Kesiswaan',
+                'kategori' => 'Kesiswaan',
+                'dashboard' => 'wakasek.kesiswaan.dashboard',
+                'rekap' => 'wakasek.kesiswaan.rekap',
+                'monitoring' => 'wakasek.kesiswaan.monitoring',
+                'notifikasi' => 'wakasek.kesiswaan.notifikasi',
+            ],
+            'wakasek kurikulum' => [
+                'nama' => 'Wakasek Kurikulum',
+                'kategori' => 'Kurikulum',
+                'dashboard' => 'wakasek.kurikulum.dashboard',
+                'rekap' => 'wakasek.kurikulum.rekap',
+                'monitoring' => 'wakasek.kurikulum.monitoring',
+                'notifikasi' => 'wakasek.kurikulum.notifikasi',
+            ],
+            'wakasek sarana' => [
+                'nama' => 'Wakasek Sarana',
+                'kategori' => 'Sarana dan Prasarana',
+                'dashboard' => 'wakasek.sarana.dashboard',
+                'rekap' => 'wakasek.sarana.rekap',
+                'monitoring' => 'wakasek.sarana.monitoring',
+                'notifikasi' => 'wakasek.sarana.notifikasi',
+            ],
+            'wakasek dudi' => [
+                'nama' => 'Wakasek DUDI',
+                'kategori' => 'DUDI',
+                'dashboard' => 'wakasek.dudi.dashboard',
+                'rekap' => 'wakasek.dudi.rekap',
+                'monitoring' => 'wakasek.dudi.monitoring',
+                'notifikasi' => 'wakasek.dudi.notifikasi',
+            ],
+        ];
+
+        $currentRole = $role ?? auth()->user()->role ?? 'wakasek kesiswaan';
+        $jabatan = $roleMapping[$currentRole] ?? $roleMapping['wakasek kesiswaan'];
+
+        $dashboardRoute = route($jabatan['dashboard']);
+        $rekapRoute = route($jabatan['rekap']);
+        $notifRoute = route($jabatan['notifikasi']);
+    @endphp
+
+    <aside class="sidebar">
+        <div>
+            <div class="brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}" alt="Logo BaktiVoice" class="brand-logo-img">
+                <span class="brand-name">BaktiVoice</span>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="{{ $dashboardRoute }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-house"></i>
+                            <span>Dashboard</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ $rekapRoute }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Rekap</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route($jabatan['monitoring']) }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>Monitoring</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ route('profil_wakasek') }}">
+                        <div class="nav-content">
+                            <i class="fa-solid fa-user-gear"></i>
+                            <span>Profil</span>
+                        </div>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ $notifRoute }}" class="nav-notification">
+                        <div class="nav-content">
+                            <span class="notification-icon-wrapper">
+    <i class="fa-solid fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+                            <span>Notifikasi</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
+        </form>
+    </aside>
+
+    <div class="main-wrapper">
+
+        <header class="topbar">
+            <div class="topbar-mobile-brand">
+                <img src="{{ asset('images/logo BaktiVoice.png') }}"
+                     alt="Logo BaktiVoice"
+                     class="topbar-logo-img">
+                <span class="topbar-brand-name">BaktiVoice</span>
+            </div>
+
+            <div class="topbar-right-group">
+                <a href="{{ $notifRoute }}"
+                   class="topbar-icon"
+                   title="Notifikasi"
+                   aria-label="Notifikasi">
+                    <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+                </a>
+        <a href="{{ route('profil_wakasek') }}" class="user-profile" style="text-decoration: none; color: inherit;">
+            <div class="avatar">
+                <i class="fa-regular fa-user"></i>
+            </div>
+            <span class="user-name">
+                {{ $user->name ?? $jabatan['nama'] }}
+            </span>
+        </a>
+    </div>
+</header>
+
+        <main class="content">
+
+            
+
+            <section class="welcome-banner-wakasek">
+    <div class="welcome-content-wakasek">
+        <h1 class="welcome-title-wakasek">
+            Hello, {{ $user->name ?? $jabatan['nama'] }}!
+        </h1>
+
+        <p class="welcome-description-wakasek">
+            Pantau dan tindak lanjuti laporan pengaduan siswa bidang
+            {{ $jabatan['kategori'] }} dengan mudah di sini.
+        </p>
+    </div>
+
+    <div class="welcome-action-wakasek">
+        <a href="{{ route($jabatan['monitoring']) }}"
+           class="btn-banner-wakasek"
+           id="btnKelolaLaporanWakasek">
+
+            <i class="fa-solid fa-chart-line"></i>
+            <span id="kelolaLaporanWakasekText">Kelola Laporan</span>
+        </a>
+    </div>
+</section>
+
+            <!-- Statistik Dinamis dari Database -->
+            <section class="stats-grid">
+                <div class="stat-card total">
+                    <div class="stat-title">Total</div>
+                    <div class="stat-value">{{ $total }}</div>
+                </div>
+
+                <div class="stat-card pending">
+                    <div class="stat-title">Pending</div>
+                    <div class="stat-value">{{ $pending }}</div>
+                </div>
+
+                <div class="stat-card diproses">
+                    <div class="stat-title">Diproses</div>
+                    <div class="stat-value">{{ $diproses }}</div>
+                </div>
+
+                <div class="stat-card selesai">
+                    <div class="stat-title">Selesai</div>
+                    <div class="stat-value">{{ $selesai }}</div>
+                </div>
+
+                <div class="stat-card ditolak">
+                    <div class="stat-title">Ditolak</div>
+                    <div class="stat-value">{{ $ditolak }}</div>
+                </div>
+            </section>
+
+            <!-- Rekap per Kategori (Dinamis) -->
+            <section class="section">
+                <h2 class="section-header">Rekap Laporan per Kategori</h2>
+
+                <div class="category-grid">
+                    @foreach ($rekapKategori as $kat)
+                        <div class="category-item">
+                            <span class="category-name">{{ $kat['nama'] }}</span>
+                            <div class="bar-track">
+                                @php
+                                    $maxCount = max(array_column($rekapKategori, 'jumlah')) ?: 1;
+                                    $percent = ($kat['jumlah'] / $maxCount) * 100;
+                                @endphp
+                                <div class="bar-fill" style="width: {{ $percent }}%"></div>
+                            </div>
+                            <span class="category-count">{{ $kat['jumlah'] }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </section>
+
+            <!-- Laporan Terbaru (Dinamis) -->
+            <section class="section">
+                <h2 class="section-header">Laporan Terbaru</h2>
+
+                <div class="report-list">
+                    @forelse ($laporanTerbaru as $lap)
+                        <article class="report-card">
+                            <div class="report-info">
+                                <div class="report-thumbnail">
+                                    @if($lap->buktiLaporan && $lap->buktiLaporan->count() > 0)
+                                       <img src="{{ asset($lap->buktiLaporan->first()->file_path) }}" alt="Bukti Laporan" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <i class="fa-regular fa-image"></i>
+                                    @endif
+                                </div>
+
+                                <div>
+                                    <div class="report-title">{{ $lap->judul ?? $lap->deskripsi ?? 'Laporan Pengaduan' }}</div>
+                                    <div class="report-id">{{ 'BV' . str_pad($lap->id_laporan ?? $lap->id, 3, '0', STR_PAD_LEFT) }}</div>
+                                    <div class="report-date">{{ $lap->created_at ? $lap->created_at->format('d M Y') : '-' }}</div>
+                                </div>
+                            </div>
+
+                            <div class="report-actions">
+                                @php
+                                    $statusLower = strtolower($lap->status ?? 'pending');
+                                    $badgeClass = match($statusLower) {
+                                        'diproses' => 'badge-diproses',
+                                        'selesai' => 'badge-selesai',
+                                        'ditolak' => 'badge-ditolak',
+                                        default => 'badge-pending',
+                                    };
+                                @endphp
+                                <span class="status-badge {{ $badgeClass }}">
+                                    {{ ucfirst($lap->status ?? 'Pending') }}
+                                </span>
+
+
+                                <a href="{{ route('wakasek.laporan.detail', $lap->id_laporan ?? $lap->id) }}" class="btn-detail" title="Detail laporan">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                </a>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="empty-state">
+                            Belum ada laporan untuk bidang ini.
+                        </div>
+                    @endforelse
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <nav class="mobile-bottom-nav" aria-label="Navigasi mobile">
+    <a href="{{ route($jabatan['dashboard']) }}"
+       class="mobile-nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Beranda</span>
+    </a>
+
+    <a href="{{ route($jabatan['rekap']) }}"
+       class="mobile-nav-item">
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Rekap</span>
+    </a>
+
+    <a href="{{ route($jabatan['monitoring']) }}"
+       class="mobile-nav-item ">
+        <i class="fa-solid fa-eye"></i>
+        <span>Monitoring</span>
+    </a>
+
+    <a href="{{ route($jabatan['notifikasi']) }}"
+       class="mobile-nav-item">
+        <span class="notification-icon-wrapper">
+    <i class="fa-regular fa-bell"></i>
+    @if (($adaNotifikasiBelumDibaca ?? false))
+        <span class="unread-notification-dot" aria-label="Ada notifikasi belum dibaca"></span>
+    @endif
+</span>
+        <span>Notif</span>
+    </a>
+
+    <a href="{{ route('profil_wakasek') }}"
+       class="mobile-nav-item">
+        <i class="fa-regular fa-user"></i>
+        <span>Profil</span>
+    </a>
+
+    <form action="{{ route('logout') }}" method="POST" class="mobile-logout-form">
+        @csrf
+        <button type="submit" class="mobile-nav-item mobile-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </button>
+    </form>
+</nav>
+
+    <!-- JAVASCRIPT UNTUK DASHBOARD WAKASEK -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const statValues = document.querySelectorAll('.stat-value');
+
+            statValues.forEach(counter => {
+                const target = +counter.innerText;
+
+                if (!isNaN(target) && target > 0) {
+                    counter.innerText = '0';
+                    const duration = 1000;
+                    const increment = target / (duration / 16);
+
+                    let current = 0;
+                    const updateCount = () => {
+                        current += increment;
+                        if (current < target) {
+                            counter.innerText = Math.ceil(current);
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            counter.innerText = target;
+                        }
+                    };
+
+                    updateCount();
+                }
+            });
+        });
+    </script>
+    <script>
+// ==========================================
+// ANTI-DOUBLE CLICK TOMBOL DETAIL WAKASEK
+// ==========================================
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const tombolDetail = document.querySelectorAll('.btn-detail');
+
+    tombolDetail.forEach(button => {
+
+        button.addEventListener('click', function (event) {
+
+            // Mencegah klik berulang
+            if (button.dataset.clicked === 'true') {
+                event.preventDefault();
+                return;
+            }
+
+            // Tandai tombol sudah diklik
+            button.dataset.clicked = 'true';
+
+            // Tampilkan loading
+            button.style.opacity = '0.7';
+            button.style.pointerEvents = 'none';
+            button.style.cursor = 'not-allowed';
+
+            // Ubah ikon panah menjadi spinner
+            button.innerHTML = `
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            `;
+
+        });
+
+    });
+
+});
+</script>
+        <script>
+    // ==========================================
+    // ANTI-DOUBLE CLICK KELola LAPORAN WAKASEK
+    // ==========================================
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const btnKelolaLaporan = document.getElementById('btnKelolaLaporanWakasek');
+        const tombolText = document.getElementById('kelolaLaporanWakasekText');
+
+        let loadingKelolaLaporan = false;
+
+        if (btnKelolaLaporan && tombolText) {
+            btnKelolaLaporan.addEventListener('click', function (event) {
+
+                if (loadingKelolaLaporan) {
+                    event.preventDefault();
+                    return;
+                }
+
+                loadingKelolaLaporan = true;
+
+                btnKelolaLaporan.classList.add('loading');
+                tombolText.textContent = 'Membuka...';
+
+                const icon = btnKelolaLaporan.querySelector('i');
+
+                if (icon) {
+                    icon.className = 'fa-solid fa-spinner fa-spin';
+                }
+            });
+        }
+    });
+    </script>
+<script src="{{ asset('js/logout-handler.js') }}"></script>
+<script src="{{ asset('js/anti-double-click.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
