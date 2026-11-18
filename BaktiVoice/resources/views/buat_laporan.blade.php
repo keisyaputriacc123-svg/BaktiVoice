@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -362,6 +362,30 @@
             padding-left: 2px;
         }
 
+        /* INFORMASI KATEGORI */
+        .kategori-info {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 13px 15px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 9px;
+            color: #1e40af;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .kategori-info i {
+            margin-top: 3px;
+            font-size: 15px;
+            flex-shrink: 0;
+        }
+
+        .kategori-info p {
+            margin: 0;
+        }
         .required {
             color: #dc2626;
         }
@@ -1554,6 +1578,7 @@
                         <div class="select-wrapper">
                             <select
                                 name="id_kategori"
+                                id="kategoriSelect"
                                 class="form-select"
                                 required
                             >
@@ -1575,6 +1600,12 @@
                             </select>
 
                             <i class="fa-solid fa-chevron-down select-arrow"></i>
+                        </div>
+
+                        <!-- INFORMASI KATEGORI -->
+                        <div id="kategoriInfo" class="kategori-info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <p>Pilih kategori untuk melihat informasi jenis pengaduan yang sesuai.</p>
                         </div>
                     </div>
 
@@ -1682,6 +1713,37 @@
 
     <script>
 
+        // INFORMASI KATEGORI OTOMATIS
+        const kategoriSelect = document.getElementById('kategoriSelect');
+        const kategoriInfo = document.getElementById('kategoriInfo');
+
+        const keteranganKategori = {
+            'kesiswaan': 'Pengaduan seputar perilaku, kedisiplinan, dan kegiatan siswa.',
+            'kurikulum': 'Pengaduan seputar pembelajaran, jadwal, dan kegiatan akademik.',
+            'sarana dan prasarana': 'Pengaduan mengenai fasilitas sekolah yang rusak atau bermasalah.',
+            'sarana': 'Pengaduan mengenai fasilitas sekolah yang rusak atau bermasalah.',
+            'dudi': 'Pengaduan seputar PKL dan kegiatan kerja sama industri.'
+        };
+
+        function tampilkanKeteranganKategori() {
+            if (!kategoriSelect || !kategoriInfo) return;
+
+            const namaKategori = kategoriSelect.options[
+                kategoriSelect.selectedIndex
+            ]?.text.trim().toLowerCase();
+
+            const keterangan = keteranganKategori[namaKategori];
+
+            kategoriInfo.querySelector('p').textContent = keterangan ||
+                'Pilih kategori untuk melihat informasi jenis pengaduan yang sesuai.';
+        }
+
+        if (kategoriSelect) {
+            kategoriSelect.addEventListener('change', tampilkanKeteranganKategori);
+
+            // Menampilkan keterangan jika kategori sudah terpilih sebelumnya
+            tampilkanKeteranganKategori();
+        }
         const fileInput =
             document.getElementById('file-upload');
 
