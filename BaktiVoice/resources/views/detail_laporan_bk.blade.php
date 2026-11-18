@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -349,6 +349,38 @@
         font-weight: 600;
         white-space: nowrap;
         text-decoration: none;
+    }
+
+    .report-actions {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 22px;
+    }
+
+    .btn-cetak {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        background: #96ace0;
+        color: #fff;
+        border: 1px solid #96ace0;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 700;
+        white-space: nowrap;
+        transition: all .2s ease;
+    }
+
+    .btn-cetak:hover {
+        background: #7b94d1;
+        border-color: #7b94d1;
+        transform: translateY(-2px);
     }
 
     .detail-card {
@@ -1090,9 +1122,16 @@
 
                 <h2 class="report-title">{{ $laporan->judul ?? 'Tanpa Judul' }}</h2>
 
-                <div class="report-id">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span>{{ 'BV' . str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}</span>
+                <div class="report-actions">
+                    <div class="report-id">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>{{ 'BV' . str_pad($laporan->id_laporan ?? $laporan->id, 3, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+
+                    <a href="{{ route('laporan.cetak', $laporan->id_laporan) }}" class="btn-cetak">
+                        <i class="fa-solid fa-print"></i>
+                        Cetak Laporan
+                    </a>
                 </div>
 
                 <div class="information-grid">
