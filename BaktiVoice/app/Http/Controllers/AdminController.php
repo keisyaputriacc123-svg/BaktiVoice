@@ -16,19 +16,30 @@ use Illuminate\Validation\ValidationException;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // 1. Hitung total laporan
-        $totalLaporan = Laporan::count();
+        // Statistik mengikuti kategori yang dipilih
+        $statistikQuery = Laporan::query();
 
-        // 2. Hitung statistik disesuaikan dengan format huruf kapital enum (Pending, Diproses, Selesai, Ditolak)
-        $pendingCount  = Laporan::whereRaw('status::text ILIKE ?', ['pending'])->count();
-        $diprosesCount = Laporan::whereRaw('status::text ILIKE ?', ['proses'])->count();
-        $selesaiCount  = Laporan::whereRaw('status::text ILIKE ?', ['selesai'])->count();
-        $ditolakCount  = Laporan::whereRaw('status::text ILIKE ?', ['ditolak'])->count();
+        if ($request->filled('kategori')) {
+            $statistikQuery->where('id_kategori', $request->kategori);
+        }
 
-        // 3. Ambil 5 laporan terbaru beserta relasi user-nya
-        $laporanTerbaru = Laporan::with(['user'])->latest('id_laporan')->take(5)->get();
+        $totalLaporan  = (clone $statistikQuery)->count();
+        $pendingCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['pending'])->count();
+        $diprosesCount = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['proses'])->count();
+        $selesaiCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['selesai'])->count();
+        $ditolakCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['ditolak'])->count();
+
+        // Ambil 5 laporan terbaru sesuai kategori
+        $laporanQuery = Laporan::with(['user']);
+
+        if ($request->filled('kategori')) {
+            $laporanQuery->where('id_kategori', $request->kategori);
+        }
+
+        $laporanTerbaru = $laporanQuery->latest('id_laporan')->take(5)->get();
+        $kategoriList = Kategori::all();
 
         return view('dashboard_admin', compact(
             'totalLaporan',
@@ -36,18 +47,26 @@ class AdminController extends Controller
             'diprosesCount',
             'selesaiCount',
             'ditolakCount',
-            'laporanTerbaru'
+            'laporanTerbaru',
+            'kategoriList'
         ));
     }
 
    // 4. Menampilkan halaman rekap laporan & filter
     public function rekap(Request $request)
     {
-        $totalLaporan  = Laporan::count();
-        $pendingCount  = Laporan::whereRaw('status::text ILIKE ?', ['pending'])->count();
-        $diprosesCount = Laporan::whereRaw('status::text ILIKE ?', ['proses'])->count();
-        $selesaiCount  = Laporan::whereRaw('status::text ILIKE ?', ['selesai'])->count();
-        $ditolakCount  = Laporan::whereRaw('status::text ILIKE ?', ['ditolak'])->count();
+        // Statistik mengikuti kategori yang dipilih
+        $statistikQuery = Laporan::query();
+
+        if ($request->filled('kategori')) {
+            $statistikQuery->where('id_kategori', $request->kategori);
+        }
+
+        $totalLaporan  = (clone $statistikQuery)->count();
+        $pendingCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['pending'])->count();
+        $diprosesCount = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['proses'])->count();
+        $selesaiCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['selesai'])->count();
+        $ditolakCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['ditolak'])->count();
 
         $query = Laporan::with(['kategori', 'user']);
 
