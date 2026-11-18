@@ -406,3 +406,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/wakasek/notifikasi/read-all', [DashboardWakasekController::class, 'tandaiSemuaDibaca'])->name('wakasek.notifikasi.readAll');
 });
 
+
+// ================================
+// CETAK LAPORAN BAKTIVOICE
+// ================================
+Route::middleware(['auth'])->get(
+    '/laporan/{id}/cetak',
+    [\App\Http\Controllers\CetakLaporanController::class, 'show']
+)->name('laporan.cetak');
+
