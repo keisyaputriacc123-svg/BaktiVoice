@@ -341,6 +341,37 @@
             font-size: 14px;
         }
 
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cetak {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #96ace0;
+            color: #ffffff;
+            border: 1px solid #96ace0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-cetak:hover {
+            background: #7b94d1;
+            border-color: #7b94d1;
+            transform: translateY(-2px);
+        }
+
         .detail-card {
             background: var(--card-bg);
             border: 1px solid rgba(186, 210, 240, 0.6);
@@ -585,7 +616,38 @@
                 padding: 26px;
             }
 
-            .detail-card {
+            .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cetak {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #96ace0;
+            color: #ffffff;
+            border: 1px solid #96ace0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-cetak:hover {
+            background: #7b94d1;
+            border-color: #7b94d1;
+            transform: translateY(-2px);
+        }
+
+        .detail-card {
                 padding: 24px;
             }
 
@@ -661,7 +723,38 @@
                 font-size: 22px;
             }
 
-            .detail-card {
+            .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cetak {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            background: #96ace0;
+            color: #ffffff;
+            border: 1px solid #96ace0;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow: var(--shadow);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-cetak:hover {
+            background: #7b94d1;
+            border-color: #7b94d1;
+            transform: translateY(-2px);
+        }
+
+        .detail-card {
                 padding: 18px;
             }
 
@@ -1090,9 +1183,16 @@
                     <h1 class="page-title">Detail Laporan</h1>
                 </div>
 
-                <div class="report-code">
-                    <i class="fa-regular fa-file-lines"></i>
-                    <span>{{ 'BV' . str_pad($laporan->id_laporan ?? 1, 3, '0', STR_PAD_LEFT) }}</span>
+                <div class="header-actions">
+                    <div class="report-code">
+                        <i class="fa-regular fa-file-lines"></i>
+                        <span>{{ 'BV' . str_pad($laporan->id_laporan ?? 1, 3, '0', STR_PAD_LEFT) }}</span>
+                    </div>
+
+                    <a href="{{ route('laporan.cetak', $laporan->id_laporan) }}" class="btn-cetak">
+                        <i class="fa-solid fa-print"></i>
+                        Cetak Laporan
+                    </a>
                 </div>
             </div>
 
