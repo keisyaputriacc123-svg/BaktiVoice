@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -1722,6 +1722,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', function (event) {
 
+        // Bukti laporan wajib diunggah
+        if (!fileInput.files || fileInput.files.length === 0) {
+            event.preventDefault();
+            alert('Bukti laporan wajib diunggah terlebih dahulu.');
+            return;
+        }
+
         // Mencegah pengiriman berulang
         if (form.dataset.submitting === 'true') {
             event.preventDefault();
@@ -1805,6 +1812,7 @@ document.addEventListener('DOMContentLoaded', function () {
 </body>
 
 </html>
+
 
 
 
