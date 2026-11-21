@@ -1352,7 +1352,38 @@
                         </div>
                     </div>
 
-                  <div class="content-section">
+                  <div class="content-section" style="margin-top: 20px; padding: 22px; background: #f8faff; border: 1px solid #dce6f7; border-radius: 14px;">
+    <h3 class="section-title" style="margin-bottom: 8px;">
+        <i class="fa-solid fa-clipboard-check" style="color: #628cdb; margin-right: 7px;"></i>
+        Kelola Status Laporan
+    </h3>
+
+    <p style="font-size: 13px; color: #7182a5; margin-bottom: 16px;">
+        Status laporan dapat diperbarui oleh Wakasek sesuai bidangnya.
+    </p>
+
+    <form action="{{ route('wakasek.laporan.status', $laporan->id_laporan) }}" method="POST">
+        @csrf
+        <label for="statusLaporan" style="display: block; margin-bottom: 8px;">
+            Pilih Status Baru
+        </label>
+
+        <select id="statusLaporan" name="status" required style="width: 100%; padding: 12px; border: 1px solid #dce6f7; border-radius: 8px;">
+            <option value="pending" @selected($laporan->status === 'pending')>Pending</option>
+            <option value="proses" @selected($laporan->status === 'proses')>Diproses</option>
+            <option value="selesai" @selected($laporan->status === 'selesai')>Selesai</option>
+            <option value="ditolak" @selected($laporan->status === 'ditolak')>Ditolak</option>
+        </select>
+
+        <div style="margin-top: 14px;">
+            <button type="submit" style="padding: 11px 20px; background: #628cdb; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                <i class="fa-solid fa-save"></i>
+                Perbarui Status
+            </button>
+        </div>
+    </form>
+</div>
+<div class="content-section">
     <h3 class="section-title">Bukti Laporan</h3>
     <div class="evidence-box" style="padding: 15px;">
         @if($laporan->buktiLaporan && $laporan->buktiLaporan->count() > 0)
@@ -1423,35 +1454,6 @@
                         </p>
                     @endforelse
                 </section>
-
-                <!-- TANGGAPAN GURU BK KHUSUS KESISWAAN -->
-                @if(strtolower(trim($laporan->kategori->nama_kategori ?? '')) === 'kesiswaan')
-                    <section class="card" style="margin-bottom: 20px;">
-                        <div class="card-title">
-                            <div class="card-title-icon">
-                                <i class="fa-solid fa-user-doctor"></i>
-                            </div>
-                            <span>Tanggapan Guru BK</span>
-                        </div>
-
-                        @forelse($tanggapanGuruBk as $item)
-                            <div class="report-content" style="margin-top: 12px;">
-                                {{ $item->tanggapan }}
-                            </div>
-
-                            @if($item->created_at)
-                                <small style="display:block; margin-top:8px; color:var(--text-muted);">
-                                    <i class="fa-regular fa-clock"></i>
-                                    {{ $item->created_at->format('d M Y, H:i') }}
-                                </small>
-                            @endif
-                        @empty
-                            <p class="report-content" style="color:var(--text-muted);">
-                                Belum ada tanggapan dari Guru BK.
-                            </p>
-                        @endforelse
-                    </section>
-                @endif
 
                 <section class="card follow-up-card">
                     <div class="card-title">

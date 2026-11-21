@@ -933,7 +933,7 @@
             <div class="feature-card">
                 <div class="feature-icon-box"><i class="fa-solid fa-users"></i></div>
                 <h3 class="feature-title">Untuk Semua</h3>
-                <p class="feature-desc">Tersedia untuk siswa, guru BK, admin sekolah, dan wakasek.</p>
+                <p class="feature-desc">Tersedia untuk siswa, admin sekolah, dan wakasek.</p>
             </div>
         </div>
     </section>
@@ -1057,7 +1057,7 @@
         <!-- Item FAQ 2 -->
         <div class="faq-card">
             <h3>Berapa lama laporan saya akan ditindaklanjuti?</h3>
-            <p>Laporan akan segera diverifikasi oleh pihak sekolah (Admin/Guru BK) dalam waktu 1x24 jam kerja.</p>
+            <p>Laporan akan segera diverifikasi oleh pihak sekolah (Admin Sekolah) dalam waktu 1x24 jam kerja.</p>
         </div>
 
         <!-- Item FAQ 3 -->
@@ -1069,7 +1069,7 @@
         <!-- Item FAQ 4 -->
         <div class="faq-card">
             <h3>Siapa saja yang bisa menggunakan BaktiVoice?</h3>
-            <p>Sistem ini dapat digunakan oleh seluruh siswa SMK Budi Bakti Ciwidey, guru BK, admin sekolah, hingga wakasek.</p>
+            <p>Sistem ini dapat digunakan oleh seluruh siswa SMK Budi Bakti Ciwidey, admin sekolah, dan wakasek.</p>
         </div>
     </div>
 </section>

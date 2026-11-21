@@ -106,7 +106,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     // Route Update Status Laporan
     Route::get('/admin/laporan/{id}', [AdminController::class, 'show'])->name('laporan.show');
-    Route::put('/admin/laporan/{id}/update-status', [AdminController::class, 'updateStatus'])->name('laporan.updateStatus');
+    Route::post('/admin/laporan/{id}/tanggapan', [AdminController::class, 'storeTanggapan'])->name('laporan.tanggapan.admin');
 
     // Route Halaman & Proses Profil Admin
     Route::get('/dashboard/admin/profil', [AdminController::class, 'profil'])->name('profil_admin');
@@ -153,12 +153,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     // HALAMAN LAPORAN ADMIN
     // --------------------------------
     Route::get('/laporan_admin/{id?}', [LaporanController::class, 'showAdmin'])->name('laporan_admin');
-    Route::put('/api/laporan/{id}/status', [StatusLaporanController::class, 'updateStatus'])->name('api.laporan.updateStatus');
     Route::post('/api/laporan/{id}/tanggapan', [TanggapanController::class, 'store'])->name('laporan.tanggapan');
 
     // --------------------------------
     // HALAMAN REKAP LAPORAN
     // --------------------------------
+    Route::get('/rekap_laporan/cetak', [AdminController::class, 'cetakSemua'])->name('rekap_laporan.cetak');
     Route::get('/rekap_laporan', [AdminController::class, 'rekap'])->name('rekap_laporan');
 
     // --------------------------------
@@ -304,40 +304,6 @@ Route::middleware('auth')->group(function () {
 
 
 // ================================
-// DASHBOARD GURU BK
-// ================================
-
-Route::middleware('auth')->group(function () {
-    Route::get('/bk/dashboard', [DashboardBkController::class, 'index'])->name('dashboard_bk');
-
-    Route::get('/dashboard/bk/LaporanSiswa', [LaporanSiswaBkController::class, 'index'])->name('LaporanSiswa_bk');
-
-    // ROUTE DETAIL & TINDAK LANJUT
-    Route::get('/dashboard/bk/laporan/{id}', [LaporanSiswaBkController::class, 'show'])->name('detail_laporan_bk');
-    Route::post('/dashboard/bk/laporan/{id}/tindak-lanjut', [LaporanSiswaBkController::class, 'updateTindakLanjut'])->name('laporan.tindak_lanjut');
-
-    Route::get('/dashboard/bk/monitoring', [MonitoringBkController::class, 'index'])->name('monitoring_bk');
-
-    // NOTIFIKASI GURU BK (DINAMIS DB)
-    Route::get('/dashboard/bk/notifikasi', [NotifikasiController::class, 'index'])
-        ->defaults('viewName', 'notifikasi_bk')
-        ->name('notifikasi_bk');
-
-    Route::post('/dashboard/bk/notifikasi/{id}/read', [NotifikasiController::class, 'markAsRead'])->name('notifikasi.read');
-    Route::post('/dashboard/bk/notifikasi/mark-all', [NotifikasiController::class, 'markAllAsRead'])->name('notifikasi.readAll');
-
-    // Route halaman profil BK
-    Route::get('/dashboard/bk/profil', [ProfilBkController::class, 'index'])->name('profil_bk');
-
-    // Route untuk update informasi profil
-    Route::put('/dashboard/bk/profil', [ProfilBkController::class, 'update'])->name('profil_bk.update');
-
-    // Route untuk update password
-    Route::put('/dashboard/bk/profil/password', [ProfilBkController::class, 'updatePassword'])->name('profil_bk.password');
-});
-
-
-// ================================
 // DASHBOARD WAKASEK
 // ================================
 
@@ -361,6 +327,7 @@ Route::middleware(['auth'])->group(function () {
     // Detail Laporan & Tanggapan Wakasek
     Route::get('/wakasek/laporan/{id}', [DashboardWakasekController::class, 'detailLaporan'])->name('wakasek.laporan.detail');
     Route::post('/wakasek/laporan/{id}/tanggapan', [DashboardWakasekController::class, 'simpanTanggapan'])->name('wakasek.laporan.tanggapan');
+    Route::post('/wakasek/laporan/{id}/status', [DashboardWakasekController::class, 'updateStatus'])->name('wakasek.laporan.status');
 });
 
 

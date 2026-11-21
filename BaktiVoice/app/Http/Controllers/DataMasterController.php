@@ -29,7 +29,6 @@ class DataMasterController extends Controller
         $totalSiswa = User::where('role', 'siswa')->count();
 
         $totalBkWakasek = User::whereIn('role', [
-            'guru_bk',
             'wakasek kurikulum',
             'wakasek kesiswaan',
             'wakasek dudi',
@@ -45,7 +44,6 @@ class DataMasterController extends Controller
 
         // Daftar role penanggung jawab (Statistik array agar opsi select di modal selalu muncul)
         $penanggungJawabs = [
-            'guru_bk',
             'wakasek kurikulum',
             'wakasek kesiswaan',
             'wakasek sarana',

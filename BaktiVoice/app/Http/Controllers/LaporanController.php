@@ -162,10 +162,6 @@ class LaporanController extends Controller
             fn($item) => $item->user?->role === 'admin'
         );
 
-        $tanggapanGuruBk = $laporan->tanggapan->filter(
-            fn($item) => $item->user?->role === 'guru_bk'
-        );
-
         $tindakLanjutWakasek = $laporan->tanggapan->filter(
             fn($item) => str_starts_with($item->user?->role ?? '', 'wakasek')
         );
@@ -173,7 +169,6 @@ class LaporanController extends Controller
         return view('detail_laporan_siswa', compact(
             'laporan',
             'tanggapanAdmin',
-            'tanggapanGuruBk',
             'tindakLanjutWakasek'
         ));
     }
@@ -182,7 +177,6 @@ class LaporanController extends Controller
     /**
      * Menyimpan Laporan Baru
      * Mengirim notifikasi kepada Siswa, Admin,
-     * Guru BK, dan Wakasek sesuai bidangnya.
      */
     public function store(Request $request)
     {
@@ -316,13 +310,6 @@ class LaporanController extends Controller
             // B. Siswa pembuat laporan
             $siswaUser = User::where('id_user', $userId)->get();
 
-            // C. Guru BK hanya menerima kategori Kesiswaan
-            $bkUsers = collect();
-
-            if (str_contains($namaKategori, 'kesiswaan')) {
-                $bkUsers = User::where('role', 'guru_bk')->get();
-            }
-
             // D. Menentukan Wakasek berdasarkan kategori laporan
             $roleWakasekTarget = match (true) {
 
@@ -355,7 +342,6 @@ class LaporanController extends Controller
             // E. Menggabungkan seluruh penerima notifikasi
             $targetUsers = $adminUsers
                 ->merge($siswaUser)
-                ->merge($bkUsers)
                 ->merge($wakasekUsers)
                 ->unique('id_user');
 

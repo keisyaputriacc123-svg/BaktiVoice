@@ -231,9 +231,7 @@ class DashboardWakasekController extends Controller
             fn($item) => strtolower(trim($item->user?->role ?? '')) === 'admin'
         );
 
-        $tanggapanGuruBk = $laporan->tanggapan->filter(
-            fn($item) => strtolower(trim($item->user?->role ?? '')) === 'guru_bk'
-        );
+        
 
         $role = $user->role;
 
@@ -242,7 +240,6 @@ class DashboardWakasekController extends Controller
             'role',
             'user',
             'tanggapanAdmin',
-            'tanggapanGuruBk'
         ));
     }
 
@@ -281,10 +278,6 @@ class DashboardWakasekController extends Controller
             ]);
         }
 
-        // Ubah status laporan menjadi diproses
-        $laporan->update([
-            'status' => 'proses',
-        ]);
 
         // Kirim notifikasi kepada siswa pemilik laporan
         Notifikasi::create([
@@ -313,31 +306,6 @@ class DashboardWakasekController extends Controller
                 'is_read' => false,
             ]);
         }
-
-        // Kirim notifikasi kepada seluruh Guru BK
-        // Hanya untuk tindak lanjut Wakasek Kesiswaan pada laporan Kesiswaan
-        $namaKategori = strtolower(trim($laporan->kategori?->nama_kategori ?? ''));
-        $rolePengguna = strtolower(trim(Auth::user()?->role ?? ''));
-
-        if (
-            str_contains($namaKategori, 'kesiswaan') &&
-            $rolePengguna === 'wakasek kesiswaan'
-        ) {
-            $bkUsers = User::where('role', 'guru_bk')->get();
-
-            foreach ($bkUsers as $bk) {
-                Notifikasi::create([
-                    'id_user' => $bk->id_user,
-                    'id_laporan' => $laporan->id_laporan,
-                    'judul' => 'Tindak Lanjut Kesiswaan',
-                    'pesan' => (Auth::user()?->name ?? 'Wakasek Kesiswaan')
-                        . ' memberikan tindak lanjut pada laporan "'
-                        . $laporan->judul . '".',
-                    'type' => 'tindak-lanjut',
-                    'is_read' => false,
-                ]);
-            }
-        }
         return back()->with(
             'success',
             'Tindak lanjut dan tanggapan berhasil disimpan!'
@@ -346,6 +314,40 @@ class DashboardWakasekController extends Controller
     // MONITORING
     // =========================================
 
+
+    // =========================================
+    // UPDATE STATUS LAPORAN WAKASEK
+    // =========================================
+
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:pending,proses,selesai,ditolak',
+        ]);
+
+        $idKategori = $this->getKategoriWakasek();
+
+        $laporan = Laporan::where('id_kategori', $idKategori)
+            ->findOrFail($id);
+
+        $laporan->update([
+            'status' => $request->status,
+        ]);
+
+        Notifikasi::create([
+            'id_user' => $laporan->id_user,
+            'id_laporan' => $laporan->id_laporan,
+            'id_kategori' => $laporan->id_kategori,
+            'judul' => 'Perubahan Status Laporan',
+            'pesan' => 'Status laporan "' . $laporan->judul .
+                '" telah diperbarui menjadi ' . ucfirst($request->status) . '.',
+            'type' => 'status-laporan',
+            'is_read' => false,
+        ]);
+
+        return redirect()->back()
+            ->with('success', 'Status laporan berhasil diperbarui.');
+    }
     public function monitoring($bidang = 'kesiswaan')
     {
         $mappingId = $this->getMapping();

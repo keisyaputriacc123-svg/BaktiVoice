@@ -1,4 +1,4 @@
-﻿
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1246,7 +1246,7 @@
                 <div>
                     <h1 class="page-title">Notifikasi</h1>
                     <p class="page-description">
-                        Pantau laporan baru, perubahan status, masukan Guru BK,
+                        Pantau laporan baru, perubahan status,
                         dan tindak lanjut Wakasek.
                     </p>
                 </div>
@@ -1318,9 +1318,7 @@
                 <button type="button" class="filter-btn" data-filter="laporan">Laporan Baru
                     <span class="filter-dot" aria-hidden="true"></span>
                 </button>
-                <button type="button" class="filter-btn" data-filter="masukan-bk">Masukan Guru BK
-                    <span class="filter-dot" aria-hidden="true"></span>
-                </button>
+                
                 <button type="button" class="filter-btn" data-filter="tindak-lanjut-wakasek">Tindak Lanjut Wakasek
                     <span class="filter-dot" aria-hidden="true"></span>
                 </button>
@@ -1345,7 +1343,7 @@
                             <div class="notification-title-row">
                                 <h3 class="notification-title">{{ $notif->title ?? $notif->judul }}</h3>
                                 <span class="type-badge badge-{{ $notif->type ?? 'status' }}">
-                                    {{ ['laporan' => 'Laporan Baru', 'masukan-bk' => 'Masukan Guru BK', 'tindak-lanjut-wakasek' => 'Tindak Lanjut Wakasek', 'tindak-lanjut' => 'Tindak Lanjut', 'status' => 'Status Laporan'][$notif->type] ?? 'Informasi' }}
+                                    {{ ['laporan' => 'Laporan Baru', 'tindak-lanjut-wakasek' => 'Tindak Lanjut Wakasek', 'tindak-lanjut' => 'Tindak Lanjut', 'status' => 'Status Laporan'][$notif->type] ?? 'Informasi' }}
                                 </span>
                             </div>
 

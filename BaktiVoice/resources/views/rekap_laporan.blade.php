@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -982,6 +982,40 @@
             text-decoration: none;
             font-weight: 600;
         }
+        .btn-cetak-semua {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, #628cdb, #4772c7);
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            transition: 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-cetak-semua:hover {
+            background: linear-gradient(135deg, #4772c7, #365fae);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(71, 114, 199, 0.2);
+        }
+
+        @media (max-width: 600px) {
+            .table-header {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+
+            .btn-cetak-semua {
+                width: 100%;
+            }
+        }
 </style>
 </head>
 
@@ -1234,6 +1268,13 @@
 
                 <div class="table-header">
                     <h2 class="table-title">Daftar Laporan</h2>
+
+                    <a href="{{ route('rekap_laporan.cetak', request()->query()) }}"
+                       target="_blank"
+                       class="btn-cetak-semua">
+                        <i class="fas fa-print"></i>
+                        Cetak Semua Laporan
+                    </a>
                 </div>
 
 

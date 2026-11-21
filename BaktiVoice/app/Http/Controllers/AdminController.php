@@ -68,7 +68,7 @@ class AdminController extends Controller
         $selesaiCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['selesai'])->count();
         $ditolakCount  = (clone $statistikQuery)->whereRaw('status::text ILIKE ?', ['ditolak'])->count();
 
-        $query = Laporan::with(['kategori', 'user']);
+        $query = Laporan::with(['kategori', 'user', 'tanggapan.user', 'buktiLaporan']);
 
         // Filter Kategori
         if ($request->filled('kategori')) {
@@ -94,6 +94,76 @@ class AdminController extends Controller
         ));
     }
 
+    // CETAK SEMUA LAPORAN ADMIN
+    public function cetakSemua(Request $request)
+    {
+        $request->validate([
+            'kategori' => 'nullable|integer',
+            'status' => 'nullable|in:pending,proses,selesai,ditolak',
+            'tanggal' => 'nullable|date',
+        ]);
+
+        $query = Laporan::with(['kategori', 'user', 'tanggapan.user', 'buktiLaporan']);
+
+        if ($request->filled('kategori')) {
+            $query->where('id_kategori', $request->kategori);
+        }
+
+        if ($request->filled('status')) {
+            $query->whereRaw('LOWER(status::text) = ?', [
+                strtolower(trim($request->status))
+            ]);
+        }
+
+        if ($request->filled('tanggal')) {
+            $query->whereDate('created_at', $request->tanggal);
+        }
+
+        $laporans = $query->latest('id_laporan')->get();
+
+        // Filter tanggapan dan bukti untuk dokumen cetak massal
+        $laporans->each(function ($laporan) {
+            $tanggapanCetak = $laporan->tanggapan
+                ->filter(function ($tanggapan) {
+                    $role = strtolower(trim($tanggapan->user?->role ?? ''));
+
+                    return $role === 'admin' || str_starts_with($role, 'wakasek');
+                })
+                ->values();
+
+            $laporan->setRelation('tanggapan', $tanggapanCetak);
+
+            $buktiCetak = $laporan->buktiLaporan
+                ->filter(function ($bukti) {
+                    return str_starts_with($bukti->file_path ?? '', 'uploads/laporan/');
+                })
+                ->values();
+
+            // Dukungan untuk laporan lama
+            if ($buktiCetak->isEmpty() && !empty($laporan->file_path)) {
+                $buktiCetak = collect([
+                    (object) ['file_path' => $laporan->file_path]
+                ]);
+            }
+
+            $laporan->setRelation('buktiLaporan', $buktiCetak);
+        });
+
+        $totalLaporan = $laporans->count();
+        $pendingCount = $laporans->filter(fn($item) => strtolower((string) $item->status) === 'pending')->count();
+        $diprosesCount = $laporans->filter(fn($item) => strtolower((string) $item->status) === 'proses')->count();
+        $selesaiCount = $laporans->filter(fn($item) => strtolower((string) $item->status) === 'selesai')->count();
+        $ditolakCount = $laporans->filter(fn($item) => strtolower((string) $item->status) === 'ditolak')->count();
+
+        return view('cetak_semua_laporan', compact(
+            'laporans',
+            'totalLaporan',
+            'pendingCount',
+            'diprosesCount',
+            'selesaiCount',
+            'ditolakCount'
+        ));
+    }
     // 5. Menampilkan halaman detail laporan
     public function show($id)
     {
@@ -102,10 +172,6 @@ class AdminController extends Controller
 
         $tanggapanAdmin = $laporan->tanggapan->filter(
             fn($item) => $item->user?->role === 'admin'
-        );
-
-        $masukanGuruBk = $laporan->tanggapan->filter(
-            fn($item) => $item->user?->role === 'guru_bk'
         );
 
         $tindakLanjutWakasek = $laporan->tanggapan->filter(
@@ -120,7 +186,6 @@ class AdminController extends Controller
             'laporan',
             'statusList',
             'tanggapanAdmin',
-            'masukanGuruBk',
             'tindakLanjutWakasek',
             'buktiWakasek'
         ));
@@ -157,21 +222,18 @@ class AdminController extends Controller
     // 9. Memproses update password baru admin
 
 
-public function updateStatus(Request $request, $id)
+public function storeTanggapan(Request $request, $id)
 {
     $request->validate([
-        'status' => 'required|in:pending,proses,selesai,ditolak',
-        'tanggapan' => 'nullable|string|max:2000',
+        'tanggapan' => 'required|string|max:2000',
     ]);
 
     $laporan = Laporan::findOrFail($id);
+    $isiTanggapan = trim($request->tanggapan);
 
-    // Simpan status laporan dan catat perubahan jika status berbeda
-    $statusSebelumnya = (string) $laporan->status;
-    $statusBaru = $request->status;
-
-    // Tentukan Wakasek penerima berdasarkan kategori laporan
-    $namaKategori = strtolower(trim($laporan->kategori?->nama_kategori ?? ''));
+    $namaKategori = strtolower(trim(
+        $laporan->kategori?->nama_kategori ?? ''
+    ));
 
     $roleWakasekTarget = match (true) {
         str_contains($namaKategori, 'kesiswaan') => 'wakasek kesiswaan',
@@ -183,63 +245,9 @@ public function updateStatus(Request $request, $id)
     };
 
     $wakasekUsers = $roleWakasekTarget
-        ? User::whereRaw(
-            'LOWER(TRIM(role::text)) = ?',
-            [$roleWakasekTarget]
-        )->get()
+        ? User::whereRaw('LOWER(TRIM(role::text)) = ?', [$roleWakasekTarget])->get()
         : collect();
 
-    if ($statusSebelumnya !== $statusBaru) {
-        $labelStatus = [
-            'pending' => 'Pending',
-            'proses' => 'Diproses',
-            'selesai' => 'Selesai',
-            'ditolak' => 'Ditolak',
-        ];
-
-        $laporan->status = $statusBaru;
-        $laporan->save();
-
-        // Tentukan penerima notifikasi berdasarkan kategori laporan
-        if (str_contains($namaKategori, 'kesiswaan')) {
-            // Admin, Guru BK, dan Wakasek Kesiswaan
-            $adminUsers = User::where('role', 'admin')->get();
-            $bkUsers = User::where('role', 'guru_bk')->get();
-
-            $targetUsers = $adminUsers
-                ->concat($bkUsers)
-                ->concat($wakasekUsers)
-                ->unique('id_user');
-        } else {
-            // Admin yang mengubah status dan Wakasek bidang terkait
-            $adminUser = User::where('id_user', Auth::id())->get();
-
-            $targetUsers = $adminUser
-                ->concat($wakasekUsers)
-                ->unique('id_user');
-        }
-
-        foreach ($targetUsers as $targetUser) {
-            Notifikasi::create([
-                'id_user' => $targetUser->id_user,
-                'id_laporan' => $laporan->id_laporan,
-                'judul' => 'Status Laporan Diperbarui',
-                'pesan' => (Auth::user()?->name ?? 'Admin Sekolah')
-                    . ' mengubah status laporan "'
-                    . $laporan->judul . '" dari '
-                    . ($labelStatus[$statusSebelumnya] ?? $statusSebelumnya)
-                    . ' menjadi '
-                    . ($labelStatus[$statusBaru] ?? $statusBaru) . '.',
-                'type' => 'status',
-                'is_read' => false,
-            ]);
-        }
-    }
-
-    // Ambil isi tanggapan dari form
-    $isiTanggapan = trim($request->tanggapan ?? '');
-
-    // Ambil tanggapan terakhir
     $tanggapanTerakhir = $laporan->tanggapan()
         ->whereHas('user', function ($query) {
             $query->where('role', 'admin');
@@ -247,12 +255,7 @@ public function updateStatus(Request $request, $id)
         ->orderByDesc('id_tanggapan')
         ->first();
 
-    // Simpan hanya jika tanggapan baru atau berubah
-    if (
-        $isiTanggapan !== '' &&
-        $isiTanggapan !== trim($tanggapanTerakhir?->tanggapan ?? '')
-    ) {
-        // Simpan tanggapan
+    if ($isiTanggapan !== trim($tanggapanTerakhir?->tanggapan ?? '')) {
         $tanggapanBaru = new Tanggapan();
         $tanggapanBaru->id_laporan = $laporan->id_laporan;
         $tanggapanBaru->id_user = Auth::id();
@@ -260,7 +263,6 @@ public function updateStatus(Request $request, $id)
         $tanggapanBaru->created_at = now();
         $tanggapanBaru->save();
 
-        // Kirim notifikasi kepada siswa
         Notifikasi::create([
             'id_user' => $laporan->id_user,
             'id_laporan' => $laporan->id_laporan,
@@ -272,7 +274,6 @@ public function updateStatus(Request $request, $id)
             'is_read' => false,
         ]);
 
-        // Kirim notifikasi tanggapan kepada Wakasek sesuai bidang laporan
         foreach ($wakasekUsers as $wakasekUser) {
             Notifikasi::create([
                 'id_user' => $wakasekUser->id_user,
@@ -289,6 +290,7 @@ public function updateStatus(Request $request, $id)
 
     return redirect()
         ->route('laporan.show', $id)
-        ->with('success', 'Status dan tanggapan laporan berhasil disimpan!');
+        ->with('success', 'Tanggapan laporan berhasil disimpan!');
 }
 }
+

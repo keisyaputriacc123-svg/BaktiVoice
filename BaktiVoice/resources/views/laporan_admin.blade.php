@@ -1305,38 +1305,6 @@
 
                     </section>
 
-                    <!-- Aksi Admin -->
-<section class="detail-card">
-    <h3 class="card-title">Aksi Laporan</h3>
-
-    <!-- Perhatikan penambahan $laporan->id_laporan di dalam URL -->
-    <form action="{{ url('/api/laporan/' . ($laporan->id_laporan ?? 1) . '/status') }}" method="POST">
-        @csrf
-        @method('PUT')
-
-        <div class="action-buttons">
-            <button type="submit" name="status_id" value="1" class="action-btn btn-pending">
-                <i class="fa-solid fa-clock"></i>
-                Pending Laporan
-            </button>
-
-            <button type="submit" name="status_id" value="2" class="action-btn btn-process">
-                <i class="fa-solid fa-spinner"></i>
-                Proses Laporan
-            </button>
-
-            <button type="submit" name="status_id" value="3" class="action-btn btn-success">
-                <i class="fa-solid fa-check"></i>
-                Tandai Selesai
-            </button>
-
-            <button type="submit" name="status_id" value="4" class="action-btn btn-danger">
-                <i class="fa-solid fa-xmark"></i>
-                Tolak Laporan
-            </button>
-        </div>
-    </form>
-</section>
 
                 </div>
 

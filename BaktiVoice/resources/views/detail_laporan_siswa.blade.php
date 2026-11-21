@@ -1350,32 +1350,6 @@
                 @endforelse
             </section>
 
-            @if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
-<!-- TANGGAPAN GURU BK -->
-            <section class="tanggapan-card">
-                <h2 class="section-title">
-                    <i class="fa-solid fa-user-doctor"></i>
-                    Tanggapan Guru BK
-                </h2>
-
-                @forelse($tanggapanGuruBk as $tanggapan)
-                    <div class="tanggapan-item">
-                        <div class="tanggapan-header">
-                            <span>{{ $tanggapan->user->name ?? 'Guru BK' }}</span>
-                            <span style="font-weight: normal; color: var(--text-muted);">
-                                {{ \Carbon\Carbon::parse($tanggapan->created_at)->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB
-                            </span>
-                        </div>
-                        <div class="tanggapan-text">
-                            {{ $tanggapan->tanggapan }}
-                        </div>
-                    </div>
-                @empty
-                    <p style="color: var(--text-muted); font-size: 14px;">Belum ada tanggapan dari Guru BK.</p>
-                @endforelse
-            </section>
-@endif
-
             <!-- TINDAK LANJUT WAKASEK -->
             <section class="tanggapan-card">
                 <h2 class="section-title">

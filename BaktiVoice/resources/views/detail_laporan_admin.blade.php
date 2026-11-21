@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -1286,15 +1286,7 @@
                 @endif
 
                 <hr class="detail-divider">
-
-                {{-- FORM DINAMIS KE CONTROLLER --}}
-                <form action="{{ route('laporan.updateStatus', $laporan->id_laporan) }}"
-      method="POST"
-      id="formUpdateStatusAdmin">
-                    @csrf
-                    @method('PUT')
-
-                    <section class="metadata-grid">
+<section class="metadata-grid">
 
     <div class="metadata-item">
         <label>Judul Laporan</label>
@@ -1337,17 +1329,21 @@
                         </div>
 
                         <div class="metadata-item">
-                            <label for="reportStatus">Status Laporan</label>
-                            <select class="status-select" id="reportStatus" name="status">
-                                @php
-                                    $statusSekarang = strtolower($laporan->status ?? 'pending');
-                                @endphp
-                                <option value="pending" {{ $statusSekarang === 'pending' ? 'selected' : '' }}>Pending</option>
-<option value="proses" {{ $statusSekarang === 'proses' ? 'selected' : '' }}>Diproses</option>
-<option value="selesai" {{ $statusSekarang === 'selesai' ? 'selected' : '' }}>Selesai</option>
-<option value="ditolak" {{ $statusSekarang === 'ditolak' ? 'selected' : '' }}>Ditolak</option>
-                            </select>
-                        </div>
+    <label>Status Laporan</label>
+    <div class="metadata-value">
+        @php
+            $statusSekarang = strtolower($laporan->status ?? 'pending');
+            $labelStatus = [
+                'pending' => 'Pending',
+                'proses' => 'Diproses',
+                'selesai' => 'Selesai',
+                'ditolak' => 'Ditolak',
+            ];
+        @endphp
+        <i class="fa-solid fa-circle-info"></i>
+        {{ $labelStatus[$statusSekarang] ?? ucfirst($statusSekarang) }}
+    </div>
+</div>
 
                     </section>
 
@@ -1400,33 +1396,21 @@
         @endforelse
     </div>
 
+    <form action="{{ route('laporan.tanggapan.admin', $laporan->id_laporan) }}"
+      method="POST"
+      id="formTanggapanAdmin">
+    @csrf
+
     <label class="response-form-label" for="tanggapanAdmin">
         Tulis Tanggapan Baru
     </label>
     <textarea class="response-textarea"
         id="tanggapanAdmin"
         name="tanggapan"
-        placeholder="Tuliskan tanggapan Admin..."></textarea>
+        placeholder="Tuliskan tanggapan Admin..."
+        required></textarea>
+</form>
 </section>
-
-@if(($laporan->kategori->nama_kategori ?? null) === 'Kesiswaan')
-<section class="form-section">
-    <h2 class="section-title">
-        <i class="fa-solid fa-user-doctor"></i> Masukan Guru BK
-    </h2>
-
-    <div class="response-history">
-        @forelse($masukanGuruBk as $item)
-            <div class="response-card">{{ $item->tanggapan }}</div>
-        @empty
-            <div class="response-empty">
-                <i class="fa-regular fa-message"></i>
-                Belum ada masukan dari Guru BK.
-            </div>
-        @endforelse
-    </div>
-</section>
-@endif
 
 <section class="form-section">
     <h2 class="section-title">
@@ -1470,13 +1454,13 @@
                         <p class="form-note">
                             <i class="fa-solid fa-circle-info"></i> Periksa status dan tanggapan sebelum menyimpan perubahan.
                         </p>
-                        <button type="submit" class="btn-save" id="btnSimpanPerubahanAdmin">
+                        <button type="submit" form="formTanggapanAdmin" class="btn-save" id="btnSimpanPerubahanAdmin">
     <i class="fa-solid fa-floppy-disk" id="iconSimpanPerubahanAdmin"></i>
     <span id="textSimpanPerubahanAdmin">Simpan Perubahan</span>
 </button>
                     </div>
 
-                </form>
+                
             </div>
         </main>
     </div>
@@ -1587,7 +1571,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function () {
 
-        const form = document.getElementById('formUpdateStatusAdmin');
+        const form = document.getElementById('formTanggapanAdmin');
         const button = document.getElementById('btnSimpanPerubahanAdmin');
         const icon = document.getElementById('iconSimpanPerubahanAdmin');
         const text = document.getElementById('textSimpanPerubahanAdmin');

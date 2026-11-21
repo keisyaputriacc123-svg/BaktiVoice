@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="id">
 <head>
@@ -838,7 +838,7 @@
                 </div>
 
                 <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm text-center">
-                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">GURU BK & WAKASEK</span>
+                    <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">WAKASEK</span>
                     <div class="text-3xl font-extrabold text-emerald-500 mt-1">{{ $totalBkWakasek ?? 0 }}</div>
                 </div>
 
@@ -1160,7 +1160,6 @@
         @foreach($penanggungJawabs as $role)
     <option value="{{ $role }}">
         {{ match($role) {
-            'guru_bk' => 'Guru BK',
             'wakasek kurikulum' => 'Wakasek Kurikulum',
             'wakasek kesiswaan' => 'Wakasek Kesiswaan',
             'wakasek sarana' => 'Wakasek Sarana',
@@ -1180,7 +1179,6 @@
                 <select name="role" id="inputRole" class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-blue-500">
                     <option value="siswa">Siswa</option>
                     <option value="admin">Admin</option>
-                    <option value="guru_bk">Guru BK</option>
                     <option value="wakasek kurikulum">Wakasek Kurikulum</option>
                     <option value="wakasek kesiswaan">Wakasek Kesiswaan</option>
                     <option value="wakasek sarana">Wakasek Sarana</option>

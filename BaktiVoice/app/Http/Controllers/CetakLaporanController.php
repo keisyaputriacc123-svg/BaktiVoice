@@ -30,12 +30,7 @@ class CetakLaporanController extends Controller
             );
         } elseif ($role === 'admin') {
             // Admin dapat mencetak semua laporan.
-        } elseif ($role === 'guru_bk') {
-            abort_unless(
-                $laporan->kategori?->nama_kategori === 'Kesiswaan',
-                403,
-                'Guru BK hanya dapat mencetak laporan kategori Kesiswaan.'
-            );
+
         } else {
             $kategoriWakasek = [
                 'wakasek kesiswaan' => 1,
